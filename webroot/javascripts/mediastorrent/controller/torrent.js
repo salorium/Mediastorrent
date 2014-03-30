@@ -373,8 +373,12 @@ Torrent.controller =  {
         }
     },
     update: function(cid){
+        var url = "http://"+Torrent.model.baseUrl+'/torrent/liste/'+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion+"/"+cid;
+        if ( Torrent.model.listeselectionnee.length == 1){
+            url += Torrent.model.listeselectionnee[0];
+        }
         $.ajax({
-            url: "http://"+Torrent.model.baseUrl+'/torrent/liste/'+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion+"/"+cid+".json",
+            url: url+".json",
             dataType: "json",
             //contentType: "application/json",
             success: function(response, textStatus, jqXHR){
