@@ -152,8 +152,8 @@ Torrent.controller =  {
         var listafaire = [];
         if (liste.length >0){
             $.each(liste, function(k,v){
-                    listafaire.push(v);
-             });
+                listafaire.push(v);
+            });
         }
         Torrent.model.listeselectionnee = [];
         $.ajax({
@@ -213,13 +213,15 @@ Torrent.controller =  {
 
                     }
                 });
-        }
-            );
+            }
+        );
 
     },
     reloadSeedbox: function(id){
         Torrent.view.initSeedbox(id);
         Torrent.model.changedurl = true;
+        Torrent.model.listeselectionnee =[];
+        Torrent.model.torrentselectionneedetail = null;
     },
     tri : function(e){
         if ($("dd.anc").length > 0 && $("dd.anc").children().attr("sort-colonne") != $(e).attr("sort-colonne")){
@@ -321,9 +323,16 @@ Torrent.controller =  {
                 Torrent.model.listeselectionnee=[];
                 Torrent.model.listeselectionnee.push($(e.currentTarget).attr("id"));
                 Torrent.model.listeselectionneeid = ($(e.currentTarget).attr("idcpt"));
+                if ( Torrent.model.torrentselectionneedetail == null){
+                    Torrent.model.torrentselectionneedetail = {
+                        detail : Torrent.model.listeoriginal[$(e.currentTarget).attr("id")]
+                    }
+                }else{
+                    Torrent.model.torrentselectionneedetail.detail = Torrent.model.listeoriginal[$(e.currentTarget).attr("id")];
+                }
                 $(".torrent").removeClass("torrentselect");
                 $(e.currentTarget).addClass("torrentselect");
-
+                Torrent.view.detailsTorrent();
             }
         });
 
@@ -382,20 +391,28 @@ Torrent.controller =  {
             dataType: "json",
             //contentType: "application/json",
             success: function(response, textStatus, jqXHR){
-                if (response.showdebugger == "ok"){
-                    var res = response.torrent;
-                    torrent = res[0];
-                    Torrent.view.statsTorrent(res[3],res[4],res[5]);
-                    Torrent.controller.conversionListe(torrent);
-                    //Torrent.view.listeTorrents(torrent);
-                    setTimeout(function(){
-                        Torrent.controller.update(res[1]);
-                    },1000);
+                if ( response.torrent[2] == Torrent.model.baseUrl){
+                    if (response.showdebugger == "ok"){
+                        var res = response.torrent;
+                        torrent = res[0];
+                        Torrent.view.statsTorrent(res[3],res[4],res[5]);
+                        Torrent.controller.conversionListe(torrent);
+                        Torrent.model.torrentselectionneedetail = response.torrentselectionnee;
+                        Torrent.view.detailsTorrent();
+                        //Torrent.view.listeTorrents(torrent);
+                        setTimeout(function(){
+                            Torrent.controller.update(res[1]);
+                        },1000);
+                    }else{
+                        Torrent.model.listeoriginal=[];
+                        Torrent.model.listeselectionnee=[];
+                        Torrent.model.container.listtorrent.empty();
+                        Base.view.noty.generate("error","Impossible de se connecter à rtorrent");
+                        setTimeout(function(){
+                            Torrent.controller.update("");
+                        },10000);
+                    }
                 }else{
-                    Torrent.model.listeoriginal=[];
-                    Torrent.model.listeselectionnee=[];
-                    Torrent.model.container.listtorrent.empty();
-                    Base.view.noty.generate("error","Impossible de se connecter à rtorrent");
                     setTimeout(function(){
                         Torrent.controller.update("");
                     },10000);

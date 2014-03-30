@@ -7,6 +7,7 @@ Torrent.model =  {
     baseUrl:"",
     nomseedbox:"",
     listeselectionnee: [],
+    torrentselectionneedetail:null,
     dStatus : { started : 1, paused : 2, checking : 4, hashing : 8, error : 16 },
     seedboxs : null,
     listeoriginal :[],

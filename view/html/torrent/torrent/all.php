@@ -90,28 +90,61 @@
         </div>
         <div class="large-6 columns panel heightfixed"><dl class="tabs" data-tab> <dd class="active"><a href="#panel2-1">Détails</a></dd> <dd><a href="#panel2-2">Fichier</a></dd> <dd><a href="#panel2-3">Tracker</a></dd> <dd><a href="#panel2-4">Tab 4</a></dd> </dl> <div class="tabs-content">
                 <div class="content active" id="panel2-1">
-                <span>Transfert</span>
-                    <div class="row">
-                        <div class="small-2 column">
-                            Temps écoulé:
+                    <fieldset>
+                        <legend>Général</legend>
+                        <div class="row">
+                            <div class="small-2 column">Nom:</div>
+                            <div id="torrentdetailnom" class="small-10 column"></div>
                         </div>
-                        <div id="torrentdetailtempsecoule" class="small-2 column">
-
+                        <div class="row">
+                            <div class="small-2 column">Date:</div>
+                            <div id="torrentdetaildateaj" class="small-10 column"></div>
                         </div>
-                        <div class="small-2 column">
-                            Restant:
+                        <div class="row">
+                            <div class="small-2 column">Répertoire:</div>
+                            <div id="torrentdetailrep" class="small-10 column"></div>
                         </div>
-                        <div id="torrentdetailrestant" class="small-2 column">
-
-                        </div>
-                        <div class="small-2 column">
-                            Ratio:
-                        </div>
-                        <div id="torrentdetailratio" class="small-2 column">
-
+                        <div class="row">
+                            <div class="small-2 column">Hash:</div>
+                            <div id="torrentdetailhash" class="small-10 column"></div>
                         </div>
 
-                    </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Transfert</legend>
+                        <div class="row">
+                            <div class="small-3 column">Temps écoulé:</div>
+                            <div id="torrentdetailtempsecoule" class="small-3 column"></div>
+                            <div class="small-3 column">Restant:</div>
+                            <div id="torrentdetailrestant" class="small-3 column"></div>
+                        </div>
+                        <div class="row">
+                            <div class="small-3 column">Téléchargé:</div>
+                            <div id="torrentdetaildl" class="small-3 column"></div>
+                            <div class="small-3 column">Vitesse de réception:</div>
+                            <div id="torrentdetailvdl" class="small-3 column"></div>
+                        </div>
+                        <div class="row">
+                            <div class="small-3 column">Envoyé:</div>
+                            <div id="torrentdetailul" class="small-3 column"></div>
+                            <div class="small-3 column">Vitesse de d'émission:</div>
+                            <div id="torrentdetailvul" class="small-3 column"></div>
+                        </div>
+                        <div class="row">
+                            <div class="small-3 column">Sources:</div>
+                            <div id="torrentdetailsource" class="small-3 column"></div>
+                            <div class="small-3 column">Clients:</div>
+                            <div id="torrentdetailclient" class="small-3 column"></div>
+                        </div>
+                        <div class="row">
+                            <div class="small-3 column">Ratio:</div>
+                            <div id="torrentdetailratio" class="small-3 column"></div>
+                            <div class="small-3 column">Rejeté:</div>
+                            <div id="torrentdetailrejete" class="small-3 column"></div>
+                        </div>
+
+                    </fieldset>
+
                 </div>
                 <div class="content" id="panel2-2"> <p>Second panel content goes here...</p> </div> <div class="content" id="panel2-3"> <p>Third panel content goes here...</p> </div> <div class="content" id="panel2-4"> <p>Fourth panel content goes here...</p> </div> </div></div>
 </div>

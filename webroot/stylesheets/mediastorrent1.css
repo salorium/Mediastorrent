@@ -9521,30 +9521,25 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
 }
 
-/* line 39, ../scss/mediastorrent1.scss */
-fieldset {
-  color: white;
-}
-
-/* line 43, ../scss/mediastorrent1.scss */
+/* line 41, ../scss/mediastorrent1.scss */
 div.connexion {
   width: 600px;
   margin: auto auto;
   padding: 5px;
 }
 
-/* line 49, ../scss/mediastorrent1.scss */
+/* line 47, ../scss/mediastorrent1.scss */
 span.secondary {
   color: #ff1300;
 }
 
-/* line 53, ../scss/mediastorrent1.scss */
+/* line 51, ../scss/mediastorrent1.scss */
 div.secondary {
   color: white;
   background-color: #333333;
 }
 
-/* line 59, ../scss/mediastorrent1.scss */
+/* line 57, ../scss/mediastorrent1.scss */
 div.debugger {
   position: absolute;
   z-index: 100000;
@@ -9566,7 +9561,7 @@ div.debugger {
   overflow: auto;
   margin: auto auto;
 }
-/* line 74, ../scss/mediastorrent1.scss */
+/* line 72, ../scss/mediastorrent1.scss */
 div.debugger div.debugger-title {
   text-align: center;
   margin-bottom: 5px;
@@ -9580,12 +9575,12 @@ div.debugger div.debugger-title {
   -moz-box-shadow: #333333 0 0 25px, rgba(255, 255, 255, 0.9) 0 0 10px;
   box-shadow: #333333 0 0 25px, rgba(255, 255, 255, 0.9) 0 0 10px;
 }
-/* line 81, ../scss/mediastorrent1.scss */
+/* line 79, ../scss/mediastorrent1.scss */
 div.debugger a.titre {
   color: white;
   font-size: 2.125rem;
 }
-/* line 86, ../scss/mediastorrent1.scss */
+/* line 84, ../scss/mediastorrent1.scss */
 div.debugger div.debugger-data {
   width: 92%;
   padding: 10px;
@@ -9593,7 +9588,7 @@ div.debugger div.debugger-data {
   overflow: auto;
   margin: auto auto;
 }
-/* line 94, ../scss/mediastorrent1.scss */
+/* line 92, ../scss/mediastorrent1.scss */
 div.debugger div.debugger-data fieldset.rouge {
   border-color: red;
 }
@@ -9619,7 +9614,7 @@ div.debugger div.debugger-data fieldset.rouge legend {
   color: red;
   cursor: pointer;
 }
-/* line 98, ../scss/mediastorrent1.scss */
+/* line 96, ../scss/mediastorrent1.scss */
 div.debugger div.debugger-data fieldset.orangee {
   border-color: orange;
 }
@@ -9645,7 +9640,7 @@ div.debugger div.debugger-data fieldset.orangee legend {
   color: orange;
   cursor: pointer;
 }
-/* line 102, ../scss/mediastorrent1.scss */
+/* line 100, ../scss/mediastorrent1.scss */
 div.debugger div.debugger-data fieldset.violet {
   border-color: purple;
 }
@@ -9671,7 +9666,7 @@ div.debugger div.debugger-data fieldset.violet legend {
   color: purple;
   cursor: pointer;
 }
-/* line 105, ../scss/mediastorrent1.scss */
+/* line 103, ../scss/mediastorrent1.scss */
 div.debugger div.debugger-data fieldset.bleu {
   border-color: deepskyblue;
 }
@@ -9697,7 +9692,7 @@ div.debugger div.debugger-data fieldset.bleu legend {
   color: deepskyblue;
   cursor: pointer;
 }
-/* line 108, ../scss/mediastorrent1.scss */
+/* line 106, ../scss/mediastorrent1.scss */
 div.debugger div.debugger-data fieldset.vert {
   border-color: limegreen;
 }
@@ -9724,41 +9719,41 @@ div.debugger div.debugger-data fieldset.vert legend {
   cursor: pointer;
 }
 
-/* line 116, ../scss/mediastorrent1.scss */
+/* line 114, ../scss/mediastorrent1.scss */
 table.infoserver {
   margin: 0;
   background: transparent;
   border: none;
 }
 
-/* line 125, ../scss/mediastorrent1.scss */
+/* line 123, ../scss/mediastorrent1.scss */
 nav table.infoserver tr td {
   color: white;
 }
 
-/* line 134, ../scss/mediastorrent1.scss */
+/* line 132, ../scss/mediastorrent1.scss */
 span.debuggericon {
   display: block;
   text-align: center;
 }
-/* line 137, ../scss/mediastorrent1.scss */
+/* line 135, ../scss/mediastorrent1.scss */
 span.debuggericon img {
   margin-top: 5px;
   cursor: pointer;
 }
 
-/* line 143, ../scss/mediastorrent1.scss */
+/* line 141, ../scss/mediastorrent1.scss */
 a.button {
   line-height: inherit;
 }
 
-/* line 148, ../scss/mediastorrent1.scss */
+/* line 146, ../scss/mediastorrent1.scss */
 .carrousel {
   margin: 0;
   padding: 0;
 }
 
-/* line 153, ../scss/mediastorrent1.scss */
+/* line 151, ../scss/mediastorrent1.scss */
 .carrousel li {
   float: left;
   height: inherit;
@@ -9769,7 +9764,7 @@ a.button {
   font-size: 20px;
 }
 
-/* line 165, ../scss/mediastorrent1.scss */
+/* line 163, ../scss/mediastorrent1.scss */
 .carrouselimage {
   width: inherit;
   height: inherit;
@@ -9778,7 +9773,7 @@ a.button {
   vertical-align: middle;
 }
 
-/* line 170, ../scss/mediastorrent1.scss */
+/* line 168, ../scss/mediastorrent1.scss */
 .carrousel-conteneur {
   margin: 0 auto;
 }
@@ -9788,17 +9783,17 @@ a.button {
 }*/
 /*todo A nettoyer
 */
-/* line 180, ../scss/mediastorrent1.scss */
+/* line 178, ../scss/mediastorrent1.scss */
 .green {
   background-color: green;
 }
 
-/* line 183, ../scss/mediastorrent1.scss */
+/* line 181, ../scss/mediastorrent1.scss */
 .red {
   background-color: red;
 }
 
-/* line 186, ../scss/mediastorrent1.scss */
+/* line 184, ../scss/mediastorrent1.scss */
 .scene3D {
   position: relative;
   float: left;
@@ -9812,7 +9807,7 @@ a.button {
   margin: 0;
 }
 
-/* line 198, ../scss/mediastorrent1.scss */
+/* line 196, ../scss/mediastorrent1.scss */
 .control {
   padding: 0;
   position: relative;
@@ -9826,7 +9821,7 @@ a.button {
    -ms-border-radius: 20px;*/
 }
 
-/* line 210, ../scss/mediastorrent1.scss */
+/* line 208, ../scss/mediastorrent1.scss */
 .btcontrol {
   margin: 0;
   position: relative;
@@ -9835,152 +9830,152 @@ a.button {
   height: 100%;
 }
 
-/* line 218, ../scss/mediastorrent1.scss */
+/* line 216, ../scss/mediastorrent1.scss */
 .rot3 {
   transform: rotateY(40deg);
   -webkit-transform: rotateY(40deg);
 }
 
-/* line 223, ../scss/mediastorrent1.scss */
+/* line 221, ../scss/mediastorrent1.scss */
 .rot3:hover {
   transform: translateZ(50px) rotateY(20deg);
   -webkit-transform: translateZ(50px) rotateY(20deg);
 }
 
-/* line 227, ../scss/mediastorrent1.scss */
+/* line 225, ../scss/mediastorrent1.scss */
 .rot {
   transform: rotateY(40deg);
   -webkit-transform: rotateY(40deg);
 }
 
-/* line 232, ../scss/mediastorrent1.scss */
+/* line 230, ../scss/mediastorrent1.scss */
 .rot1 {
   transform: rotateY(130deg);
   -webkit-transform: rotateY(130deg);
 }
 
-/* line 238, ../scss/mediastorrent1.scss */
+/* line 236, ../scss/mediastorrent1.scss */
 .rot2 {
   transform: translateZ(40px);
   -webkit-transform: translateZ(40px);
 }
 
-/* line 243, ../scss/mediastorrent1.scss */
+/* line 241, ../scss/mediastorrent1.scss */
 .rot2:hover {
   transform: translateZ(50px);
   -webkit-transform: translateZ(50px);
 }
 
-/* line 249, ../scss/mediastorrent1.scss */
+/* line 247, ../scss/mediastorrent1.scss */
 .detailsFilm {
   background: rgba(255, 255, 255, 0.5);
   margin: 20px;
   margin-top: 19px;
 }
 
-/* line 259, ../scss/mediastorrent1.scss */
+/* line 257, ../scss/mediastorrent1.scss */
 div.container {
   width: 98%;
   margin: auto;
   margin-top: 10px;
 }
 
-/* line 266, ../scss/mediastorrent1.scss */
+/* line 264, ../scss/mediastorrent1.scss */
 .diskspace::-moz-progress-bar {
   background-color: lightgreen;
 }
 
-/* line 269, ../scss/mediastorrent1.scss */
+/* line 267, ../scss/mediastorrent1.scss */
 .diskspace::-webkit-progress-value {
   background-color: lightgreen;
 }
 
-/* line 272, ../scss/mediastorrent1.scss */
+/* line 270, ../scss/mediastorrent1.scss */
 .checking::-moz-progress-bar {
   background-color: orange;
 }
 
-/* line 275, ../scss/mediastorrent1.scss */
+/* line 273, ../scss/mediastorrent1.scss */
 .checking::-webkit-progress-value {
   background-color: orange;
 }
 
-/* line 279, ../scss/mediastorrent1.scss */
+/* line 277, ../scss/mediastorrent1.scss */
 .diskspace::-moz-progress-bar {
   background-color: lightgreen;
 }
 
-/* line 282, ../scss/mediastorrent1.scss */
+/* line 280, ../scss/mediastorrent1.scss */
 .diskspace::-webkit-progress-value {
   background-color: lightgreen;
 }
 
-/* line 286, ../scss/mediastorrent1.scss */
+/* line 284, ../scss/mediastorrent1.scss */
 .dl::-moz-progress-bar {
   background-color: #1832C7;
 }
 
-/* line 289, ../scss/mediastorrent1.scss */
+/* line 287, ../scss/mediastorrent1.scss */
 .dl::-webkit-progress-value {
   background-color: #1832C7;
 }
 
-/* line 293, ../scss/mediastorrent1.scss */
+/* line 291, ../scss/mediastorrent1.scss */
 .ul::-moz-progress-bar {
   background-color: #18C72F;
 }
 
-/* line 296, ../scss/mediastorrent1.scss */
+/* line 294, ../scss/mediastorrent1.scss */
 .ul::-webkit-progress-value {
   background-color: #18C72F;
 }
 
-/* line 300, ../scss/mediastorrent1.scss */
+/* line 298, ../scss/mediastorrent1.scss */
 .queue::-moz-progress-bar {
   background-color: purple;
 }
 
-/* line 303, ../scss/mediastorrent1.scss */
+/* line 301, ../scss/mediastorrent1.scss */
 .queue::-webkit-progress-value {
   background-color: purple;
 }
 
-/* line 307, ../scss/mediastorrent1.scss */
+/* line 305, ../scss/mediastorrent1.scss */
 .pause::-moz-progress-bar {
   background-color: gold;
 }
 
-/* line 310, ../scss/mediastorrent1.scss */
+/* line 308, ../scss/mediastorrent1.scss */
 .pause::-webkit-progress-value {
   background-color: gold;
 }
 
-/* line 314, ../scss/mediastorrent1.scss */
+/* line 312, ../scss/mediastorrent1.scss */
 .noncomplet::-moz-progress-bar {
   background-color: gray;
 }
 
-/* line 317, ../scss/mediastorrent1.scss */
+/* line 315, ../scss/mediastorrent1.scss */
 .noncomplet::-webkit-progress-value {
   background-color: gray;
 }
 
-/* line 320, ../scss/mediastorrent1.scss */
+/* line 318, ../scss/mediastorrent1.scss */
 .error::-moz-progress-bar {
   background-color: #FF0000;
 }
 
-/* line 323, ../scss/mediastorrent1.scss */
+/* line 321, ../scss/mediastorrent1.scss */
 .error::-webkit-progress-value {
   background-color: #FF0000;
 }
 
-/* line 327, ../scss/mediastorrent1.scss */
+/* line 325, ../scss/mediastorrent1.scss */
 .terminer::-moz-progress-bar {
   background-color: mediumseagreen;
 }
 
-/* line 330, ../scss/mediastorrent1.scss */
+/* line 328, ../scss/mediastorrent1.scss */
 .terminer::-webkit-progress-value {
   background-color: mediumseagreen;
 }
@@ -10005,18 +10000,18 @@ progress::-moz-progress-bar {
 
 }
 */
-/* line 353, ../scss/mediastorrent1.scss */
+/* line 351, ../scss/mediastorrent1.scss */
 progress {
   width: 100%;
   -webkit-appearance: none;
 }
 
-/* line 364, ../scss/mediastorrent1.scss */
+/* line 362, ../scss/mediastorrent1.scss */
 dl {
   line-height: 1;
 }
 
-/* line 369, ../scss/mediastorrent1.scss */
+/* line 367, ../scss/mediastorrent1.scss */
 fieldset.torrent {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -10028,18 +10023,18 @@ fieldset.torrent {
   margin: 0;
   padding-top: 0px;
 }
-/* line 370, ../scss/mediastorrent1.scss */
+/* line 368, ../scss/mediastorrent1.scss */
 fieldset.torrent table {
   border: none;
   margin-bottom: 0px;
   background: none;
 }
-/* line 375, ../scss/mediastorrent1.scss */
+/* line 373, ../scss/mediastorrent1.scss */
 fieldset.torrent table tr {
   background: none;
   height: 13px;
 }
-/* line 378, ../scss/mediastorrent1.scss */
+/* line 376, ../scss/mediastorrent1.scss */
 fieldset.torrent table tr td {
   border: none;
   padding: 0;
@@ -10047,18 +10042,18 @@ fieldset.torrent table tr td {
   background: none;
 }
 
-/* line 398, ../scss/mediastorrent1.scss */
+/* line 396, ../scss/mediastorrent1.scss */
 fieldset.torrentselect {
   background-color: rgba(0, 155, 0, 0.2);
 }
 
-/* line 402, ../scss/mediastorrent1.scss */
+/* line 400, ../scss/mediastorrent1.scss */
 .heightfixed {
   height: 100%;
   margin: 0px;
 }
 
-/* line 407, ../scss/mediastorrent1.scss */
+/* line 405, ../scss/mediastorrent1.scss */
 span.bt {
   display: block;
   text-align: center;
@@ -10074,7 +10069,7 @@ span.bt {
  *
  * Designed and built with all the love in the world @twitter by @mdo and @fat.
  */
-/* line 421, ../scss/mediastorrent1.scss */
+/* line 419, ../scss/mediastorrent1.scss */
 .btn {
   display: inline-block;
   *display: inline;
@@ -10112,7 +10107,7 @@ span.bt {
   *margin-left: .3em;
 }
 
-/* line 462, ../scss/mediastorrent1.scss */
+/* line 460, ../scss/mediastorrent1.scss */
 .btn:hover,
 .btn:active,
 .btn.active,
@@ -10121,18 +10116,18 @@ span.bt {
   background-color: #e6e6e6;
 }
 
-/* line 466, ../scss/mediastorrent1.scss */
+/* line 464, ../scss/mediastorrent1.scss */
 .btn:active,
 .btn.active {
   background-color: #cccccc \9;
 }
 
-/* line 469, ../scss/mediastorrent1.scss */
+/* line 467, ../scss/mediastorrent1.scss */
 .btn:first-child {
   *margin-left: 0;
 }
 
-/* line 472, ../scss/mediastorrent1.scss */
+/* line 470, ../scss/mediastorrent1.scss */
 .btn:hover {
   color: #333333;
   text-decoration: none;
@@ -10145,14 +10140,14 @@ span.bt {
   transition: background-position 0.1s linear;
 }
 
-/* line 483, ../scss/mediastorrent1.scss */
+/* line 481, ../scss/mediastorrent1.scss */
 .btn:focus {
   outline: thin dotted #333;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
 
-/* line 489, ../scss/mediastorrent1.scss */
+/* line 487, ../scss/mediastorrent1.scss */
 .btn.active,
 .btn:active {
   background-image: none;
@@ -10164,7 +10159,7 @@ span.bt {
   outline: 0;
 }
 
-/* line 499, ../scss/mediastorrent1.scss */
+/* line 497, ../scss/mediastorrent1.scss */
 .btn.disabled,
 .btn[disabled] {
   cursor: default;
@@ -10177,7 +10172,7 @@ span.bt {
   box-shadow: none;
 }
 
-/* line 509, ../scss/mediastorrent1.scss */
+/* line 507, ../scss/mediastorrent1.scss */
 .btn-large {
   padding: 9px 14px;
   font-size: 15px;
@@ -10187,31 +10182,31 @@ span.bt {
   border-radius: 5px;
 }
 
-/* line 517, ../scss/mediastorrent1.scss */
+/* line 515, ../scss/mediastorrent1.scss */
 .btn-large [class^="icon-"] {
   margin-top: 1px;
 }
 
-/* line 520, ../scss/mediastorrent1.scss */
+/* line 518, ../scss/mediastorrent1.scss */
 .btn-small {
   padding: 5px 9px;
   font-size: 11px;
   line-height: 16px;
 }
 
-/* line 525, ../scss/mediastorrent1.scss */
+/* line 523, ../scss/mediastorrent1.scss */
 .btn-small [class^="icon-"] {
   margin-top: -1px;
 }
 
-/* line 528, ../scss/mediastorrent1.scss */
+/* line 526, ../scss/mediastorrent1.scss */
 .btn-mini {
   padding: 2px 6px;
   font-size: 11px;
   line-height: 14px;
 }
 
-/* line 544, ../scss/mediastorrent1.scss */
+/* line 542, ../scss/mediastorrent1.scss */
 .btn-primary,
 .btn-primary:hover,
 .btn-warning,
@@ -10228,7 +10223,7 @@ span.bt {
   color: #ffffff;
 }
 
-/* line 553, ../scss/mediastorrent1.scss */
+/* line 551, ../scss/mediastorrent1.scss */
 .btn-primary.active,
 .btn-warning.active,
 .btn-danger.active,
@@ -10238,7 +10233,7 @@ span.bt {
   color: rgba(255, 255, 255, 0.75);
 }
 
-/* line 556, ../scss/mediastorrent1.scss */
+/* line 554, ../scss/mediastorrent1.scss */
 .btn-primary {
   background-color: #0074cc;
   background-image: -moz-linear-gradient(top, #0088cc, #0055cc);
@@ -10254,7 +10249,7 @@ span.bt {
   filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 
-/* line 574, ../scss/mediastorrent1.scss */
+/* line 572, ../scss/mediastorrent1.scss */
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary.active,
@@ -10263,13 +10258,13 @@ span.bt {
   background-color: #0055cc;
 }
 
-/* line 578, ../scss/mediastorrent1.scss */
+/* line 576, ../scss/mediastorrent1.scss */
 .btn-primary:active,
 .btn-primary.active {
   background-color: #004099 \9;
 }
 
-/* line 581, ../scss/mediastorrent1.scss */
+/* line 579, ../scss/mediastorrent1.scss */
 .btn-warning {
   background-color: #faa732;
   background-image: -moz-linear-gradient(top, #fbb450, #f89406);
@@ -10285,7 +10280,7 @@ span.bt {
   filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 
-/* line 599, ../scss/mediastorrent1.scss */
+/* line 597, ../scss/mediastorrent1.scss */
 .btn-warning:hover,
 .btn-warning:active,
 .btn-warning.active,
@@ -10294,13 +10289,13 @@ span.bt {
   background-color: #f89406;
 }
 
-/* line 603, ../scss/mediastorrent1.scss */
+/* line 601, ../scss/mediastorrent1.scss */
 .btn-warning:active,
 .btn-warning.active {
   background-color: #c67605 \9;
 }
 
-/* line 606, ../scss/mediastorrent1.scss */
+/* line 604, ../scss/mediastorrent1.scss */
 .btn-danger {
   background-color: #da4f49;
   background-image: -moz-linear-gradient(top, #ee5f5b, #bd362f);
@@ -10316,7 +10311,7 @@ span.bt {
   filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 
-/* line 624, ../scss/mediastorrent1.scss */
+/* line 622, ../scss/mediastorrent1.scss */
 .btn-danger:hover,
 .btn-danger:active,
 .btn-danger.active,
@@ -10325,13 +10320,13 @@ span.bt {
   background-color: #bd362f;
 }
 
-/* line 628, ../scss/mediastorrent1.scss */
+/* line 626, ../scss/mediastorrent1.scss */
 .btn-danger:active,
 .btn-danger.active {
   background-color: #942a25 \9;
 }
 
-/* line 631, ../scss/mediastorrent1.scss */
+/* line 629, ../scss/mediastorrent1.scss */
 .btn-success {
   background-color: #5bb75b;
   background-image: -moz-linear-gradient(top, #62c462, #51a351);
@@ -10347,7 +10342,7 @@ span.bt {
   filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 
-/* line 649, ../scss/mediastorrent1.scss */
+/* line 647, ../scss/mediastorrent1.scss */
 .btn-success:hover,
 .btn-success:active,
 .btn-success.active,
@@ -10356,13 +10351,13 @@ span.bt {
   background-color: #51a351;
 }
 
-/* line 653, ../scss/mediastorrent1.scss */
+/* line 651, ../scss/mediastorrent1.scss */
 .btn-success:active,
 .btn-success.active {
   background-color: #408140 \9;
 }
 
-/* line 656, ../scss/mediastorrent1.scss */
+/* line 654, ../scss/mediastorrent1.scss */
 .btn-info {
   background-color: #49afcd;
   background-image: -moz-linear-gradient(top, #5bc0de, #2f96b4);
@@ -10378,7 +10373,7 @@ span.bt {
   filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 
-/* line 674, ../scss/mediastorrent1.scss */
+/* line 672, ../scss/mediastorrent1.scss */
 .btn-info:hover,
 .btn-info:active,
 .btn-info.active,
@@ -10387,13 +10382,13 @@ span.bt {
   background-color: #2f96b4;
 }
 
-/* line 678, ../scss/mediastorrent1.scss */
+/* line 676, ../scss/mediastorrent1.scss */
 .btn-info:active,
 .btn-info.active {
   background-color: #24748c \9;
 }
 
-/* line 681, ../scss/mediastorrent1.scss */
+/* line 679, ../scss/mediastorrent1.scss */
 .btn-inverse {
   background-color: #414141;
   background-image: -moz-linear-gradient(top, #555555, #222222);
@@ -10409,7 +10404,7 @@ span.bt {
   filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 
-/* line 699, ../scss/mediastorrent1.scss */
+/* line 697, ../scss/mediastorrent1.scss */
 .btn-inverse:hover,
 .btn-inverse:active,
 .btn-inverse.active,
@@ -10418,48 +10413,48 @@ span.bt {
   background-color: #222222;
 }
 
-/* line 703, ../scss/mediastorrent1.scss */
+/* line 701, ../scss/mediastorrent1.scss */
 .btn-inverse:active,
 .btn-inverse.active {
   background-color: #080808 \9;
 }
 
-/* line 707, ../scss/mediastorrent1.scss */
+/* line 705, ../scss/mediastorrent1.scss */
 button.btn,
 input[type="submit"].btn {
   *padding-top: 2px;
   *padding-bottom: 2px;
 }
 
-/* line 712, ../scss/mediastorrent1.scss */
+/* line 710, ../scss/mediastorrent1.scss */
 button.btn::-moz-focus-inner,
 input[type="submit"].btn::-moz-focus-inner {
   padding: 0;
   border: 0;
 }
 
-/* line 717, ../scss/mediastorrent1.scss */
+/* line 715, ../scss/mediastorrent1.scss */
 button.btn.btn-large,
 input[type="submit"].btn.btn-large {
   *padding-top: 7px;
   *padding-bottom: 7px;
 }
 
-/* line 722, ../scss/mediastorrent1.scss */
+/* line 720, ../scss/mediastorrent1.scss */
 button.btn.btn-small,
 input[type="submit"].btn.btn-small {
   *padding-top: 3px;
   *padding-bottom: 3px;
 }
 
-/* line 727, ../scss/mediastorrent1.scss */
+/* line 725, ../scss/mediastorrent1.scss */
 button.btn.btn-mini,
 input[type="submit"].btn.btn-mini {
   *padding-top: 1px;
   *padding-bottom: 1px;
 }
 
-/* line 732, ../scss/mediastorrent1.scss */
+/* line 730, ../scss/mediastorrent1.scss */
 .addTorrent {
   background-color: #f2f2f2;
   position: absolute;
@@ -10470,14 +10465,14 @@ input[type="submit"].btn.btn-mini {
   border: solid 1px;
   border-color: #d8d8d8;
 }
-/* line 743, ../scss/mediastorrent1.scss */
+/* line 741, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentTitle {
   background-color: #999999;
   height: 45px;
   color: white;
   text-align: center;
 }
-/* line 749, ../scss/mediastorrent1.scss */
+/* line 747, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentTitle a {
   color: inherit;
   font-family: "Comic Sans MS", sans-serif;
@@ -10485,7 +10480,7 @@ input[type="submit"].btn.btn-mini {
   line-height: 45px;
   cursor: default;
 }
-/* line 758, ../scss/mediastorrent1.scss */
+/* line 756, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentTitle .close {
   cursor: pointer;
   float: right;
@@ -10493,7 +10488,7 @@ input[type="submit"].btn.btn-mini {
   margin-right: 10px;
   font-size: 20px;
 }
-/* line 772, ../scss/mediastorrent1.scss */
+/* line 770, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentDetails {
   height: 100px;
   padding: 15px;
@@ -10501,7 +10496,7 @@ input[type="submit"].btn.btn-mini {
   overflow-x: hidden;
 }
 
-/* line 781, ../scss/mediastorrent1.scss */
+/* line 779, ../scss/mediastorrent1.scss */
 input[type="file"] {
   font-family: inherit;
   color: rgba(0, 0, 0, 0.75);
@@ -10511,12 +10506,12 @@ input[type="file"] {
   padding: 0.5rem;
 }
 
-/* line 789, ../scss/mediastorrent1.scss */
+/* line 787, ../scss/mediastorrent1.scss */
 .expansion {
   max-width: none;
 }
 
-/* line 793, ../scss/mediastorrent1.scss */
+/* line 791, ../scss/mediastorrent1.scss */
 iframe.perso {
   display: none;
 }

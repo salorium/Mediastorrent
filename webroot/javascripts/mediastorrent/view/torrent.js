@@ -217,6 +217,30 @@ Torrent.view =  {
             '<tr><td style="vertical-align: bottom;">Télécharger</td><td >: '+(Base.model.converter.bytes(torrent[4],2)!= ""? Base.model.converter.bytes(torrent[4],2):"-" )+'/'+(Base.model.converter.bytes(torrent[2],2)!= ""? Base.model.converter.bytes(torrent[2],2):"-" )+'</td><td>Envoyé</td><td>: '+(Base.model.converter.bytes(torrent[5],2)!= ""? Base.model.converter.bytes(torrent[5],2):"-" )+'</td><td align="right">Temps restant : '+(torrent[9] != -1 ? Base.model.converter.time(torrent[9]):"∞")+'</td></tr>'+
             '</table></fieldset>';
     },
+    detailsTorrent:function(){
+        if ( Torrent.model.torrentselectionneedetail != null){
+            $("#torrentdetailnom").html(Torrent.model.torrentselectionneedetail.detail[1]);
+            $("#torrentdetaildateaj").html(((Torrent.model.torrentselectionneedetail.detail[25]>3600*24*365) ? Base.model.converter.date(Base.model.converter.iv(Torrent.model.torrentselectionneedetail.detail[25])) : ""));
+            $("#torrentdetailrep").html(Torrent.model.torrentselectionneedetail.detail[18]);
+            $("#torrentdetailhash").html(Torrent.model.torrentselectionneedetail.detail[27]);
+
+            $("#torrentdetailtempsecoule").html(Base.model.converter.time((new Date().getTime()-Torrent.model.torrentselectionneedetail.detail[16]*1000)/1000));
+            $("#torrentdetailrestant").html((Torrent.model.torrentselectionneedetail.detail[9] != -1 ? Base.model.converter.time(Torrent.model.torrentselectionneedetail.detail[9]):"∞"));
+            $("#torrentdetaildl").html((Base.model.converter.bytes(Torrent.model.torrentselectionneedetail.detail[4],2)!= ""? Base.model.converter.bytes(Torrent.model.torrentselectionneedetail.detail[4],2):"-" ));
+            $("#torrentdetailvdl").html((Base.model.converter.speed(Torrent.model.torrentselectionneedetail.detail[8]) != "" ? Base.model.converter.speed(Torrent.model.torrentselectionneedetail.detail[8]):"-"));
+            $("#torrentdetailul").html((Base.model.converter.bytes(Torrent.model.torrentselectionneedetail.detail[5],2)!= ""? Base.model.converter.bytes(Torrent.model.torrentselectionneedetail.detail[5],2):"-" ));
+            $("#torrentdetailvul").html((Base.model.converter.speed(Torrent.model.torrentselectionneedetail.detail[7]) != "" ? Base.model.converter.speed(Torrent.model.torrentselectionneedetail.detail[7]):"-"));
+            $("#torrentdetailsource").html((torrent[11]?torrent[11]:"0" )+" de "+(torrent[13]?torrent[13]:"0" )+" connecté(s)");
+            $("#torrentdetailclient").html((torrent[12]?torrent[12]:"0" )+" de "+(torrent[14]?torrent[14]:"0" )+" connecté(s)");
+            $("#torrentdetailrejete").html(Base.model.converter.bytes(Torrent.model.torrentselectionneedetail.detail[17],2));
+            $("#torrentdetailratio").html(Torrent.model.torrentselectionneedetail.detail[6]/1000);
+        }else{
+            $("#torrentdetailtempsecoule").html("");
+            $("#torrentdetailrestant").html("");
+            $("#torrentdetailratio").html("");
+
+        }
+    },
     listeTorrents:function(){
         res ="";
         $.each( Torrent.model.liste, function(k,v){
