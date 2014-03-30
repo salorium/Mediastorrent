@@ -87,7 +87,7 @@ class Torrent extends Controller {
                             $f [] = $fi;
                         }
                         if (is_null($f)){
-                            $to["status"] = "Aucun fichier compatible avec le site (" . Thumbnailers::getStringExtension () . ")";
+                            $to["status"] = "Aucun fichier compatible avec la bibliothèque (" . Thumbnailers::getStringExtension () . ")";
                         }else{
                             $to["file"] = $f;
                         }

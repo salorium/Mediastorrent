@@ -33,5 +33,8 @@ class Conf
     static $numerorole = array("Visiteur","Normal",array("Torrent","Uploadeur"),"Sysop");
     static $rolenumero; // Ne pas modifier
     static $rolevue;
+    static $videoExtensions = array ('avi', 'asf', 'flv', 'mkv', 'mov', 'mp4', 'mpg', 'mpeg', 'ogm', 'rm', 'wmv','rar' );
+    static $musicExtensions = array ('mp3', 'flac', 'ogg' );
+
 }
 
