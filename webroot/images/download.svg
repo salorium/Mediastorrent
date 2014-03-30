@@ -1,0 +1,21 @@
+<?php
+header('Content-type: image/svg+xml');
+echo '<?xml version="1.0" encoding="utf-8"?>';
+?>
+
+
+
+<!-- The icon can be used freely in both personal and commercial projects with no attribution required, but always appreciated.
+You may NOT sub-license, resell, rent, redistribute or otherwise transfer the icon without express written permission from iconmonstr.com -->
+
+
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+
+	 width="40px" height="40px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+
+<path fill="#1832C7" id="download-10-icon" d="m 409.338,216.254 c -10.416,-54.961 -58.666,-95.777 -115.781,-95.777 -35.098,0 -67.631,15.285 -89.871,41.584 -37.148,-9.906 -76.079,11.781 -86.933,48.779 C 78.16,222.176 50.6,257.895 50.6,299.303 c 0,50.852 41.37,92.221 93.222,92.221 l 225.358,0 c 50.85,0 92.221,-41.369 92.221,-92.221 -0.001,-35.914 -20.46,-67.846 -52.063,-83.049 z m -40.158,135.269 -225.359,0 c -29.795,0 -53.222,-23.426 -53.222,-52.221 0,-34.078 27.65,-60.078 62.186,-53.816 -11.536,-39.596 44.131,-61.93 64.641,-32.348 5.157,-14.582 25.823,-52.662 76.131,-52.662 38.027,0 77.361,26.08 78.664,84.982 25.363,0.098 49.18,18.432 49.18,53.844 -0.001,28.796 -23.426,52.221 -52.221,52.221 z m -72.44351,-67.76373 28.75617,-0.23586 -58.98986,60.06152 -59.96447,-59.08589 28.7553,-0.23584 -0.50555,-61.63939 61.44286,-0.50394 z"/>
+
+</svg>
+

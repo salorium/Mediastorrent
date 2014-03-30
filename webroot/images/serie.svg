@@ -1,0 +1,12 @@
+<?php
+header('Content-type: image/svg+xml');
+echo '<?xml version="1.0" encoding="utf-8"?>';
+?>
+<!-- License Agreement at http://iconmonstr.com/license/ -->
+
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+<path <?php echo isset($_GET["color"]) == true ? 'style="fill: '.$_GET["color"].';"':"";?>  id="tv-3-icon" d="M159.207,176.597h95.348v23.837h-33.781v77.012h-27.784v-77.012h-33.782V176.597z M326.623,176.597
+	l-19.447,61.404l-19.359-61.404h-28.578l32.638,100.849h30.116l33.379-100.849H326.623z M157.456,388.5
+	c20.626,24.034,57.048,40,98.543,40s77.918-15.966,98.545-40H157.456z M50,83.5v280h412v-280H50z M422,323.5H90v-200h332V323.5z"/>
+</svg>
