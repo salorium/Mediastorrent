@@ -446,7 +446,7 @@ class Torrent extends Controller {
                         $torrent['status']= "Erreur du fichier torrent";
                     }else{
                         $torrent['erreur']= 0;
-                        $torrent["status"]= \model\xmlrpc\rTorrent::sendTorrent($to,isset($_REQUEST['autostart']));
+                        $torrent["status"]= \model\xmlrpc\rTorrent::sendTorrent($to,!isset($_REQUEST['autostart']));
 
                     }
                     unlink($des);

@@ -110,7 +110,7 @@
                     <input class="right" name="autostart" id="autostart" type="checkbox">
                 </div>
                 <div class="small-6 columns">
-                    <label for="autostart">Lancement automatique</label>
+                    <label for="autostart">Ne pas démarrer le téléchargement</label>
                 </div>
             </div>
             <hr />
