@@ -116,7 +116,7 @@ class Torrent extends Controller {
                 $torrent[] = $req->val[$i+20];//Taille restant 14
                 $torrent[] = $req->val[$i+21];//Priority 15 (0 ne pas télécharger, 1 basse, 2 moyenne, 3 haute)
                 $torrent[] = $req->val[$i+22];//State change 16 (dernière date de change d'état)
-                $torrent[] = $req->val[$i+23];//Skip total 17
+                $torrent[] = $req->val[$i+23];//Skip total Contiens les rejets en mo 17
                 $torrent[] = $req->val[$i+26];//Base Path 18
                 $torrent[] = $req->val[$i+27];//Date create 19
                 $torrent[] = $req->val[$i+28];//Focus tracker 20
