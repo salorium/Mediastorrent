@@ -70,7 +70,7 @@ class Torrent extends Controller {
                         if (isset ( $info ['files'] )){
                             foreach ( $info ['files'] as $key => $tfile ) {
                                 $nom = $info ['name'].DS.implode ( DS, $tfile ['path'] );
-                                if (in_array ( strtolower ( pathinfo ( $nom, PATHINFO_EXTENSION ) ), Thumbnailers::$videoExtensions )) {
+                                if (in_array ( strtolower ( pathinfo ( $nom, PATHINFO_EXTENSION ) ), \config\Conf::$videoExtensions )) {
                                     $torrent["erreur"] = 0;
                                     $fi ["nom"] = basename($nom);
                                     $fi ["ext"] = pathinfo ( $nom, PATHINFO_EXTENSION );
@@ -79,7 +79,7 @@ class Torrent extends Controller {
                                 }
                             }
                         }
-                        else if (in_array ( strtolower ( pathinfo ( $info ['name'], PATHINFO_EXTENSION ) ), Thumbnailers::$videoExtensions )) {
+                        else if (in_array ( strtolower ( pathinfo ( $info ['name'], PATHINFO_EXTENSION ) ),  \config\Conf::$videoExtensions )) {
                             $torrent["erreur"] = 0;
                             $fi ["nom"] = basename($info ['name']);
                             $fi ["ext"] = pathinfo ( $info ['name'], PATHINFO_EXTENSION );
@@ -87,7 +87,7 @@ class Torrent extends Controller {
                             $f [] = $fi;
                         }
                         if (is_null($f)){
-                            $to["status"] = "Aucun fichier compatible avec la bibliothèque (" . Thumbnailers::getStringExtension () . ")";
+                            $to["status"] = "Aucun fichier compatible avec la bibliothèque (" ./* Thumbnailers::getStringExtension () .*/ ")";
                         }else{
                             $to["file"] = $f;
                         }
