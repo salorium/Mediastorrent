@@ -13,7 +13,7 @@ use core\Controller;
 use model\xmlrpc\rXMLRPCCommand;
 
 class Torrent extends Controller {
-    function liste($login=null,$keyconnexion=null,$cid=null){
+    function liste($login=null,$keyconnexion=null,$cid=null,$hashtorrentselectionne=null){
         if (!is_null($login) && ! is_null($keyconnexion)){
             $u = \core\Memcached::value($login,"user");
             if ( is_null($u)){
@@ -31,6 +31,7 @@ class Torrent extends Controller {
             }
             \config\Conf::$user["user"]= $u;
         }
+        $tor = null ;
         if ( !\config\Conf::$user["user"] ) throw new \Exception("Non User");
         $cmds = array(
             "d.get_hash="/*0*/, "d.is_open="/*1*/, "d.is_hash_checking="/*2*/, "d.is_hash_checked="/*3*/, "d.get_state="/*4*/,
@@ -131,6 +132,8 @@ class Torrent extends Controller {
                 $torrent[] = preg_replace("#\n#","",$req->val[$i+43]);//Torrent add time 25
                 $torrent[] = $msg;//Message tracker 26
                 $torrent[] =$req->val[$i];//Hash 27
+                if ( $hashtorrentselectionne == $req->val[$i])
+                    $tor = $torrent;
                 $tmp[$req->val[$i]]= $torrent;
                 $i=$i+44;
 
@@ -175,9 +178,13 @@ class Torrent extends Controller {
 
         }
         if(is_null($t)) trigger_error("Impossible de se connecter à rtorrent :(");
-
+        $torrent = null;
+            if ( !is_null($hashtorrentselectionne)){
+                $torrent["detail"]= $tor;
+            }
         $this->set(array(
             "torrent"=>$t,
+            "torrentselectionnee"=>$torrent,
             "seedbox"=> \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
         ));
     }
