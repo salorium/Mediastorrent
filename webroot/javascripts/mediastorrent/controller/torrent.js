@@ -10,7 +10,8 @@ Torrent.controller =  {
         Torrent.model.baseUrl = seedbox[0].hostname;
         Torrent.model.nomseedbox = seedbox[1].nom;
         Torrent.model.seedboxs = seedbox;
-        console.log($("#baseaddTorrent").height());
+        Base.view.fixedHeight("#addTorrentContenu",$("#addTorrent").height()-Base.model.html.hauteur("#addTorrentTitle"));
+        Base.view.fixedHeight("#addTorrentDetails",$("#addTorrentContenu").height()-$("#baseaddTorrent").height()-$("#divbouttonaddtorrent").height());
         Torrent.view.initSeedbox(0);
         Torrent.model.container.listtorrent = $("#listorrent");
         Torrent.model.container.listtorrent.empty();

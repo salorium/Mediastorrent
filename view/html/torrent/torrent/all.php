@@ -93,7 +93,7 @@
 
 <div id="addTorrent" class="addTorrent">
 
-    <div class="addTorrentTitle"><a><?= preg_replace("#([A-Z]+)#",'<span class="secondary">$1</span>',"Ajouter un torrent");?></a><a class="close" onclick="Torrent.controller.addTorrent.addTorrentHide();">&times;</a></div>
+    <div id="addTorrentTitle" class="addTorrentTitle"><a><?= preg_replace("#([A-Z]+)#",'<span class="secondary">$1</span>',"Ajouter un torrent");?></a><a class="close" onclick="Torrent.controller.addTorrent.addTorrentHide();">&times;</a></div>
     <div id="addTorrentContenu" class="addTorrentContenu">
         <form id="addtorrent" method="post" enctype="multipart/form-data" onsubmit="Torrent.controller.addTorrent.upload(event);" >
         <div id="baseaddTorrent">
@@ -156,7 +156,7 @@
             </p>
 
         </div>
-        <div class="row">
+        <div id="divbouttonaddtorrent" class="row">
         <div class="small-2 small-centered columns">
         <button class="button small secondary expand" value="ajouter" type="submit" >Ajouter</button>
         </div>

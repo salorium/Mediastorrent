@@ -773,7 +773,9 @@ input[type="submit"].btn.btn-mini {
       height: 100px;
       background-color: red;
       padding: 15px;
+
       overflow-y: auto;
+      overflow-x: hidden;
     }
   }
 input[type="file"]{
