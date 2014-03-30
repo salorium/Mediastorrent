@@ -120,7 +120,7 @@
                 <input class="right" name="mediastorrent" id="mediastorrent" type="checkbox" onchange="Torrent.controller.addTorrent.checkTorrentFile($('#mediastorrent').is(':checked'));">
             </div>
             <div class="small-6 columns">
-                <label for="mediastorrent">Mettre sur mediastorrent</label>
+                <label for="mediastorrent">Ajouter à la bibliothèque</label>
             </div>
         </div>
 
