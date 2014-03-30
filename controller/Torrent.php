@@ -33,15 +33,15 @@ class Torrent extends Controller {
         }
         if ( !\config\Conf::$user["user"] ) throw new \Exception("Non User");
         $cmds = array(
-            "d.get_hash=", "d.is_open=", "d.is_hash_checking=", "d.is_hash_checked=", "d.get_state=",
-            "d.get_name=", "d.get_size_bytes=", "d.get_completed_chunks=", "d.get_size_chunks=", "d.get_bytes_done=",
-            "d.get_up_total=", "d.get_ratio=", "d.get_up_rate=", "d.get_down_rate=", "d.get_chunk_size=",
-            "d.get_custom1=", "d.get_peers_accounted=", "d.get_peers_not_connected=", "d.get_peers_connected=", "d.get_peers_complete=",
-            "d.get_left_bytes=", "d.get_priority=", "d.get_state_changed=", "d.get_skip_total=", "d.get_hashing=",
-            "d.get_chunks_hashed=", "d.get_base_path=", "d.get_creation_date=", "d.get_tracker_focus=", "d.is_active=",
-            "d.get_message=", "d.get_custom2=", "d.get_free_diskspace=", "d.is_private=", "d.is_multi_file=","d.get_throttle_name=","d.get_custom=chk-state",
-            "d.get_custom=chk-time","d.get_custom=sch_ignore",'cat="$t.multicall=d.get_hash=,t.get_scrape_complete=,cat={#}"','cat="$t.multicall=d.get_hash=,t.get_scrape_incomplete=,cat={#}"',
-            'cat=$d.views=',"d.get_custom=seedingtime","d.get_custom=addtime"
+            "d.get_hash="/*0*/, "d.is_open="/*1*/, "d.is_hash_checking="/*2*/, "d.is_hash_checked="/*3*/, "d.get_state="/*4*/,
+            "d.get_name="/*5*/, "d.get_size_bytes="/*6*/, "d.get_completed_chunks="/*7*/, "d.get_size_chunks="/*8*/, "d.get_bytes_done="/*9*/,
+            "d.get_up_total="/*10*/, "d.get_ratio="/*11*/, "d.get_up_rate="/*12*/, "d.get_down_rate="/*13*/, "d.get_chunk_size="/*14*/,
+            "d.get_custom1="/*15*/, "d.get_peers_accounted="/*16*/, "d.get_peers_not_connected="/*17*/, "d.get_peers_connected="/*18*/, "d.get_peers_complete="/*19*/,
+            "d.get_left_bytes="/*20*/, "d.get_priority="/*21*/, "d.get_state_changed="/*22*/, "d.get_skip_total="/*23*/, "d.get_hashing="/*24*/,
+            "d.get_chunks_hashed="/*25*/, "d.get_base_path="/*26*/, "d.get_creation_date="/*27*/, "d.get_tracker_focus="/*28*/, "d.is_active="/*29*/,
+            "d.get_message="/*30*/, "d.get_custom2="/*31*/, "d.get_free_diskspace="/*32*/, "d.is_private="/*33*/, "d.is_multi_file="/*34*/,"d.get_throttle_name="/*35*/,"d.get_custom=chk-state"/*36*/,
+            "d.get_custom=chk-time"/*37*/,"d.get_custom=sch_ignore"/*38*/,'cat="$t.multicall=d.get_hash=,t.get_scrape_complete=,cat={#}"'/*39*/,'cat="$t.multicall=d.get_hash=,t.get_scrape_incomplete=,cat={#}"'/*40*/,
+            'cat=$d.views='/*41*/,"d.get_custom=seedingtime"/*42*/,"d.get_custom=addtime"/*43*/
         );
         $cmd = new \model\xmlrpc\rXMLRPCCommand(5001, "d.multicall", "main" );
         $res = array();
