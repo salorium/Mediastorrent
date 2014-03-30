@@ -96,7 +96,7 @@
     <div class="addTorrentTitle"><a><?= preg_replace("#([A-Z]+)#",'<span class="secondary">$1</span>',"Ajouter un torrent");?></a><a class="close" onclick="Torrent.controller.addTorrent.addTorrentHide();">&times;</a></div>
     <div id="addTorrentContenu" class="addTorrentContenu">
         <form id="addtorrent" method="post" enctype="multipart/form-data" onsubmit="Torrent.controller.addTorrent.upload(event);" >
-
+        <div id="baseaddTorrent">
         <div class="row expansion">
                     <div class="small-6 columns">
                         <label for="torrentfile" class="right inline">Torrent</label>
@@ -113,8 +113,6 @@
                     <label for="autostart">Ne pas démarrer le téléchargement</label>
                 </div>
             </div>
-            <hr />
-
         <div class="row expansion">
             <div class="small-6 columns">
                 <input class="right" name="mediastorrent" id="mediastorrent" type="checkbox" onchange="Torrent.controller.addTorrent.checkTorrentFile($('#mediastorrent').is(':checked'));">
@@ -123,7 +121,7 @@
                 <label for="mediastorrent">Ajouter à la bibliothèque</label>
             </div>
         </div>
-
+        </div>
         <div id="addTorrentDetails" class="addTorrentDetails">
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum facilis perferendis possimus rerum
                 velit! Adipisci blanditiis delectus deserunt enim exercitationem ipsam iste laudantium libero nesciunt
