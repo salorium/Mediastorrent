@@ -21,7 +21,7 @@ class Conf
     static $databases = array(
         "default" => array(
             "host" => "mysql",
-            "database" => "mediastorrent1",
+            "database" => "mediastorrent",
             "login" => "mediastorrent",
             "password" => "azerty"
         )
