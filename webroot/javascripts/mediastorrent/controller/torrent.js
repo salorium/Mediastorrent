@@ -281,61 +281,88 @@ Torrent.controller =  {
             }
             Torrent.controller.afficheTorrent();
         });
-        $('fieldset.torrent').bind('click', function(e) {
+        $('fieldset.torrent').mousedown(function(e) {
             e.preventDefault();
+            switch (e.which){
+                case 1:
+                    if (e.shiftKey) {
+                        Torrent.model.listeselectionnee=[];
+                        $(".torrent").removeClass("torrentselect");
+                        if (Torrent.model.listeselectionneeid> -1){
+                            max = $(e.currentTarget).attr("idcpt");
+                            i1 = Torrent.model.listeselectionneeid;
+                            if (i1 < max ){
+                                for (i=i1;i< max;i++){
 
-            if (e.shiftKey) {
-                Torrent.model.listeselectionnee=[];
-                $(".torrent").removeClass("torrentselect");
-                if (Torrent.model.listeselectionneeid> -1){
-                    max = $(e.currentTarget).attr("idcpt");
-                    i1 = Torrent.model.listeselectionneeid;
-                    if (i1 < max ){
-                        for (i=i1;i< max;i++){
-
-                            Torrent.model.listeselectionnee.push(Torrent.model.liste[i][27]);
-                            $("#"+Torrent.model.liste[i][27]).addClass("torrentselect");
+                                    Torrent.model.listeselectionnee.push(Torrent.model.liste[i][27]);
+                                    $("#"+Torrent.model.liste[i][27]).addClass("torrentselect");
+                                }
+                            }else{
+                                for (i=i1;i> max;i--){
+                                    Torrent.model.listeselectionnee.push(Torrent.model.liste[i][27]);
+                                    $("#"+Torrent.model.liste[i][27]).addClass("torrentselect");
+                                }
+                            }
+                            Torrent.model.listeselectionnee.push($(e.currentTarget).attr("id"));
+                            $(e.currentTarget).addClass("torrentselect");
+                        }else{
+                            Torrent.model.listeselectionnee.push($(e.currentTarget).attr("id"));
+                            Torrent.model.listeselectionneeid = ($(e.currentTarget).attr("idcpt"));
                         }
+                        //  mon action
+                    }else if (e.ctrlKey){
+                        id = $.inArray($(e.currentTarget).attr("id"),Torrent.model.listeselectionnee)
+                        if (id > -1){
+                            $(e.currentTarget).removeClass("torrentselect");
+                            Torrent.model.listeselectionnee.splice(id,1);
+                        }else{
+                            Torrent.model.listeselectionnee.push($(e.currentTarget).attr("id"));
+                            $(e.currentTarget).addClass("torrentselect");
+                        }
+                        Torrent.model.listeselectionneeid = ($(e.currentTarget).attr("idcpt"));
                     }else{
-                        for (i=i1;i> max;i--){
-                            Torrent.model.listeselectionnee.push(Torrent.model.liste[i][27]);
-                            $("#"+Torrent.model.liste[i][27]).addClass("torrentselect");
+                        Torrent.model.listeselectionnee=[];
+                        Torrent.model.listeselectionnee.push($(e.currentTarget).attr("id"));
+                        Torrent.model.listeselectionneeid = ($(e.currentTarget).attr("idcpt"));
+                        if ( Torrent.model.torrentselectionneedetail == null){
+                            Torrent.model.torrentselectionneedetail = {
+                                detail : Torrent.model.listeoriginal[$(e.currentTarget).attr("id")]
+                            }
+                        }else{
+                            Torrent.model.torrentselectionneedetail.detail = Torrent.model.listeoriginal[$(e.currentTarget).attr("id")];
                         }
+                        $(".torrent").removeClass("torrentselect");
+                        $(e.currentTarget).addClass("torrentselect");
+                        Torrent.view.detailsTorrent();
                     }
-                    Torrent.model.listeselectionnee.push($(e.currentTarget).attr("id"));
-                    $(e.currentTarget).addClass("torrentselect");
-                }else{
+                    break;
+                case 3:
+                    e.stopPropagation();
+                    Torrent.model.listeselectionnee=[];
                     Torrent.model.listeselectionnee.push($(e.currentTarget).attr("id"));
                     Torrent.model.listeselectionneeid = ($(e.currentTarget).attr("idcpt"));
-                }
-                //  mon action
-            }else if (e.ctrlKey){
-                id = $.inArray($(e.currentTarget).attr("id"),Torrent.model.listeselectionnee)
-                if (id > -1){
-                    $(e.currentTarget).removeClass("torrentselect");
-                    Torrent.model.listeselectionnee.splice(id,1);
-                }else{
-                    Torrent.model.listeselectionnee.push($(e.currentTarget).attr("id"));
-                    $(e.currentTarget).addClass("torrentselect");
-                }
-                Torrent.model.listeselectionneeid = ($(e.currentTarget).attr("idcpt"));
-            }else{
-                Torrent.model.listeselectionnee=[];
-                Torrent.model.listeselectionnee.push($(e.currentTarget).attr("id"));
-                Torrent.model.listeselectionneeid = ($(e.currentTarget).attr("idcpt"));
-                if ( Torrent.model.torrentselectionneedetail == null){
-                    Torrent.model.torrentselectionneedetail = {
-                        detail : Torrent.model.listeoriginal[$(e.currentTarget).attr("id")]
+                    if ( Torrent.model.torrentselectionneedetail == null){
+                        Torrent.model.torrentselectionneedetail = {
+                            detail : Torrent.model.listeoriginal[$(e.currentTarget).attr("id")]
+                        }
+                    }else{
+                        Torrent.model.torrentselectionneedetail.detail = Torrent.model.listeoriginal[$(e.currentTarget).attr("id")];
                     }
-                }else{
-                    Torrent.model.torrentselectionneedetail.detail = Torrent.model.listeoriginal[$(e.currentTarget).attr("id")];
-                }
-                $(".torrent").removeClass("torrentselect");
-                $(e.currentTarget).addClass("torrentselect");
-                Torrent.view.detailsTorrent();
+                    $(".torrent").removeClass("torrentselect");
+                    $(e.currentTarget).addClass("torrentselect");
+                    Torrent.view.detailsTorrent();
+                    break;
             }
-        });
 
+        });
+        $('fieldset.torrent').dblclick(function(e){
+            e.preventDefault();
+            $("#btdetails").parent().children().removeClass('active');
+            $("#btdetails").addClass('active');
+            $("#panel2-1").parent().children().removeClass('active');
+            $("#panel2-1").addClass('active');
+
+        });
         if (Torrent.model.liste.length > Torrent.model.nbtorrents){
             var max = Torrent.model.cpt+1;
             if (max+Torrent.model.nbtorrents-1 < Torrent.model.liste.length)

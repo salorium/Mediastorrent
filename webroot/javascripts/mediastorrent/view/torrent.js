@@ -230,8 +230,8 @@ Torrent.view =  {
             $("#torrentdetailvdl").html((Base.model.converter.speed(Torrent.model.torrentselectionneedetail.detail[8]) != "" ? Base.model.converter.speed(Torrent.model.torrentselectionneedetail.detail[8]):"-"));
             $("#torrentdetailul").html((Base.model.converter.bytes(Torrent.model.torrentselectionneedetail.detail[5],2)!= ""? Base.model.converter.bytes(Torrent.model.torrentselectionneedetail.detail[5],2):"-" ));
             $("#torrentdetailvul").html((Base.model.converter.speed(Torrent.model.torrentselectionneedetail.detail[7]) != "" ? Base.model.converter.speed(Torrent.model.torrentselectionneedetail.detail[7]):"-"));
-            $("#torrentdetailsource").html((torrent[11]?torrent[11]:"0" )+" de "+(torrent[13]?torrent[13]:"0" )+" connecté(s)");
-            $("#torrentdetailclient").html((torrent[12]?torrent[12]:"0" )+" de "+(torrent[14]?torrent[14]:"0" )+" connecté(s)");
+            $("#torrentdetailsource").html((Torrent.model.torrentselectionneedetail.detail[11]?Torrent.model.torrentselectionneedetail.detail[11]:"0" )+" de "+(Torrent.model.torrentselectionneedetail.detail[13]?Torrent.model.torrentselectionneedetail.detail[13]:"0" )+" connecté(s)");
+            $("#torrentdetailclient").html((Torrent.model.torrentselectionneedetail.detail[10]?Torrent.model.torrentselectionneedetail.detail[10]:"0" )+" de "+(Torrent.model.torrentselectionneedetail.detail[12]?Torrent.model.torrentselectionneedetail.detail[12]:"0" )+" connecté(s)");
             $("#torrentdetailrejete").html(Base.model.converter.bytes(Torrent.model.torrentselectionneedetail.detail[17],2));
             $("#torrentdetailratio").html(Torrent.model.torrentselectionneedetail.detail[6]/1000);
         }else{
