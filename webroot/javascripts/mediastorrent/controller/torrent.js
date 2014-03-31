@@ -453,8 +453,27 @@ Torrent.controller =  {
             }
         });
     },
+    checkfileTorrent: function(){
+        var url = "http://"+Torrent.model.baseUrl+'/torrent/files/'+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion+"/"+Torrent.model.listeselectionnee[0];
 
-
+        $.ajax({
+            url: url+".json",
+            dataType: "json",
+            //contentType: "application/json",
+            success: function(response, textStatus, jqXHR){
+                if ( response.torrent[2] == Torrent.model.baseUrl){
+                    if (response.showdebugger == "ok"){
+                        Torrent.model.torrentselectionneedetail = response.torrentselectionnee;
+                        }else{
+                        Base.view.noty.generate("error","Impossible de se connecter à rtorrent");
+                        }
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                Base.view.noty.generate("error","Impossible de se connecter à "+Torrent.model.nomseedbox);
+            }
+        });
+    },
     torrentPeutEffectuerCommande : function(torrent,commande){
         var ret = true;
         var status = torrent[0];

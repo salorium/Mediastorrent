@@ -10,7 +10,7 @@ namespace controller;
 
 
 use core\Controller;
-use model\xmlrpc\rXMLRPCCommand;
+
 
 class Torrent extends Controller {
     function liste($login=null,$keyconnexion=null,$cid=null,$hashtorrentselectionne=null){
@@ -470,6 +470,45 @@ class Torrent extends Controller {
             "erreur"=> $erreur,
             "status"=>$status ,
             "post"=> $_REQUEST,
+            "seedbox"=> \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
+        ));
+    }
+    function files($login=null,$keyconnexion=null,$hashtorrentselectionne=null){
+        if (!is_null($login) && ! is_null($keyconnexion)){
+            $u = \core\Memcached::value($login,"user");
+            if ( is_null($u)){
+                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
+                if ( $u)
+                    \core\Memcached::value($u->login,"user",$u,60*5);
+            }else{
+                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
+                if ( is_bool($u)){
+                    $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
+                    if ( $u)
+                        \core\Memcached::value($u->login,"user",$u,60*5);
+                }
+                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
+            }
+            \config\Conf::$user["user"]= $u;
+        }
+        if ( !\config\Conf::$user["user"] ) throw new \Exception("Non User");
+        $cmds = array(
+            "f.get_path=", "f.get_completed_chunks=", "f.get_size_chunks=", "f.get_size_bytes=", "f.get_priority=","f.prioritize_first=","f.prioritize_last="
+        );
+        $cmd = new \model\xmlrpc\rXMLRPCCommand( 5001,"f.multicall", array( $hashtorrentselectionne, "" ) );
+
+        foreach($cmds as $prm){
+            $cmd->addParameter( \model\xmlrpc\rTorrentSettings::getCmd(5001,$prm) );
+
+        }
+        $req = new \model\xmlrpc\rXMLRPCRequest(5001,$cmd);
+        if($req->success())
+        {
+        }
+
+        $this->set(array(
+            "file"=>$req->val,
+            "torrentselectionnee"=>$hashtorrentselectionne,
             "seedbox"=> \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
         ));
     }
