@@ -499,15 +499,23 @@ class Torrent extends Controller {
 
         foreach($cmds as $prm){
             $cmd->addParameter( \model\xmlrpc\rTorrentSettings::getCmd(5001,$prm) );
-
         }
         $req = new \model\xmlrpc\rXMLRPCRequest(5001,$cmd);
-        if($req->success())
-        {
+        $files  = null;
+        if(!$req->success()){
+            trigger_error("Impossible de récupéré la liste des fichiers de ".$hashtorrentselectionne);
+            $files = $req->val;
+        }else{
+            $taille = count($req->val);
+            for($i=0;$i<$taille;$i+=7 ){
+                $files[]= array($req->val[$i],$req->val[$i+1],$req->val[$i+2],$req->val[$i+3],$req->val[$i+4],$req->val[$i+5],$req->val[$i+6]);
+            }
         }
 
+
         $this->set(array(
-            "file"=>$req->val,
+            "file"=>$files,
+            "host"=>$_SERVER["HTTP_HOST"],
             "torrentselectionnee"=>$hashtorrentselectionne,
             "seedbox"=> \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
         ));
