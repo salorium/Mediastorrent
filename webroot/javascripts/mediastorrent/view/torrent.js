@@ -241,6 +241,20 @@ Torrent.view =  {
 
         }
     },
+    filesTorrent:function(){
+        $("#torrentdetailsfiles").empty();
+        if ( Torrent.model.torrentselectionneedetail != null){
+            $.each( Torrent.model.torrentselectionneedetail.files, function(k,v){
+                $("#torrentdetailsfiles").append(
+                "<tr><td>"+Base.model.path.basename(v[0])+"</td><td>"+Base.model.converter.bytes(v[3],2)+"</td><td>"+Base.model.converter.bytes(v[3]*v[1]/v[2],2)+"</td><td><progress class='ul'  value="+v[1]+" max='"+v[2]+"'></progress></td><td></td></tr>"
+                );
+            });
+            Base.controller.tableScroll();
+            //panel2-2
+        }else{
+
+        }
+    },
     listeTorrents:function(){
         res ="";
         $.each( Torrent.model.liste, function(k,v){

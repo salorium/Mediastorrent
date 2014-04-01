@@ -9,6 +9,7 @@
 
 
 \core\LoaderJavascript::add("base","controller.fixeHeightContainer");
+\core\LoaderJavascript::add("base","controller.tableScroll");
 \core\LoaderJavascript::add("torrent","controller.init",$seedbox);
 ?>
 <nav class="top-bar" data-topbar>
@@ -86,7 +87,7 @@
             </div>
 
         </div>
-        <div class="large-7 columns panel heightfixed"><dl class="tabs" data-tab> <dd id="btdetails" class="active"><a href="#panel2-1">Détails</a></dd> <dd><a href="#panel2-2">Fichier</a></dd> <dd><a href="#panel2-3">Tracker</a></dd> <dd><a href="#panel2-4">Tab 4</a></dd> </dl> <div class="tabs-content">
+        <div id="moitiedroite" class="large-7 columns panel heightfixed"><dl class="tabs" data-tab> <dd id="btdetails" class="active"><a href="#panel2-1">Détails</a></dd> <dd><a href="#panel2-2">Fichier</a></dd> <dd><a href="#panel2-3">Tracker</a></dd> <dd><a href="#panel2-4">Tab 4</a></dd> </dl> <div class="tabs-content">
                 <div class="content active" id="panel2-1">
                     <fieldset>
                         <legend>Général</legend>
@@ -144,7 +145,58 @@
                     </fieldset>
 
                 </div>
-                <div class="content" id="panel2-2"> <p>Second panel content goes here...</p> </div> <div class="content" id="panel2-3"> <p>Third panel content goes here...</p> </div> <div class="content" id="panel2-4"> <p>Fourth panel content goes here...</p> </div> </div></div>
+                <div class="content" id="panel2-2">
+                <table class="scroll" style="width: 100%;">
+                    <thead ><tr><th>Nom</th><th>Taille</th><th>Reçus</th><th style='width: 150px;'>%</th><th>Priorité</th></tr></thead>
+                    <tbody id="torrentdetailsfiles">
+
+                    </tbody>
+                </table>
+                    <table style="width: 100%;">
+                        <thead ><tr><th>Nom</th><th>Taille</th><th>Reçus</th><th style='width: 150px;'>%</th><th>Priorité</th></tr></thead>
+                        <tbody id="torrentdetailsfiles">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="content" id="panel2-3">
+
+                    <style>
+                        #ministres thead {
+                            display:block;
+                        }
+                        #ministres tbody {
+                            display:block;
+                            height:5em; /* 5 times the equivalent of a text "size". */
+                            overflow-y:scroll;
+                        }
+
+                        #ministres thead tr th:nth-child(1) { /* column 1 ! */
+                            width:10px;
+                        }
+                        #ministres thead tr th:nth-child(2) { /* column 2 */
+                            width:50px;
+                        }
+                        #ministres tbody tr:first-child td:nth-child(1) { /* column 1 ! */
+                            width:10px;
+                        }
+                        #ministres tbody tr:first-child td:nth-child(2) { /* column 2 */
+                            width:50px;
+                        }
+                    </style>
+                    <table id="ministres">
+                        <thead>
+                        <tr><th>Nom</th><th>Ministère</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr><td>JM Ayrault</td><td>Premier</td></tr>
+                        <tr><td>L Fabius</td><td>A. Etrangères</td></tr>
+                        <tr><td>V Peillon</td><td>Education</td></tr>
+                        <tr><td>C Taubira</td><td>Justice</td></tr>
+                        <tr><td>P Moscovici</td><td>Economie</td></tr>
+                        <tr><td>M Valls</td><td>Intérieur</td></tr>
+                        </tbody>
+                    </table>
+                </div> <div class="content" id="panel2-4"> <p>Fourth panel content goes here...</p> </div> </div></div>
 </div>
 
 <div id="addTorrent" class="addTorrent">

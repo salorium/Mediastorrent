@@ -181,10 +181,34 @@ class Torrent extends Controller {
         $torrent = null;
             if ( !is_null($hashtorrentselectionne)){
                 $torrent["detail"]= $tor;
+                $cmds = array(
+                    "f.get_path=", "f.get_completed_chunks=", "f.get_size_chunks=", "f.get_size_bytes=", "f.get_priority=","f.prioritize_first=","f.prioritize_last="
+                );
+                $cmd = new \model\xmlrpc\rXMLRPCCommand( 5001,"f.multicall", array( $hashtorrentselectionne, "" ) );
+
+                foreach($cmds as $prm){
+                    $cmd->addParameter( \model\xmlrpc\rTorrentSettings::getCmd(5001,$prm) );
+                }
+                $req = new \model\xmlrpc\rXMLRPCRequest(5001,$cmd);
+                $files  = null;
+                $to = null;
+                if(!$req->success()){
+                    trigger_error("Impossible de récupéré la liste des fichiers de ".$hashtorrentselectionne);
+                    $files = $req->val;
+                }else{
+                    $taille = count($req->val);
+                    for($i=0;$i<$taille;$i+=7 ){
+                        $files[]= array($req->val[$i],$req->val[$i+1],$req->val[$i+2],$req->val[$i+3],$req->val[$i+4],$req->val[$i+5],$req->val[$i+6]);
+                    }
+                    $torrent["files"]= $files;
+                }
+
             }
+
         $this->set(array(
             "torrent"=>$t,
             "torrentselectionnee"=>$torrent,
+            "hashtorrent"=>$hashtorrentselectionne,
             "seedbox"=> \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
         ));
     }
@@ -469,11 +493,12 @@ class Torrent extends Controller {
             "torrent"=>$torrents,
             "erreur"=> $erreur,
             "status"=>$status ,
+
             "post"=> $_REQUEST,
             "seedbox"=> \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
         ));
     }
-    function files($login=null,$keyconnexion=null,$hashtorrentselectionne=null){
+    function details($login=null,$keyconnexion=null,$hashtorrentselectionne=null){
         if (!is_null($login) && ! is_null($keyconnexion)){
             $u = \core\Memcached::value($login,"user");
             if ( is_null($u)){
@@ -502,6 +527,7 @@ class Torrent extends Controller {
         }
         $req = new \model\xmlrpc\rXMLRPCRequest(5001,$cmd);
         $files  = null;
+        $to = null;
         if(!$req->success()){
             trigger_error("Impossible de récupéré la liste des fichiers de ".$hashtorrentselectionne);
             $files = $req->val;
@@ -510,13 +536,13 @@ class Torrent extends Controller {
             for($i=0;$i<$taille;$i+=7 ){
                 $files[]= array($req->val[$i],$req->val[$i+1],$req->val[$i+2],$req->val[$i+3],$req->val[$i+4],$req->val[$i+5],$req->val[$i+6]);
             }
+            $to["files"]= $files;
         }
 
-
         $this->set(array(
-            "file"=>$files,
+            "torrentselectionnee"=>$to,
             "host"=>$_SERVER["HTTP_HOST"],
-            "torrentselectionnee"=>$hashtorrentselectionne,
+            "hashtorrent"=>$hashtorrentselectionne,
             "seedbox"=> \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
         ));
     }

@@ -224,7 +224,12 @@ Base.model =  {
             }
             return t;
         }
+    },
+    path :{
+        basename : function(path){
+            var res = path.split("/");
+            return res[res.length-1];
+        }
     }
-
 
 };

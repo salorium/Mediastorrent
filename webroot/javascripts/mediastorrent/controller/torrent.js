@@ -12,6 +12,13 @@ Torrent.controller =  {
         Torrent.model.seedboxs = seedbox;
         Base.view.fixedHeight("#addTorrentContenu",$("#addTorrent").height()-Base.model.html.hauteur("#addTorrentTitle"));
         Base.view.fixedHeight("#addTorrentDetails",$("#addTorrentContenu").height()-$("#baseaddTorrent").height()-$("#divbouttonaddtorrent").height());
+        Base.view.fixedHeight("#panel2-1",$("#moitiedroite").height()-Base.model.html.hauteur("#moitiedroite > dl"));
+        Base.view.fixedHeight("#panel2-2",$("#moitiedroite").height()-Base.model.html.hauteur("#moitiedroite > dl"));
+        Base.view.fixedHeight("#panel2-3",$("#moitiedroite").height()-Base.model.html.hauteur("#moitiedroite > dl"));
+        Base.view.fixedHeight("#panel2-4",$("#moitiedroite").height()-Base.model.html.hauteur("#moitiedroite > dl"));
+        //Base.view.fixedHeight("#panel2-2 > table",$("#panel2-2").height());
+        console.log(Base.model.html.hauteur("#panel2-2 > table > thead"));
+        Base.view.fixedHeight("#torrentdetailsfiles",$("#panel2-2 > table").height()-Base.model.html.hauteur("#panel2-2 > thead"));
         Torrent.view.initSeedbox(0);
         Torrent.model.container.listtorrent = $("#listorrent");
         Torrent.model.container.listtorrent.empty();
@@ -424,8 +431,10 @@ Torrent.controller =  {
                         torrent = res[0];
                         Torrent.view.statsTorrent(res[3],res[4],res[5]);
                         Torrent.controller.conversionListe(torrent);
+                        if (Torrent.model.listeselectionnee.length == 1 && response.hashtorrent == Torrent.model.listeselectionnee[0])
                         Torrent.model.torrentselectionneedetail = response.torrentselectionnee;
                         Torrent.view.detailsTorrent();
+                        Torrent.view.filesTorrent();
                         //Torrent.view.listeTorrents(torrent);
                         setTimeout(function(){
                             Torrent.controller.update(res[1]);
@@ -453,8 +462,8 @@ Torrent.controller =  {
             }
         });
     },
-    checkfileTorrent: function(){
-        var url = "http://"+Torrent.model.baseUrl+'/torrent/files/'+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion+"/"+Torrent.model.listeselectionnee[0];
+    detailsTorrent: function(){
+        var url = "http://"+Torrent.model.baseUrl+'/torrent/details/'+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion+"/"+Torrent.model.listeselectionnee[0];
 
         $.ajax({
             url: url+".json",
@@ -463,7 +472,8 @@ Torrent.controller =  {
             success: function(response, textStatus, jqXHR){
                 if ( response.torrent[2] == Torrent.model.baseUrl){
                     if (response.showdebugger == "ok"){
-                        Torrent.model.torrentselectionneedetail = response.torrentselectionnee;
+                        if (Torrent.model.listeselectionnee.length == 1 && response.hashtorrent == Torrent.model.listeselectionnee[0])
+                            Torrent.model.torrentselectionneedetail = response.torrentselectionnee;
                         }else{
                         Base.view.noty.generate("error","Impossible de se connecter à rtorrent");
                         }
