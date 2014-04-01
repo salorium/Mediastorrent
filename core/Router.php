@@ -44,6 +44,6 @@ class  Router {
         self::$routesredir[$role][$redir] = $r;
     }
     static function url($url){
-      return $url;
+      return BASE_URL.$url;
     }
 }
