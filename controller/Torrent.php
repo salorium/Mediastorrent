@@ -155,11 +155,11 @@ class Torrent extends Controller {
                 }
             }
 
-            $cid = \model\simple\String::random(5);
-            if (!(\core\Memcached::value("torrentlist"."5001",$cid,$data,60*5)))
+            $ncid = \model\simple\String::random(5);
+            if (!(\core\Memcached::value("torrentlist"."5001",$ncid,$data,60*5)))
                 trigger_error("Impossible de mettre des données dans le cache");
             $t[]= $tmp;
-            $t[]= $cid;
+            $t[]= $ncid;
             $t[]= $_SERVER["HTTP_HOST"];
             $path = ROOT;
             $t[]= disk_total_space($path)-disk_free_space($path);
@@ -180,7 +180,21 @@ class Torrent extends Controller {
         if(is_null($t)) trigger_error("Impossible de se connecter à rtorrent :(");
         $torrent = null;
             if ( !is_null($hashtorrentselectionne)){
-                $torrent["detail"]= $tor;
+                $tmp = $tor;
+                $data = $tmp;
+                if (!is_null($cid)){
+                    if ($anc = \core\Memcached::value("detaillist5001",sha1($cid.$hashtorrentselectionne))){
+                        foreach ($anc as $k=>$v){
+                            if (isset($tmp[$k]) && $tmp[$k] == $v){
+                                  unset($tmp[$k]);
+                            }
+                         }
+                    }
+                }
+
+                if (!(\core\Memcached::value("detaillist5001",sha1($ncid.$hashtorrentselectionne),$data,60*5)))
+                    trigger_error("Impossible de mettre des données dans le cache");
+                $torrent["detail"]= $tmp;
                 $cmds = array(
                     "f.get_path=", "f.get_completed_chunks=", "f.get_size_chunks=", "f.get_size_bytes=", "f.get_priority=","f.prioritize_first=","f.prioritize_last="
                 );
@@ -197,10 +211,32 @@ class Torrent extends Controller {
                     $files = $req->val;
                 }else{
                     $taille = count($req->val);
+                    $j=0;
                     for($i=0;$i<$taille;$i+=7 ){
-                        $files[]= array($req->val[$i],$req->val[$i+1],$req->val[$i+2],$req->val[$i+3],$req->val[$i+4],$req->val[$i+5],$req->val[$i+6]);
+                        $files[]= array($j,$req->val[$i],$req->val[$i+1],$req->val[$i+2],$req->val[$i+3],$req->val[$i+4],$req->val[$i+5],$req->val[$i+6]);
+                        $j++;
                     }
-                    $torrent["files"]= $files;
+                    $tmp = $files;
+                    $data = $tmp;
+                    if (!is_null($cid)){
+                        if ($anc = \core\Memcached::value("fileslist5001",sha1($cid.$hashtorrentselectionne))){
+                            foreach ($anc as $k=>$v){
+                                if (!isset($tmp[$k]))
+                                    $tmp[$k]=false;
+                                foreach($v as $kk=>$vv){
+                                    if (isset($tmp[$k][$kk]) && $tmp[$k][$kk] == $vv){
+                                        unset($tmp[$k][$kk]);
+                                    }
+                                }
+                                if (count($tmp[$k]) ==0)
+                                    unset($tmp[$k]);
+                            }
+                        }
+                    }
+
+                    if (!(\core\Memcached::value("fileslist5001",sha1($ncid.$hashtorrentselectionne),$data,60*5)))
+                        trigger_error("Impossible de mettre des données dans le cache");
+                    $torrent["files"]= $tmp;
                 }
 
             }
@@ -533,8 +569,10 @@ class Torrent extends Controller {
             $files = $req->val;
         }else{
             $taille = count($req->val);
+            $j=0;
             for($i=0;$i<$taille;$i+=7 ){
-                $files[]= array($req->val[$i],$req->val[$i+1],$req->val[$i+2],$req->val[$i+3],$req->val[$i+4],$req->val[$i+5],$req->val[$i+6]);
+                $files[]= array($j,$req->val[$i],$req->val[$i+1],$req->val[$i+2],$req->val[$i+3],$req->val[$i+4],$req->val[$i+5],$req->val[$i+6]);
+                $j++;
             }
             $to["files"]= $files;
         }

@@ -146,10 +146,10 @@
             <li class="has-form">
                 <div class="row collapse">
                     <div class="large-8 small-9 columns">
-                        <input placeholder="Recherche" type="text">
+                        <input id="recherche" placeholder="Recherche" type="text">
                     </div>
                     <div class="large-4 small-3 columns">
-                        <a href="#" class="alert button expand"><img width="18px" src="<?=BASE_URL?>images/search.svg?color=rgba(240,240,240,1)"></a>
+                        <a href="#" id="recherchesubmit" class="alert button expand"><img width="18px" src="<?=BASE_URL?>images/search.svg?color=rgba(240,240,240,1)"></a>
                     </div>
                 </div>
             </li>

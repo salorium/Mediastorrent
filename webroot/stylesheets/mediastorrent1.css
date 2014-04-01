@@ -10522,6 +10522,11 @@ iframe.perso {
   display: none;
 }
 
+/* line 804, ../scss/mediastorrent1.scss */
+table tbody tr.active {
+  background-color: rgba(0, 155, 0, 0.2);
+}
+
                        /*table.scroll{
 thead, tbody { display: block;width: 100%; }
 tbody{

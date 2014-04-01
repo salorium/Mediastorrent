@@ -3,20 +3,15 @@
  */
 Base.controller =  {
     tableScroll: function(){
-        var $tables = $("table.scroll");
-        $.each( $tables, function(k,v){
-            $bodyCells = $(v).find('tbody tr:first').children();
-            colWidth = $bodyCells.map(function() {
-                return $(this).width();
-            }).get();
-            $(v).find('thead tr').children().each(function(i, vv) {
-                //console.log($(vv).css("width"));
-                //if(Base.model.converter.iv($(vv).css("width")) < colWidth[i])
-                $(vv).width(colWidth[i]);
-            });
-
-        });
-        console.log($tables);
+        Array.prototype.clone = function() {
+            var newArray = (this instanceof Array) ? [] : {};
+            for (i in this) {
+                if (i == 'clone') continue;
+                if (this[i] && typeof this[i] == "object") {
+                    newArray[i] = this[i].clone();
+                } else newArray[i] = this[i]
+            } return newArray;
+        }
     },
     setUtilisateur : function(args){
         Base.model.utilisateur.login = args[0];

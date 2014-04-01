@@ -12,6 +12,9 @@
 \core\LoaderJavascript::add("base","controller.tableScroll");
 \core\LoaderJavascript::add("torrent","controller.init",$seedbox);
 ?>
+<script>
+    document.oncontextmenu = new Function("return false");
+</script>
 <nav class="top-bar" data-topbar>
     <!-- Title -->
     <ul class="title-area">
@@ -277,3 +280,5 @@
     </form>
     </div>
 </div>
+
+<div id="cliquedroit" style="background-color: darkslategray;width: 150px;display: none;"></div>
