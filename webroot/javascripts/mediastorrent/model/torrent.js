@@ -19,6 +19,11 @@ Torrent.model =  {
         listtorrent : null
 
     },
+    downloadFileTorrent: function(hash,no){
+        var url = "http://"+Torrent.model.baseUrl+'/torrent/download/'+hash+"/"+no+"/"+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion;
+
+        return url;
+    },
     nbtorrents:0,
     updated : true
 };

@@ -224,6 +224,7 @@ Torrent.controller =  {
         );
 
     },
+
     reloadSeedbox: function(id){
         Torrent.view.initSeedbox(id);
         Torrent.model.changedurl = true;
@@ -463,7 +464,7 @@ Torrent.controller =  {
         });
     },
     detailsTorrent: function(){
-        var url = "http://"+Torrent.model.baseUrl+'/torrent/details/'+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion+"/"+Torrent.model.listeselectionnee[0];
+        var url = "http://"+Torrent.model.baseUrl+'/torrent/details/'+Torrent.model.listeselectionnee[0]+"/"+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion;
 
         $.ajax({
             url: url+".json",
@@ -483,6 +484,11 @@ Torrent.controller =  {
                 Base.view.noty.generate("error","Impossible de se connecter à "+Torrent.model.nomseedbox);
             }
         });
+    },
+    downloadFileTorrent: function(hash,no){
+        var url = "http://"+Torrent.model.baseUrl+'/torrent/download/'+hash+"/"+no+"/"+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion;
+        $("#getdata").attr("action",url).submit();
+        //window.open(url,"_blank", null);
     },
     torrentPeutEffectuerCommande : function(torrent,commande){
         var ret = true;

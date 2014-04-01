@@ -498,7 +498,7 @@ class Torrent extends Controller {
             "seedbox"=> \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
         ));
     }
-    function details($login=null,$keyconnexion=null,$hashtorrentselectionne=null){
+    function details($hashtorrentselectionne,$login=null,$keyconnexion=null){
         if (!is_null($login) && ! is_null($keyconnexion)){
             $u = \core\Memcached::value($login,"user");
             if ( is_null($u)){
@@ -545,6 +545,43 @@ class Torrent extends Controller {
             "hashtorrent"=>$hashtorrentselectionne,
             "seedbox"=> \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
         ));
+    }
+    function download($hashtorrentselectionne,$nofile,$login=null,$keyconnexion=null){
+        if (!is_null($login) && ! is_null($keyconnexion)){
+            $u = \core\Memcached::value($login,"user");
+            if ( is_null($u)){
+                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
+                if ( $u)
+                    \core\Memcached::value($u->login,"user",$u,60*5);
+            }else{
+                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
+                if ( is_bool($u)){
+                    $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
+                    if ( $u)
+                        \core\Memcached::value($u->login,"user",$u,60*5);
+                }
+                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
+            }
+            \config\Conf::$user["user"]= $u;
+        }
+        if ( !\config\Conf::$user["user"] ) throw new \Exception("Non User");
+        $req = new \model\xmlrpc\rXMLRPCRequest(5001,
+            new \model\xmlrpc\rXMLRPCCommand(5001, "f.get_frozen_path", array($hashtorrentselectionne,intval($nofile))) );
+        if($req->success())
+        {
+            $filename = $req->val[0];
+            if($filename=='')
+            {
+                $req = new rXMLRPCRequest( array(
+                    new rXMLRPCCommand( "d.open", $hashtorrentselectionne ),
+                    new rXMLRPCCommand( "f.get_frozen_path", array($hashtorrentselectionne,intval($nofile)) ),
+                    new rXMLRPCCommand( "d.close", $hashtorrentselectionne ) ) );
+                if($req->success())
+                    $filename = $req->val[1];
+            }
+            \model\simple\Download::sendFile($filename);
+        }
+        throw new \Exception("FILE NOT FOUND");
     }
     function add(){
         $theSettings = \model\xmlrpc\rTorrentSettings::get(5001,true);

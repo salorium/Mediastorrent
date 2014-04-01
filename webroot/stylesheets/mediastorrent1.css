@@ -6531,7 +6531,7 @@ dialog[open] {
   -webkit-border-radius: 3px;
   border-radius: 3px;
   font-weight: normal;
-  background: #333333;
+  background: #ff1300;
   padding: 0.1875rem 1rem;
   cursor: default;
   color: white;
@@ -6540,7 +6540,7 @@ dialog[open] {
 .sub-nav dt.active a:hover,
 .sub-nav dd.active a:hover,
 .sub-nav li.active a:hover {
-  background: #2c2c2c;
+  background: #db1000;
 }
 
 /* line 293, ../bower_components/foundation/scss/foundation/components/_switch.scss */
@@ -6787,7 +6787,7 @@ table {
 /* line 55, ../bower_components/foundation/scss/foundation/components/_tables.scss */
 table thead,
 table tfoot {
-  background: whitesmoke;
+  background: #999999;
 }
 /* line 60, ../bower_components/foundation/scss/foundation/components/_tables.scss */
 table thead tr th,
@@ -6797,7 +6797,7 @@ table tfoot tr td {
   padding: 0.5rem 0.625rem 0.625rem;
   font-size: 0.875rem;
   font-weight: bold;
-  color: #222222;
+  color: white;
   text-align: left;
 }
 /* line 72, ../bower_components/foundation/scss/foundation/components/_tables.scss */
@@ -6809,7 +6809,7 @@ table tr td {
 }
 /* line 80, ../bower_components/foundation/scss/foundation/components/_tables.scss */
 table tr.even, table tr.alt, table tr:nth-of-type(even) {
-  background: #f9f9f9;
+  background: #e6e6e6;
 }
 /* line 87, ../bower_components/foundation/scss/foundation/components/_tables.scss */
 table thead tr th,
@@ -6856,7 +6856,7 @@ table tfoot tr td {
 }
 /* line 45, ../bower_components/foundation/scss/foundation/components/_tabs.scss */
 .tabs dd.active a {
-  background: #333333;
+  background: #ff1300;
 }
 /* line 49, ../bower_components/foundation/scss/foundation/components/_tabs.scss */
 .tabs.radius dd:first-child a {
@@ -7326,7 +7326,7 @@ meta.foundation-mq-topbar {
 }
 /* line 352, ../bower_components/foundation/scss/foundation/components/_top-bar.scss */
 .top-bar-section ul li:hover:not(.has-form) > a {
-  background: #272727;
+  background: #ff1300;
   color: white;
 }
 /* line 359, ../bower_components/foundation/scss/foundation/components/_top-bar.scss */
@@ -7511,7 +7511,7 @@ meta.foundation-mq-topbar {
   }
   /* line 490, ../bower_components/foundation/scss/foundation/components/_top-bar.scss */
   .top-bar-section li.hover > a:not(.button) {
-    background: #272727;
+    background: #ff1300;
     color: white;
   }
   /* line 496, ../bower_components/foundation/scss/foundation/components/_top-bar.scss */
@@ -7522,7 +7522,7 @@ meta.foundation-mq-topbar {
   }
   /* line 500, ../bower_components/foundation/scss/foundation/components/_top-bar.scss */
   .top-bar-section li:not(.has-form) a:not(.button):hover {
-    background: #272727;
+    background: #ff1300;
   }
   /* line 504, ../bower_components/foundation/scss/foundation/components/_top-bar.scss */
   .top-bar-section li.active:not(.has-form) a:not(.button) {
@@ -7644,7 +7644,7 @@ meta.foundation-mq-topbar {
 
   /* line 624, ../bower_components/foundation/scss/foundation/components/_top-bar.scss */
   .no-js .top-bar-section ul li:hover > a {
-    background: #272727;
+    background: #ff1300;
     color: white;
   }
   /* line 630, ../bower_components/foundation/scss/foundation/components/_top-bar.scss */
@@ -10012,6 +10012,11 @@ dl {
 }
 
 /* line 365, ../scss/mediastorrent1.scss */
+table.noneventrowbg tr {
+  background: none;
+}
+
+/* line 374, ../scss/mediastorrent1.scss */
 fieldset.torrent {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -10023,18 +10028,18 @@ fieldset.torrent {
   margin: 0;
   padding-top: 0px;
 }
-/* line 366, ../scss/mediastorrent1.scss */
+/* line 375, ../scss/mediastorrent1.scss */
 fieldset.torrent table {
   border: none;
   margin-bottom: 0px;
   background: none;
 }
-/* line 371, ../scss/mediastorrent1.scss */
+/* line 380, ../scss/mediastorrent1.scss */
 fieldset.torrent table tr {
   background: none;
   height: 13px;
 }
-/* line 374, ../scss/mediastorrent1.scss */
+/* line 383, ../scss/mediastorrent1.scss */
 fieldset.torrent table tr td {
   border: none;
   padding: 0;
@@ -10042,18 +10047,18 @@ fieldset.torrent table tr td {
   background: none;
 }
 
-/* line 394, ../scss/mediastorrent1.scss */
+/* line 403, ../scss/mediastorrent1.scss */
 fieldset.torrentselect {
   background-color: rgba(0, 155, 0, 0.2);
 }
 
-/* line 398, ../scss/mediastorrent1.scss */
+/* line 407, ../scss/mediastorrent1.scss */
 .heightfixed {
   height: 100%;
   margin: 0px;
 }
 
-/* line 403, ../scss/mediastorrent1.scss */
+/* line 412, ../scss/mediastorrent1.scss */
 span.bt {
   display: block;
   text-align: center;
@@ -10070,7 +10075,7 @@ span.bt {
  *
  * Designed and built with all the love in the world @twitter by @mdo and @fat.
  */
-/* line 419, ../scss/mediastorrent1.scss */
+/* line 428, ../scss/mediastorrent1.scss */
 .btn {
   display: inline-block;
   *display: inline;
@@ -10108,7 +10113,7 @@ span.bt {
   *margin-left: .3em;
 }
 
-/* line 460, ../scss/mediastorrent1.scss */
+/* line 469, ../scss/mediastorrent1.scss */
 .btn:hover,
 .btn:active,
 .btn.active,
@@ -10117,18 +10122,18 @@ span.bt {
   background-color: #e6e6e6;
 }
 
-/* line 464, ../scss/mediastorrent1.scss */
+/* line 473, ../scss/mediastorrent1.scss */
 .btn:active,
 .btn.active {
   background-color: #cccccc \9;
 }
 
-/* line 467, ../scss/mediastorrent1.scss */
+/* line 476, ../scss/mediastorrent1.scss */
 .btn:first-child {
   *margin-left: 0;
 }
 
-/* line 470, ../scss/mediastorrent1.scss */
+/* line 479, ../scss/mediastorrent1.scss */
 .btn:hover {
   color: #333333;
   text-decoration: none;
@@ -10141,14 +10146,14 @@ span.bt {
   transition: background-position 0.1s linear;
 }
 
-/* line 481, ../scss/mediastorrent1.scss */
+/* line 490, ../scss/mediastorrent1.scss */
 .btn:focus {
   outline: thin dotted #333;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
 
-/* line 487, ../scss/mediastorrent1.scss */
+/* line 496, ../scss/mediastorrent1.scss */
 .btn.active,
 .btn:active {
   background-image: none;
@@ -10160,7 +10165,7 @@ span.bt {
   outline: 0;
 }
 
-/* line 497, ../scss/mediastorrent1.scss */
+/* line 506, ../scss/mediastorrent1.scss */
 .btn.disabled,
 .btn[disabled] {
   cursor: default;
@@ -10173,7 +10178,7 @@ span.bt {
   box-shadow: none;
 }
 
-/* line 507, ../scss/mediastorrent1.scss */
+/* line 516, ../scss/mediastorrent1.scss */
 .btn-large {
   padding: 9px 14px;
   font-size: 15px;
@@ -10183,31 +10188,31 @@ span.bt {
   border-radius: 5px;
 }
 
-/* line 515, ../scss/mediastorrent1.scss */
+/* line 524, ../scss/mediastorrent1.scss */
 .btn-large [class^="icon-"] {
   margin-top: 1px;
 }
 
-/* line 518, ../scss/mediastorrent1.scss */
+/* line 527, ../scss/mediastorrent1.scss */
 .btn-small {
   padding: 5px 9px;
   font-size: 11px;
   line-height: 16px;
 }
 
-/* line 523, ../scss/mediastorrent1.scss */
+/* line 532, ../scss/mediastorrent1.scss */
 .btn-small [class^="icon-"] {
   margin-top: -1px;
 }
 
-/* line 526, ../scss/mediastorrent1.scss */
+/* line 535, ../scss/mediastorrent1.scss */
 .btn-mini {
   padding: 2px 6px;
   font-size: 11px;
   line-height: 14px;
 }
 
-/* line 542, ../scss/mediastorrent1.scss */
+/* line 551, ../scss/mediastorrent1.scss */
 .btn-primary,
 .btn-primary:hover,
 .btn-warning,
@@ -10224,7 +10229,7 @@ span.bt {
   color: #ffffff;
 }
 
-/* line 551, ../scss/mediastorrent1.scss */
+/* line 560, ../scss/mediastorrent1.scss */
 .btn-primary.active,
 .btn-warning.active,
 .btn-danger.active,
@@ -10234,7 +10239,7 @@ span.bt {
   color: rgba(255, 255, 255, 0.75);
 }
 
-/* line 554, ../scss/mediastorrent1.scss */
+/* line 563, ../scss/mediastorrent1.scss */
 .btn-primary {
   background-color: #0074cc;
   background-image: -moz-linear-gradient(top, #0088cc, #0055cc);
@@ -10250,7 +10255,7 @@ span.bt {
   filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 
-/* line 572, ../scss/mediastorrent1.scss */
+/* line 581, ../scss/mediastorrent1.scss */
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary.active,
@@ -10259,13 +10264,13 @@ span.bt {
   background-color: #0055cc;
 }
 
-/* line 576, ../scss/mediastorrent1.scss */
+/* line 585, ../scss/mediastorrent1.scss */
 .btn-primary:active,
 .btn-primary.active {
   background-color: #004099 \9;
 }
 
-/* line 579, ../scss/mediastorrent1.scss */
+/* line 588, ../scss/mediastorrent1.scss */
 .btn-warning {
   background-color: #faa732;
   background-image: -moz-linear-gradient(top, #fbb450, #f89406);
@@ -10281,7 +10286,7 @@ span.bt {
   filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 
-/* line 597, ../scss/mediastorrent1.scss */
+/* line 606, ../scss/mediastorrent1.scss */
 .btn-warning:hover,
 .btn-warning:active,
 .btn-warning.active,
@@ -10290,13 +10295,13 @@ span.bt {
   background-color: #f89406;
 }
 
-/* line 601, ../scss/mediastorrent1.scss */
+/* line 610, ../scss/mediastorrent1.scss */
 .btn-warning:active,
 .btn-warning.active {
   background-color: #c67605 \9;
 }
 
-/* line 604, ../scss/mediastorrent1.scss */
+/* line 613, ../scss/mediastorrent1.scss */
 .btn-danger {
   background-color: #da4f49;
   background-image: -moz-linear-gradient(top, #ee5f5b, #bd362f);
@@ -10312,7 +10317,7 @@ span.bt {
   filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 
-/* line 622, ../scss/mediastorrent1.scss */
+/* line 631, ../scss/mediastorrent1.scss */
 .btn-danger:hover,
 .btn-danger:active,
 .btn-danger.active,
@@ -10321,13 +10326,13 @@ span.bt {
   background-color: #bd362f;
 }
 
-/* line 626, ../scss/mediastorrent1.scss */
+/* line 635, ../scss/mediastorrent1.scss */
 .btn-danger:active,
 .btn-danger.active {
   background-color: #942a25 \9;
 }
 
-/* line 629, ../scss/mediastorrent1.scss */
+/* line 638, ../scss/mediastorrent1.scss */
 .btn-success {
   background-color: #5bb75b;
   background-image: -moz-linear-gradient(top, #62c462, #51a351);
@@ -10343,7 +10348,7 @@ span.bt {
   filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 
-/* line 647, ../scss/mediastorrent1.scss */
+/* line 656, ../scss/mediastorrent1.scss */
 .btn-success:hover,
 .btn-success:active,
 .btn-success.active,
@@ -10352,13 +10357,13 @@ span.bt {
   background-color: #51a351;
 }
 
-/* line 651, ../scss/mediastorrent1.scss */
+/* line 660, ../scss/mediastorrent1.scss */
 .btn-success:active,
 .btn-success.active {
   background-color: #408140 \9;
 }
 
-/* line 654, ../scss/mediastorrent1.scss */
+/* line 663, ../scss/mediastorrent1.scss */
 .btn-info {
   background-color: #49afcd;
   background-image: -moz-linear-gradient(top, #5bc0de, #2f96b4);
@@ -10374,7 +10379,7 @@ span.bt {
   filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 
-/* line 672, ../scss/mediastorrent1.scss */
+/* line 681, ../scss/mediastorrent1.scss */
 .btn-info:hover,
 .btn-info:active,
 .btn-info.active,
@@ -10383,13 +10388,13 @@ span.bt {
   background-color: #2f96b4;
 }
 
-/* line 676, ../scss/mediastorrent1.scss */
+/* line 685, ../scss/mediastorrent1.scss */
 .btn-info:active,
 .btn-info.active {
   background-color: #24748c \9;
 }
 
-/* line 679, ../scss/mediastorrent1.scss */
+/* line 688, ../scss/mediastorrent1.scss */
 .btn-inverse {
   background-color: #414141;
   background-image: -moz-linear-gradient(top, #555555, #222222);
@@ -10405,7 +10410,7 @@ span.bt {
   filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 
-/* line 697, ../scss/mediastorrent1.scss */
+/* line 706, ../scss/mediastorrent1.scss */
 .btn-inverse:hover,
 .btn-inverse:active,
 .btn-inverse.active,
@@ -10414,48 +10419,48 @@ span.bt {
   background-color: #222222;
 }
 
-/* line 701, ../scss/mediastorrent1.scss */
+/* line 710, ../scss/mediastorrent1.scss */
 .btn-inverse:active,
 .btn-inverse.active {
   background-color: #080808 \9;
 }
 
-/* line 705, ../scss/mediastorrent1.scss */
+/* line 714, ../scss/mediastorrent1.scss */
 button.btn,
 input[type="submit"].btn {
   *padding-top: 2px;
   *padding-bottom: 2px;
 }
 
-/* line 710, ../scss/mediastorrent1.scss */
+/* line 719, ../scss/mediastorrent1.scss */
 button.btn::-moz-focus-inner,
 input[type="submit"].btn::-moz-focus-inner {
   padding: 0;
   border: 0;
 }
 
-/* line 715, ../scss/mediastorrent1.scss */
+/* line 724, ../scss/mediastorrent1.scss */
 button.btn.btn-large,
 input[type="submit"].btn.btn-large {
   *padding-top: 7px;
   *padding-bottom: 7px;
 }
 
-/* line 720, ../scss/mediastorrent1.scss */
+/* line 729, ../scss/mediastorrent1.scss */
 button.btn.btn-small,
 input[type="submit"].btn.btn-small {
   *padding-top: 3px;
   *padding-bottom: 3px;
 }
 
-/* line 725, ../scss/mediastorrent1.scss */
+/* line 734, ../scss/mediastorrent1.scss */
 button.btn.btn-mini,
 input[type="submit"].btn.btn-mini {
   *padding-top: 1px;
   *padding-bottom: 1px;
 }
 
-/* line 730, ../scss/mediastorrent1.scss */
+/* line 739, ../scss/mediastorrent1.scss */
 .addTorrent {
   background-color: #f2f2f2;
   position: absolute;
@@ -10466,14 +10471,14 @@ input[type="submit"].btn.btn-mini {
   border: solid 1px;
   border-color: #d8d8d8;
 }
-/* line 741, ../scss/mediastorrent1.scss */
+/* line 750, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentTitle {
   background-color: #999999;
   height: 45px;
   color: white;
   text-align: center;
 }
-/* line 747, ../scss/mediastorrent1.scss */
+/* line 756, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentTitle a {
   color: inherit;
   font-family: "Comic Sans MS", sans-serif;
@@ -10481,7 +10486,7 @@ input[type="submit"].btn.btn-mini {
   line-height: 45px;
   cursor: default;
 }
-/* line 756, ../scss/mediastorrent1.scss */
+/* line 765, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentTitle .close {
   cursor: pointer;
   float: right;
@@ -10489,7 +10494,7 @@ input[type="submit"].btn.btn-mini {
   margin-right: 10px;
   font-size: 20px;
 }
-/* line 770, ../scss/mediastorrent1.scss */
+/* line 779, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentDetails {
   height: 100px;
   padding: 15px;
@@ -10497,7 +10502,7 @@ input[type="submit"].btn.btn-mini {
   overflow-x: hidden;
 }
 
-/* line 779, ../scss/mediastorrent1.scss */
+/* line 788, ../scss/mediastorrent1.scss */
 input[type="file"] {
   font-family: inherit;
   color: rgba(0, 0, 0, 0.75);
@@ -10507,27 +10512,24 @@ input[type="file"] {
   padding: 0.5rem;
 }
 
-/* line 787, ../scss/mediastorrent1.scss */
+/* line 796, ../scss/mediastorrent1.scss */
 .expansion {
   max-width: none;
 }
 
-/* line 791, ../scss/mediastorrent1.scss */
+/* line 800, ../scss/mediastorrent1.scss */
 iframe.perso {
   display: none;
 }
 
-/* line 796, ../scss/mediastorrent1.scss */
-table.scroll thead, table.scroll tbody {
-  display: block;
-  width: 100%;
-}
-/* line 797, ../scss/mediastorrent1.scss */
-table.scroll tbody {
-  height: 100px;
-  /* Just for the demo          */
-  overflow-y: auto;
-  /* Trigger vertical scroll    */
-  overflow-x: hidden;
-  /* Hide the horizontal scroll */
-}
+                       /*table.scroll{
+thead, tbody { display: block;width: 100%; }
+tbody{
+  tr td{
+    //white-space: nowrap;
+  }
+  height: 100px;       /* Just for the demo          */
+/* overflow-y: auto;    /* Trigger vertical scroll    */
+/* overflow-x: hidden;  /* Hide the horizontal scroll */
+ /* }
+}*/

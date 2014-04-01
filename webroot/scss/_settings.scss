@@ -834,7 +834,7 @@ $legend-bg: transparent;
 // We use these to control the active item styles
 
 // $sub-nav-active-font-weight: normal;
-// $sub-nav-active-bg: $primary-color;
+ $sub-nav-active-bg: $secondary-color;
 // $sub-nav-active-bg-hover: darken($sub-nav-active-bg, 5%);
 // $sub-nav-active-color: #fff;
 // $sub-nav-active-padding: rem-calc(3 16);
@@ -848,8 +848,8 @@ $legend-bg: transparent;
 // $include-html-table-classes: $include-html-classes;
 
 // These control the background color for the table and even rows
-// $table-bg: #fff;
-// $table-even-row-bg: #f9f9f9  ;
+ $table-bg: #fff;
+ $table-even-row-bg: darken($table-bg,10) ;
 
 // These control the table cell border style
 // $table-border-style: solid;
@@ -857,9 +857,9 @@ $legend-bg: transparent;
 // $table-border-color: #ddd;
 
 // These control the table head styles
-// $table-head-bg: #f5f5f5  ;
+ $table-head-bg: #999  ;
 // $table-head-font-size: rem-calc(14);
-// $table-head-font-color: #222;
+ $table-head-font-color: #FFF;
 // $table-head-font-weight: bold;
 // $table-head-padding: rem-calc(8 10 10);
 
@@ -882,7 +882,7 @@ $legend-bg: transparent;
 // $tabs-navigation-padding: rem-calc(16);
  $tabs-navigation-bg-color: #999  ;
 // $tabs-navigation-hover-bg-color: darken($tabs-navigation-bg-color, 5%);
-$tabs-navigation-active-bg-color:$primary-color;
+$tabs-navigation-active-bg-color:$secondary-color;
  $tabs-navigation-font-color: $secondary-font-color;
  //$tabs-navigation-font-size: rem-calc(1);
 // $tabs-navigation-font-family: $body-font-family;
@@ -959,7 +959,7 @@ $tabs-navigation-active-bg-color:$primary-color;
 // Style the top bar dropdown elements
 // $topbar-dropdown-bg: #333;
 // $topbar-dropdown-link-color: #fff;
-// $topbar-dropdown-link-bg: #333;
+// $topbar-dropdown-link-bg: $secondary-color;
 // $topbar-dropdown-toggle-size: 5px;
 // $topbar-dropdown-toggle-color: #fff;
 // $topbar-dropdown-toggle-alpha: 0.4;
@@ -971,8 +971,8 @@ $tabs-navigation-active-bg-color:$primary-color;
 // $topbar-link-weight: normal;
 // $topbar-link-font-size: rem-calc(13);
 // $topbar-link-hover-lightness: -10%; // Darken by 10%
-// $topbar-link-bg-hover: #272727  ;
-// $topbar-link-bg-active: $primary-color;
+ $topbar-link-bg-hover: $secondary-color ;
+// $topbar-link-bg-active: $secondary-color;
 // $topbar-link-bg-active-hover: darken($primary-color, 5%);
 // $topbar-link-font-family: $body-font-family;
 

@@ -244,9 +244,10 @@ Torrent.view =  {
     filesTorrent:function(){
         $("#torrentdetailsfiles").empty();
         if ( Torrent.model.torrentselectionneedetail != null){
+            if (Torrent.model.torrentselectionneedetail.files)
             $.each( Torrent.model.torrentselectionneedetail.files, function(k,v){
                 $("#torrentdetailsfiles").append(
-                "<tr><td>"+Base.model.path.basename(v[0])+"</td><td>"+Base.model.converter.bytes(v[3],2)+"</td><td>"+Base.model.converter.bytes(v[3]*v[1]/v[2],2)+"</td><td><progress class='ul'  value="+v[1]+" max='"+v[2]+"'></progress></td><td></td></tr>"
+                '<tr style="cursor: pointer;" ondblclick="Torrent.controller.downloadFileTorrent(\''+Torrent.model.listeselectionnee[0]+'\',\''+k+'\');"><td>'+Base.model.path.basename(v[0])+'</td><td>'+Base.model.converter.bytes(v[3],2)+'</td><td>'+Base.model.converter.bytes(v[3]*v[1]/v[2],2)+'</td><td><progress class="'+(v[1]==v[2] ? "ul":"dl")+'"  value="'+v[1]+'" max="'+v[2]+'" title="'+(v[1] != 0 ?v[1]/v[2]*100:0)+'%"></progress></td><td>OK</td></tr>'
                 );
             });
             Base.controller.tableScroll();

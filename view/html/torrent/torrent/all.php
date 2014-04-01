@@ -91,7 +91,7 @@
                 <div class="content active" id="panel2-1">
                     <fieldset>
                         <legend>Général</legend>
-                        <table style="width: 100%;border: none;">
+                        <table class="noneventrowbg" style="width: 100%;border: none;">
                         <tr>
                             <td>Nom:</td>
                             <td id="torrentdetailnom"></td>
@@ -112,7 +112,7 @@
                     </fieldset>
                     <fieldset>
                         <legend>Transfert</legend>
-                        <table style="width: 100%;border: none;">
+                        <table class="noneventrowbg" style="width: 100%;border: none;">
                             <tr>
                                 <td>Temps écoulé:</td>
                                 <td id="torrentdetailtempsecoule"></td>
@@ -145,18 +145,23 @@
                     </fieldset>
 
                 </div>
-                <div class="content" id="panel2-2">
-                <table class="scroll" style="width: 100%;">
-                    <thead ><tr><th>Nom</th><th>Taille</th><th>Reçus</th><th style='width: 150px;'>%</th><th>Priorité</th></tr></thead>
+                <div class="content" id="panel2-2" >
+                <!--<table class="scroll">
+                    <thead style="width: inherit;"><tr><th style='width: 60%;'>Nom</th><th style='width: 20%;'>Taille</th><th style='width: 20%;'>Reçus</th><th style='width: 20%;'>%</th><th style='width: 20%;'>Priorité</th></tr></thead>
                     <tbody id="torrentdetailsfiles">
 
                     </tbody>
-                </table>
+                </table>-->
+                    <div style="overflow-y: auto;position: relative;height: inherit;">
                     <table style="width: 100%;">
-                        <thead ><tr><th>Nom</th><th>Taille</th><th>Reçus</th><th style='width: 150px;'>%</th><th>Priorité</th></tr></thead>
+                        <thead><tr><th>Nom</th><th>Taille</th><th>Reçus</th><th style='width: 150px;'>%</th><th>Priorité</th></tr></thead>
                         <tbody id="torrentdetailsfiles">
                         </tbody>
                     </table>
+                        <iframe name='datafrm' id='datafrm' style="height: 0px;width: 0px;border: none;display: none;"></iframe>
+                        <form action="" id="getdata" method="get" target="datafrm">
+                            </form>
+                    </div>
                 </div>
                 <div class="content" id="panel2-3">
 
