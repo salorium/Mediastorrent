@@ -82,25 +82,25 @@ class Torrent extends Controller {
                     $state|=$status["error"];
                 $torrent[]=$state;   //state 0
                 $torrent[]=$req->val[$i+5];//nom 1
-                $torrent[]=$req->val[$i+6];//taille 2
+                $torrent[]=intval ($req->val[$i+6]);//taille 2
                 $get_completed_chunks = $req->val[$i+7];
                 $get_hashed_chunks = $req->val[$i+25];
                 $get_size_chunks = $req->val[$i+8];
                 $chunks_processing = ($is_hash_checking==0) ? $get_completed_chunks : $get_hashed_chunks;
                 $done = floor($chunks_processing/$get_size_chunks*1000);
                 $torrent[]=$done;// 3
-                $torrent[]=$req->val[$i+9];//downloaded 4
-                $torrent[]=$req->val[$i+10];//Uploaded 5
-                $torrent[]=$req->val[$i+11];//ratio 6
-                $torrent[]=$req->val[$i+12];//UL 7
-                $torrent[]=$req->val[$i+13];//DL 8
+                $torrent[]=intval ($req->val[$i+9]);//downloaded 4
+                $torrent[]=intval ($req->val[$i+10]);//Uploaded 5
+                $torrent[]=intval ($req->val[$i+11]);//ratio 6
+                $torrent[]=intval ($req->val[$i+12]);//UL 7
+                $torrent[]=intval ($req->val[$i+13]);//DL 8
                 $get_chunk_size = $req->val[$i+14];
                 $torrent[]= ($req->val[$i+13] >0 ? floor(($get_size_chunks-$get_completed_chunks)*$get_chunk_size/$req->val[$i+13]):-1);//Eta 9 (Temps restant en seconde)
                 /*$get_peers_not_connected = $req->val[$i+17];
                 $get_peers_connected = $req->val[$i+18];
                 $get_peers_all = $get_peers_not_connected+$get_peers_connected;*/
-                $torrent[] = $req->val[$i+16]; //Peer Actual 10
-                $torrent[] = $req->val[$i+19]; //Seed Actual 11
+                $torrent[] = intval ($req->val[$i+16]); //Peer Actual 10
+                $torrent[] = intval ($req->val[$i+19]); //Seed Actual 11
                 $seeds=0;
                 foreach(explode("#",$req->val[$i+39]) as $k=> $v){
                     $seeds += $v;
@@ -113,21 +113,21 @@ class Torrent extends Controller {
                 $torrent[] = $seeds; //Seed tota 13
 
 
-                $torrent[] = $req->val[$i+20];//Taille restant 14
-                $torrent[] = $req->val[$i+21];//Priority 15 (0 ne pas télécharger, 1 basse, 2 moyenne, 3 haute)
-                $torrent[] = $req->val[$i+22];//State change 16 (dernière date de change d'état)
-                $torrent[] = $req->val[$i+23];//Skip total Contiens les rejets en mo 17
+                $torrent[] = intval ($req->val[$i+20]);//Taille restant 14
+                $torrent[] = intval ($req->val[$i+21]);//Priority 15 (0 ne pas télécharger, 1 basse, 2 moyenne, 3 haute)
+                $torrent[] = intval ($req->val[$i+22]);//State change 16 (dernière date de change d'état)
+                $torrent[] = intval ($req->val[$i+23]);//Skip total Contiens les rejets en mo 17
                 $torrent[] = $req->val[$i+26];//Base Path 18
-                $torrent[] = $req->val[$i+27];//Date create 19
-                $torrent[] = $req->val[$i+28];//Focus tracker 20
+                $torrent[] = intval ($req->val[$i+27]);//Date create 19
+                $torrent[] = intval ($req->val[$i+28]);//Focus tracker 20
                 /*try {
                     torrent.comment = this.getValue(values,31);
                     if(torrent.comment.search("VRS24mrker")==0)
                         torrent.comment = decodeURIComponent(torrent.comment.substr(10));
                 } catch(e) { torrent.comment = ''; }*/
-                $torrent[] = $req->val[$i+32];//Torrent free diskspace 21
-                $torrent[] = $req->val[$i+33];//Torrent is private 22
-                $torrent[] = $req->val[$i+34];//Torrent is multifile 23
+                $torrent[] = intval ($req->val[$i+32]);//Torrent free diskspace 21
+                $torrent[] = intval ($req->val[$i+33]);//Torrent is private 22
+                $torrent[] = intval ($req->val[$i+34]);//Torrent is multifile 23
                 $torrent[] = preg_replace("#\n#","",$req->val[$i+42]);//Torrent seed time 24
                 $torrent[] = preg_replace("#\n#","",$req->val[$i+43]);//Torrent add time 25
                 $torrent[] = $msg;//Message tracker 26

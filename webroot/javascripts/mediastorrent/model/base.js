@@ -17,7 +17,7 @@ Base.model =  {
     converter : {
         iv: function(val){
             var v = (val==null) ? 0 : parseInt(val + "");
-            return(isNaN(v) ? 0 : v);
+            return(isNaN(v) ? null : v);
         },
         round: function(num, p)
         {
@@ -185,6 +185,7 @@ Base.model =  {
 
     tableau : {
         compareObjet : function (o1, o2, sortColumn, sortOrder){
+            console.log(o1[sortColumn]+" ==> " + typeof o1[sortColumn]);
             return sortOrder > 0 ? (typeof o1[sortColumn] == "string" ? o1[sortColumn].toLowerCase():o1[sortColumn])< (typeof o2[sortColumn] == "string" ? o2[sortColumn].toLowerCase():o2[sortColumn]) : (typeof o1[sortColumn] == "string" ? o1[sortColumn].toLowerCase():o1[sortColumn]) > (typeof o2[sortColumn] == "string" ? o2[sortColumn].toLowerCase():o2[sortColumn]);
         },
         fusion: function (t, tmp, de1, vers1, de2, vers2, count, posInB, sortColumn, sortOrder){
