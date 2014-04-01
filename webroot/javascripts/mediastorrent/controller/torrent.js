@@ -8,7 +8,7 @@ Torrent.controller =  {
         //console.log($("#moitiegauche").css("padding-top"));
         Torrent.model.hauteurTorrent =$("#moitiegauche").height()-Base.model.html.hauteur("#moitiegauche dl");
         Torrent.model.baseUrl = seedbox[0].hostname;
-        Torrent.model.nomseedbox = seedbox[1].nom;
+        Torrent.model.nomseedbox = seedbox[0].nom;
         Torrent.model.seedboxs = seedbox;
         $("#recherchesubmit").attr("onclick","Torrent.controller.rechercheTorrent();");
         var input = $("#recherche")[0];
