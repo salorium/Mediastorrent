@@ -156,7 +156,7 @@ class Torrent extends Controller {
             }
 
             $ncid = \model\simple\String::random(5);
-            if (!(\core\Memcached::value("torrentlist"."\config\Conf::$portscgi",$ncid,$data,60*5)))
+            if (!(\core\Memcached::value("torrentlist".\config\Conf::$portscgi,$ncid,$data,60*5)))
                 trigger_error("Impossible de mettre des données dans le cache");
             $t[]= $tmp;
             $t[]= $ncid;
