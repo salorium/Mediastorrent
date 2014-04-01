@@ -19,9 +19,7 @@ class Torrent extends Controller {
         ));
     }
 
-    function add(){
 
-    }
     function send(){
         $this->set(array(
             "file"=> $_FILES,
