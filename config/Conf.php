@@ -35,6 +35,6 @@ class Conf
     static $rolevue;
     static $videoExtensions = array ('avi', 'asf', 'flv', 'mkv', 'mov', 'mp4', 'mpg', 'mpeg', 'ogm', 'rm', 'wmv','rar' );
     static $musicExtensions = array ('mp3', 'flac', 'ogg' );
-
+    static $portscgi = 5001;
 }
 
