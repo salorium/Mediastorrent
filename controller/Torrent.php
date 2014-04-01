@@ -161,7 +161,7 @@ class Torrent extends Controller {
             $t[]= $tmp;
             $t[]= $ncid;
             $t[]= $_SERVER["HTTP_HOST"];
-            $path = ROOT;
+            $path = ROOT.DS."..".DS."rtorrent".DS."data2";
             $t[]= disk_total_space($path)-disk_free_space($path);
             $t[]= disk_total_space($path);
 

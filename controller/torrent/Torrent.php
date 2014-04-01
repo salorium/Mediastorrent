@@ -74,6 +74,7 @@ class Torrent extends Controller {
                                     $torrent["erreur"] = 0;
                                     $fi ["nom"] = basename($nom);
                                     $fi ["ext"] = pathinfo ( $nom, PATHINFO_EXTENSION );
+
                                    // $fi ["nomaff"] = formatNomAff ( $fi ["nom"] );
                                     $f [] = $fi;
                                 }
