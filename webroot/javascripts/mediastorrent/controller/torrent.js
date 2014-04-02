@@ -376,6 +376,7 @@ Torrent.controller =  {
                     }else if (! (Torrent.model.listeselectionnee.length == 1 && Torrent.model.listeselectionnee[0]==$(e.currentTarget).attr("id") )){
                         Torrent.model.listeselectionnee=[];
                         Torrent.model.listeselectionnee.push($(e.currentTarget).attr("id"));
+                        Torrent.controller.detailsTorrent();
                         Torrent.model.listeselectionneeid = ($(e.currentTarget).attr("idcpt"));
                         Torrent.model.detailliste = Torrent.model.listeoriginal[$(e.currentTarget).attr("id")];
                         Torrent.model.detaillisteoriginal = Torrent.model.listeoriginal[$(e.currentTarget).attr("id")];
