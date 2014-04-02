@@ -160,7 +160,6 @@ class Torrent extends Controller {
                 trigger_error("Impossible de mettre des données dans le cache");
             $t[]= $tmp;
             $t[]= $ncid;
-            $t[]= $_SERVER["HTTP_HOST"];
             $path = ROOT.DS."..".DS."rtorrent".DS."data2";
             $t[]= disk_total_space($path)-disk_free_space($path);
             $t[]= disk_total_space($path);
@@ -245,6 +244,7 @@ class Torrent extends Controller {
             "torrent"=>$t,
             "torrentselectionnee"=>$torrent,
             "hashtorrent"=>$hashtorrentselectionne,
+            "host"=>$_SERVER["HTTP_HOST"],
             "seedbox"=> \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
         ));
     }
@@ -434,9 +434,9 @@ class Torrent extends Controller {
 
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi);
         foreach($_REQUEST["hash"] as $h){
-            $req->addCommand( new rXMLRPCCommand(\config\Conf::$portscgi,"d.get_name",$h) );
-            $req->addCommand( new rXMLRPCCommand(\config\Conf::$portscgi,"d.set_custom1",array($h,"1")) );
-            $req->addCommand( new rXMLRPCCommand(\config\Conf::$portscgi,"d.erase",$h));
+            $req->addCommand( new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi,"d.get_name",$h) );
+            $req->addCommand( new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi,"d.set_custom1",array($h,"1")) );
+            $req->addCommand( new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi,"d.erase",$h));
         }
 
         $r = ($req->success() ? $req->val : $req->val);
@@ -610,10 +610,10 @@ class Torrent extends Controller {
             $filename = $req->val[0];
             if($filename=='')
             {
-                $req = new rXMLRPCRequest( array(
-                    new rXMLRPCCommand( "d.open", $hashtorrentselectionne ),
-                    new rXMLRPCCommand( "f.get_frozen_path", array($hashtorrentselectionne,intval($nofile)) ),
-                    new rXMLRPCCommand( "d.close", $hashtorrentselectionne ) ) );
+                $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, array(
+                    new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.open", $hashtorrentselectionne ),
+                    new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.get_frozen_path", array($hashtorrentselectionne,intval($nofile)) ),
+                    new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.close", $hashtorrentselectionne ) ) );
                 if($req->success())
                     $filename = $req->val[1];
             }
@@ -621,7 +621,7 @@ class Torrent extends Controller {
         }
         throw new \Exception("FILE NOT FOUND");
     }
-    function add(){
+    function init(){
         $theSettings = \model\xmlrpc\rTorrentSettings::get(\config\Conf::$portscgi,true);
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, array(
             $theSettings->getOnFinishedCommand(array("seedingtime",

@@ -533,11 +533,11 @@ Torrent.controller =  {
             dataType: "json",
             //contentType: "application/json",
             success: function(response, textStatus, jqXHR){
-                if ( response.torrent[2] == Torrent.model.baseUrl){
+                if ( response.host == Torrent.model.baseUrl){
                     if (response.showdebugger == "ok"){
                         var res = response.torrent;
                         torrent = res[0];
-                        Torrent.view.statsTorrent(res[3],res[4],res[5]);
+                        Torrent.view.statsTorrent(res[2],res[3],res[4]);
                         Torrent.controller.conversionListe(torrent);
                         if ($("#recherche").val().length > 1){
                             Torrent.controller.rechercheTorrent();

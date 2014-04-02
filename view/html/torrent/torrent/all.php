@@ -111,6 +111,10 @@
                             <td>Hash:</td>
                             <td id="torrentdetailhash"></td>
                         </tr>
+                            <tr>
+                                <td>Infos:</td>
+                                <td id="torrentdetailhash"></td>
+                            </tr>
                         </table>
                     </fieldset>
                     <fieldset>
