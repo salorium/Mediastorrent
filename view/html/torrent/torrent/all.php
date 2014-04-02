@@ -113,7 +113,7 @@
                         </tr>
                             <tr>
                                 <td>Infos:</td>
-                                <td id="torrentdetailhash"></td>
+                                <td id="torrentdetailinfos" class="red"></td>
                             </tr>
                         </table>
                     </fieldset>

@@ -11,14 +11,14 @@ Torrent.controller =  {
         Torrent.model.nomseedbox = seedbox[0].nom;
         Torrent.model.seedboxs = seedbox;
         $("#recherchesubmit").attr("onclick","Torrent.controller.rechercheTorrent();");
-        var input = $("#recherche")[0];
+        /*var input = $("#recherche")[0];
         input.onupdate = input.onkeyup = function() {
             if ($.trim(input.value).length > 1){
                 Torrent.controller.rechercheTorrent();
             }else{
                 Torrent.model.listerecherche = [];
             }
-        }
+        }*/
         Base.view.fixedHeight("#addTorrentContenu",$("#addTorrent").height()-Base.model.html.hauteur("#addTorrentTitle"));
         Base.view.fixedHeight("#addTorrentDetails",$("#addTorrentContenu").height()-$("#baseaddTorrent").height()-$("#divbouttonaddtorrent").height());
         Base.view.fixedHeight("#panel2-1",$("#moitiedroite").height()-Base.model.html.hauteur("#moitiedroite > dl"));
@@ -595,7 +595,7 @@ Torrent.controller =  {
             dataType: "json",
             //contentType: "application/json",
             success: function(response, textStatus, jqXHR){
-                if ( response.torrent[2] == Torrent.model.baseUrl){
+                if ( response.host == Torrent.model.baseUrl){
                     if (response.showdebugger == "ok"){
                         if (Torrent.model.listeselectionnee.length == 1 && response.hashtorrent == Torrent.model.listeselectionnee[0]){
                                 if ( response.torrentselectionnee){

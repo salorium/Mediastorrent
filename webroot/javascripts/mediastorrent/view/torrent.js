@@ -223,6 +223,7 @@ Torrent.view =  {
             $("#torrentdetaildateaj").html(((Torrent.model.detailliste[25]>3600*24*365) ? Base.model.converter.date(Base.model.converter.iv(Torrent.model.detailliste[25])) : ""));
             $("#torrentdetailrep").html(Torrent.model.detailliste[18]);
             $("#torrentdetailhash").html(Torrent.model.detailliste[27]);
+            $("#torrentdetailinfos").html(Torrent.model.detailliste[26]);
 
             $("#torrentdetailtempsecoule").html(Base.model.converter.time((new Date().getTime()-Torrent.model.detailliste[16]*1000)/1000));
             $("#torrentdetailrestant").html((Torrent.model.detailliste[9] != -1 ? Base.model.converter.time(Torrent.model.detailliste[9]):"∞"));
