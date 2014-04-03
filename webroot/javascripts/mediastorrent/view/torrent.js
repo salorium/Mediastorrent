@@ -334,7 +334,7 @@ Torrent.view =  {
                                 button.push({nom:"Priorité",dest : subutton});
                                 button.push({nom:"Télécharger",dest : function(){Torrent.controller.downloadFileTorrent($(e.currentTarget).attr("data-cpt"));}});
                                 if ( Base.model.path.ext(v[1]) == "avi" || Base.model.path.ext(v[1]) == "mp4" || Base.model.path.ext(v[1]) == "mkv"){
-                                    button.push({nom:"Streaming",dest : function(){Torrent.controller.streamingFileTorrent();}});
+                                    button.push({nom:"Streaming",dest : function(){Torrent.controller.streamingFileTorrent($(e.currentTarget).attr("data-cpt"));}});
                                 }
                                 Base.model.pannelClicDroit.make(button, e.clientX,e.clientY);
                             }

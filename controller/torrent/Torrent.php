@@ -159,5 +159,13 @@ class Torrent extends Controller {
             "torrent"=> $torrent
         ));
     }
+    function streaming($host,$hashtorrent,$nofile,$file){
+        $this->layout = "streaming";
+        $user = \config\Conf::$user["user"]->login;
+        $keyconnexion = \config\Conf::$user["user"]->keyconnexion;
+        $this->set(array(
+            "src"=> "http://".$host."/torrent/download/".$hashtorrent."/".$nofile."/".$user."/".$keyconnexion."/".$file
+        ));
+    }
 
 } 
