@@ -666,6 +666,10 @@ Torrent.controller =  {
             }
         });
     },
+    streamingFileTorrent : function(){
+        var url = Torrent.model.downloadFileTorrent(Torrent.model.listeselectionnee[0],Torrent.model.fileselectionnee[0]);
+        Torrent.view.fileTorrentsStreaming(url);
+    },
     torrentPeutEffectuerCommande : function(torrent,commande){
         var ret = true;
         var status = torrent[0];

@@ -333,7 +333,9 @@ Torrent.view =  {
                                 }
                                 button.push({nom:"Priorité",dest : subutton});
                                 button.push({nom:"Télécharger",dest : function(){Torrent.controller.downloadFileTorrent($(e.currentTarget).attr("data-cpt"));}});
-
+                                if ( Base.model.path.ext(v[1]) == "avi" || Base.model.path.ext(v[1]) == "mp4" || Base.model.path.ext(v[1]) == "mkv"){
+                                    button.push({nom:"Streaming",dest : function(){Torrent.controller.streamingFileTorrent();}});
+                                }
                                 Base.model.pannelClicDroit.make(button, e.clientX,e.clientY);
                             }
                             break;
@@ -344,6 +346,27 @@ Torrent.view =  {
             });
             //panel2-2
 
+    },
+    fileTorrentsStreaming : function (src){
+        var $div = $("<div style='position: absolute; top 50px;left: 50px; z-index: 100;display: block;'></div>");
+        $button = $("<button>Close</button>");
+        $button.click(function(e){
+            e.preventDefault();
+            $div.remove();
+        });
+        $div.append($button);
+        $div.append('<object style="position: absolute; top 50px;left: 50px; z-index: 100;display: block;" classid="clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616" width="320" height="260" codebase="http://go.divx.com/plugin/DivXBrowserPlugin.cab">'+
+
+            '<param name="custommode" value="none" />'+
+
+        '<param name="autoPlay" value="false" />'+
+        '<param name="src" value="'+src+'" />'+
+
+        '<embed style="position: absolute; top 50px;left: 50px; z-index: 100;display: block;" type="video/divx" src="'+src+'" custommode="none" width="320" height="260" autoPlay="false"  pluginspage="http://go.divx.com/plugin/download/">'+
+        '</embed>'+
+        '</object>'+
+        '<br />No video? Get the DivX Web Player for <a style="text-decoration: underline;" href="http://download.divx.com/player/DivXWebPlayerInstaller.exe">Windows</a> or <a style="text-decoration: underline;" href="http://download.divx.com/player/DivXWebPlayer.dmg">Mac</a>');
+        $div.appendTo("#panel2-2");
     },
     listeTorrents:function(){
         res ="";
