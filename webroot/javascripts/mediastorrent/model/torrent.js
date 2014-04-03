@@ -3,10 +3,12 @@
  */
 var Torrent = new Object();
 Torrent.model =  {
+    fileinfospriorite : ["Ne pas télécharger","Normal","Haute"],
     hauteurTorrent : 0,
     baseUrl:"",
     nomseedbox:"",
     listeselectionnee: [],
+    listeselectionneeid : -1,
     changeselecttorrent:false,
     torrentselectionneedetail:null,
     dStatus : { started : 1, paused : 2, checking : 4, hashing : 8, error : 16 },
@@ -17,6 +19,7 @@ Torrent.model =  {
     liste:[],
     listerecherche:[],
     fileselectionnee:[],
+    fileselectionneeid:-1,
     fileliste:[],
     filelisteoriginal:[],
     detailliste:[],

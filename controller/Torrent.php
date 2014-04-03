@@ -272,7 +272,7 @@ class Torrent extends Controller {
         );
 
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi);
-        foreach($_POST["hash"] as $h)
+        foreach($_REQUEST["hash"] as $h)
             foreach($cmds as $cmd)
                 $req->addCommand( new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, $cmd, $h ) );
         $r = ($req->success() ? $req->val : false);
@@ -305,7 +305,7 @@ class Torrent extends Controller {
         $cmds = array("d.open","d.start");
 
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi);
-        foreach($_POST["hash"] as $h)
+        foreach($_REQUEST["hash"] as $h)
             foreach($cmds as $cmd)
                 $req->addCommand( new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, $cmd, $h ) );
         $r = ($req->success() ? $req->val : false);
@@ -337,7 +337,7 @@ class Torrent extends Controller {
         $cmds = array("d.stop","d.close");
 
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi);
-        foreach($_POST["hash"] as $h)
+        foreach($_REQUEST["hash"] as $h)
             foreach($cmds as $cmd)
                 $req->addCommand( new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, $cmd, $h ) );
         $r = ($req->success() ? $req->val : false);
@@ -370,7 +370,7 @@ class Torrent extends Controller {
         $cmds = array("d.check_hash");
 
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi);
-        foreach($_POST["hash"] as $h)
+        foreach($_REQUEST["hash"] as $h)
             foreach($cmds as $cmd)
                 $req->addCommand( new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, $cmd, $h ) );
         $r = ($req->success() ? $req->val : false);
@@ -402,7 +402,7 @@ class Torrent extends Controller {
         $cmds = array("d.erase");
 
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi);
-        foreach($_POST["hash"] as $h)
+        foreach($_REQUEST["hash"] as $h)
             foreach($cmds as $cmd)
                 $req->addCommand( new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, $cmd, $h ) );
         $r = ($req->success() ? $req->val : false);
@@ -620,6 +620,32 @@ class Torrent extends Controller {
             \model\simple\Download::sendFile($filename);
         }
         throw new \Exception("FILE NOT FOUND");
+    }
+    function setPrioriteFile($hashtorrentselectionne,$prio,$login=null,$keyconnexion=null){
+        if (!is_null($login) && ! is_null($keyconnexion)){
+            $u = \core\Memcached::value($login,"user");
+            if ( is_null($u)){
+                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
+                if ( $u)
+                    \core\Memcached::value($u->login,"user",$u,60*5);
+            }else{
+                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
+                if ( is_bool($u)){
+                    $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
+                    if ( $u)
+                        \core\Memcached::value($u->login,"user",$u,60*5);
+                }
+                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
+            }
+            \config\Conf::$user["user"]= $u;
+        }
+        if ( !\config\Conf::$user["user"] ) throw new \Exception("Non User");
+        $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi);
+        foreach($_REQUEST["nofiles"] as $v)
+            $req->addCommand( new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.set_priority", array($hashtorrentselectionne, intval($v), intval($prio)) ) );
+        $req->addCommand( new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi,"d.update_priorities", $hashtorrentselectionne) );
+        if($req->success())
+            $result = $req->val;
     }
     function init(){
         $theSettings = \model\xmlrpc\rTorrentSettings::get(\config\Conf::$portscgi,true);

@@ -257,7 +257,7 @@ Torrent.view =  {
         $("#torrentdetailsfiles").empty();
             if (Torrent.model.fileliste.length > 0)
             $.each( Torrent.model.fileliste, function(k,v){
-                 var $tr = $('<tr style="cursor: pointer;" class="'+($.inArray(k+"",Torrent.model.fileselectionnee) > -1 ?"active":"")+'" data-cpt="'+k+'" data-id="'+v[0]+'" ondblclick="Torrent.controller.downloadFileTorrent('+k+',\''+Torrent.model.listeselectionnee[0]+'\',\''+v[0]+'\','+v[2]+','+v[3]+');"><td>'+Base.model.path.basename(v[1])+'</td><td>'+Base.model.converter.bytes(v[4],2)+'</td><td>'+Base.model.converter.bytes(v[4]*v[2]/v[3],2)+'</td><td><progress class="'+(v[2]==v[3] ? "ul":"dl")+'"  value="'+v[2]+'" max="'+v[3]+'" title="'+(v[2] != 0 ?v[2]/v[3]*100:0)+'%"></progress></td><td>OK</td></tr>');
+                 var $tr = $('<tr style="cursor: pointer;" class="'+($.inArray(v[0]+"",Torrent.model.fileselectionnee) > -1 ?"active":"")+'" id="file'+k+'" data-cpt="'+k+'" data-id="'+v[0]+'" ondblclick="Torrent.controller.downloadFileTorrent('+k+');"><td>'+Base.model.path.basename(v[1])+'</td><td>'+Base.model.converter.bytes(v[4],2)+'</td><td>'+Base.model.converter.bytes(v[4]*v[2]/v[3],2)+'</td><td><progress class="'+(v[2]==v[3] ? "ul":"dl")+'"  value="'+v[2]+'" max="'+v[3]+'" title="'+(v[2] != 0 ?v[2]/v[3]*100:0)+'%"></progress></td><td>'+Torrent.model.fileinfospriorite[v[5]]+'</td></tr>');
 
                 $("#torrentdetailsfiles").append(
                     $tr
@@ -268,23 +268,74 @@ Torrent.view =  {
                         case 1:
                             //clique gauche
                             if (e.shiftKey) { //Clique gauche avec Shift
+                                Torrent.model.fileselectionnee = [];
+                                if ( Torrent.model.fileselectionneeid > -1){
+                                    max = Base.model.converter.iv($(e.currentTarget).attr("data-cpt"));
+                                    i1 = Base.model.converter.iv(Torrent.model.fileselectionneeid);
+                                    if (i1 < max ){
+                                        for (i=i1;i< max;i++){
 
+                                            Torrent.model.fileselectionnee.push($("#file"+i).attr("data-id"));
+                                            $("#file"+i).addClass("active");
+                                        }
+                                    }else{
+                                        for (i=i1;i> max;i--){
+                                            Torrent.model.fileselectionnee.push($("#file"+i).attr("data-id"));
+                                            $("#file"+i).addClass("active");
+                                        }
+                                    }
+                                    Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-id"));
+                                }else{
+                                    Torrent.model.fileselectionneeid = $(e.currentTarget).attr("data-cpt");
+                                    Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-id"));
+                                }
+                                $(e.currentTarget).addClass("active");
                                 //  mon action
                             }else if (e.ctrlKey){//Clique gauche avec CTRL
-
+                                id = $.inArray($(e.currentTarget).attr("data-id"),Torrent.model.fileselectionnee);
+                                if (id > -1){
+                                    $(e.currentTarget).removeClass("active");
+                                    Torrent.model.fileselectionnee.splice(id,1);
+                                }else{
+                                    Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-id"));
+                                    $(e.currentTarget).addClass("active");
+                                    Torrent.model.fileselectionneeid = $(e.currentTarget).attr("data-id");
+                                }
                             }else{//Clique gauche
                                 Torrent.model.fileselectionnee=[];
                                 Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-id"));
+                                Torrent.model.fileselectionneeid = $(e.currentTarget).attr("data-cpt");
                                 $(e.currentTarget).parent().children().removeClass("active");
                                 $(e.currentTarget).addClass("active");
                             }
                             break;
                         case 3:
                             //clique droit
+                            id= $.inArray($(e.currentTarget).attr("data-id"),Torrent.model.fileselectionnee);
+                            if ( id > -1 && Torrent.model.fileselectionnee.length > 1){
+                                // console.log(e);
+                                Base.model.pannelClicDroit.make([{nom:"Bonjour",dest : 'alert("b");'}], e.clientX,e.clientY);
+                            }else{
                             Torrent.model.fileselectionnee=[];
                             Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-id"));
                             $(e.currentTarget).parent().children().removeClass("active");
                             $(e.currentTarget).addClass("active");
+                                var button = [];
+                                var subutton = [];
+                                if (v[5] !=2 ){
+                                    subutton.push({nom:"Haute", dest: function(){Torrent.controller.prioriteFileTorrent(2);}})
+                                }
+                                if (v[5] !=1 ){
+                                    subutton.push({nom:"Normal", dest: function(){Torrent.controller.prioriteFileTorrent(1);}})
+                                }
+                                if (v[5] !=0 ){
+                                    subutton.push({nom:"Ne pas télécharger", dest: function(){Torrent.controller.prioriteFileTorrent(0);}})
+                                }
+                                button.push({nom:"Priorité",dest : subutton});
+                                button.push({nom:"Télécharger",dest : function(){Torrent.controller.downloadFileTorrent($(e.currentTarget).attr("data-cpt"));}});
+
+                                Base.model.pannelClicDroit.make(button, e.clientX,e.clientY);
+                            }
                             break;
                     }
 

@@ -182,7 +182,51 @@ Base.model =  {
         login : null,
         keyconnexion:null
     },
+    pannelClicDroit: {
+        make: function(lines,x,y){
+            //$div1 = $("<div></div>");
+            //$div = $("<div></div>").css({"position":"absolute","top":y-1+"px","left":x-1+"px","z-index": 100,"padding":"10px","border" :"black 1px","background": "white"});
+           // $div1 = $('<ul style="position: absolute; left: '+(x-1)+'px; top: '+(y-1)+'px; z-index: 2030; display: block; overflow: visible;" class="CMenu"><li class="menuitem"><a class="exp">Priorité</a><ul class="CMenu" style=""><li class="menuitem"><a class="menu-cmd" href="javascript://void();">Haute</a></li><li class="menuitem"><a class="menu-cmd dis">Moyenne</a></li><li class="menuitem"><hr class="menu-line"></li><li class="menuitem"><a class="menu-cmd" href="javascript://void();">Ne pas télécharger</a></li></ul></li><li class="menuitem"><a class="exp">Stratégie de téléchargement</a><ul class="CMenu" style=""><li class="menuitem"><a class="menu-cmd" href="javascript://void();">Normal</a></li><li class="menuitem"><hr class="menu-line"></li><li class="menuitem"><a class="menu-cmd dis">Commencer par le début</a></li><li class="menuitem"><a class="menu-cmd" href="javascript://void();">Commencer par la fin</a></li></ul></li><li class="menuitem"><a class="exp">Voir</a><ul class="CMenu" style=""><li class="menuitem"><a class="menu-cmd" href="javascript://void();">En liste</a></li><li class="menuitem"><a class="menu-cmd dis">En arbre</a></li></ul></li><li class="menuitem"><hr class="menu-line"></li><li class="menuitem"><a class="menu-cmd" href="javascript://void();">Télécharger le fichier</a></li><li class="menuitem"><a class="menu-cmd dis">Décompression...</a></li><li class="menuitem"><a class="menu-cmd" href="javascript://void();">Media info</a></li><li class="menuitem"><a class="menu-cmd dis">Screenshots</a></li></ul>');
+           // $div1.append($div);
+            var $div1 = $("<ul></ul>").css({position: "absolute", left: (x-1)+'px', top: (y-1)+'px', "z-index" : "2030", display: "block", overflow: "visible"}).addClass("CMenu");
+            $.each(lines, function(k,v){
+                $li = $("<li class='menuitem'></li>");
+                $a = $("<a class='"+( v.dest instanceof Array ? "exp'":"'")+">"+ v.nom+"</a>");
+                $li.append($a);
+                if (v.dest instanceof Array){
+                    $ul = $("<ul class='CMenu'></ul>");
+                    $.each(v.dest, function(kk,vv){
+                        $lii = $("<li class='menuitem'></li>" );
+                        $aa = $("<a>"+vv.nom+"</a>");
+                        $lii.append($aa);
+                        $aa.click ( function(eee){
+                            eee.preventDefault();
+                            $div1.remove();
+                            vv.dest();
+                        });
+                        $ul.append($lii);
+                    });
+                    $li.append($ul);
+                }else{
+                    $a.click ( function(ee){
+                        ee.preventDefault();
+                        $div1.remove();
+                        v.dest();
+                    });
+                }
+                $div1.append($li);
+            });
+            $div1.appendTo("body");
+            $div1.show();
+            $div1.mouseleave(
+                function(e){
+                    e.preventDefault();
+                    $(e.currentTarget).remove();
+                }
+            );
 
+        }
+    },
     tableau : {
         compareObjet : function (o1, o2, sortColumn, sortOrder){
             console.log(o1[sortColumn]+" ==> " + typeof o1[sortColumn]);
