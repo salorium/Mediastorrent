@@ -32,5 +32,19 @@ Base.controller =  {
                 $(location).attr('href',url);
             }
         },1000);
+    },
+    checkerCheckbox : function(e){
+        var classs = $(e).attr("class");
+        classs = "."+classs;
+        console.log($(e).is(':checked'));
+        if ( $(e).is(':checked')){
+            //Checked
+
+            $(classs).prop('checked', true);
+        }else{
+            //Non checked
+            $(classs).prop('checked', false);
+        }
+        console.log(classs);
     }
 };

@@ -10527,7 +10527,12 @@ table tbody tr.active {
   background-color: rgba(0, 155, 0, 0.2);
 }
 
-/* line 808, ../scss/mediastorrent1.scss */
+/* line 807, ../scss/mediastorrent1.scss */
+table label {
+  color: inherit;
+}
+
+/* line 810, ../scss/mediastorrent1.scss */
 ul.CMenu {
   -moz-border-bottom-colors: none;
   -moz-border-left-colors: none;
@@ -10549,7 +10554,7 @@ ul.CMenu {
   z-index: 1000;
 }
 
-/* line 829, ../scss/mediastorrent1.scss */
+/* line 831, ../scss/mediastorrent1.scss */
 ul.CMenu li {
   background: none repeat scroll 0 0 #FFFFFF;
   float: left;
@@ -10558,29 +10563,29 @@ ul.CMenu li {
   width: 195px;
 }
 
-/* line 836, ../scss/mediastorrent1.scss */
+/* line 838, ../scss/mediastorrent1.scss */
 ul.CMenu li a {
   display: block;
 }
 
-/* line 839, ../scss/mediastorrent1.scss */
+/* line 841, ../scss/mediastorrent1.scss */
 ul.CMenu li a.dis {
   color: #C0C0C0;
 }
 
-/* line 842, ../scss/mediastorrent1.scss */
+/* line 844, ../scss/mediastorrent1.scss */
 ul.CMenu li a.dis:hover {
   background-color: #FFFFFF;
   color: #C0C0C0;
 }
 
-/* line 846, ../scss/mediastorrent1.scss */
+/* line 848, ../scss/mediastorrent1.scss */
 ul.CMenu li a {
   font-weight: normal;
   padding: 3px 4px 3px 16px;
 }
 
-/* line 851, ../scss/mediastorrent1.scss */
+/* line 853, ../scss/mediastorrent1.scss */
 ul.CMenu li hr {
   border-top: 1px solid #D0D0D0;
   height: 0;
@@ -10589,30 +10594,30 @@ ul.CMenu li hr {
   width: 90%;
 }
 
-/* line 858, ../scss/mediastorrent1.scss */
+/* line 860, ../scss/mediastorrent1.scss */
 .ie ul.CMenu li hr {
   font-size: 1px;
   line-height: 1px;
   margin: 0;
 }
 
-/* line 863, ../scss/mediastorrent1.scss */
+/* line 865, ../scss/mediastorrent1.scss */
 ul.CMenu li a.exp {
   background: url("../images/menuexp.gif") no-repeat scroll 190px center rgba(0, 0, 0, 0);
 }
 
-/* line 866, ../scss/mediastorrent1.scss */
+/* line 868, ../scss/mediastorrent1.scss */
 ul.CMenu li a.sel {
   background: url("../images/menusel.gif") no-repeat scroll 4px center rgba(0, 0, 0, 0);
 }
 
-/* line 869, ../scss/mediastorrent1.scss */
+/* line 871, ../scss/mediastorrent1.scss */
 ul.CMenu li a:hover {
   background-color: rgba(0, 155, 0, 0.2);
   color: #000000;
 }
 
-/* line 873, ../scss/mediastorrent1.scss */
+/* line 875, ../scss/mediastorrent1.scss */
 ul.CMenu li:hover ul {
   display: block;
   left: 190px;
@@ -10621,35 +10626,35 @@ ul.CMenu li:hover ul {
   width: 200px;
 }
 
-/* line 880, ../scss/mediastorrent1.scss */
+/* line 882, ../scss/mediastorrent1.scss */
 ul.CMenu li:hover ul li ul {
   display: none;
 }
 
-/* line 883, ../scss/mediastorrent1.scss */
+/* line 885, ../scss/mediastorrent1.scss */
 ul.CMenu li:hover ul li a {
   background-color: #FFFFFF;
   color: #000000;
   display: block;
 }
 
-/* line 888, ../scss/mediastorrent1.scss */
+/* line 890, ../scss/mediastorrent1.scss */
 ul.CMenu li:hover ul li a:hover {
   background-color: rgba(0, 155, 0, 0.2);
   color: #000000;
 }
 
-/* line 892, ../scss/mediastorrent1.scss */
+/* line 894, ../scss/mediastorrent1.scss */
 ul.CMenu li:hover ul.left {
   left: -200px;
 }
 
-/* line 895, ../scss/mediastorrent1.scss */
+/* line 897, ../scss/mediastorrent1.scss */
 ul.CMenu li ul li a.dis {
   color: #C0C0C0;
 }
 
-/* line 898, ../scss/mediastorrent1.scss */
+/* line 900, ../scss/mediastorrent1.scss */
 ul.CMenu li ul li a.dis:hover {
   background-color: #FFFFFF;
   color: #C0C0C0;

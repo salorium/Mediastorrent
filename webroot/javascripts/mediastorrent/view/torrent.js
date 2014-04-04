@@ -314,7 +314,23 @@ Torrent.view =  {
                             id= $.inArray($(e.currentTarget).attr("data-id"),Torrent.model.fileselectionnee);
                             if ( id > -1 && Torrent.model.fileselectionnee.length > 1){
                                 // console.log(e);
-                                Base.model.pannelClicDroit.make([{nom:"Bonjour",dest : 'alert("b");'}], e.clientX,e.clientY);
+                                var button = [];
+                                var subutton = [];
+                                if (v[5] !=2 ){
+                                    subutton.push({nom:"Haute", dest: function(){Torrent.controller.prioriteFileTorrent(2);}})
+                                }
+                                if (v[5] !=1 ){
+                                    subutton.push({nom:"Normal", dest: function(){Torrent.controller.prioriteFileTorrent(1);}})
+                                }
+                                if (v[5] !=0 ){
+                                    subutton.push({nom:"Ne pas télécharger", dest: function(){Torrent.controller.prioriteFileTorrent(0);}})
+                                }
+                                button.push({nom:"Priorité",dest : subutton});
+                                /*button.push({nom:"Télécharger",dest : function(){Torrent.controller.downloadFileTorrent($(e.currentTarget).attr("data-cpt"));}});
+                                if ( Base.model.path.ext(v[1]) == "avi" || Base.model.path.ext(v[1]) == "mp4" || Base.model.path.ext(v[1]) == "mkv"){
+                                    button.push({nom:"Streaming",dest : function(){Torrent.controller.streamingFileTorrent($(e.currentTarget).attr("data-cpt"));}});
+                                }*/
+                                Base.model.pannelClicDroit.make(button, e.clientX,e.clientY);
                             }else{
                             Torrent.model.fileselectionnee=[];
                             Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-id"));
@@ -393,7 +409,82 @@ Torrent.view =  {
         },
         hideAddTorrent: function (){
             $("#addTorrent").hide();
+        },
+        showTorrents : function(torrents){
+            $("#addTorrentDetails").empty();
+            $("#addTorrentDetails").append('<input type="hidden" name="nbtorrents" value="'+torrents.length+'">')
+            $.each(torrents, function(k,v){
+                Torrent.view.addTorrent.showTorrent(v,k);
+            });
+        },
+
+        showTorrent: function(torrent,id){
+            $fieldset = $("<fieldset><legend>"+torrent.nom+"</legend></fieldset>");
+            if ( torrent.type == "movie"){
+                //Type sois FILM ou Série
+                $inputfilm = $('<input type="radio" name="torrent'+id+'type" value="film" id="torrent'+id+'typefilm">');
+                $fieldset.append($inputfilm);
+                $fieldset.append('<label for="torrent'+id+'typefilm">Film</label>');
+                $inputserie = $('<input type="radio" name="torrent'+id+'type" value="serie" id="torrent'+id+'typeserie">');
+                $fieldset.append($inputserie);
+                $fieldset.append('<label for="torrent'+id+'typeserie">Série</label>');
+                $inputfilm.click(function(e){
+                    Torrent.view.addTorrent.showFileMovieTorrent(torrent.files,id);
+                });
+                $inputserie.click(function(e){
+                    Torrent.view.addTorrent.showFileSerieTorrent(torrent.files,id);
+                });
+            }else{
+                //Type MUSIQUE
+            }
+            $fieldset.append('<div id="torrent'+id+'files"></div>');
+            $("#addTorrentDetails").append($fieldset);
+        },
+        showFileMovieTorrent: function(files,id){
+            $("#torrent"+id+"files").empty();
+            $tablefile = $('<table><thead><tr><th><input onchange="Base.controller.checkerCheckbox(this);" id="torrent'+id+'ajoutecheck" class="torrent'+id+'ajoutecheck" type="checkbox"><label for="torrent'+id+'ajoutecheck">Ajoute</label></th><th><input onchange="Base.controller.checkerCheckbox(this);" id="torrent'+id+'partagecheck" class="torrent'+id+'partagecheck" type="checkbox"><label for="torrent'+id+'partagecheck">Partage</label></th><th>Fichier</th><th>Complément</th></tr></thead></table>');
+            $tbodyfile = $("<tbody></tbody>");
+            $.each(files, function(k,v){
+                $tbodyfile.append('<tr><td><input type="checkbox" name="torrent'+id+'ajoutecheckfile'+k+'" class="torrent'+id+'ajoutecheck"></td><td><input type="checkbox" name="torrent'+id+'partagecheckfile'+k+'" class="torrent'+id+'partagecheck"></td><td>'+ Base.model.path.basename(v.nom)+'</td><td><input type="text" placeholder="Truefrench.Unrated..." name="torrent'+id+'filecomplement'+k+'"></td></tr>');
+            });
+            $tablefile.append($tbodyfile);
+            $("#torrent"+id+"files").append($tablefile);
+
+        },
+
+        showFileSerieTorrent: function(files,id){
+            $("#torrent"+id+"files").empty();
+            $tablefile = $('<table><thead><tr><th><input onchange="Base.controller.checkerCheckbox(this);" id="torrent'+id+'ajoutecheck" class="torrent'+id+'ajoutecheck" type="checkbox"><label for="torrent'+id+'ajoutecheck">Ajoute</label></th><th><input onchange="Base.controller.checkerCheckbox(this);" id="torrent'+id+'partagecheck" class="torrent'+id+'partagecheck" type="checkbox"><label for="torrent'+id+'partagecheck">Partage</label></th><th>Fichier</th><th>Saison</th><th>Episode</th><th>Complément</th></tr></thead></table>');
+            $tbodyfile = $("<tbody></tbody>");
+            $.each(files, function(k,v){
+                saisons = v.nom.match(Torrent.model.regexsaison);
+                console.log(v.nom);
+                console.log(saisons);
+                if ( saisons != null){
+                saisons = saisons[saisons.length-1];
+                saison = Base.model.converter.iv(saisons);
+                    if (saison == null)
+                        saison = Base.model.converter.iv(saisons.substr(1));
+                    saisons =saison;
+                }
+                episode = v.nom.match(Torrent.model.regexepisode);
+                if ( episode != null){
+                    episode = episode[episode.length-1];
+                    episode = Base.model.converter.iv(episode.substr(1));
+                }else{
+                    episode = v.nom.match(Torrent.model.regexepisode1);
+                    if ( episode != null){
+                        episode = episode[episode.length-1];
+                        episode = Base.model.converter.iv(episode);
+                    }
+                }
+                    $tbodyfile.append('<tr><td><input type="checkbox" name="torrent'+id+'ajoutecheckfile'+k+'" class="torrent'+id+'ajoutecheck"></td><td><input type="checkbox" name="torrent'+id+'partagecheckfile'+k+'" class="torrent'+id+'partagecheck"></td><td>'+ Base.model.path.basename(v.nom)+'</td><td><input type="text" placeholder="1,2,3" value="'+( saisons == null ? "":saisons)+'" name="torrent'+id+'filesaison'+k+'"></td><td><input type="text" placeholder="1,2,3.." value="'+( episode == null ? "":episode)+'" name="torrent'+id+'fileepisode'+k+'"></td><td><input type="text" placeholder="Truefrench.Unrated..." name="torrent'+id+'filecomplement'+k+'"></td></tr>');
+            });
+            $tablefile.append($tbodyfile);
+            $("#torrent"+id+"files").append($tablefile);
+
         }
+
 
     }
 

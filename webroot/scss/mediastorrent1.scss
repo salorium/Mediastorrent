@@ -804,7 +804,9 @@ iframe.perso{
 table tbody tr.active {
   background-color: rgba(0,155,0, 0.2);
 }
-
+table label {
+  color: inherit;
+}
 ul.CMenu {
   -moz-border-bottom-colors: none;
   -moz-border-left-colors: none;
