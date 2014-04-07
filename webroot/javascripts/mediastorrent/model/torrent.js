@@ -21,6 +21,7 @@ Torrent.model =  {
     fileselectionnee:[],
     fileselectionneeid:-1,
     fileliste:[],
+    filelistenavigation:[],
     filelisteoriginal:[],
     detailliste:[],
     detaillisteoriginal:[],

@@ -12,13 +12,13 @@ Torrent.controller =  {
         Torrent.model.seedboxs = seedbox;
         $("#recherchesubmit").attr("onclick","Torrent.controller.rechercheTorrent();");
         /*var input = $("#recherche")[0];
-        input.onupdate = input.onkeyup = function() {
-            if ($.trim(input.value).length > 1){
-                Torrent.controller.rechercheTorrent();
-            }else{
-                Torrent.model.listerecherche = [];
-            }
-        }*/
+         input.onupdate = input.onkeyup = function() {
+         if ($.trim(input.value).length > 1){
+         Torrent.controller.rechercheTorrent();
+         }else{
+         Torrent.model.listerecherche = [];
+         }
+         }*/
         Base.view.fixedHeight("#addTorrentContenu",$("#addTorrent").height()-Base.model.html.hauteur("#addTorrentTitle"));
         Base.view.fixedHeight("#addTorrentDetails",$("#addTorrentContenu").height()-$("#baseaddTorrent").height()-$("#divbouttonaddtorrent").height());
         Base.view.fixedHeight("#panel2-1",$("#moitiedroite").height()-Base.model.html.hauteur("#moitiedroite > dl"));
@@ -497,6 +497,179 @@ Torrent.controller =  {
 
         }
     },
+    conversionListeNavigation : function (liste,force){
+        if (liste != null){
+            if (Torrent.model.filelisteoriginal.length == 0 || Torrent.model.changedurl|| force ){
+                Torrent.model.filelisteoriginal = liste;
+            }else{
+                $.each(liste, function(k,v){
+                    if (v == false){
+                        delete Torrent.model.filelisteoriginal[k];
+                    }else{
+                        if(Torrent.model.filelisteoriginal[k]){
+                            $.each(v, function (kk,vv){
+                                Torrent.model.filelisteoriginal[k][kk]= vv;
+                            });
+                        }else{
+                            Torrent.model.filelisteoriginal[k]= v;
+                        }
+                    }
+                });
+            }
+
+            Torrent.model.fileliste = [];
+            var dossier = [];
+            for( var j = 0; j <Torrent.model.filelisteoriginal.length; j++){
+                var v = Torrent.model.filelisteoriginal[j];
+                Torrent.model.fileliste[Torrent.model.fileliste.length]= v;
+                var paths = v[1].split("/");
+
+                for ( var i= 0; i < paths.length;i++){
+                    if ( i == paths.length -1){
+                        //File
+                        if ( i == 0){
+                            if (!Torrent.model.filelistenavigation[0])
+                                Torrent.model.filelistenavigation[0]=[];
+                            Torrent.model.filelistenavigation[0][Torrent.model.filelistenavigation[0].length] = [false,paths[i]];
+                        }else{
+                            if ( !Torrent.model.filelistenavigation[dossier[paths[i-1]]])
+                                Torrent.model.filelistenavigation[dossier[paths[i-1]]]=[];
+                            Torrent.model.filelistenavigation[dossier[paths[i-1]]][Torrent.model.filelistenavigation[dossier[paths[i-1]]].length]= [false,paths[i]];
+                        }
+                    }else{
+                        //Dossier
+                        if ( i == 0){
+                            if (!Torrent.model.filelistenavigation[0])
+                                Torrent.model.filelistenavigation[0]=[];
+                            if ( !dossier[paths[i]] )
+                                Torrent.model.filelistenavigation[0][Torrent.model.filelistenavigation[0].length] = [true,paths[i],Torrent.model.filelistenavigation.length];
+                        }else{
+                            if ( !Torrent.model.filelistenavigation[dossier[paths[i-1]]])
+                                Torrent.model.filelistenavigation[dossier[paths[i-1]]]=[];
+                            if ( !dossier[paths[i]] )
+                                Torrent.model.filelistenavigation[dossier[paths[i-1]]][Torrent.model.filelistenavigation[dossier[paths[i-1]]].length]= [true,paths[i],Torrent.model.filelistenavigation.length];
+                        }
+                        if ( !dossier[paths[i]] )
+                            dossier[paths[i]]=Torrent.model.filelistenavigation.length;
+                    }
+
+
+
+                }
+                //Torrent.model.filelistenavigation[ Torrent.model.filelistenavigation.length-1] = vv;
+
+
+            }
+            //Tri par fusion si nécessaire
+            /*if (Torrent.model.sortcolonne > -1){
+             Torrent.model.fileliste = Base.model.tableau.triFusion(Torrent.model.fileliste,Torrent.model.sortcolonne,Torrent.model.sorttype);
+             }*/
+
+
+        }
+    },
+    conversionListeNavigation1 : function (liste,force){
+        if (liste != null){
+            if (Torrent.model.filelisteoriginal.length == 0 || Torrent.model.changedurl|| force ){
+                Torrent.model.filelisteoriginal = liste;
+            }else{
+                $.each(liste, function(k,v){
+                    if (v == false){
+                        delete Torrent.model.filelisteoriginal[k];
+                    }else{
+                        if(Torrent.model.filelisteoriginal[k]){
+                            $.each(v, function (kk,vv){
+                                Torrent.model.filelisteoriginal[k][kk]= vv;
+                            });
+                        }else{
+                            Torrent.model.filelisteoriginal[k]= v;
+                        }
+                    }
+                });
+            }
+
+            Torrent.model.fileliste = [];
+            var dossier = [];
+            for( var j = 0; j <Torrent.model.filelisteoriginal.length; j++){
+                var v = Torrent.model.filelisteoriginal[j];
+                Torrent.model.fileliste[Torrent.model.fileliste.length]= v;
+                var paths = v[1].split("/");
+                var dire= "/";
+                var ancdire= "/";
+                for ( var i= 0; i < paths.length;i++){
+                    var parent =0;
+                    if ( i == paths.length -1){
+                        //File
+                        if ( i == 0){
+                            if (!Torrent.model.filelistenavigation[0])
+                                Torrent.model.filelistenavigation[0]={dossier : [],file : []};
+                            Torrent.model.filelistenavigation[0].file[Torrent.model.filelistenavigation[0].file.length] = [paths[i]];
+                        }else{
+                            if ( !Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id])
+                                Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id]={dossier : [],file : [],back:dossier[(ancdire+paths[i-1])].parent};
+                            Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].file[Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].file.length]= [paths[i]];
+                        }
+                    }else{
+                        //Dossier
+                        var where
+
+                        if ( i == 0){
+                            parent = 0;
+                            if (!Torrent.model.filelistenavigation[parent])
+                                Torrent.model.filelistenavigation[parent]={dossier : [],file : []};
+                            where =Torrent.model.filelistenavigation[parent].dossier.length;
+                            if ( !dossier[(dire+paths[i])] ){
+//                                Torrent.model.filelistenavigation[parent].dossier[where] = {nom :paths[i], parent:parent,childs:Torrent.model.filelistenavigation.length,chunkscomplete : v[2],chunkstotal :v[3], size: v[4]};
+                                Torrent.model.filelistenavigation[parent].dossier[where] = [paths[i], Torrent.model.filelistenavigation.length,Base.model.converter.iv(v[2]),Base.model.converter.iv(v[3]), Base.model.converter.iv(v[4])];
+                            }else{
+                                where = dossier[(dire+paths[i])].ou;
+                                Torrent.model.filelistenavigation[parent].dossier[where][3]+=Base.model.converter.iv(v[2]);
+                                Torrent.model.filelistenavigation[parent].dossier[where][4]+=Base.model.converter.iv(v[3]);
+                                Torrent.model.filelistenavigation[parent].dossier[where][5]+=Base.model.converter.iv(v[4]);
+                            }
+                        }else{
+                            //parent = dossier[(ancdire+paths[i-1])].parent;
+                            if ( !Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id])
+                                Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id]={dossier : [],file : [],back:dossier[(ancdire+paths[i-1])].parent};
+                            where = Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].dossier.length;
+
+                            if ( !dossier[(dire+paths[i])] ){
+                                Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].dossier[where]= [paths[i], Torrent.model.filelistenavigation.length, Base.model.converter.iv(v[2]),Base.model.converter.iv(v[3]), Base.model.converter.iv(v[4])];
+                            }else{
+                                where = dossier[(dire+paths[i])].ou;
+                               // console.log((dire+paths[i]));
+                               // console.log(where);
+                              //  console.log(Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].dossier[where]);
+                                Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].dossier[where][3]+=Base.model.converter.iv(v[2]);
+                                Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].dossier[where][4]+=Base.model.converter.iv(v[3]);
+                                Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].dossier[where][5]+=Base.model.converter.iv(v[4]);
+                            }
+                        }
+                        if ( !dossier[(dire+paths[i])] )
+                            dossier[(dire+paths[i])]={id:Torrent.model.filelistenavigation.length,ou : where,parent : (i < 1 ? 0:dossier[(ancdire+paths[i-1])].id)};
+                    }
+                     if ( i>0){
+                         ancdire += "/"+paths[i-1];
+                     }
+                    dire += "/"+paths[i];
+
+
+
+                }
+                //Torrent.model.filelistenavigation[ Torrent.model.filelistenavigation.length-1] = vv;
+
+
+            }
+            console.log(dossier);
+            //Tri par fusion si nécessaire
+            /*if (Torrent.model.sortcolonne > -1){
+             Torrent.model.fileliste = Base.model.tableau.triFusion(Torrent.model.fileliste,Torrent.model.sortcolonne,Torrent.model.sorttype);
+             }*/
+
+
+        }
+    },
+
     conversionListeDetails : function (liste,force){
         if (liste != null){
             if (Torrent.model.detaillisteoriginal.length == 0 || Torrent.model.changedurl||force ){
@@ -561,7 +734,7 @@ Torrent.controller =  {
                             }
                         }
                         Torrent.view.detailsTorrent();
-                        Torrent.view.filesTorrent();
+                        //Torrent.view.filesTorrent();
                         //Torrent.view.listeTorrents(torrent);
                         setTimeout(function(){
                             Torrent.controller.update(res[1]);
@@ -600,23 +773,23 @@ Torrent.controller =  {
                 if ( response.host == Torrent.model.baseUrl){
                     if (response.showdebugger == "ok"){
                         if (Torrent.model.listeselectionnee.length == 1 && response.hashtorrent == Torrent.model.listeselectionnee[0]){
-                                if ( response.torrentselectionnee){
-                                    Torrent.model.torrentselectionneedetail = {};
-                                    if (response.torrentselectionnee.files ){
-                                        var t = true;
-                                        Torrent.controller.conversionListeFiles(response.torrentselectionnee.files,t);
-                                        Torrent.controller.conversionListeDetails(response.torrentselectionnee.detail,t);
-                                    }
-
-                                }else{
-                                    //var t = true;
-                                    //Torrent.controller.conversionListeFiles([],t);
-                                    //Torrent.controller.conversionListeDetails([],t);
+                            if ( response.torrentselectionnee){
+                                Torrent.model.torrentselectionneedetail = {};
+                                if (response.torrentselectionnee.files ){
+                                    var t = true;
+                                    Torrent.controller.conversionListeFiles(response.torrentselectionnee.files,t);
+                                    Torrent.controller.conversionListeDetails(response.torrentselectionnee.detail,t);
                                 }
+
+                            }else{
+                                //var t = true;
+                                //Torrent.controller.conversionListeFiles([],t);
+                                //Torrent.controller.conversionListeDetails([],t);
+                            }
 
                         }
                         Torrent.view.detailsTorrent();
-                        Torrent.view.filesTorrent();
+                        //Torrent.view.filesTorrent();
                     }else{
                         Base.view.noty.generate("error","Impossible de se connecter à rtorrent");
                     }
@@ -669,11 +842,11 @@ Torrent.controller =  {
     streamingFileTorrent : function(k){
         var url = Torrent.model.downloadFileTorrent(Torrent.model.listeselectionnee[0],Torrent.model.fileselectionnee[0]);
         if (Torrent.model.fileliste[k][2] == Torrent.model.fileliste[k][3]){
-            window.open(Base.model.conf.base_url+'/torrent/streaming/'+Torrent.model.baseUrl+"/"+Torrent.model.listeselectionnee[0]+"/"+Torrent.model.fileselectionnee[0]+"/"+Base.model.path.basename(Torrent.model.fileliste[k][1])+"/test.html","_blank","menubar=no, status=no, scrollbars=no, toolbar=no,location=no,resizable=no, width=650, height=500");
+            window.open(Base.model.conf.base_url+'/torrent/streaming/'+Torrent.model.baseUrl+"/"+Torrent.model.listeselectionnee[0]+"/"+Torrent.model.fileselectionnee[0]+"/"+Base.model.path.basename(Torrent.model.fileliste[k][1])+"/test.html","_blank","menubar=no, status=no, scrollbars=no, toolbar=no,location=no,resizable=no, width=650, height=510");
         }else{
             var text = "Le fichier \""+Base.model.path.basename(Torrent.model.fileliste[k][1])+"\" n'est pas complet<br>Voulez vous continuez le streaming ?";
             Base.view.noty.generateConfirm(text,function(){
-                window.open(Base.model.conf.base_url+'/torrent/streaming/'+Torrent.model.baseUrl+"/"+Torrent.model.listeselectionnee[0]+"/"+Torrent.model.fileselectionnee[0]+"/"+Base.model.path.basename(Torrent.model.fileliste[k][1])+"/test.html","_blank","menubar=no, status=no, scrollbars=no, toolbar=no,location=no,resizable=no, width=650, height=500");
+                window.open(Base.model.conf.base_url+'/torrent/streaming/'+Torrent.model.baseUrl+"/"+Torrent.model.listeselectionnee[0]+"/"+Torrent.model.fileselectionnee[0]+"/"+Base.model.path.basename(Torrent.model.fileliste[k][1])+"/test.html","_blank","menubar=no, status=no, scrollbars=no, toolbar=no,location=no,resizable=no, width=650, height=510");
             });
         }
         //Torrent.view.fileTorrentsStreaming(url);
