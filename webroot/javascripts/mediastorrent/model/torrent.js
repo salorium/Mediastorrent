@@ -19,9 +19,11 @@ Torrent.model =  {
     liste:[],
     listerecherche:[],
     fileselectionnee:[],
+    fileselectionneenofile:[],
     fileselectionneeid:-1,
     fileliste:[],
     filelistenavigation:[],
+    filenavigationou : 0,
     filelisteoriginal:[],
     detailliste:[],
     detaillisteoriginal:[],
@@ -29,6 +31,11 @@ Torrent.model =  {
     container :{
         listtorrent : null
 
+    },
+    getPriorite : function( noprio){
+        if ( noprio < 0 )
+            return '?';
+        return Torrent.model.fileinfospriorite[noprio];
     },
     downloadFileTorrent: function(hash,no){
         var url = "http://"+Torrent.model.baseUrl+'/torrent/download/'+hash+"/"+no+"/"+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion;

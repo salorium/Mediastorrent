@@ -352,10 +352,12 @@ Torrent.controller =  {
                         Torrent.model.detaillisteoriginal = [];
                         Torrent.model.fileliste = [];
                         Torrent.model.filelisteoriginal = [];
+                        Torrent.model.filelistenavigation=[];
+                        Torrent.model.filenavigationou = 0;
                         Torrent.model.changeselecttorrent = true;
                         $(e.currentTarget).addClass("torrentselect");
                         Torrent.view.detailsTorrent();
-                        Torrent.view.filesTorrent();
+                        Torrent.view.filesTorrentArbre();
                         //  mon action
                     }else if (e.ctrlKey){
                         id = $.inArray($(e.currentTarget).attr("id"),Torrent.model.listeselectionnee)
@@ -369,11 +371,13 @@ Torrent.controller =  {
                         Torrent.model.detailliste = [];
                         Torrent.model.detaillisteoriginal = [];
                         Torrent.model.fileliste = [];
+                        Torrent.model.filenavigationou = 0;
+                        Torrent.model.filelistenavigation=[];
                         Torrent.model.filelisteoriginal = [];
                         Torrent.model.changeselecttorrent = true;
                         Torrent.model.listeselectionneeid = ($(e.currentTarget).attr("idcpt"));
                         Torrent.view.detailsTorrent();
-                        Torrent.view.filesTorrent();
+                        Torrent.view.filesTorrentArbre();
                     }else if (! (Torrent.model.listeselectionnee.length == 1 && Torrent.model.listeselectionnee[0]==$(e.currentTarget).attr("id") )){
                         Torrent.model.listeselectionnee=[];
                         Torrent.model.listeselectionnee.push($(e.currentTarget).attr("id"));
@@ -382,13 +386,15 @@ Torrent.controller =  {
                         Torrent.model.detailliste = Torrent.model.listeoriginal[$(e.currentTarget).attr("id")];
                         Torrent.model.detaillisteoriginal = Torrent.model.listeoriginal[$(e.currentTarget).attr("id")];
                         Torrent.model.fileselectionnee=[];
+                        Torrent.model.filenavigationou = 0;
+                        Torrent.model.filelistenavigation=[];
                         Torrent.model.fileliste = [];
                         Torrent.model.filelisteoriginal = [];
                         Torrent.model.changeselecttorrent = true;
                         $(".torrent").removeClass("torrentselect");
                         $(e.currentTarget).addClass("torrentselect");
                         Torrent.view.detailsTorrent();
-                        Torrent.view.filesTorrent();
+                        Torrent.view.filesTorrentArbre();
                     }
                     break;
                 case 3:
@@ -400,13 +406,15 @@ Torrent.controller =  {
                         Torrent.model.detailliste = Torrent.model.listeoriginal[$(e.currentTarget).attr("id")];
                         Torrent.model.detaillisteoriginal = Torrent.model.listeoriginal[$(e.currentTarget).attr("id")];
                         Torrent.model.fileselectionnee=[];
+                        Torrent.model.filelistenavigation=[];
+                        Torrent.model.filenavigationou = 0;
                         Torrent.model.changeselecttorrent = true;
                         $(".torrent").removeClass("torrentselect");
                         $(e.currentTarget).addClass("torrentselect");
                         Torrent.model.fileliste = [];
                         Torrent.model.filelisteoriginal = [];
                         Torrent.view.detailsTorrent();
-                        Torrent.view.filesTorrent();
+                        Torrent.view.filesTorrentArbre();
                     }
                     break;
             }
@@ -568,7 +576,7 @@ Torrent.controller =  {
 
         }
     },
-    conversionListeNavigation1 : function (liste,force){
+    conversionListeFileArbre : function (liste,force){
         if (liste != null){
             if (Torrent.model.filelisteoriginal.length == 0 || Torrent.model.changedurl|| force ){
                 Torrent.model.filelisteoriginal = liste;
@@ -589,6 +597,7 @@ Torrent.controller =  {
             }
 
             Torrent.model.fileliste = [];
+            Torrent.model.filelistenavigation = [];
             var dossier = [];
             for( var j = 0; j <Torrent.model.filelisteoriginal.length; j++){
                 var v = Torrent.model.filelisteoriginal[j];
@@ -603,11 +612,11 @@ Torrent.controller =  {
                         if ( i == 0){
                             if (!Torrent.model.filelistenavigation[0])
                                 Torrent.model.filelistenavigation[0]={dossier : [],file : []};
-                            Torrent.model.filelistenavigation[0].file[Torrent.model.filelistenavigation[0].file.length] = [paths[i]];
+                            Torrent.model.filelistenavigation[0].file[Torrent.model.filelistenavigation[0].file.length] = [paths[i],v[0],v[2],v[3],v[4],v[5]];
                         }else{
                             if ( !Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id])
                                 Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id]={dossier : [],file : [],back:dossier[(ancdire+paths[i-1])].parent};
-                            Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].file[Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].file.length]= [paths[i]];
+                            Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].file[Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].file.length]= [paths[i],v[0],v[2],v[3],v[4],v[5]];
                         }
                     }else{
                         //Dossier
@@ -620,12 +629,14 @@ Torrent.controller =  {
                             where =Torrent.model.filelistenavigation[parent].dossier.length;
                             if ( !dossier[(dire+paths[i])] ){
 //                                Torrent.model.filelistenavigation[parent].dossier[where] = {nom :paths[i], parent:parent,childs:Torrent.model.filelistenavigation.length,chunkscomplete : v[2],chunkstotal :v[3], size: v[4]};
-                                Torrent.model.filelistenavigation[parent].dossier[where] = [paths[i], Torrent.model.filelistenavigation.length,Base.model.converter.iv(v[2]),Base.model.converter.iv(v[3]), Base.model.converter.iv(v[4])];
+                                Torrent.model.filelistenavigation[parent].dossier[where] = [paths[i], Torrent.model.filelistenavigation.length,Base.model.converter.iv(v[2]),Base.model.converter.iv(v[3]), Base.model.converter.iv(v[4]), Base.model.converter.iv(v[5]),[v[0]]];
                             }else{
                                 where = dossier[(dire+paths[i])].ou;
-                                Torrent.model.filelistenavigation[parent].dossier[where][3]+=Base.model.converter.iv(v[2]);
-                                Torrent.model.filelistenavigation[parent].dossier[where][4]+=Base.model.converter.iv(v[3]);
-                                Torrent.model.filelistenavigation[parent].dossier[where][5]+=Base.model.converter.iv(v[4]);
+                                Torrent.model.filelistenavigation[parent].dossier[where][2]+=Base.model.converter.iv(v[2]);
+                                Torrent.model.filelistenavigation[parent].dossier[where][3]+=Base.model.converter.iv(v[3]);
+                                Torrent.model.filelistenavigation[parent].dossier[where][4]+=Base.model.converter.iv(v[4]);
+                                Torrent.model.filelistenavigation[parent].dossier[where][5]=(Torrent.model.filelistenavigation[parent].dossier[where][5] == Base.model.converter.iv(v[5]) ? Base.model.converter.iv(v[5]):-1);
+                                Torrent.model.filelistenavigation[parent].dossier[where][6][Torrent.model.filelistenavigation[parent].dossier[where][6].length] = v[0];
                             }
                         }else{
                             //parent = dossier[(ancdire+paths[i-1])].parent;
@@ -634,15 +645,17 @@ Torrent.controller =  {
                             where = Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].dossier.length;
 
                             if ( !dossier[(dire+paths[i])] ){
-                                Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].dossier[where]= [paths[i], Torrent.model.filelistenavigation.length, Base.model.converter.iv(v[2]),Base.model.converter.iv(v[3]), Base.model.converter.iv(v[4])];
+                                Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].dossier[where]= [paths[i], Torrent.model.filelistenavigation.length, Base.model.converter.iv(v[2]),Base.model.converter.iv(v[3]), Base.model.converter.iv(v[4]), Base.model.converter.iv(v[5]),[v[0]]];
                             }else{
                                 where = dossier[(dire+paths[i])].ou;
                                // console.log((dire+paths[i]));
                                // console.log(where);
                               //  console.log(Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].dossier[where]);
-                                Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].dossier[where][3]+=Base.model.converter.iv(v[2]);
-                                Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].dossier[where][4]+=Base.model.converter.iv(v[3]);
-                                Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].dossier[where][5]+=Base.model.converter.iv(v[4]);
+                                Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].dossier[where][2]+=Base.model.converter.iv(v[2]);
+                                Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].dossier[where][3]+=Base.model.converter.iv(v[3]);
+                                Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].dossier[where][4]+=Base.model.converter.iv(v[4]);
+                                Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].dossier[where][5]=(Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].dossier[where][5] ==Base.model.converter.iv(v[5])?Base.model.converter.iv(v[5]):-1);
+                                Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].dossier[where][6][Torrent.model.filelistenavigation[dossier[(ancdire+paths[i-1])].id].dossier[where][6].length] = v[0];
                             }
                         }
                         if ( !dossier[(dire+paths[i])] )
@@ -660,7 +673,6 @@ Torrent.controller =  {
 
 
             }
-            console.log(dossier);
             //Tri par fusion si nécessaire
             /*if (Torrent.model.sortcolonne > -1){
              Torrent.model.fileliste = Base.model.tableau.triFusion(Torrent.model.fileliste,Torrent.model.sortcolonne,Torrent.model.sorttype);
@@ -722,7 +734,7 @@ Torrent.controller =  {
                             if ( response.torrentselectionnee){
                                 if (response.torrentselectionnee.files ){
                                     var t = Torrent.model.changeselecttorrent && response.torrentselectionnee.files != [] && response.torrentselectionnee.detail != [];
-                                    Torrent.controller.conversionListeFiles(response.torrentselectionnee.files,t);
+                                    Torrent.controller.conversionListeFileArbre(response.torrentselectionnee.files,t);
                                     Torrent.controller.conversionListeDetails(response.torrentselectionnee.detail,t);
                                     Torrent.model.changeselecttorrent = false;
                                 }
@@ -734,6 +746,7 @@ Torrent.controller =  {
                             }
                         }
                         Torrent.view.detailsTorrent();
+                        Torrent.view.filesTorrentArbre();
                         //Torrent.view.filesTorrent();
                         //Torrent.view.listeTorrents(torrent);
                         setTimeout(function(){
@@ -777,7 +790,7 @@ Torrent.controller =  {
                                 Torrent.model.torrentselectionneedetail = {};
                                 if (response.torrentselectionnee.files ){
                                     var t = true;
-                                    Torrent.controller.conversionListeFiles(response.torrentselectionnee.files,t);
+                                    Torrent.controller.conversionListeFileArbre(response.torrentselectionnee.files,t);
                                     Torrent.controller.conversionListeDetails(response.torrentselectionnee.detail,t);
                                 }
 
@@ -789,6 +802,7 @@ Torrent.controller =  {
 
                         }
                         Torrent.view.detailsTorrent();
+                        Torrent.view.filesTorrentArbre();
                         //Torrent.view.filesTorrent();
                     }else{
                         Base.view.noty.generate("error","Impossible de se connecter à rtorrent");
@@ -813,14 +827,16 @@ Torrent.controller =  {
         //window.open(url,"_blank", null);
     },
     prioriteFileTorrent : function(priorite){
-        var liste = Torrent.model.fileselectionnee;
+        var liste = Torrent.model.fileselectionneenofile;
         var listafaire = [];
         if (liste.length >0){
             $.each(liste, function(k,v){
                 listafaire.push(v);
             });
         }
+        console.log(listafaire.join());
         Torrent.model.fileselectionnee = [];
+        Torrent.model.fileselectionneenofile = [];
         $.ajax({
             url: "http://"+Torrent.model.baseUrl+'/torrent/setPrioriteFile/'+Torrent.model.listeselectionnee[0]+"/"+priorite+"/"+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion+".json",
             dataType: "json",
@@ -842,11 +858,11 @@ Torrent.controller =  {
     streamingFileTorrent : function(k){
         var url = Torrent.model.downloadFileTorrent(Torrent.model.listeselectionnee[0],Torrent.model.fileselectionnee[0]);
         if (Torrent.model.fileliste[k][2] == Torrent.model.fileliste[k][3]){
-            window.open(Base.model.conf.base_url+'/torrent/streaming/'+Torrent.model.baseUrl+"/"+Torrent.model.listeselectionnee[0]+"/"+Torrent.model.fileselectionnee[0]+"/"+Base.model.path.basename(Torrent.model.fileliste[k][1])+"/test.html","_blank","menubar=no, status=no, scrollbars=no, toolbar=no,location=no,resizable=no, width=650, height=510");
+            window.open(Base.model.conf.base_url+'/torrent/streaming/'+Torrent.model.baseUrl+"/"+Torrent.model.listeselectionnee[0]+"/"+k+"/"+Base.model.path.basename(Torrent.model.fileliste[k][1])+"/test.html","_blank","menubar=no, status=no, scrollbars=no, toolbar=no,location=no,resizable=no, width=650, height=510");
         }else{
             var text = "Le fichier \""+Base.model.path.basename(Torrent.model.fileliste[k][1])+"\" n'est pas complet<br>Voulez vous continuez le streaming ?";
             Base.view.noty.generateConfirm(text,function(){
-                window.open(Base.model.conf.base_url+'/torrent/streaming/'+Torrent.model.baseUrl+"/"+Torrent.model.listeselectionnee[0]+"/"+Torrent.model.fileselectionnee[0]+"/"+Base.model.path.basename(Torrent.model.fileliste[k][1])+"/test.html","_blank","menubar=no, status=no, scrollbars=no, toolbar=no,location=no,resizable=no, width=650, height=510");
+                window.open(Base.model.conf.base_url+'/torrent/streaming/'+Torrent.model.baseUrl+"/"+Torrent.model.listeselectionnee[0]+"/"+k+"/"+Base.model.path.basename(Torrent.model.fileliste[k][1])+"/test.html","_blank","menubar=no, status=no, scrollbars=no, toolbar=no,location=no,resizable=no, width=650, height=510");
             });
         }
         //Torrent.view.fileTorrentsStreaming(url);

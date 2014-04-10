@@ -253,7 +253,7 @@ Torrent.view =  {
             $("#torrentdetailratio").html("");
         }
     },
-    filesTorrent:function(){
+    filesTorrentListe:function(){
         $("#torrentdetailsfiles").empty();
             if (Torrent.model.fileliste.length > 0)
             $.each( Torrent.model.fileliste, function(k,v){
@@ -363,11 +363,154 @@ Torrent.view =  {
             //panel2-2
 
     },
-    filesTorrentNavigation:function(){
+    filesTorrentArbre:function(){
         $("#torrentdetailsfiles").empty();
-        if (Torrent.model.fileliste.length > 0)
-            $.each( Torrent.model.fileliste, function(k,v){
-                var $tr = $('<tr style="cursor: pointer;" class="'+($.inArray(v[0]+"",Torrent.model.fileselectionnee) > -1 ?"active":"")+'" id="file'+k+'" data-cpt="'+k+'" data-id="'+v[0]+'" ondblclick="Torrent.controller.downloadFileTorrent('+k+');"><td>'+Base.model.path.basename(v[1])+'</td><td>'+Base.model.converter.bytes(v[4],2)+'</td><td>'+Base.model.converter.bytes(v[4]*v[2]/v[3],2)+'</td><td><progress class="'+(v[2]==v[3] ? "ul":"dl")+'"  value="'+v[2]+'" max="'+v[3]+'" title="'+(v[2] != 0 ?v[2]/v[3]*100:0)+'%"></progress></td><td>'+Torrent.model.fileinfospriorite[v[5]]+'</td></tr>');
+        if (Torrent.model.filelistenavigation.length > 0){
+             //Parcour dossier
+            list = Torrent.model.filelistenavigation[Torrent.model.filenavigationou];
+            if (!isNaN(list.back) ){
+                var $tr = $('<tr style="cursor: pointer;" ><td><img width="30" src="'+Base.model.conf.base_url+'images/dossier.svg">..</td><td></td><td></td><td></td><td></td></tr>');
+
+                $("#torrentdetailsfiles").append(
+                    $tr
+                );
+                $tr.dblclick ( function(e){
+                    e.preventDefault();
+                    Torrent.model.fileselectionnee = [];
+                    Torrent.model.filenavigationou = list.back;
+                    Torrent.view.filesTorrentArbre();
+                });
+            }
+            var cpt = 0;
+            $.each(list.dossier, function(k,v){
+                var $tr = $('<tr style="cursor: pointer;" class="'+($.inArray(cpt+"",Torrent.model.fileselectionnee) > -1 ?"active":"")+'" id="file'+cpt+'" data-cpt="'+cpt+'" data-dossier="1" data-dossierk="'+k+'"><td><img width="30" src="'+Base.model.conf.base_url+'images/dossier.svg">'+v[0]+'</td><td>'+Base.model.converter.bytes(v[4],2)+'</td><td>'+Base.model.converter.bytes(v[4]*v[2]/v[3],2)+'</td><td><progress class="'+(v[2]==v[3] ? "ul":"dl")+'"  value="'+v[2]+'" max="'+v[3]+'" title="'+(v[2] != 0 ?v[2]/v[3]*100:0)+'%"></progress></td><td>'+Torrent.model.getPriorite(v[5])+'</td></tr>');
+
+                $("#torrentdetailsfiles").append(
+                    $tr
+                );
+                $tr.dblclick ( function(e){
+                    e.preventDefault();
+                    Torrent.model.fileselectionnee = [];
+                    Torrent.model.filenavigationou = v[1];
+                    Torrent.view.filesTorrentArbre();
+                });
+
+                $tr.mousedown(function(e) {
+                    e.preventDefault();
+                    switch (e.which){
+                        case 1:
+                            //clique gauche
+                            if (e.shiftKey) { //Clique gauche avec Shift
+                                Torrent.model.fileselectionnee = [];
+                                if ( Torrent.model.fileselectionneeid > -1){
+                                    max = Base.model.converter.iv($(e.currentTarget).attr("data-cpt"));
+                                    i1 = Base.model.converter.iv(Torrent.model.fileselectionneeid);
+                                    if (i1 < max ){
+                                        for (i=i1;i< max;i++){
+                                            if ($("#file"+i).attr("data-dossier") === "1" ){
+                                                Torrent.model.fileselectionneenofile =Torrent.model.fileselectionneenofile.concat(Torrent.model.filelistenavigation[Torrent.model.filenavigationou].dossier[$("#file"+i).attr("data-dossierk")][6]);
+                                            }else{
+                                                Torrent.model.fileselectionneenofile.push($("#file"+i).attr("data-id"));
+                                            }
+                                            Torrent.model.fileselectionnee.push($("#file"+i).attr("data-cpt"));
+                                            $("#file"+i).addClass("active");
+                                        }
+                                    }else{
+                                        for (i=i1;i> max;i--){
+                                            if ($("#file"+i).attr("data-dossier") === "1" ){
+                                                Torrent.model.fileselectionneenofile =Torrent.model.fileselectionneenofile.concat(Torrent.model.filelistenavigation[Torrent.model.filenavigationou].dossier[$("#file"+i).attr("data-dossierk")][6]);
+                                            }else{
+                                                Torrent.model.fileselectionneenofile.push($("#file"+i).attr("data-id"));
+                                            }
+                                            Torrent.model.fileselectionnee.push($("#file"+i).attr("data-cpt"));
+                                            $("#file"+i).addClass("active");
+                                        }
+                                    }
+                                    Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-cpt"));
+                                    Torrent.model.fileselectionneenofile =Torrent.model.fileselectionneenofile.concat(v[6]);
+                                }else{
+                                    Torrent.model.fileselectionneeid = $(e.currentTarget).attr("data-cpt");
+                                    Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-cpt"));
+                                    Torrent.model.fileselectionneenofile =Torrent.model.fileselectionneenofile.concat(v[6]);
+                                }
+                                $(e.currentTarget).addClass("active");
+                                //  mon action
+                            }else if (e.ctrlKey){//Clique gauche avec CTRL
+                                id = $.inArray($(e.currentTarget).attr("data-cpt"),Torrent.model.fileselectionnee);
+                                if (id > -1){
+                                    $(e.currentTarget).removeClass("active");
+                                    Torrent.model.fileselectionnee.splice(id,1);
+                                    $.each( v[6],function(k,vv){
+                                    Torrent.model.fileselectionneenofile.splice(Torrent.model.fileselectionneenofile.indexOf(vv), 1);
+                                    });
+                                }else{
+                                    Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-cpt"));
+                                    Torrent.model.fileselectionneenofile =Torrent.model.fileselectionneenofile.concat(v[6]);
+                                    $(e.currentTarget).addClass("active");
+                                    Torrent.model.fileselectionneeid = $(e.currentTarget).attr("data-cpt");
+                                }
+                            }else{//Clique gauche
+                                Torrent.model.fileselectionnee=[];
+                                Torrent.model.fileselectionneenofile = [];
+                                Torrent.model.fileselectionneenofile =Torrent.model.fileselectionneenofile.concat(v[6]);
+                                Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-cpt"));
+                                Torrent.model.fileselectionneeid = $(e.currentTarget).attr("data-cpt");
+                                $(e.currentTarget).parent().children().removeClass("active");
+                                $(e.currentTarget).addClass("active");
+                            }
+                            break;
+                        case 3:
+                            //clique droit
+                            id= $.inArray($(e.currentTarget).attr("data-cpt"),Torrent.model.fileselectionnee);
+                            if ( id > -1 && Torrent.model.fileselectionnee.length > 1){
+                                console.log("ici");
+                                // console.log(e);
+                                var button = [];
+                                var subutton = [];
+                                    subutton.push({nom:"Haute", dest: function(){Torrent.controller.prioriteFileTorrent(2);}})
+                                    subutton.push({nom:"Normal", dest: function(){Torrent.controller.prioriteFileTorrent(1);}})
+                                    subutton.push({nom:"Ne pas télécharger", dest: function(){Torrent.controller.prioriteFileTorrent(0);}})
+                                button.push({nom:"Priorité",dest : subutton});
+                                /*button.push({nom:"Télécharger",dest : function(){Torrent.controller.downloadFileTorrent($(e.currentTarget).attr("data-cpt"));}});
+                                 if ( Base.model.path.ext(v[1]) == "avi" || Base.model.path.ext(v[1]) == "mp4" || Base.model.path.ext(v[1]) == "mkv"){
+                                 button.push({nom:"Streaming",dest : function(){Torrent.controller.streamingFileTorrent($(e.currentTarget).attr("data-cpt"));}});
+                                 }*/
+                                Base.model.pannelClicDroit.make(button, e.clientX,e.clientY);
+                            }else{
+                                Torrent.model.fileselectionnee=[];
+                                Torrent.model.fileselectionneenofile=[];
+                                Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-cpt"));
+                                Torrent.model.fileselectionneenofile =Torrent.model.fileselectionneenofile.concat(v[6]);
+                                $(e.currentTarget).parent().children().removeClass("active");
+                                $(e.currentTarget).addClass("active");
+                                var button = [];
+                                var subutton = [];
+                                if (v[5] !=2 ){
+                                    subutton.push({nom:"Haute", dest: function(){Torrent.controller.prioriteFileTorrent(2);}})
+                                }
+                                if (v[5] !=1 ){
+                                    subutton.push({nom:"Normal", dest: function(){Torrent.controller.prioriteFileTorrent(1);}})
+                                }
+                                if (v[5] !=0 ){
+                                    subutton.push({nom:"Ne pas télécharger", dest: function(){Torrent.controller.prioriteFileTorrent(0);}})
+                                }
+                                button.push({nom:"Priorité",dest : subutton});
+                                /*button.push({nom:"Télécharger",dest : function(){Torrent.controller.downloadFileTorrent($(e.currentTarget).attr("data-cpt"));}});
+                                if ( Base.model.path.ext(v[1]) == "avi" || Base.model.path.ext(v[1]) == "mp4" || Base.model.path.ext(v[1]) == "mkv"){
+                                    button.push({nom:"Streaming",dest : function(){Torrent.controller.streamingFileTorrent($(e.currentTarget).attr("data-cpt"));}});
+                                }*/
+                                Base.model.pannelClicDroit.make(button, e.clientX,e.clientY);
+                            }
+                            break;
+                    }
+
+                });
+
+
+                cpt++;
+            });
+            $.each(list.file, function(k,v){
+                var $tr = $('<tr style="cursor: pointer;" class="'+($.inArray(cpt+"",Torrent.model.fileselectionnee) > -1 ?"active":"")+'" id="file'+cpt+'" data-cpt="'+cpt+'" data-dossier="0" data-id="'+v[1]+'"><td><img width="30" src="'+Base.model.conf.base_url+'images/fichier.svg">'+v[0]+'</td><td>'+Base.model.converter.bytes(v[4],2)+'</td><td>'+Base.model.converter.bytes((v[3] != 0 ? v[4]*v[2]/v[3]: 0),2)+'</td><td><progress class="'+(v[2]==v[3] ? "ul":"dl")+'"  value="'+(v[3] != 0 ? v[2] :1)+'" max="'+v[3] +'" title="'+(v[3] != 0 ? v[2]/v[3]*100:100)+'%"></progress></td><td>'+Torrent.model.getPriorite(v[5])+'</td></tr>');
 
                 $("#torrentdetailsfiles").append(
                     $tr
@@ -385,35 +528,35 @@ Torrent.view =  {
                                     if (i1 < max ){
                                         for (i=i1;i< max;i++){
 
-                                            Torrent.model.fileselectionnee.push($("#file"+i).attr("data-id"));
+                                            Torrent.model.fileselectionnee.push($("#file"+i).attr("data-cpt"));
                                             $("#file"+i).addClass("active");
                                         }
                                     }else{
                                         for (i=i1;i> max;i--){
-                                            Torrent.model.fileselectionnee.push($("#file"+i).attr("data-id"));
+                                            Torrent.model.fileselectionnee.push($("#file"+i).attr("data-cpt"));
                                             $("#file"+i).addClass("active");
                                         }
                                     }
-                                    Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-id"));
+                                    Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-cpt"));
                                 }else{
                                     Torrent.model.fileselectionneeid = $(e.currentTarget).attr("data-cpt");
-                                    Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-id"));
+                                    Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-cpt"));
                                 }
                                 $(e.currentTarget).addClass("active");
                                 //  mon action
                             }else if (e.ctrlKey){//Clique gauche avec CTRL
-                                id = $.inArray($(e.currentTarget).attr("data-id"),Torrent.model.fileselectionnee);
+                                id = $.inArray($(e.currentTarget).attr("data-cpt"),Torrent.model.fileselectionnee);
                                 if (id > -1){
                                     $(e.currentTarget).removeClass("active");
                                     Torrent.model.fileselectionnee.splice(id,1);
                                 }else{
-                                    Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-id"));
+                                    Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-cpt"));
                                     $(e.currentTarget).addClass("active");
-                                    Torrent.model.fileselectionneeid = $(e.currentTarget).attr("data-id");
+                                    Torrent.model.fileselectionneeid = $(e.currentTarget).attr("data-cpt");
                                 }
                             }else{//Clique gauche
                                 Torrent.model.fileselectionnee=[];
-                                Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-id"));
+                                Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-cpt"));
                                 Torrent.model.fileselectionneeid = $(e.currentTarget).attr("data-cpt");
                                 $(e.currentTarget).parent().children().removeClass("active");
                                 $(e.currentTarget).addClass("active");
@@ -421,29 +564,23 @@ Torrent.view =  {
                             break;
                         case 3:
                             //clique droit
-                            id= $.inArray($(e.currentTarget).attr("data-id"),Torrent.model.fileselectionnee);
+                            id= $.inArray($(e.currentTarget).attr("data-cpt"),Torrent.model.fileselectionnee);
                             if ( id > -1 && Torrent.model.fileselectionnee.length > 1){
                                 // console.log(e);
                                 var button = [];
                                 var subutton = [];
-                                if (v[5] !=2 ){
                                     subutton.push({nom:"Haute", dest: function(){Torrent.controller.prioriteFileTorrent(2);}})
-                                }
-                                if (v[5] !=1 ){
                                     subutton.push({nom:"Normal", dest: function(){Torrent.controller.prioriteFileTorrent(1);}})
-                                }
-                                if (v[5] !=0 ){
                                     subutton.push({nom:"Ne pas télécharger", dest: function(){Torrent.controller.prioriteFileTorrent(0);}})
-                                }
                                 button.push({nom:"Priorité",dest : subutton});
                                 /*button.push({nom:"Télécharger",dest : function(){Torrent.controller.downloadFileTorrent($(e.currentTarget).attr("data-cpt"));}});
-                                 if ( Base.model.path.ext(v[1]) == "avi" || Base.model.path.ext(v[1]) == "mp4" || Base.model.path.ext(v[1]) == "mkv"){
+                                 if ( Base.model.path.ext(v[0]) == "avi" || Base.model.path.ext(v[0]) == "mp4" || Base.model.path.ext(v[0]) == "mkv"){
                                  button.push({nom:"Streaming",dest : function(){Torrent.controller.streamingFileTorrent($(e.currentTarget).attr("data-cpt"));}});
                                  }*/
                                 Base.model.pannelClicDroit.make(button, e.clientX,e.clientY);
                             }else{
                                 Torrent.model.fileselectionnee=[];
-                                Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-id"));
+                                Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-cpt"));
                                 $(e.currentTarget).parent().children().removeClass("active");
                                 $(e.currentTarget).addClass("active");
                                 var button = [];
@@ -458,18 +595,28 @@ Torrent.view =  {
                                     subutton.push({nom:"Ne pas télécharger", dest: function(){Torrent.controller.prioriteFileTorrent(0);}})
                                 }
                                 button.push({nom:"Priorité",dest : subutton});
-                                button.push({nom:"Télécharger",dest : function(){Torrent.controller.downloadFileTorrent($(e.currentTarget).attr("data-cpt"));}});
-                                if ( Base.model.path.ext(v[1]) == "avi" || Base.model.path.ext(v[1]) == "mp4" || Base.model.path.ext(v[1]) == "mkv"){
-                                    button.push({nom:"Streaming",dest : function(){Torrent.controller.streamingFileTorrent($(e.currentTarget).attr("data-cpt"));}});
-                                }
+                                button.push({nom:"Télécharger",dest : function(){Torrent.controller.downloadFileTorrent($(e.currentTarget).attr("data-id"));}});
+                                 if ( Base.model.path.ext(v[0]) == "avi" || Base.model.path.ext(v[0]) == "mp4" || Base.model.path.ext(v[0]) == "mkv"){
+                                 button.push({nom:"Streaming",dest : function(){Torrent.controller.streamingFileTorrent($(e.currentTarget).attr("data-id"));}});
+                                 }
                                 Base.model.pannelClicDroit.make(button, e.clientX,e.clientY);
                             }
                             break;
                     }
 
                 });
+                $tr.dblclick ( function(e){
+                    e.preventDefault();
+                    Torrent.controller.downloadFileTorrent($(e.currentTarget).attr("data-id"));
+                });
+                cpt++
+
 
             });
+        }
+            /*$.each( Torrent.model.filelistenavigation[Torrent.model.filenavigationou], function(k,v){
+            console.log(v);
+            });*/
         //panel2-2
 
     },
