@@ -225,27 +225,41 @@ class Allocine extends Model {
             /*if (isset($v->poster->href))
                 $tmp["image"] =  $v->poster->href;
             */
-            foreach($v->media AS $k=>$v){
-                if ( $v->class === "picture"){
+            foreach($v->media AS $k=>$vv){
+                if ( $vv->class === "picture"){
                     $width=0;
                     $height=0;
-                    if ( isset($v->width) && isset($v->height)){
-                        $width = $v->width;
-                        $height = $v->height;
+                    if ( isset($vv->width) && isset($vv->height)){
+                        $width = $vv->width;
+                        $height = $vv->height;
                     }else{
-                        $info = getimagesize ( $v->thumbnail->href );
+                        $info = getimagesize ( $vv->thumbnail->href );
                         $width = $info[0];
                         $height = $info[1];
                     }
                     if ( $width > $height){
                         //Backdrop
-                        $tmp["imagebackdrop"][]= array($v->thumbnail->href,$width,$height);
+                        $tmp["imagebackdrop"][]= array($vv->thumbnail->href,$width,$height);
                     }else{
                         //Poster
-                        $tmp["imageposter"][]= array($v->thumbnail->href,$width,$height);
+                        $tmp["imageposter"][]= array($vv->thumbnail->href,$width,$height);
                     }
                 }
             }
+            $tmdb = new TheMovieDb();
+            $tmp1 = $tmdb->searchSerie($v->originalTitle,"en");
+            if ( isset($tmp1->results)){
+                $tmp1 =$tmdb->getSerieImage($tmp1->results[0]->id);
+                foreach( $tmp1->backdrops as $k=>$vv){
+                    //var_dump($vv);
+                    //die();
+                    $tmp["imagebackdrop"][]= array("http://image.tmdb.org/t/p/original".$vv->file_path,$vv->width,$vv->height);
+                }
+                foreach( $tmp1->posters as $k=>$vv){
+                    $tmp["imageposter"][]= array("http://image.tmdb.org/t/p/original".$vv->file_path,$vv->width,$vv->height);
+                }
+            }
+
             if (isset($v->statistics->userRating))
                 $tmp["Note des spectacteurs"]= $v->statistics->userRating;
             if (isset($v->statistics->pressRating))
@@ -335,9 +349,41 @@ class Allocine extends Model {
                 $tmp["Réalisateur"] =  $v->castingShort->directors;
             if (isset($v->castingShort->actors))
                 $tmp["Acteur(s)"] =  $v->castingShort->actors;
-            if (isset($v->poster->href))
-                $tmp["image"] =  $v->poster->href;
-            if (isset($v->movieCertificate->certificate->_))
+            foreach($v->media AS $k=>$vv){
+                if ( $vv->class === "picture"){
+                    $width=0;
+                    $height=0;
+                    if ( isset($vv->width) && isset($vv->height)){
+                        $width = $vv->width;
+                        $height = $vv->height;
+                    }else{
+                        $info = getimagesize ( $vv->thumbnail->href );
+                        $width = $info[0];
+                        $height = $info[1];
+                    }
+                    if ( $width > $height){
+                        //Backdrop
+                        $tmp["imagebackdrop"][]= array($vv->thumbnail->href,$width,$height);
+                    }else{
+                        //Poster
+                        $tmp["imageposter"][]= array($vv->thumbnail->href,$width,$height);
+                    }
+                }
+            }
+            $tmdb = new TheMovieDb();
+            $tmp1 = $tmdb->searchFilm($v->originalTitle,"en");
+            if ( isset($tmp1->results)){
+            $tmp1 =$tmdb->getMovieImage($tmp1->results[0]->id);
+                foreach( $tmp1->backdrops as $k=>$vv){
+                    //var_dump($vv);
+                    //die();
+                    $tmp["imagebackdrop"][]= array("http://image.tmdb.org/t/p/original".$vv->file_path,$vv->width,$vv->height);
+                }
+                foreach( $tmp1->posters as $k=>$vv){
+                    $tmp["imageposter"][]= array("http://image.tmdb.org/t/p/original".$vv->file_path,$vv->width,$vv->height);
+                }
+            }
+                if (isset($v->movieCertificate->certificate->_))
                 $tmp["Interdiction"] =  $v->movieCertificate->certificate->_;
             if (isset($v->nationality)){
                 $tmp["Origine"] = "";

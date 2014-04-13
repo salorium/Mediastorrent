@@ -21,6 +21,15 @@ class Test extends Controller {
 
         ));
     }
+    function iso3166(){
+        \model\simple\Iso31::getIso3166();
+    }
+    function tmdb($re){
+        $tmdb = new \model\simple\TheMovieDb();
+        $this->set(array(
+            "film" =>$tmdb->getMovieFormat($re)
+    ));
+    }
     function accerole($role){
         $num = \config\Conf::$rolenumero[$role];
         $compteurarray = null;

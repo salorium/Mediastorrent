@@ -43,7 +43,7 @@ class Allocine extends Controller {
         $o["typesearch"]="movie";
         $all = new \model\simple\Allocine($id,$o);
         $this->set(array(
-            "film" => $all->retourneResMovie()
+            "film" => $all->retourneResMovieFormat()
         ));
     }
 } 
