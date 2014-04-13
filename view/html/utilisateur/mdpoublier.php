@@ -18,7 +18,7 @@ if (isset ($erreur)){
 ?>
 
 <div class="connexion">
-    <form data-abide class="custom" action="<?=\core\Router::url("/utilisateur/mdpoublier")?>" method="POST">
+    <form data-abide class="custom" action="<?=\core\Router::url("utilisateur/mdpoublier")?>" method="POST">
         <fieldset>
             <legend>Récupération du mot de passe</legend>
             <div class="row">

@@ -12,9 +12,15 @@ namespace controller;
 use core\Controller;
 
 
-
 class Test extends Controller {
+    function allocine ( $re){
+        $all = new \model\simple\Allocine($re);
+        $this->set(array(
+            "film" => $all->retourneResMoviesFormat(),
+            "serie" => $all->retourneResSeriesFormat()
 
+        ));
+    }
     function accerole($role){
         $num = \config\Conf::$rolenumero[$role];
         $compteurarray = null;

@@ -402,6 +402,7 @@ Torrent.view =  {
                             //clique gauche
                             if (e.shiftKey) { //Clique gauche avec Shift
                                 Torrent.model.fileselectionnee = [];
+                                Torrent.model.fileselectionneenofile = [];
                                 if ( Torrent.model.fileselectionneeid > -1){
                                     max = Base.model.converter.iv($(e.currentTarget).attr("data-cpt"));
                                     i1 = Base.model.converter.iv(Torrent.model.fileselectionneeid);
@@ -522,25 +523,37 @@ Torrent.view =  {
                             //clique gauche
                             if (e.shiftKey) { //Clique gauche avec Shift
                                 Torrent.model.fileselectionnee = [];
+                                Torrent.model.fileselectionneenofile = [];
                                 if ( Torrent.model.fileselectionneeid > -1){
                                     max = Base.model.converter.iv($(e.currentTarget).attr("data-cpt"));
                                     i1 = Base.model.converter.iv(Torrent.model.fileselectionneeid);
                                     if (i1 < max ){
                                         for (i=i1;i< max;i++){
-
+                                            if ($("#file"+i).attr("data-dossier") === "1" ){
+                                                Torrent.model.fileselectionneenofile =Torrent.model.fileselectionneenofile.concat(Torrent.model.filelistenavigation[Torrent.model.filenavigationou].dossier[$("#file"+i).attr("data-dossierk")][6]);
+                                            }else{
+                                                Torrent.model.fileselectionneenofile.push($("#file"+i).attr("data-id"));
+                                            }
                                             Torrent.model.fileselectionnee.push($("#file"+i).attr("data-cpt"));
                                             $("#file"+i).addClass("active");
                                         }
                                     }else{
                                         for (i=i1;i> max;i--){
+                                            if ($("#file"+i).attr("data-dossier") === "1" ){
+                                                Torrent.model.fileselectionneenofile =Torrent.model.fileselectionneenofile.concat(Torrent.model.filelistenavigation[Torrent.model.filenavigationou].dossier[$("#file"+i).attr("data-dossierk")][6]);
+                                            }else{
+                                                Torrent.model.fileselectionneenofile.push($("#file"+i).attr("data-id"));
+                                            }
                                             Torrent.model.fileselectionnee.push($("#file"+i).attr("data-cpt"));
                                             $("#file"+i).addClass("active");
                                         }
                                     }
                                     Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-cpt"));
+                                    Torrent.model.fileselectionneenofile.push(v[1]);
                                 }else{
                                     Torrent.model.fileselectionneeid = $(e.currentTarget).attr("data-cpt");
                                     Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-cpt"));
+                                    Torrent.model.fileselectionneenofile.push(v[1]);
                                 }
                                 $(e.currentTarget).addClass("active");
                                 //  mon action
@@ -549,13 +562,17 @@ Torrent.view =  {
                                 if (id > -1){
                                     $(e.currentTarget).removeClass("active");
                                     Torrent.model.fileselectionnee.splice(id,1);
+                                    Torrent.model.fileselectionneenofile.splice(Torrent.model.fileselectionneenofile.indexOf(v[1]), 1);
                                 }else{
                                     Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-cpt"));
                                     $(e.currentTarget).addClass("active");
                                     Torrent.model.fileselectionneeid = $(e.currentTarget).attr("data-cpt");
+                                    Torrent.model.fileselectionneenofile.push(v[1]);
                                 }
                             }else{//Clique gauche
                                 Torrent.model.fileselectionnee=[];
+                                Torrent.model.fileselectionneenofile = [];
+                                Torrent.model.fileselectionneenofile.push(v[1]);
                                 Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-cpt"));
                                 Torrent.model.fileselectionneeid = $(e.currentTarget).attr("data-cpt");
                                 $(e.currentTarget).parent().children().removeClass("active");
@@ -580,6 +597,8 @@ Torrent.view =  {
                                 Base.model.pannelClicDroit.make(button, e.clientX,e.clientY);
                             }else{
                                 Torrent.model.fileselectionnee=[];
+                                Torrent.model.fileselectionneenofile = [];
+                                Torrent.model.fileselectionneenofile.push(v[1]);
                                 Torrent.model.fileselectionnee.push($(e.currentTarget).attr("data-cpt"));
                                 $(e.currentTarget).parent().children().removeClass("active");
                                 $(e.currentTarget).addClass("active");
@@ -706,7 +725,8 @@ Torrent.view =  {
             });
             $tablefile.append($tbodyfile);
             $("#torrent"+id+"files").append($tablefile);
-
+            $("#torrent"+id+"files").append('<label>Recherche</label><ul style="list-style: none; width: 50%;"><li><input type="text" ></li><li id="torrent'+id+'suggest" style="display: none;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda consequuntur cupiditate dicta, expedita facilis laborum maiores natus nobis vero vitae! Eaque eos explicabo magnam officiis, quo suscipit totam unde vero!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab animi architecto consectetur, deserunt dolorem id mollitia neque nobis, obcaecati provident quae, quas quia recusandae repellendus saepe sapiente sint sunt voluptate. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos labore, veritatis. Ab, cupiditate eaque earum minus natus odit quam quasi quos repellendus repudiandae suscipit tempora velit voluptates. Deserunt, quis, quos.</li></ul>');
+            $("#torrent"+id+"files").append('<h1>Testtt</h1>');
         },
 
         showFileSerieTorrent: function(files,id){

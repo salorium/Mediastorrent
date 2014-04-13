@@ -22,11 +22,11 @@
         <!-- Top Bar Left Nav Elements -->
         <ul class="left">
             <li class="divider"></li>
-            <li class=""><a href="<?=\core\Router::url("/torrent/all")?>"><img width="30px"  title="Torrent" src="<?=BASE_URL?>images/torrent.svg?color=rgba(240,240,240,1)"/></a>
+            <li class=""><a href="<?=\core\Router::url("torrent/all")?>"><img width="30px"  title="Torrent" src="<?=BASE_URL?>images/torrent.svg?color=rgba(240,240,240,1)"/></a>
             </li>
             <li class="divider"></li>
             <!-- Search | has-form wrapper -->
-            <li class="has-dropdown not-click"><a href="<?=\core\Router::url("/film/nouveau")?>"><img width="30px"  title="Film" src="<?=BASE_URL?>images/film.svg?color=rgba(240,240,240,1)"/></a>
+            <li class="has-dropdown not-click"><a href="<?=\core\Router::url("film/nouveau")?>"><img width="30px"  title="Film" src="<?=BASE_URL?>images/film.svg?color=rgba(240,240,240,1)"/></a>
 
                 <ul class="dropdown">
                     <li class="has-dropdown"><a>Nouveauté</a>
@@ -153,6 +153,6 @@
                     </div>
                 </div>
             </li>
-            <li><a href="<?=\core\Router::url("/utilisateur/deconnexion")?>"><img title="Déconnexion" width="30px" src="<?=BASE_URL?>images/logout.svg?color=white"></a></li>
+            <li><a href="<?=\core\Router::url("utilisateur/deconnexion")?>"><img title="Déconnexion" width="30px" src="<?=BASE_URL?>images/logout.svg?color=white"></a></li>
         </ul>
     </section></nav>

@@ -45,7 +45,7 @@ if (isset ($erreur)){
 }
 ?>
 <div class="connexion">
-    <form data-abide class="custom" action="<?=\core\Router::url("/utilisateur/connexion")?>" method="POST">
+    <form data-abide class="custom" action="<?=\core\Router::url("utilisateur/connexion")?>" method="POST">
         <fieldset>
             <legend>Connexion</legend>
             <div class="row">
@@ -68,7 +68,7 @@ if (isset ($erreur)){
                 <div class="columns">
                     <ul class="button-group round">
                         <li>    <button class="button small secondary" value="Connexion" type="submit">Connexion</button></li>
-                        <li>    <a class="button small" href="<?=\core\Router::url("/utilisateur/mdpoublier")?>">Mot de passe oublié ?</a></li>
+                        <li>    <a class="button small" href="<?=\core\Router::url("utilisateur/mdpoublier")?>">Mot de passe oublié ?</a></li>
 
 
                     </ul>

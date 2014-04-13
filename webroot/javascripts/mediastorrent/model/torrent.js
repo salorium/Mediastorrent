@@ -44,7 +44,7 @@ Torrent.model =  {
     },
     nbtorrents:0,
     updated : true,
-    regexsaison : /(s(\d+)|(\d+)x)/img,
+    regexsaison : /(s(\d+)|(\d+)x(\d+))/img,
     regexepisode: /e(\d+)/gi,
     regexepisode1 : /(\d+)/gi
 };
