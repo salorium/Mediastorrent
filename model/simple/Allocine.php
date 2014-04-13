@@ -203,7 +203,7 @@ class Allocine extends Model {
             $tmp["type"] = "tvseries";
             $tmp["code"] = $v->code;
             if (isset($v->originalTitle))
-                $tmp["Tite original"]= $v->originalTitle;
+                $tmp["Titre original"]= $v->originalTitle;
             if (isset($v->title))
                 $tmp["Titre"]= $v->title;
             if (isset($v->yearStart))
@@ -222,8 +222,30 @@ class Allocine extends Model {
                 $tmp["Réalisateur"] =  $v->castingShort->creators;
             if (isset($v->castingShort->actors))
                 $tmp["Acteur(s)"] =  $v->castingShort->actors;
-            if (isset($v->poster->href))
+            /*if (isset($v->poster->href))
                 $tmp["image"] =  $v->poster->href;
+            */
+            foreach($v->media AS $k=>$v){
+                if ( $v->class === "picture"){
+                    $width=0;
+                    $height=0;
+                    if ( isset($v->width) && isset($v->height)){
+                        $width = $v->width;
+                        $height = $v->height;
+                    }else{
+                        $info = getimagesize ( $v->thumbnail->href );
+                        $width = $info[0];
+                        $height = $info[1];
+                    }
+                    if ( $width > $height){
+                        //Backdrop
+                        $tmp["imagebackdrop"][]= array($v->thumbnail->href,$width,$height);
+                    }else{
+                        //Poster
+                        $tmp["imageposter"][]= array($v->thumbnail->href,$width,$height);
+                    }
+                }
+            }
             if (isset($v->statistics->userRating))
                 $tmp["Note des spectacteurs"]= $v->statistics->userRating;
             if (isset($v->statistics->pressRating))
