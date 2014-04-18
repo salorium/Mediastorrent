@@ -6,7 +6,7 @@
  * Time: 11:02
  * To change this template use File | Settings | File Templates.
  */
-header("Access-Control-Allow-Origin: http://mediastorrent");
+header("Access-Control-Allow-Origin: *");
 define('WEBROOT',__DIR__);
 define('ROOT',dirname(WEBROOT));
 define('DS',DIRECTORY_SEPARATOR);
