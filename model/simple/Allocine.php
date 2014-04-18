@@ -147,6 +147,7 @@ class Allocine extends Model {
         $res = $this->retourneResMovies();
         if ($res != null){
             foreach ($res as $k => $v){
+                $tmp = null;
                 $tmp["type"] = "movie";
                 $tmp["code"] = $v->code;
                 if (isset($v->originalTitle))
@@ -171,6 +172,7 @@ class Allocine extends Model {
         $res = $this->retourneResSeries();
         if ($res != null){
             foreach ($res as $k => $v){
+                $tmp = null;
                 $tmp["type"] = "tvseries";
                 $tmp["code"] = $v->code;
                 if (isset($v->originalTitle))
@@ -369,6 +371,10 @@ class Allocine extends Model {
                         $tmp["imageposter"][]= array($vv->thumbnail->href,$width,$height);
                     }
                 }
+                if ( $vv->class === "video" && $vv->type->_ === "Bande-annonce" && strpos($vv->title,'VF') !== false){
+                    $tmp["ba"]= $vv->code;
+                }
+
             }
             $tmdb = new TheMovieDb();
             $tmp1 = $tmdb->searchFilm($v->originalTitle,"en");

@@ -6,13 +6,13 @@
  * Time: 16:08
  */
 
-namespace controller\normal;
+namespace controller;
 
 
 use core\Controller;
 
 class Allocine extends Controller {
-    function recherche($re=null){
+    function recherche($login=null,$keyconnexion=null,$re=null){
         if (is_null($re))
             $re = $_REQUEST["recherche"];
         $all = new \model\simple\Allocine($re);
@@ -22,7 +22,24 @@ class Allocine extends Controller {
 
         ));
     }
-    function rechercheFilm($re=null){
+    function rechercheFilm($login=null,$keyconnexion=null,$re=null){
+        if (!is_null($login) && ! is_null($keyconnexion)){
+            $u = \core\Memcached::value($login,"user");
+            if ( is_null($u)){
+                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
+                if ( $u)
+                    \core\Memcached::value($u->login,"user",$u,60*5);
+            }else{
+                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
+                if ( is_bool($u)){
+                    $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
+                    if ( $u)
+                        \core\Memcached::value($u->login,"user",$u,60*5);
+                }
+                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
+            }
+            \config\Conf::$user["user"]= $u;
+        }
         if (is_null($re))
             $re = $_REQUEST["recherche"];
         $all = new \model\simple\Allocine($re);

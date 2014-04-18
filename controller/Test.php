@@ -14,11 +14,10 @@ use core\Controller;
 
 class Test extends Controller {
     function allocine ( $re){
-        $all = new \model\simple\Allocine($re);
+        $o["typesearch"]="movie";
+        $all = new \model\simple\Allocine($re,$o);
         $this->set(array(
-            "film" => $all->retourneResMoviesFormat(),
-            "serie" => $all->retourneResSeriesFormat()
-
+            "film" => $all->retourneResMovie()
         ));
     }
     function iso3166(){

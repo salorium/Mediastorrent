@@ -10659,3 +10659,30 @@ ul.CMenu li ul li a.dis:hover {
   background-color: #FFFFFF;
   color: #C0C0C0;
 }
+
+/* line 905, ../scss/mediastorrent1.scss */
+div.suggest {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 200px;
+}
+/* line 907, ../scss/mediastorrent1.scss */
+div.suggest img {
+  width: 90px;
+}
+/* line 910, ../scss/mediastorrent1.scss */
+div.suggest table {
+  width: 100%;
+  border: none;
+  margin-bottom: 0px;
+  background: none;
+}
+/* line 917, ../scss/mediastorrent1.scss */
+div.suggest fieldset {
+  cursor: pointer;
+  padding: 0;
+}
+/* line 921, ../scss/mediastorrent1.scss */
+div.suggest fieldset:hover {
+  background-color: rgba(0, 155, 0, 0.2);
+}

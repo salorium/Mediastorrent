@@ -706,6 +706,10 @@ Torrent.view =  {
                 $fieldset.append('<label for="torrent'+id+'typeserie">Série</label>');
                 $inputfilm.click(function(e){
                     Torrent.view.addTorrent.showFileMovieTorrent(torrent.files,id);
+                    var nom = torrent.nom.replace(/\.\d{4}.+/gi,"");
+                    nom = nom.replace(/\./gi," ");
+                    $('#torrent'+id+'suggestrecherche').val(nom);
+                    Torrent.controller.addTorrent.rechercher(id);
                 });
                 $inputserie.click(function(e){
                     Torrent.view.addTorrent.showFileSerieTorrent(torrent.files,id);
@@ -725,18 +729,65 @@ Torrent.view =  {
             });
             $tablefile.append($tbodyfile);
             $("#torrent"+id+"files").append($tablefile);
-            $("#torrent"+id+"files").append('<label>Recherche</label><ul style="list-style: none; width: 50%;"><li><input type="text" ></li><li id="torrent'+id+'suggest" style="display: none;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda consequuntur cupiditate dicta, expedita facilis laborum maiores natus nobis vero vitae! Eaque eos explicabo magnam officiis, quo suscipit totam unde vero!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab animi architecto consectetur, deserunt dolorem id mollitia neque nobis, obcaecati provident quae, quas quia recusandae repellendus saepe sapiente sint sunt voluptate. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos labore, veritatis. Ab, cupiditate eaque earum minus natus odit quam quasi quos repellendus repudiandae suscipit tempora velit voluptates. Deserunt, quis, quos.</li></ul>');
+            Torrent.view.addTorrent.addRechercher(id);
             $("#torrent"+id+"files").append('<h1>Testtt</h1>');
         },
+        addRechercher : function(id){
+            $("#torrent"+id+"files").append('<label>Recherche</label>');
+            $ul = $('<ul style="list-style: none; width: 50%;"></ul>');
+            $li = $('<li></li>');
+            $input =  $('<input type="text" id="torrent'+id+'suggestrecherche" name="torrent'+id+'suggestrecherche">');
+            $input[0].onupdate = $input[0].onkeyup = function() {
+                if ($.trim($input[0].value).length > 1){
+                    Torrent.controller.addTorrent.rechercher(id);
+                }else{
+                    $('#torrent'+id+'suggest').hide();
+                }
+            }
+            $li.append($input);
+            $ul.append($li);
+            $ul.append('<li><div class="suggest" id="torrent'+id+'suggest" style="display: none;"></div></li>');
+            $("#torrent"+id+"files").append($ul);
 
+        },
+        showRechercheFilms : function(id,films){
+            $('#torrent'+id+'suggest').empty();
+            $.each( films, function(k,v){
+               Torrent.view.addTorrent.showRechercheFilm(id,v);
+            });
+            $('#torrent'+id+'suggest').show();
+        },
+        showRechercheFilm : function(id,film){
+            $fieldset = $('<fieldset><legend>'+(film.titre ? film.titre:film.originaltitre)+'</legend></fieldset>');
+            $fieldset.click ( function(e){
+                console.log(film.code);
+                $('#torrent'+id+'suggest').empty();
+                $('#torrent'+id+'suggest').hide();
+            });
+            $table = $('<table class="noneventrowbg"></table>');
+            if (film.image){
+                $table.append('<tr><td rowspan="4" ><img src="'+Base.model.conf.base_url+"proxy/imageSetWidth/"+film.image.replace(/\//gi,"\\")+'/100.jpg"></td><td></td></tr>');
+
+            }else{
+
+            }
+            if ( film.acteur){
+            $table.append('<tr><td>Acteur : '+film.acteur+'</td></tr>');
+            }else{
+                $table.append('<tr><td></td></tr>');
+            }
+            $table.append('<tr><td></td></tr>');
+            $table.append('<tr><td>'+(film.realisateur ?'Par : '+film.realisateur:"")+(film.anneeprod ?' en '+film.anneeprod:"")+'</td></tr>');
+
+            $fieldset.append($table);
+            $('#torrent'+id+'suggest').append($fieldset);
+        },
         showFileSerieTorrent: function(files,id){
             $("#torrent"+id+"files").empty();
             $tablefile = $('<table><thead><tr><th><input onchange="Base.controller.checkerCheckbox(this);" id="torrent'+id+'ajoutecheck" class="torrent'+id+'ajoutecheck" type="checkbox"><label for="torrent'+id+'ajoutecheck">Ajoute</label></th><th><input onchange="Base.controller.checkerCheckbox(this);" id="torrent'+id+'partagecheck" class="torrent'+id+'partagecheck" type="checkbox"><label for="torrent'+id+'partagecheck">Partage</label></th><th>Fichier</th><th>Saison</th><th>Episode</th><th>Complément</th></tr></thead></table>');
             $tbodyfile = $("<tbody></tbody>");
             $.each(files, function(k,v){
                 saisons = v.nom.match(Torrent.model.regexsaison);
-                console.log(v.nom);
-                console.log(saisons);
                 if ( saisons != null){
                 saisons = saisons[saisons.length-1];
                 saison = Base.model.converter.iv(saisons);

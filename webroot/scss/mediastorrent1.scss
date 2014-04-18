@@ -901,3 +901,27 @@ ul.CMenu li ul li a.dis:hover {
   background-color: #FFFFFF;
   color: #C0C0C0;
 }
+
+div.suggest {
+ // background-color:$table-bg;
+  img{
+    width: 90px;
+  }
+  table{
+    width: 100%;
+    border: none;
+    //color: #ffffff;
+    margin-bottom: 0px;
+    background: none;
+  }
+  fieldset{
+    cursor: pointer;
+    padding: 0;
+  }
+  fieldset:hover{
+    background-color: rgba(0,155,0, 0.2);
+  }
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 200px;
+}

@@ -953,6 +953,26 @@ Torrent.controller =  {
 
                 });
             }
+        },
+        rechercher: function(id){
+            var recherche = $("#torrent"+id+"suggestrecherche").val();
+            var url = "http://"+Torrent.model.baseUrl+'/allocine/rechercheFilm/'+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion;
+
+            $.ajax({
+                url: url+".json",
+                dataType: "json",
+                type: "POST",
+                data: {recherche:recherche},
+
+                //contentType: "application/json",
+                success: function(response, textStatus, jqXHR){
+                    console.log(response);
+                    Torrent.view.addTorrent.showRechercheFilms(id,response.film);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    Base.view.noty.generate("error","Impossible de se connecter à "+Torrent.model.nomseedbox);
+                }
+            });
         }
 
     }

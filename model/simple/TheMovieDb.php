@@ -63,6 +63,14 @@ class TheMovieDb extends Model {
         );
         return $this->lookUrl($this->url."movie/".$id."?");
     }
+    function getSerie($id,$lang="fr"){
+        $this->param =  array(
+            'append_to_response' => "casts",
+            'language' => $lang,
+            'api_key'=> $this->api_key
+        );
+        return $this->lookUrl($this->url."tv/".$id."?");
+    }
     /*function getMovieJson($id,$lang="fr"){
         $this->param =  array(
             'append_to_response' => "casts",

@@ -30,6 +30,7 @@ class Conf
         array("localhost",11211)
     );
     static $user = null;
+    static $api_key_themoviedb = "57b59be276081344c6073b1989f4d57e";
     static $numerorole = array("Visiteur","Normal",array("Torrent","Uploadeur"),"Sysop");
     static $rolenumero; // Ne pas modifier
     static $rolevue;
