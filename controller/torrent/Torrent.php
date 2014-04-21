@@ -20,12 +20,12 @@ class Torrent extends Controller {
     }
 
 
-    function send(){
+    /*function send(){
         $this->set(array(
             "file"=> $_FILES,
             "post"=> $_POST
         ));
-    }
+    }*/
     function infofichier(){
 
         if (isset ( $_FILES ['torrentfile'] )) {
