@@ -766,7 +766,7 @@ Torrent.view =  {
             });
             $table = $('<table class="noneventrowbg"></table>');
             if (film.image){
-                $table.append('<tr><td rowspan="4" ><img src="'+Base.model.conf.base_url+"proxy/imageSetWidth/"+film.image.replace(/\//gi,"\\")+'/100.jpg"></td><td></td></tr>');
+                $table.append('<tr><td rowspan="4" ><img src="'+Base.model.conf.base_url+"proxy/imageSetWidth/"+Base.model.converter.paramUrl(film.image)+'/100.jpg"></td><td></td></tr>');
 
             }else{
 

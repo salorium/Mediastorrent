@@ -15,6 +15,9 @@ Base.model =  {
     },
 
     converter : {
+        paramUrl:function(val){
+            return val.replace(/\//gi,"\\");
+        },
         iv: function(val){
             var v = (val==null) ? 0 : parseInt(val + "");
             return(isNaN(v) ? null : v);

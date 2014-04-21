@@ -858,7 +858,7 @@ Torrent.controller =  {
     streamingFileTorrent : function(k){
         var url = Torrent.model.downloadFileTorrent(Torrent.model.listeselectionnee[0],Torrent.model.fileselectionnee[0]);
         if (Torrent.model.fileliste[k][2] == Torrent.model.fileliste[k][3]){
-            window.open(Base.model.conf.base_url+'/torrent/streaming/'+Torrent.model.baseUrl+"/"+Torrent.model.listeselectionnee[0]+"/"+k+"/"+Base.model.path.basename(Torrent.model.fileliste[k][1])+"/test.html","_blank","menubar=no, status=no, scrollbars=no, toolbar=no,location=no,resizable=no, width=650, height=510");
+            window.open(Base.model.conf.base_url+'/torrent/streaming/'+Base.model.converter.paramUrl(Torrent.model.baseUrl)+"/"+Torrent.model.listeselectionnee[0]+"/"+k+"/"+Base.model.path.basename(Torrent.model.fileliste[k][1])+"/test.html","_blank","menubar=no, status=no, scrollbars=no, toolbar=no,location=no,resizable=no, width=650, height=510");
         }else{
             var text = "Le fichier \""+Base.model.path.basename(Torrent.model.fileliste[k][1])+"\" n'est pas complet<br>Voulez vous continuez le streaming ?";
             Base.view.noty.generateConfirm(text,function(){
