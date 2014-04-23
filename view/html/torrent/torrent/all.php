@@ -10,7 +10,9 @@
 
 \core\LoaderJavascript::add("base","controller.fixeHeightContainer");
 \core\LoaderJavascript::add("base","controller.tableScroll");
-\core\LoaderJavascript::add("torrent","controller.init",$seedbox);
+\core\LoaderJavascript::add("torrent1","controller.init",$seedbox);
+\core\LoaderJavascript::add("base","controller.setHost",array($_SERVER["HTTP_HOST"].dirname(dirname($_SERVER["SCRIPT_NAME"])).($_SERVER["SCRIPT_NAME"] !== "/index.php" ? "/":""),false))
+
 ?>
 <script>
     document.oncontextmenu = new Function("return false");
@@ -38,21 +40,21 @@
                 </ul>
             </li>
             <li class="divider"></li>
-            <li><a onclick="Torrent.controller.addTorrent.addTorrentShow();" title="Ajouter un Torrent"><img width="40px"   src="<?=BASE_URL?>images/world.svg"/></a></li>
+            <li><a onclick="Torrent1.controller.addTorrent.show();" title="Ajouter un Torrent"><img width="40px"   src="<?=BASE_URL?>images/world.svg"/></a></li>
             <li class="divider"></li>
-            <li><a onclick="Torrent.controller.startTorrent();" title="Démarrer un Torrent"><img width="40px"   src="<?=BASE_URL?>images/play.svg"/></a></li>
+            <li><a onclick="Torrent1.controller.listTorrent.start();" title="Démarrer un Torrent"><img width="40px"   src="<?=BASE_URL?>images/play.svg"/></a></li>
             <li class="divider"></li>
-            <li><a onclick="Torrent.controller.pauseTorrent();" title="Mettre en pause un Torrent"><img width="40px"   src="<?=BASE_URL?>images/pause.svg"/></a></li>
+            <li><a onclick="Torrent1.controller.listTorrent.pause();" title="Mettre en pause un Torrent"><img width="40px"   src="<?=BASE_URL?>images/pause.svg"/></a></li>
             <li class="divider"></li>
-            <li><a onclick="Torrent.controller.stopTorrent();" title="Arrêter un Torrent"><img width="40px"   src="<?=BASE_URL?>images/stop.svg"/></a></li>
+            <li><a onclick="Torrent1.controller.listTorrent.stop();" title="Arrêter un Torrent"><img width="40px"   src="<?=BASE_URL?>images/stop.svg"/></a></li>
             <li class="divider"></li>
-            <li><a onclick="Torrent.controller.recheckTorrent();" title="Revérification"><img width="40px"   src="<?=BASE_URL?>images/verify.svg"/></a></li>
+            <li><a onclick="Torrent1.controller.listTorrent.recheck();" title="Revérification"><img width="40px"   src="<?=BASE_URL?>images/verify.svg"/></a></li>
             <li class="divider"></li>
             <li class="has-dropdown not-click"><a><img width="40px"   src="<?=BASE_URL?>images/poubelle.svg"/></a>
 
                 <ul class="dropdown">
-                    <li><a onclick="Torrent.controller.deleteTorrent();">Supprimer</a></li>
-                    <li><a onclick="Torrent.controller.deleteAllTorrent();">Supprimer tout</a></li>
+                    <li><a onclick="Torrent1.controller.listTorrent.delete();">Supprimer</a></li>
+                    <li><a onclick="Torrent1.controller.listTorrent.deleteAll();">Supprimer tout</a></li>
                 </ul>
             </li>
             <li class="divider"></li>
@@ -83,9 +85,11 @@
             </ul>
     </section></nav>
 <div id="contenu">
+    <div id="loader" style="background-color: rgba(0,0,0,0.9); position: absolute; bottom: 0px; right: 0px;top: 45px;left: 0px; z-index: 10;display: none" ><h3 style="color: #ffffff;">Veuillez patienter</h3><img style="display:block;margin: auto; width: 256px;height: 256px;" src="<?=BASE_URL;?>images/loader.svg?color=white"></div>
+    <div id="souscontenu" class="heightfixed" >
         <div id="moitiegauche" class="large-5 columns panel heightfixed">
 
-            <dl class="sub-nav"> <dt>Tri:</dt> <dd class=""><a onclick="Torrent.controller.tri(this);" sort-colonne="0" >Status <span></span></a></dd><dd><a onclick="Torrent.controller.tri(this);" sort-colonne="1">Nom <span></span></a></dd><dd><a onclick="Torrent.controller.tri(this);" sort-colonne="25">Ajouté <span></span></a></dd><dd><a onclick="Torrent.controller.tri(this);" sort-colonne="6">Ratio <span></span></a></dd></dl>
+            <dl class="sub-nav"> <dt>Tri:</dt> <dd class=""><a onclick="Torrent1.controller.listTorrent.tri(this);" sort-colonne="0" >Status <span></span></a></dd><dd><a onclick="Torrent1.controller.listTorrent.tri(this);" sort-colonne="1">Nom <span></span></a></dd><dd><a onclick="Torrent1.controller.listTorrent.tri(this);" sort-colonne="25">Ajouté <span></span></a></dd><dd><a onclick="Torrent1.controller.listTorrent.tri(this);" sort-colonne="6">Ratio <span></span></a></dd></dl>
             <div id="listorrent">
             </div>
 
@@ -175,19 +179,20 @@
                 </div>
                 <div class="content" id="panel2-4"> <p>Fourth panel content goes here...</p> </div> </div></div>
 </div>
+</div>
 
 <div id="addTorrent" class="addTorrent">
 
-    <div id="addTorrentTitle" class="addTorrentTitle"><a><?= preg_replace("#([A-Z]+)#",'<span class="secondary">$1</span>',"Ajouter un torrent");?></a><a class="close" onclick="Torrent.controller.addTorrent.addTorrentHide();">&times;</a></div>
+    <div id="addTorrentTitle" class="addTorrentTitle"><a><?= preg_replace("#([A-Z]+)#",'<span class="secondary">$1</span>',"Ajouter un torrent");?></a><a class="close" onclick="Torrent1.controller.addTorrent.hide();">&times;</a></div>
     <div id="addTorrentContenu" class="addTorrentContenu">
-        <form id="addtorrent" method="post" enctype="multipart/form-data" onsubmit="Torrent.controller.addTorrent.upload(event);" >
+        <form id="addtorrent" method="post" enctype="multipart/form-data" onsubmit="Torrent1.controller.addTorrent.upload(event);" >
         <div id="baseaddTorrent">
         <div class="row expansion">
                     <div class="small-6 columns">
                         <label for="torrentfile" class="right inline">Torrent</label>
                     </div>
                     <div class="small-6 columns">
-                        <input type="file" name="torrentfile[]" multiple onchange="Torrent.controller.addTorrent.checkTorrentFile($('#mediastorrent').is(':checked'));">
+                        <input type="file" name="torrentfile[]" multiple onchange="Torrent1.controller.addTorrent.files.check($('#mediastorrent').is(':checked'));">
                     </div>
             </div>
             <div class="row expansion">
@@ -200,7 +205,7 @@
             </div>
         <div class="row expansion">
             <div class="small-6 columns">
-                <input class="right" name="mediastorrent" id="mediastorrent" type="checkbox" onchange="Torrent.controller.addTorrent.checkTorrentFile($('#mediastorrent').is(':checked'));">
+                <input class="right" name="mediastorrent" id="mediastorrent" type="checkbox" onchange="Torrent1.controller.addTorrent.files.check($('#mediastorrent').is(':checked'));">
             </div>
             <div class="small-6 columns">
                 <label for="mediastorrent">Ajouter à la bibliothèque</label>

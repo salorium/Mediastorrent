@@ -2,6 +2,17 @@
  * Created by salorium on 15/03/14.
  */
 Base.controller =  {
+    setHost : function(args){
+        Base.model.conf.base_url = args[0];
+        Base.model.conf.ssl = args[1];
+    },
+    makeUrlBase:function(base){
+        if ( base){
+            return "http"+(Base.model.conf.ssl ? "s":"")+"://"+base+"/";
+        }else{
+            return "http"+(Base.model.conf.ssl ? "s":"")+"://"+Base.model.conf.base_url;
+        }
+    },
     tableScroll: function(){
         Array.prototype.clone = function() {
             var newArray = (this instanceof Array) ? [] : {};

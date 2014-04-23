@@ -16,15 +16,16 @@ Base.view =  {
         $(container).css("height",hauteur);
     },
     noty : {
-        generate : function (type,texte){
+        generate : function (type,texte,layout){
             var n = noty({
                 text        : texte,
                 type        : type,
                 dismissQueue: true,
-                layout      : 'bottomRight',
+                layout      : (layout ? layout:'bottomRight'),
                 theme       : 'defaultTheme',
                 timeout: 2000
             });
+
         },
         generateConfirm :function(texte,call_oui,call_non){
             var n = noty({

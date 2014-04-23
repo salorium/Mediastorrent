@@ -11,7 +11,7 @@ define('WEBROOT',__DIR__);
 define('ROOT',dirname(WEBROOT));
 define('DS',DIRECTORY_SEPARATOR);
 define('CORE',ROOT.DS.'core');
-define('BASE_URL',"http".($_SERVER["SERVER_PORT"] == 80 ? "":"s")."://".$_SERVER["HTTP_HOST"].dirname(dirname($_SERVER["SCRIPT_NAME"])));
+define('BASE_URL',"http".($_SERVER["SERVER_PORT"] == 80 ? "":"s")."://".$_SERVER["HTTP_HOST"].dirname(dirname($_SERVER["SCRIPT_NAME"])).($_SERVER["SCRIPT_NAME"] !== "/index.php" ? "/":""));
 function __autoload($class_name) {
     $filename = ROOT.DS.str_replace("\\",DS,$class_name).".php";
     if (file_exists($filename)){
@@ -52,6 +52,7 @@ function debug($var){
     echo "</pre></div></a>";
 }
 core\Router::connect("Visiteur","/","utilisateur/index");
+core\Router::connect("Torrent","/","mediastorrent/accueil");
 core\Router::connect("Sysop","/","mediastorrent/accueil");
 $Dispa = new core\Dispatcher();
 

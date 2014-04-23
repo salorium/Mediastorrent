@@ -4,7 +4,8 @@
 var Base = new Object();
 Base.model =  {
     conf : {
-        base_url : 'http://mediastorrent/',
+        base_url : 'mediastorrent',
+        ssl : false,
         containerHeight : function(){
             return $(".container").height();
         }

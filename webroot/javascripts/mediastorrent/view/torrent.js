@@ -77,6 +77,7 @@ Torrent.view =  {
     },
     initSeedbox: function(selectionne){
         if ( ! Torrent.model.changedurl){
+        $("#loader").show();
         seedbox = Torrent.model.seedboxs;
         res = "";
         for ( i=seedbox.length-1;i>-1;i--){
@@ -94,10 +95,10 @@ Torrent.view =  {
         Torrent.model.baseUrl = seedbox[selectionne].hostname;
             Torrent.model.nomseedbox = seedbox[selectionne].nom;
         $("#seedbox").html(res);
-            if ( !Torrent.model.updated){
+            /*if ( !Torrent.model.updated){
                 Torrent.model.updated = true;
                 Torrent.controller.update("");
-            }
+            }*/
         }
     },
     getIconDessin:function (name){
@@ -369,7 +370,7 @@ Torrent.view =  {
              //Parcour dossier
             list = Torrent.model.filelistenavigation[Torrent.model.filenavigationou];
             if (!isNaN(list.back) ){
-                var $tr = $('<tr style="cursor: pointer;" ><td><img width="30" src="'+Base.model.conf.base_url+'images/dossier.svg">..</td><td></td><td></td><td></td><td></td></tr>');
+                var $tr = $('<tr style="cursor: pointer;" ><td><img width="30" src="'+Base.controller.makeUrlBase()+'images/dossier.svg">..</td><td></td><td></td><td></td><td></td></tr>');
 
                 $("#torrentdetailsfiles").append(
                     $tr
@@ -383,7 +384,7 @@ Torrent.view =  {
             }
             var cpt = 0;
             $.each(list.dossier, function(k,v){
-                var $tr = $('<tr style="cursor: pointer;" class="'+($.inArray(cpt+"",Torrent.model.fileselectionnee) > -1 ?"active":"")+'" id="file'+cpt+'" data-cpt="'+cpt+'" data-dossier="1" data-dossierk="'+k+'"><td><img width="30" src="'+Base.model.conf.base_url+'images/dossier.svg">'+v[0]+'</td><td>'+Base.model.converter.bytes(v[4],2)+'</td><td>'+Base.model.converter.bytes(v[4]*v[2]/v[3],2)+'</td><td><progress class="'+(v[2]==v[3] ? "ul":"dl")+'"  value="'+v[2]+'" max="'+v[3]+'" title="'+(v[2] != 0 ?v[2]/v[3]*100:0)+'%"></progress></td><td>'+Torrent.model.getPriorite(v[5])+'</td></tr>');
+                var $tr = $('<tr style="cursor: pointer;" class="'+($.inArray(cpt+"",Torrent.model.fileselectionnee) > -1 ?"active":"")+'" id="file'+cpt+'" data-cpt="'+cpt+'" data-dossier="1" data-dossierk="'+k+'"><td><img width="30" src="'+Base.controller.makeUrlBase()+'images/dossier.svg">'+v[0]+'</td><td>'+Base.model.converter.bytes(v[4],2)+'</td><td>'+Base.model.converter.bytes(v[4]*v[2]/v[3],2)+'</td><td><progress class="'+(v[2]==v[3] ? "ul":"dl")+'"  value="'+v[2]+'" max="'+v[3]+'" title="'+(v[2] != 0 ?v[2]/v[3]*100:0)+'%"></progress></td><td>'+Torrent.model.getPriorite(v[5])+'</td></tr>');
 
                 $("#torrentdetailsfiles").append(
                     $tr
@@ -511,7 +512,7 @@ Torrent.view =  {
                 cpt++;
             });
             $.each(list.file, function(k,v){
-                var $tr = $('<tr style="cursor: pointer;" class="'+($.inArray(cpt+"",Torrent.model.fileselectionnee) > -1 ?"active":"")+'" id="file'+cpt+'" data-cpt="'+cpt+'" data-dossier="0" data-id="'+v[1]+'"><td><img width="30" src="'+Base.model.conf.base_url+'images/fichier.svg">'+v[0]+'</td><td>'+Base.model.converter.bytes(v[4],2)+'</td><td>'+Base.model.converter.bytes((v[3] != 0 ? v[4]*v[2]/v[3]: 0),2)+'</td><td><progress class="'+(v[2]==v[3] ? "ul":"dl")+'"  value="'+(v[3] != 0 ? v[2] :1)+'" max="'+v[3] +'" title="'+(v[3] != 0 ? v[2]/v[3]*100:100)+'%"></progress></td><td>'+Torrent.model.getPriorite(v[5])+'</td></tr>');
+                var $tr = $('<tr style="cursor: pointer;" class="'+($.inArray(cpt+"",Torrent.model.fileselectionnee) > -1 ?"active":"")+'" id="file'+cpt+'" data-cpt="'+cpt+'" data-dossier="0" data-id="'+v[1]+'"><td><img width="30" src="'+Base.controller.makeUrlBase()+'images/fichier.svg">'+v[0]+'</td><td>'+Base.model.converter.bytes(v[4],2)+'</td><td>'+Base.model.converter.bytes((v[3] != 0 ? v[4]*v[2]/v[3]: 0),2)+'</td><td><progress class="'+(v[2]==v[3] ? "ul":"dl")+'"  value="'+(v[3] != 0 ? v[2] :1)+'" max="'+v[3] +'" title="'+(v[3] != 0 ? v[2]/v[3]*100:100)+'%"></progress></td><td>'+Torrent.model.getPriorite(v[5])+'</td></tr>');
 
                 $("#torrentdetailsfiles").append(
                     $tr
@@ -766,7 +767,7 @@ Torrent.view =  {
             });
             $table = $('<table class="noneventrowbg"></table>');
             if (film.image){
-                $table.append('<tr><td rowspan="4" ><img src="'+Base.model.conf.base_url+"proxy/imageSetWidth/"+Base.model.converter.paramUrl(film.image)+'/100.jpg"></td><td></td></tr>');
+                $table.append('<tr><td rowspan="4" ><img src="'+Base.controller.makeUrlBase()+"proxy/imageSetWidth/"+Base.model.converter.paramUrl(film.image)+'/100.jpg"></td><td></td></tr>');
 
             }else{
 

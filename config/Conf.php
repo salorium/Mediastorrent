@@ -20,7 +20,7 @@ class Conf
     static $author = "Salorium";
     static $databases = array(
         "default" => array(
-            "host" => "mysql",
+            "host" => "mysql.salorium.com",
             "database" => "mediastorrent",
             "login" => "mediastorrent",
             "password" => "azerty"

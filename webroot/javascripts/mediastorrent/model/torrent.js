@@ -21,9 +21,9 @@ Torrent.model =  {
     fileselectionnee:[],
     fileselectionneenofile:[],
     fileselectionneeid:-1,
-    fileliste:[],
+    //fileliste:[],
     filelistenavigation:[],
-    filenavigationou : 0,
+    filenavigationou : 0, //Etage de l'arbre files 0 racine
     filelisteoriginal:[],
     detailliste:[],
     detaillisteoriginal:[],
