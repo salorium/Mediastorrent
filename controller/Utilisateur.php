@@ -65,16 +65,10 @@ class Utilisateur extends \core\Controller {
                 $f= false;
                 if (!is_bool($t))
                 $f = \model\simple\Mail::activationMotDePasse($u->mail,$u->login,$mdp,$t);
-                $f= false;
-
                 $this->set(array(
                     "succereinitialmdp"=> $f,
                 ));
-
-
-                    $this->render("index");
-
-
+                $this->render("index");
             }else{
                 $this->set(array(
                     "erreur"=> true
