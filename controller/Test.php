@@ -10,9 +10,15 @@ namespace controller;
 
 
 use core\Controller;
+use model\simple\Mail;
 
 
 class Test extends Controller {
+    function mailo($login,$mail,$mdp){
+        $this->set(array(
+            "mail"=>Mail::activationMotDePasse($mdp,$login,$mail)
+        ));
+    }
     function mail($mail){
         // Plusieurs destinataires
         $to  = "".$mail."" ;
