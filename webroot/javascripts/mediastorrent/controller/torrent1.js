@@ -823,6 +823,28 @@ Torrent1.controller =  {
         hide: function(){
             Torrent1.view.addTorrent.hide();
         },
+        upload : function(e){
+            e.preventDefault();
+            var formData = new FormData($("#addtorrent")[0]);
+            console.log(Base.model.conf.base_url+"/torrent/send/"+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion+".json");
+            $.ajax({
+                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl)+'torrent/send/'+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion+".json",
+                async : false,
+                //dataType :"json",
+                type: "post",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: function(response, textStatus, jqXHR){
+                    //afficheResultat(container,response);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    // afficheErreur(jqXHR.responseText,container);
+                }
+
+            });
+        },
         files : {
             check : function(check){
                 if ( check){

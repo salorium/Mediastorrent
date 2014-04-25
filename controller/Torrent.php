@@ -14,7 +14,7 @@ use core\Controller;
 
 class Torrent extends Controller {
     function liste($login=null,$keyconnexion=null,$cid=null,$hashtorrentselectionne=null){
-        if (!is_null($login) && ! is_null($keyconnexion)){
+        /*if (!is_null($login) && ! is_null($keyconnexion)){
             $u = \core\Memcached::value($login,"user");
             if ( is_null($u)){
                 $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
@@ -30,7 +30,8 @@ class Torrent extends Controller {
                 $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
             }
             \config\Conf::$user["user"]= $u;
-        }
+        }*/
+        \model\simple\Utilisateur::authentificationPourRtorrent($login,$keyconnexion);
         $tor = null ;
         if ( !\config\Conf::$user["user"] ) throw new \Exception("Non User");
         $cmds = array(
@@ -249,23 +250,7 @@ class Torrent extends Controller {
         ));
     }
     function pause($login=null,$keyconnexion=null){
-        if (!is_null($login) && ! is_null($keyconnexion)){
-            $u = \core\Memcached::value($login,"user");
-            if ( is_null($u)){
-                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                if ( $u)
-                    \core\Memcached::value($u->login,"user",$u,60*5);
-            }else{
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-                if ( is_bool($u)){
-                    $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                    if ( $u)
-                        \core\Memcached::value($u->login,"user",$u,60*5);
-                }
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-            }
-            \config\Conf::$user["user"]= $u;
-        }
+        \model\simple\Utilisateur::authentificationPourRtorrent($login,$keyconnexion);
         if ( !\config\Conf::$user["user"] ) throw new \Exception("Non User");
         $cmds = array(
             "d.stop"
@@ -284,23 +269,7 @@ class Torrent extends Controller {
     }
 
     function start($login=null,$keyconnexion=null){
-        if (!is_null($login) && ! is_null($keyconnexion)){
-            $u = \core\Memcached::value($login,"user");
-            if ( is_null($u)){
-                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                if ( $u)
-                    \core\Memcached::value($u->login,"user",$u,60*5);
-            }else{
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-                if ( is_bool($u)){
-                    $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                    if ( $u)
-                        \core\Memcached::value($u->login,"user",$u,60*5);
-                }
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-            }
-            \config\Conf::$user["user"]= $u;
-        }
+        \model\simple\Utilisateur::authentificationPourRtorrent($login,$keyconnexion);
         if ( !\config\Conf::$user["user"] ) throw new \Exception("Non User");
         $cmds = array("d.open","d.start");
 
@@ -316,23 +285,7 @@ class Torrent extends Controller {
         ));
     }
     function stop($login=null,$keyconnexion=null){
-        if (!is_null($login) && ! is_null($keyconnexion)){
-            $u = \core\Memcached::value($login,"user");
-            if ( is_null($u)){
-                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                if ( $u)
-                    \core\Memcached::value($u->login,"user",$u,60*5);
-            }else{
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-                if ( is_bool($u)){
-                    $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                    if ( $u)
-                        \core\Memcached::value($u->login,"user",$u,60*5);
-                }
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-            }
-            \config\Conf::$user["user"]= $u;
-        }
+        \model\simple\Utilisateur::authentificationPourRtorrent($login,$keyconnexion);
         if ( !\config\Conf::$user["user"] ) throw new \Exception("Non User");
         $cmds = array("d.stop","d.close");
 
@@ -349,23 +302,7 @@ class Torrent extends Controller {
     }
 
     function recheck($login=null,$keyconnexion=null){
-        if (!is_null($login) && ! is_null($keyconnexion)){
-            $u = \core\Memcached::value($login,"user");
-            if ( is_null($u)){
-                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                if ( $u)
-                    \core\Memcached::value($u->login,"user",$u,60*5);
-            }else{
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-                if ( is_bool($u)){
-                    $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                    if ( $u)
-                        \core\Memcached::value($u->login,"user",$u,60*5);
-                }
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-            }
-            \config\Conf::$user["user"]= $u;
-        }
+        \model\simple\Utilisateur::authentificationPourRtorrent($login,$keyconnexion);
         if ( !\config\Conf::$user["user"] ) throw new \Exception("Non User");
         $cmds = array("d.check_hash");
 
@@ -381,23 +318,7 @@ class Torrent extends Controller {
         ));
     }
     function delete($login=null,$keyconnexion=null){
-        if (!is_null($login) && ! is_null($keyconnexion)){
-            $u = \core\Memcached::value($login,"user");
-            if ( is_null($u)){
-                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                if ( $u)
-                    \core\Memcached::value($u->login,"user",$u,60*5);
-            }else{
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-                if ( is_bool($u)){
-                    $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                    if ( $u)
-                        \core\Memcached::value($u->login,"user",$u,60*5);
-                }
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-            }
-            \config\Conf::$user["user"]= $u;
-        }
+        \model\simple\Utilisateur::authentificationPourRtorrent($login,$keyconnexion);
         if ( !\config\Conf::$user["user"] ) throw new \Exception("Non User");
         $cmds = array("d.erase");
 
@@ -413,23 +334,7 @@ class Torrent extends Controller {
         ));
     }
     function deleteall($login=null,$keyconnexion=null){
-        if (!is_null($login) && ! is_null($keyconnexion)){
-            $u = \core\Memcached::value($login,"user");
-            if ( is_null($u)){
-                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                if ( $u)
-                    \core\Memcached::value($u->login,"user",$u,60*5);
-            }else{
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-                if ( is_bool($u)){
-                    $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                    if ( $u)
-                        \core\Memcached::value($u->login,"user",$u,60*5);
-                }
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-            }
-            \config\Conf::$user["user"]= $u;
-        }
+        \model\simple\Utilisateur::authentificationPourRtorrent($login,$keyconnexion);
         if ( !\config\Conf::$user["user"] ) throw new \Exception("Non User");
 
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi);
@@ -456,23 +361,7 @@ class Torrent extends Controller {
 
     }
     function send($login=null,$keyconnexion=null){
-        if (!is_null($login) && ! is_null($keyconnexion)){
-            $u = \core\Memcached::value($login,"user");
-            if ( is_null($u)){
-                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                if ( $u)
-                    \core\Memcached::value($u->login,"user",$u,60*5);
-            }else{
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-                if ( is_bool($u)){
-                    $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                    if ( $u)
-                        \core\Memcached::value($u->login,"user",$u,60*5);
-                }
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-            }
-            \config\Conf::$user["user"]= $u;
-        }
+        \model\simple\Utilisateur::authentificationPourRtorrent($login,$keyconnexion);
         if ( !\config\Conf::$user["user"] ) throw new \Exception("Non User");
         $erreur = 1;
         $torrents = null;
@@ -535,23 +424,7 @@ class Torrent extends Controller {
         ));
     }
     function details($hashtorrentselectionne,$login=null,$keyconnexion=null){
-        if (!is_null($login) && ! is_null($keyconnexion)){
-            $u = \core\Memcached::value($login,"user");
-            if ( is_null($u)){
-                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                if ( $u)
-                    \core\Memcached::value($u->login,"user",$u,60*5);
-            }else{
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-                if ( is_bool($u)){
-                    $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                    if ( $u)
-                        \core\Memcached::value($u->login,"user",$u,60*5);
-                }
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-            }
-            \config\Conf::$user["user"]= $u;
-        }
+        \model\simple\Utilisateur::authentificationPourRtorrent($login,$keyconnexion);
         if ( !\config\Conf::$user["user"] ) throw new \Exception("Non User");
         $cmds = array(
             "f.get_path=", "f.get_completed_chunks=", "f.get_size_chunks=", "f.get_size_bytes=", "f.get_priority=","f.prioritize_first=","f.prioritize_last="
@@ -585,23 +458,7 @@ class Torrent extends Controller {
         ));
     }
     function download($hashtorrentselectionne,$nofile,$login=null,$keyconnexion=null){
-        if (!is_null($login) && ! is_null($keyconnexion)){
-            $u = \core\Memcached::value($login,"user");
-            if ( is_null($u)){
-                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                if ( $u)
-                    \core\Memcached::value($u->login,"user",$u,60*5);
-            }else{
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-                if ( is_bool($u)){
-                    $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                    if ( $u)
-                        \core\Memcached::value($u->login,"user",$u,60*5);
-                }
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-            }
-            \config\Conf::$user["user"]= $u;
-        }
+        \model\simple\Utilisateur::authentificationPourRtorrent($login,$keyconnexion);
         if ( !\config\Conf::$user["user"] ) throw new \Exception("Non User");
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
             new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.get_frozen_path", array($hashtorrentselectionne,intval($nofile))) );
@@ -622,23 +479,7 @@ class Torrent extends Controller {
         throw new \Exception("FILE NOT FOUND");
     }
     function setPrioriteFile($hashtorrentselectionne,$prio,$login=null,$keyconnexion=null){
-        if (!is_null($login) && ! is_null($keyconnexion)){
-            $u = \core\Memcached::value($login,"user");
-            if ( is_null($u)){
-                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                if ( $u)
-                    \core\Memcached::value($u->login,"user",$u,60*5);
-            }else{
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-                if ( is_bool($u)){
-                    $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                    if ( $u)
-                        \core\Memcached::value($u->login,"user",$u,60*5);
-                }
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-            }
-            \config\Conf::$user["user"]= $u;
-        }
+        \model\simple\Utilisateur::authentificationPourRtorrent($login,$keyconnexion);
         if ( !\config\Conf::$user["user"] ) throw new \Exception("Non User");
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi);
         foreach($_REQUEST["nofiles"] as $v)
@@ -647,7 +488,8 @@ class Torrent extends Controller {
         if($req->success())
             $result = $req->val;
     }
-    function init(){
+    function init($login=null,$keyconnexion=null){
+        \model\simple\Utilisateur::authentificationPourRtorrent($login,$keyconnexion);
         $theSettings = \model\xmlrpc\rTorrentSettings::get(\config\Conf::$portscgi,true);
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, array(
             $theSettings->getOnFinishedCommand(array("seedingtime",

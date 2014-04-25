@@ -22,19 +22,19 @@ class rTorrent extends \core\Model {
             $filename = is_object($fname) ? $torrent->getFileName() : $fname;
             if((strlen($raw_value)<self::RTORRENT_PACKET_LIMIT) || is_null($filename) )
             {
-                $cmd = new rXMLRPCCommand(5001, $isStart ? 'load_raw_start' : 'load_raw' );
+                $cmd = new rXMLRPCCommand(\config\Conf::$portscgi, $isStart ? 'load_raw_start' : 'load_raw' );
                 $cmd->addParameter($raw_value,"base64");
                 if(!is_null($filename) && !true)
                     @unlink($filename);
             }
             else
             {
-                $cmd = new rXMLRPCCommand(5001, $isStart ? 'load_start' : 'load' );
+                $cmd = new rXMLRPCCommand(\config\Conf::$portscgi, $isStart ? 'load_start' : 'load' );
                 $cmd->addParameter($filename);
             }
-            if(!is_null($filename) && (rTorrentSettings::get(5001)->iVersion>=0x805))
-                $cmd->addParameter(rTorrentSettings::getCmd(5001,"d.set_custom")."=x-filename,".rawurlencode(basename($filename)));
-            $req = new rXMLRPCRequest(5001);
+            if(!is_null($filename) && (rTorrentSettings::get(\config\Conf::$portscgi)->iVersion>=0x805))
+                $cmd->addParameter(rTorrentSettings::getCmd(\config\Conf::$portscgi,"d.set_custom")."=x-filename,".rawurlencode(basename($filename)));
+            $req = new rXMLRPCRequest(\config\Conf::$portscgi);
             $req->addCommand( $cmd );
             if($req->run() && !$req->fault)
                 $hash = $req->val;
