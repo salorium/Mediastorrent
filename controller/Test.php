@@ -15,7 +15,7 @@ use core\Controller;
 class Test extends Controller {
     function mail($mail){
         // Plusieurs destinataires
-        $to  = "Geoffrey Saleur <".$mail.">" ;
+        $to  = "".$mail."" ;
 
         // Sujet
         $subject = 'Calendrier des anniversaires pour Août';
@@ -49,7 +49,7 @@ class Test extends Controller {
 
         // En-têtes additionnels
        // $headers .= 'To: Mary <mary@example.com>, Kelly <kelly@example.com>' . "\r\n";
-        $headers .= 'From: Anniversaire <anniversaire@salorium.com>' . "\r\n";
+        $headers .= 'From: no-reply@'.$_SERVER["host"] . "\r\n";
         //$headers .= 'Cc: anniversaire_archive@example.com' . "\r\n";
         //$headers .= 'Bcc: anniversaire_verif@example.com' . "\r\n";
 
