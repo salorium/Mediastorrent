@@ -55,7 +55,7 @@ class Test extends Controller {
 
         // En-têtes additionnels
        // $headers .= 'To: Mary <mary@example.com>, Kelly <kelly@example.com>' . "\r\n";
-        $headers .= 'From: no-reply@'.$_SERVER["HTTP_HOST"].'' . "\r\n";
+        $headers .= 'From: admin@'.$_SERVER["HTTP_HOST"].'' . "\r\n";
         //$headers .= 'Cc: anniversaire_archive@example.com' . "\r\n";
         //$headers .= 'Bcc: anniversaire_verif@example.com' . "\r\n";
 
