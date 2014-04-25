@@ -15,7 +15,7 @@ use core\Controller;
 class Test extends Controller {
     function mail(){
         // Plusieurs destinataires
-        $to  = "Geoffrey Saleur <salorium@hotmail.fr>" ;
+        $to  = "Geoffrey Saleur <djsalorium@gmail.com>" ;
 
         // Sujet
         $subject = 'Calendrier des anniversaires pour Août';
