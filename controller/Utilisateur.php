@@ -80,7 +80,8 @@ class Utilisateur extends \core\Controller {
     function modifierMdp($login,$mdp){
         if ( isset($login)&& isset($mdp)){
             $res = \model\mysql\Utilisateur::modifierMotDePasse($login,$mdp);
-            $this->set("modifiermdp",$res);
+            $this->set(array("modifiermdp"=>$res,
+            "mdp"=>$mdp));
             $this->render("index");
             return $res;
 
