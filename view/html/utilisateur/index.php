@@ -27,12 +27,21 @@ if ( isset($modifiermdp)){
 
 
 if ( isset($succereinitialmdp)){
+    if ($succereinitialmdp){
     ?>
     <div data-alert class="alert-box success radius connexion">
         Modification du mot de passe faite, consulter vos e-mail pour plus d'information.
         <a href="#" class="close">&times;</a>
     </div>
 <?php
+    }else{
+        ?>
+        <div data-alert class="alert-box warning radius connexion">
+            Erreur lors de la réinitialisation du mot de passe.
+            <a href="#" class="close">&times;</a>
+        </div>
+    <?php
+    }
 }
 
 if (isset ($erreur)){

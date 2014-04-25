@@ -62,11 +62,19 @@ class Utilisateur extends \core\Controller {
                 $args["login"]= $u->login;
                 $args["mdp"]= $mdp;
                 $t = \model\mysql\Ticket::savTicket(__CLASS__,"modifierMdp",$args);
-                $this->set(array(
-                    "succereinitialmdp"=> true
+                $f= false;
+                if (!is_bool($t))
+                $f = \model\simple\Mail::activationMotDePasse($u->mail,$u->login,$mdp,$t);
+                $f= false;
 
+                $this->set(array(
+                    "succereinitialmdp"=> $f,
                 ));
-                $this->render("index");
+
+
+                    $this->render("index");
+
+
             }else{
                 $this->set(array(
                     "erreur"=> true

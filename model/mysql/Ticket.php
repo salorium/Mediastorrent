@@ -62,7 +62,7 @@ class Ticket extends \core\ModelMysql {
             $t = new Ticket();
             $t->id = $id;
             $t->donnee = $data;
-            return $t->insert();
+            return ($t->insert() ? $id:false);
     }
 
     public static function traiteTicket($id){
