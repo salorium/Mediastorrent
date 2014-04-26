@@ -58,7 +58,7 @@ if ( \config\Conf::$install){
     core\Router::connect("Visiteur","/","utilisateur/index");
 }
 if ( file_exists(WEBROOT.DS."install.php")){
-    require WEBROOT.DS."install.php";
+    echo WEBROOT.DS."install.php";
     exit;
 }
 core\Router::connect("Torrent","/","mediastorrent/accueil");
