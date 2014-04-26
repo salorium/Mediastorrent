@@ -9,6 +9,6 @@
 <table>
     <tr>
         <td>Memcached</td>
-        <td><?=($memcached ? "ok":"non ok");?></td>
+        <td><?=($memcached ? \model\simple\String::styleSuccess("ok"):model\simple\String::styleError("non ok"));?></td>
     </tr>
 </table>
