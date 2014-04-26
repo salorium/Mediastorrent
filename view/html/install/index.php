@@ -9,6 +9,6 @@
 <table>
     <tr>
         <td>Memcached</td>
-        <td><?=$memcached;?></td>
+        <td><?=($memcached ? "ok":"non ok");?></td>
     </tr>
 </table>
