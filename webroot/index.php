@@ -52,7 +52,12 @@ function debug($var){
     print_r($var);
     echo "</pre></div></a>";
 }
-core\Router::connect("Visiteur","/","utilisateur/index");
+if ( \config\Conf::$install){
+    core\Router::connect("Visiteur","/","install/index");
+}else{
+    core\Router::connect("Visiteur","/","utilisateur/index");
+}
+
 core\Router::connect("Torrent","/","mediastorrent/accueil");
 core\Router::connect("Sysop","/","mediastorrent/accueil");
 $Dispa = new core\Dispatcher();
