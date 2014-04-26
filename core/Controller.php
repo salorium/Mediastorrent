@@ -92,11 +92,12 @@ class Controller {
             $time = \core\Mysqli::$time;
             if (is_array($data))
                 require ROOT.DS."view".DS."html".DS."debug".DS."mysqli.php";
-
+            if ( extension_loaded("memcached")){
             $data = \core\Memcached::$request;
             $time = \core\Memcached::$time;
             if (is_array($data))
                 require ROOT.DS."view".DS."html".DS."debug".DS."memcached.php";
+            }
             $debug_contenu_for_layout = \ob_get_clean();
 
             \ob_start();
