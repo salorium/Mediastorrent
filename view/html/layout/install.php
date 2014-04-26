@@ -30,6 +30,7 @@
 <!--<script src="<?php echo BASE_URL;?>javascripts/mediastorrent/jquery.mousewheel.js"></script>
 --><?= isset($loadjavascript_for_layout) ? $loadjavascript_for_layout:"";?>
 <h1><?=\model\simple\String::styleString("Installation de MediasTorrent")?></h1>
+<?= isset($debug_icon_for_layout) ? $debug_icon_for_layout:""; ?>
 <div class="container"><?php echo $content_for_layout; ?></div>
 
 <center>
