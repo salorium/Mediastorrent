@@ -32,6 +32,9 @@ Install.controller =  {
             success: function(response, textStatus, jqXHR){
                 //afficheResultat(container,response);
                 $(e).html((response.extension ? "<span style='color: green'>Ok</span>":"<span style='color: red'>Non ok</span>"));
+                if ( response.extension){
+                    $(e).removeAttr("onclick");
+                }
             },
             error: function(jqXHR, textStatus, errorThrown){
                 // afficheErreur(jqXHR.responseText,container);
@@ -42,8 +45,8 @@ Install.controller =  {
     enableWriteFile : function(e){
         formData = new FormData($("#root")[0]);
         var el = $(e).attr("data-filewrite");
-        console.log(el);
         formData.append("file", el);
+        $(e).html("<span style='color: orange'>En cour</span>");
         $.ajax({
             url: Base.controller.makeUrlBase()+'install/enableWriteFile.json',
             async : false,
@@ -56,6 +59,9 @@ Install.controller =  {
             success: function(response, textStatus, jqXHR){
                 //afficheResultat(container,response);
                 $(e).html((response.ecriture ? "<span style='color: green'>Ok</span>":"<span style='color: red'>Non ok</span>"));
+                if ( response.ecriture){
+                    $(e).removeAttr("onclick");
+                }
             },
             error: function(jqXHR, textStatus, errorThrown){
                 // afficheErreur(jqXHR.responseText,container);
