@@ -12,12 +12,11 @@ use config\Conf;
 class Dispatcher {
     private $request;
     private $debug;
-    function __construct($authentification=true){
+    function __construct(){
         LoaderJavascript::add("debug","controller.init",Conf::$debug);
         LoaderJavascript::add("test","controller.init");
         $this->debug = new Debug($this);
         $this->debug->handle_errors();
-        if ( $authentification)
         $this->roleUser();
         $this->request = new Request();
         Router::parse($this->request->url,$this->request);
@@ -82,6 +81,7 @@ class Dispatcher {
         Memcached::value("deb1","ddd");*/
         $u = null;
         if ( isset( $_COOKIE["login"]) && isset($_COOKIE["keyconnexion"])){
+            if ( extension_loaded("memcached"))
             $u = Memcached::value($_COOKIE["login"],"user");
             if ( is_null($u)){
                 $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($_COOKIE["login"],$_COOKIE["keyconnexion"]);

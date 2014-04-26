@@ -54,10 +54,6 @@ function debug($var){
 }
 if ( \config\Conf::$install){
     core\Router::connect("Visiteur","/","install/index");
-    $Dispa = new core\Dispatcher(false);
-
-    $Dispa->load();
-    exit;
 }else{
     core\Router::connect("Visiteur","/","utilisateur/index");
 }
