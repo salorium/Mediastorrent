@@ -6,6 +6,12 @@
  * Time: 13:49
  */
 ?>
+<form id="root">
+
+<table>
+    <td>Password du root:</td><td><input type="password" name="password"></td>
+</table>
+</form>
 <table>
     <tr>
         <td>Memcached</td>
