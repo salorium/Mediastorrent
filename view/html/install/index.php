@@ -6,3 +6,9 @@
  * Time: 13:49
  */
 ?>
+<table>
+    <tr>
+        <td>Memcached</td>
+        <td><?=$memcached;?></td>
+    </tr>
+</table>

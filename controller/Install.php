@@ -12,5 +12,9 @@ namespace controller;
 class Install extends  \core\Controller{
     function index(){
         $this->layout = "install";
+        $memachedload = extension_loaded("memcached");
+        $this->set(array(
+            "memcached"=>$memachedload
+        ));
     }
 } 
