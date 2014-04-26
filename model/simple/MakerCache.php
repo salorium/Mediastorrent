@@ -1,19 +1,21 @@
 <?php
 /**
- * Created by JetBrains PhpStorm.
- * User: Salorium
- * Date: 27/10/13
- * Time: 08:36
- * To change this template use File | Settings | File Templates.
+ * Created by PhpStorm.
+ * User: salorium
+ * Date: 26/04/14
+ * Time: 20:35
  */
 
+namespace model\simple;
+
+
+class MakerCache {
+    static function maker($filename,$option){
+$contenu = '<?php
 namespace config;
-
-
-
 class Conf
 {
-    static $install = true;
+    static $install = false;
     static $debug = true;
     static $nomdusite = "MediasTorrent";
     static $version = "#A.2.0";
@@ -38,6 +40,7 @@ class Conf
     static $videoExtensions = array ("avi", "asf", "flv", "mkv", "mov", "mp4", "mpg", "mpeg", "ogm", "rm", "wmv","rar" );
     static $musicExtensions = array ("mp3", "flac", "ogg" );
     static $portscgi = 5001;
-    static $te = "dd";
 }
-?>
+?>';
+    }
+} 

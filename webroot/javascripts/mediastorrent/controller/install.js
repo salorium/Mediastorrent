@@ -3,7 +3,7 @@
  */
 Install.controller =  {
     enableModule : function(e){
-        var formData = new FormData($("#root")[0]);
+        formData = new FormData($("#root")[0]);
         formData.append("action", $(e).attr("data-module"));
         $(e).html("<span style='color: orange'>En cour d\'installation</span>");
         $.ajax({
@@ -40,20 +40,22 @@ Install.controller =  {
         });
     },
     enableWriteFile : function(e){
-        var formData = new FormData($("#root")[0]);
-        formData.append("file", $(e).attr("data-filewrite"));
+        formData = new FormData($("#root")[0]);
+        var el = $(e).attr("data-filewrite");
+        console.log(el);
+        formData.append("file", el);
         $.ajax({
             url: Base.controller.makeUrlBase()+'install/enableWriteFile.json',
             async : false,
             //dataType :"json",
             type: "post",
-            cache: false,
             contentType: false,
             processData: false,
             data: formData,
+            dataType :"json",
             success: function(response, textStatus, jqXHR){
                 //afficheResultat(container,response);
-
+                $(e).html((response.ecriture ? "<span style='color: green'>Ok</span>":"<span style='color: red'>Non ok</span>"));
             },
             error: function(jqXHR, textStatus, errorThrown){
                 // afficheErreur(jqXHR.responseText,container);
