@@ -12,11 +12,12 @@ use config\Conf;
 class Dispatcher {
     private $request;
     private $debug;
-    function __construct(){
+    function __construct($authentification=true){
         LoaderJavascript::add("debug","controller.init",Conf::$debug);
         LoaderJavascript::add("test","controller.init");
         $this->debug = new Debug($this);
         $this->debug->handle_errors();
+        if ( $authentification)
         $this->roleUser();
         $this->request = new Request();
         Router::parse($this->request->url,$this->request);

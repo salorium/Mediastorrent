@@ -54,13 +54,14 @@ function debug($var){
 }
 if ( \config\Conf::$install){
     core\Router::connect("Visiteur","/","install/index");
+    $Dispa = new core\Dispatcher();
+
+    $Dispa->load();
+    exit;
 }else{
     core\Router::connect("Visiteur","/","utilisateur/index");
 }
-if ( file_exists(WEBROOT.DS."install.php")){
-    require_once WEBROOT.DS."install.php";
-    exit;
-}
+
 core\Router::connect("Torrent","/","mediastorrent/accueil");
 core\Router::connect("Sysop","/","mediastorrent/accueil");
 $Dispa = new core\Dispatcher();
