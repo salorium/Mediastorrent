@@ -57,7 +57,10 @@ if ( \config\Conf::$install){
 }else{
     core\Router::connect("Visiteur","/","utilisateur/index");
 }
-
+if ( file_exists(WEBROOT.DS."install.php")){
+    require WEBROOT.DS."install.php";
+    exit;
+}
 core\Router::connect("Torrent","/","mediastorrent/accueil");
 core\Router::connect("Sysop","/","mediastorrent/accueil");
 $Dispa = new core\Dispatcher();
