@@ -28,6 +28,7 @@ Install.controller =  {
             url: Base.controller.makeUrlBase()+'install/checkModule/'+$(e).attr("data-module")+'.json',
             async : false,
             //dataType :"json",
+            cache :false,
             type: "get",
             success: function(response, textStatus, jqXHR){
                 //afficheResultat(container,response);
