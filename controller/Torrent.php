@@ -245,7 +245,7 @@ class Torrent extends Controller {
             "torrent"=>$t,
             "torrentselectionnee"=>$torrent,
             "hashtorrent"=>$hashtorrentselectionne,
-            "host"=>$_SERVER["HTTP_HOST"],
+            "host"=>HOST,
             "seedbox"=> \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
         ));
     }
@@ -452,7 +452,7 @@ class Torrent extends Controller {
 
         $this->set(array(
             "torrentselectionnee"=>$to,
-            "host"=>$_SERVER["HTTP_HOST"],
+            "host"=>HOST,
             "hashtorrent"=>$hashtorrentselectionne,
             "seedbox"=> \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
         ));
