@@ -9,7 +9,7 @@ Install.controller =  {
         $.ajax({
             url: Base.controller.makeUrlBase()+'install/enableModule.json',
             async : false,
-            //dataType :"json",
+            dataType :"json",
             type: "post",
             cache: false,
             contentType: false,
@@ -27,7 +27,7 @@ Install.controller =  {
         $.ajax({
             url: Base.controller.makeUrlBase()+'install/checkModule/'+$(e).attr("data-module")+'.json',
             async : false,
-            //dataType :"json",
+            dataType :"json",
             cache :false,
             type: "get",
             success: function(response, textStatus, jqXHR){
