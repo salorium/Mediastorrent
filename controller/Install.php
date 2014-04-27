@@ -48,7 +48,6 @@ class Install extends  \core\Controller{
                     $t[] = \model\simple\Ssh::execute("root",$_REQUEST["password"],"service apache2 reload");
                     break;
             }
-            sleep(2);
             $this->set(array(
                 "result"=> $t,
                 "tmp"=>$tmp

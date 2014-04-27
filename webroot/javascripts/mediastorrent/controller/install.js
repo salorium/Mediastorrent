@@ -24,24 +24,27 @@ Install.controller =  {
             }
 
         });
-        $.ajax({
-            url: Base.controller.makeUrlBase()+'install/checkModule/'+$(e).attr("data-module")+'.json',
-            async : false,
-            dataType :"json",
-            cache :false,
-            type: "get",
-            success: function(response, textStatus, jqXHR){
-                //afficheResultat(container,response);
-                $(e).html((response.extension ? "<span style='color: green'>Ok</span>":"<span style='color: red'>Non ok</span>"));
-                if ( response.extension){
-                    $(e).removeAttr("onclick");
+        setTimeout(function(){
+            $.ajax({
+                url: Base.controller.makeUrlBase()+'install/checkModule/'+$(e).attr("data-module")+'.json',
+                async : false,
+                dataType :"json",
+                cache :false,
+                type: "get",
+                success: function(response, textStatus, jqXHR){
+                    //afficheResultat(container,response);
+                    $(e).html((response.extension ? "<span style='color: green'>Ok</span>":"<span style='color: red'>Non ok</span>"));
+                    if ( response.extension){
+                        $(e).removeAttr("onclick");
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    // afficheErreur(jqXHR.responseText,container);
                 }
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                // afficheErreur(jqXHR.responseText,container);
-            }
 
-        });
+            });
+        },10000);
+
     },
     enableWriteFile : function(e){
         formData = new FormData($("#root")[0]);
