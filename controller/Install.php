@@ -30,10 +30,10 @@ class Install extends  \core\Controller{
         if (isset( $_REQUEST["password"])&& isset( $_REQUEST["action"])){$tmp=null;
             switch ( $_REQUEST["action"]){
                 case "mysqli":
-                    $ti = \model\simple\Ssh::execute("root",$_REQUEST["password"],"apt-get -y install php5-".$_REQUEST["action"]);
+                    $ti = \model\simple\Ssh::execute("root",$_REQUEST["password"],"apt-get -y install php5-mysqlnd");
                     $t[]= $ti;
                     if ( $ti["error"] !== ""){
-                        $ti = \model\simple\Ssh::execute("root",$_REQUEST["password"],"apt-get -y install php5-mysqlnd");
+                        $ti = \model\simple\Ssh::execute("root",$_REQUEST["password"],"apt-get -y install php5-mysql");
                         $t[]= $ti;
                         $ti = \model\simple\Ssh::execute("root",$_REQUEST["password"],"dpkg --configure -a");
                         $t[]= $ti;
