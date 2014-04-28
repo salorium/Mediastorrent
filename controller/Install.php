@@ -14,12 +14,11 @@ class Install extends  \core\Controller{
         $this->layout = "install";
         $memachedload = extension_loaded("memcached");
         $this->set(array(
-            "curl"=>extension_loaded("curl"),
+            //"curl"=>extension_loaded("curl"),
             "memcached"=>$memachedload,
             "mysqli"=>extension_loaded("mysqli"),
             "imagick"=>extension_loaded("imagick"),
             "ecrituredossiercache"=>is_writable(ROOT.DS."cache"),
-            "ecrituredossiercache"=>is_writable(ROOT.DS."cache")
         ));
     }
     function enableModule($pass=null,$action=null){
@@ -76,6 +75,39 @@ class Install extends  \core\Controller{
             $this->set(array(
                 "result"=> $t,
                 "ecriture"=>$write
+            ));
+        }
+    }
+    function install($pass=null,$action=null){
+        set_time_limit (0);
+        if ( ! is_null($pass) && ! is_null($action)){
+            $_REQUEST["password"] = $pass;
+            $_REQUEST["action"]= $action;
+        }
+        if (isset( $_REQUEST["password"])&& isset( $_REQUEST["action"])){$tmp=null;
+            switch ( $_REQUEST["action"]){
+                case "memcached":
+                    $ti = \model\simple\Ssh::execute("root",$_REQUEST["password"],"apt-get -y install memcached");
+                    $t[]= $ti;
+                    if ( $ti["error"] !== ""){
+                        $ti = \model\simple\Ssh::execute("root",$_REQUEST["password"],"apt-get -y install php5-mysql");
+                        $t[]= $ti;
+                        $ti = \model\simple\Ssh::execute("root",$_REQUEST["password"],"dpkg --configure -a");
+                        $t[]= $ti;
+
+                    }
+                    $t[] = \model\simple\Ssh::execute("root",$_REQUEST["password"],"service apache2 reload");
+                    break;
+                default:
+                    $t[] = \model\simple\Ssh::execute("root",$_REQUEST["password"],"apt-get -y install php5-".$_REQUEST["action"]);
+                    $ti = \model\simple\Ssh::execute("root",$_REQUEST["password"],"dpkg --configure -a");
+                    $t[]= $ti;
+                    $t[] = \model\simple\Ssh::execute("root",$_REQUEST["password"],"service apache2 reload");
+                    break;
+            }
+            $this->set(array(
+                "result"=> $t,
+                "tmp"=>$tmp
             ));
         }
     }
