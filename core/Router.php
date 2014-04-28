@@ -26,9 +26,8 @@ class  Router {
     static function parse($url,$request){
         $ext = pathinfo($url,PATHINFO_EXTENSION);
         $url = trim(preg_replace("#\.".$ext."$#i","",$url),"/");
-
         if (empty($url)){
-            $url = self::$routesredir[\config\Conf::$numerorole[\config\Conf::$user["role"]]]["/"]["url"];
+            $url = self::$routesredir[\config\Conf::$user["roletxt"]]["/"]["url"];
         }
         $params = explode('/',$url);
         $params =str_replace("\\","/",$params);
@@ -44,6 +43,6 @@ class  Router {
         self::$routesredir[$role][$redir] = $r;
     }
     static function url($url){
-      return $url;
+      return BASE_URL.$url;
     }
 }

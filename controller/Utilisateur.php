@@ -61,10 +61,12 @@ class Utilisateur extends \core\Controller {
 
                 $args["login"]= $u->login;
                 $args["mdp"]= $mdp;
-                $t = \model\mysql\Ticket::savTicket(__CLASS__,"modifierMdp",$args);
+                $t = \model\mysql\Ticket::savTicket("controller\\horsligne\\Utilisateur","modifierMdp",$args);
+                $f= false;
+                if (!is_bool($t))
+                $f = \model\simple\Mail::activationMotDePasse($u->mail,$u->login,$mdp,$t);
                 $this->set(array(
-                    "succereinitialmdp"=> true
-
+                    "succereinitialmdp"=> $f,
                 ));
                 $this->render("index");
             }else{
@@ -72,19 +74,6 @@ class Utilisateur extends \core\Controller {
                     "erreur"=> true
                 ));
             }
-        }
-    }
-
-    function modifierMdp($login,$mdp){
-        if ( isset($login)&& isset($mdp)){
-            $res = \model\mysql\Utilisateur::modifierMotDePasse($login,$mdp);
-            $this->set("modifiermdp",$res);
-            $this->render("index");
-            return $res;
-
-        }else{
-            header ("Location: ".BASE_URL);
-            exit();
         }
     }
 

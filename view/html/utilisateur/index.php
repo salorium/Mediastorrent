@@ -27,12 +27,21 @@ if ( isset($modifiermdp)){
 
 
 if ( isset($succereinitialmdp)){
+    if ($succereinitialmdp){
     ?>
     <div data-alert class="alert-box success radius connexion">
         Modification du mot de passe faite, consulter vos e-mail pour plus d'information.
         <a href="#" class="close">&times;</a>
     </div>
 <?php
+    }else{
+        ?>
+        <div data-alert class="alert-box warning radius connexion">
+            Erreur lors de la réinitialisation du mot de passe.
+            <a href="#" class="close">&times;</a>
+        </div>
+    <?php
+    }
 }
 
 if (isset ($erreur)){
@@ -45,7 +54,7 @@ if (isset ($erreur)){
 }
 ?>
 <div class="connexion">
-    <form data-abide class="custom" action="<?=\core\Router::url("/utilisateur/connexion")?>" method="POST">
+    <form data-abide class="custom" action="<?=\core\Router::url("utilisateur/connexion")?>" method="POST">
         <fieldset>
             <legend>Connexion</legend>
             <div class="row">
@@ -59,7 +68,7 @@ if (isset ($erreur)){
             <div class="row">
                 <div class="columns">
                     <label>Mot de passe <small>obligatoire</small>
-                    <input name="motdepasse" type="password" required pattern="password" />
+                    <input name="motdepasse" type="password" required pattern="password"/>
                     </label>
                     <small class="error">Le mot de passe est obligatoire ! (Au moins 8 caractères avec une lettre majuscule, un chiffre / un caractère spécial.) </small>
                 </div>
@@ -68,7 +77,7 @@ if (isset ($erreur)){
                 <div class="columns">
                     <ul class="button-group round">
                         <li>    <button class="button small secondary" value="Connexion" type="submit">Connexion</button></li>
-                        <li>    <a class="button small" href="<?=\core\Router::url("/utilisateur/mdpoublier")?>">Mot de passe oublié ?</a></li>
+                        <li>    <a class="button small" href="<?=\core\Router::url("utilisateur/mdpoublier")?>">Mot de passe oublié ?</a></li>
 
 
                     </ul>

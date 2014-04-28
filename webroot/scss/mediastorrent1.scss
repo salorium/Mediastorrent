@@ -36,10 +36,6 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
 }
 
-fieldset{
-  color: white;
-}
-
 div.connexion{
   width: 600px;
   margin : auto auto;
@@ -181,7 +177,7 @@ a.button{
   background-color : green;
 }
 .red {
-  background-color : red;
+  color : red;
 }
 .scene3D{
   position: relative;
@@ -364,7 +360,16 @@ progress {
 dl{
   line-height: 1;
 }
+table.noneventrowbg{
 
+  tr {
+    background: none;
+
+    td{
+      //color: #ffffff;
+    }
+  }
+}
 
 fieldset.torrent{
   table{
@@ -406,6 +411,8 @@ fieldset.torrentselect{
 
 span.bt{
   display: block;text-align: center;padding: 2px;
+  cursor: pointer;
+
 }
 
 /*!
@@ -771,9 +778,11 @@ input[type="submit"].btn.btn-mini {
     }
     .addTorrentDetails {
       height: 100px;
-      background-color: red;
+//      background-color: red;
       padding: 15px;
 
+      overflow-y: auto;
+      overflow-x: hidden;
     }
   }
 input[type="file"]{
@@ -790,4 +799,129 @@ input[type="file"]{
 
 iframe.perso{
   display: none;
+}
+
+table tbody tr.active {
+  background-color: rgba(0,155,0, 0.2);
+}
+table label {
+  color: inherit;
+}
+ul.CMenu {
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background: none repeat scroll 0 0 #F0F0F0;
+  border-color: #A0A0A0 #A0A0A0 #808080;
+  border-image: none;
+  border-style: solid;
+  border-width: 1px 2px 2px 1px;
+  display: none;
+  left: 0;
+  list-style-type: none;
+  margin: 0;
+  padding: 2px 0 0 2px;
+  text-decoration: none;
+  top: 0;
+  width: 200px;
+  z-index: 1000;
+
+}
+ul.CMenu li {
+  background: none repeat scroll 0 0 #FFFFFF;
+  float: left;
+  margin-right: 1px;
+  position: relative;
+  width: 195px;
+}
+ul.CMenu li a {
+  display: block;
+}
+ul.CMenu li a.dis {
+  color: #C0C0C0;
+}
+ul.CMenu li a.dis:hover {
+  background-color: #FFFFFF;
+  color: #C0C0C0;
+}
+ul.CMenu li a {
+  font-weight: normal;
+  //line-height: 16px;
+  padding: 3px 4px 3px 16px;
+}
+ul.CMenu li hr {
+  border-top: 1px solid #D0D0D0;
+  height: 0;
+  margin-bottom: 2px;
+  margin-top: 2px;
+  width: 90%;
+}
+.ie ul.CMenu li hr {
+  font-size: 1px;
+  line-height: 1px;
+  margin: 0;
+}
+ul.CMenu li a.exp {
+  background: url("../images/menuexp.gif") no-repeat scroll 190px center rgba(0, 0, 0, 0);
+}
+ul.CMenu li a.sel {
+  background: url("../images/menusel.gif") no-repeat scroll 4px center rgba(0, 0, 0, 0);
+}
+ul.CMenu li a:hover {
+  background-color: rgba(0,155,0, 0.2);
+  color: #000000;
+}
+ul.CMenu li:hover ul {
+  display: block;
+  left: 190px;
+  position: absolute;
+  top: 0;
+  width: 200px;
+}
+ul.CMenu li:hover ul li ul {
+  display: none;
+}
+ul.CMenu li:hover ul li a {
+  background-color: #FFFFFF;
+  color: #000000;
+  display: block;
+}
+ul.CMenu li:hover ul li a:hover {
+  background-color: rgba(0,155,0, 0.2);;
+  color: #000000;
+}
+ul.CMenu li:hover ul.left {
+  left: -200px;
+}
+ul.CMenu li ul li a.dis {
+  color: #C0C0C0;
+}
+ul.CMenu li ul li a.dis:hover {
+  background-color: #FFFFFF;
+  color: #C0C0C0;
+}
+
+div.suggest {
+ // background-color:$table-bg;
+  img{
+    width: 90px;
+  }
+  table{
+    width: 100%;
+    border: none;
+    //color: #ffffff;
+    margin-bottom: 0px;
+    background: none;
+  }
+  fieldset{
+    cursor: pointer;
+    padding: 0;
+  }
+  fieldset:hover{
+    background-color: rgba(0,155,0, 0.2);
+  }
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 200px;
 }

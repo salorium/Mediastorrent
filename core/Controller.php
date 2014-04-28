@@ -92,11 +92,12 @@ class Controller {
             $time = \core\Mysqli::$time;
             if (is_array($data))
                 require ROOT.DS."view".DS."html".DS."debug".DS."mysqli.php";
-
+            if ( extension_loaded("memcached")){
             $data = \core\Memcached::$request;
             $time = \core\Memcached::$time;
             if (is_array($data))
                 require ROOT.DS."view".DS."html".DS."debug".DS."memcached.php";
+            }
             $debug_contenu_for_layout = \ob_get_clean();
 
             \ob_start();
@@ -144,7 +145,8 @@ class Controller {
         $this->vars["showdebugger"] = $this->debug->showIcon();
         $this->vars["debuggerfatal"]= \core\Debug::$fatal;
         $this->vars["debuggererreur"]= \core\Debug::$error;
-
+        $this->vars["debuggermysql"]= \core\Mysqli::$query;
+        $this->vars["scgi"] = \config\Conf::$portscgi;
         $this->vars["perf"]= $this->debug->get_perf();
         echo \json_encode($this->vars);
 

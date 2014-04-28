@@ -10,11 +10,76 @@ namespace controller;
 
 
 use core\Controller;
-
+use model\simple\Mail;
 
 
 class Test extends Controller {
+    function mailo($login,$mail,$mdp){
+        $this->set(array(
+            "mail"=>Mail::activationMotDePasse($mdp,$login,$mail)
+        ));
+    }
+    function mail($mail){
+        // Plusieurs destinataires
+        $to  = "".$mail."" ;
 
+        // Sujet
+        $subject = 'Calendrier des anniversaires pour Août';
+
+        // message
+        $message = '
+     <html>
+      <head>
+       <title>Calendrier des anniversaires pour Août</title>
+      </head>
+      <body>
+       <p>Voici les anniversaires à venir au mois d\'Août !</p>
+       <table>
+        <tr>
+         <th>Personne</th><th>Jour</th><th>Mois</th><th>Année</th>
+        </tr>
+        <tr>
+         <td>Josiane</td><td>3</td><td>Août</td><td>1970</td>
+        </tr>
+        <tr>
+         <td>Emma</td><td>26</td><td>Août</td><td>1973</td>
+        </tr>
+       </table>
+      </body>
+     </html>
+     ';
+
+        // Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
+        $headers  = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+
+        // En-têtes additionnels
+       // $headers .= 'To: Mary <mary@example.com>, Kelly <kelly@example.com>' . "\r\n";
+        $headers .= 'From: admin@'.$_SERVER["HTTP_HOST"].'' . "\r\n";
+        //$headers .= 'Cc: anniversaire_archive@example.com' . "\r\n";
+        //$headers .= 'Bcc: anniversaire_verif@example.com' . "\r\n";
+
+        // Envoi
+        $this->set(array(
+            "mail"=>mail($to, $subject, $message, $headers)
+        ));
+    }
+    function allocine ( $re){
+        $o["typesearch"]="movie";
+        $all = new \model\simple\Allocine($re,$o);
+        $this->set(array(
+            "film" => $all->retourneResMovie()
+        ));
+    }
+    function iso3166(){
+        \model\simple\Iso31::getIso3166();
+    }
+    function tmdb($re){
+        $tmdb = new \model\simple\TheMovieDb();
+        $this->set(array(
+            "film" =>$tmdb->getMovieFormat($re)
+    ));
+    }
     function accerole($role){
         $num = \config\Conf::$rolenumero[$role];
         $compteurarray = null;

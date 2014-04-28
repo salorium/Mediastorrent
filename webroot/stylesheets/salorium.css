@@ -1,0 +1,256 @@
+@media only screen and (min-width: 668px) {
+  /* line 6, ../sass/mediastorrent.scss */
+  div.connexion {
+    width: 600px;
+    margin: auto auto;
+  }
+}
+/* line 11, ../sass/mediastorrent.scss */
+.maxlarg {
+  width: 90%;
+  height: 80%;
+  margin: auto auto;
+}
+
+/* line 16, ../sass/mediastorrent.scss */
+.maxlarg1 {
+  width: 100%;
+}
+
+/* line 20, ../sass/mediastorrent.scss */
+.banniere {
+  width: 600px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* line 25, ../sass/mediastorrent.scss */
+div#div-element {
+  position: relative;
+  width: 600px;
+  height: 800px;
+  margin: 50px auto 150px;
+}
+
+/* line 25, ../sass/mediastorrent.scss */
+p {
+  font: 1.2em sans-serif;
+  position: absolute;
+  right: 0;
+  bottom: 20px;
+  margin: 0;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  -webkit-box-reflect: below 0 linear-gradient(transparent 50%, rgba(0, 0, 0, 0.3));
+}
+
+/* line 27, ../sass/mediastorrent.scss */
+div#div-element::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: inherit;
+  height: inherit;
+  background: -moz-element(#div-element);
+  transform: scaleY(-1);
+  mask: url(#mask1);
+}
+
+/* line 28, ../sass/mediastorrent.scss */
+ul.minature img {
+  -webkit-box-shadow: rgba(255, 255, 255, 0.4) 0 0 25px, rgba(0, 128, 0, 0.2) 0 0 3px 1px inset;
+  -moz-box-shadow: rgba(255, 255, 255, 0.4) 0 0 25px, rgba(0, 128, 0, 0.2) 0 0 3px 1px inset;
+  box-shadow: rgba(255, 255, 255, 0.4) 0 0 25px, rgba(0, 128, 0, 0.2) 0 0 3px 1px inset;
+  width: 225px;
+  height: 300px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  border-radius: 20px;
+}
+
+/* line 35, ../sass/mediastorrent.scss */
+ul.minature img:hover {
+  -webkit-box-shadow: rgba(0, 128, 0, 0.4) 0 0 25px, rgba(0, 128, 0, 0.2) 0 0 3px 1px inset;
+  -moz-box-shadow: rgba(0, 128, 0, 0.4) 0 0 25px, rgba(0, 128, 0, 0.2) 0 0 3px 1px inset;
+  box-shadow: rgba(0, 128, 0, 0.4) 0 0 25px, rgba(0, 128, 0, 0.2) 0 0 3px 1px inset;
+  width: 225px;
+  height: 300px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  border-radius: 20px;
+}
+
+/* line 42, ../sass/mediastorrent.scss */
+ul.minature span {
+  color: #FFF;
+  font-size: 12px;
+  position: relative;
+  top: -30px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  border-radius: 20px;
+  padding: 0px 5px;
+  margin-left: 3px;
+}
+
+/* line 50, ../sass/mediastorrent.scss */
+.carrousel {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 54, ../sass/mediastorrent.scss */
+.carrousel li {
+  float: left;
+  width: 15%;
+  height: 100px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 20px;
+  text-align: center;
+}
+
+/* line 66, ../sass/mediastorrent.scss */
+.carrousel li a {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 20px;
+  text-align: center;
+}
+
+/* line 72, ../sass/mediastorrent.scss */
+.carrousel li.centre {
+  float: left;
+  width: 70%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: #FFF;
+  font-size: 25px;
+  text-align: center;
+}
+
+/* line 84, ../sass/mediastorrent.scss */
+.carrousel li.centre a {
+  color: #FFF;
+  font-size: 25px;
+}
+
+/* line 90, ../sass/mediastorrent.scss */
+.carrousel-conteneur {
+  margin: 0 auto;
+}
+
+/* line 93, ../sass/mediastorrent.scss */
+.carrousel-next a {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* line 96, ../sass/mediastorrent.scss */
+.carrousel-prev a {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* line 102, ../sass/mediastorrent.scss */
+.green {
+  background-color: green;
+}
+
+/* line 105, ../sass/mediastorrent.scss */
+.red {
+  background-color: red;
+}
+
+/* line 108, ../sass/mediastorrent.scss */
+.scene3D {
+  position: relative;
+  float: left;
+  /*  top: 600px;*/
+  /*   width:77px;*/
+  /*height:231px;*/
+  perspective: 500px;
+  -webkit-perspective: 500px;
+  -webkit-perspective-origin: 50% 50%;
+  -moz-perspective-origin: 50% 50%;
+  margin: 0;
+}
+
+/* line 120, ../sass/mediastorrent.scss */
+.control {
+  padding: 0;
+  position: relative;
+  float: top;
+  margin: auto auto;
+  width: 100%;
+  /* background :rgba(0,0,0,0.5);
+   border-radius: 20px;
+  -webkit-border-radius: 20px;
+   -moz-border-radius: 20px;
+   -ms-border-radius: 20px;*/
+}
+
+/* line 132, ../sass/mediastorrent.scss */
+.btcontrol {
+  margin: 0;
+  position: relative;
+  float: left;
+  width: 100px;
+  height: 100%;
+}
+
+/* line 140, ../sass/mediastorrent.scss */
+.rot3 {
+  transform: rotateY(40deg);
+  -webkit-transform: rotateY(40deg);
+}
+
+/* line 145, ../sass/mediastorrent.scss */
+.rot3:hover {
+  transform: translateZ(50px) rotateY(20deg);
+  -webkit-transform: translateZ(50px) rotateY(20deg);
+}
+
+/* line 149, ../sass/mediastorrent.scss */
+.rot {
+  transform: rotateY(40deg);
+  -webkit-transform: rotateY(40deg);
+}
+
+/* line 154, ../sass/mediastorrent.scss */
+.rot1 {
+  transform: rotateY(130deg);
+  -webkit-transform: rotateY(130deg);
+}
+
+/* line 160, ../sass/mediastorrent.scss */
+.rot2 {
+  transform: translateZ(40px);
+  -webkit-transform: translateZ(40px);
+}
+
+/* line 165, ../sass/mediastorrent.scss */
+.rot2:hover {
+  transform: translateZ(50px);
+  -webkit-transform: translateZ(50px);
+}
+
+/* line 171, ../sass/mediastorrent.scss */
+.detailsFilm {
+  background: rgba(0, 0, 0, 0.9);
+  position: relative;
+  float: top;
+  margin: auto auto;
+  width: 95%;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.9) 0 0 25px, rgba(255, 255, 255, 0.9) 0 0 10px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.9) 0 0 25px, rgba(255, 255, 255, 0.9) 0 0 10px;
+  box-shadow: rgba(0, 0, 0, 0.9) 0 0 25px, rgba(255, 255, 255, 0.9) 0 0 10px;
+}

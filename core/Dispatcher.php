@@ -81,6 +81,7 @@ class Dispatcher {
         Memcached::value("deb1","ddd");*/
         $u = null;
         if ( isset( $_COOKIE["login"]) && isset($_COOKIE["keyconnexion"])){
+            if ( extension_loaded("memcached"))
             $u = Memcached::value($_COOKIE["login"],"user");
             if ( is_null($u)){
                 $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($_COOKIE["login"],$_COOKIE["keyconnexion"]);
@@ -92,12 +93,15 @@ class Dispatcher {
 
         }
         $role = 0;
+        $roletext = "Visiteur";
         if ( $u && ! is_null($u)){
             $role = Conf::$rolenumero[$u->role];
+            $roletext = $u->role;
         }
 
         Conf::$user["user"]= $u;
         Conf::$user["role"]= $role;
+        Conf::$user["roletxt"] = $roletext;
         if ( $u){
             LoaderJavascript::add("base","controller.setUtilisateur", array(Conf::$user["user"]->login,Conf::$user["user"]->keyconnexion));
         }

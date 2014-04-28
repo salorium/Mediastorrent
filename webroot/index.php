@@ -6,12 +6,13 @@
  * Time: 11:02
  * To change this template use File | Settings | File Templates.
  */
-header("Access-Control-Allow-Origin: http://mediastorrent");
+header("Access-Control-Allow-Origin: *");
 define('WEBROOT',__DIR__);
 define('ROOT',dirname(WEBROOT));
 define('DS',DIRECTORY_SEPARATOR);
 define('CORE',ROOT.DS.'core');
-define('BASE_URL',"http".($_SERVER["SERVER_PORT"] == 80 ? "":"s")."://".$_SERVER["HTTP_HOST"].dirname(dirname($_SERVER["SCRIPT_NAME"])));
+define('BASE_URL',"http".($_SERVER["SERVER_PORT"] == 80 ? "":"s")."://".$_SERVER["HTTP_HOST"].dirname(dirname($_SERVER["SCRIPT_NAME"])).($_SERVER["SCRIPT_NAME"] !== "/index.php" ? "/":""));
+define('HOST',substr($_SERVER["HTTP_HOST"].dirname(dirname($_SERVER["SCRIPT_NAME"])).($_SERVER["SCRIPT_NAME"] !== "/index.php" ? "/":""),0,-1));
 function __autoload($class_name) {
     $filename = ROOT.DS.str_replace("\\",DS,$class_name).".php";
     if (file_exists($filename)){
@@ -51,7 +52,13 @@ function debug($var){
     print_r($var);
     echo "</pre></div></a>";
 }
-core\Router::connect("Visiteur","/","utilisateur/index");
+if ( \config\Conf::$install){
+    core\Router::connect("Visiteur","/","install/index");
+}else{
+    core\Router::connect("Visiteur","/","utilisateur/index");
+}
+
+core\Router::connect("Torrent","/","mediastorrent/accueil");
 core\Router::connect("Sysop","/","mediastorrent/accueil");
 $Dispa = new core\Dispatcher();
 

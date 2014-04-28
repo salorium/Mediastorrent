@@ -19,15 +19,13 @@ class Torrent extends Controller {
         ));
     }
 
-    function add(){
 
-    }
-    function send(){
+    /*function send(){
         $this->set(array(
             "file"=> $_FILES,
             "post"=> $_POST
         ));
-    }
+    }*/
     function infofichier(){
 
         if (isset ( $_FILES ['torrentfile'] )) {
@@ -66,34 +64,47 @@ class Torrent extends Controller {
                     }else{
                         $info = $to->info;
                         $f = null;
-
+                        $torrent['hash'] = $to->hash_info();
                         if (isset ( $info ['files'] )){
                             foreach ( $info ['files'] as $key => $tfile ) {
                                 $nom = $info ['name'].DS.implode ( DS, $tfile ['path'] );
-                                if (in_array ( strtolower ( pathinfo ( $nom, PATHINFO_EXTENSION ) ), Thumbnailers::$videoExtensions )) {
+                                if (in_array ( strtolower ( pathinfo ( $nom, PATHINFO_EXTENSION ) ), \config\Conf::$videoExtensions )) {
                                     $torrent["erreur"] = 0;
-                                    $fi ["nom"] = basename($nom);
-                                    $fi ["ext"] = pathinfo ( $nom, PATHINFO_EXTENSION );
-                                   // $fi ["nomaff"] = formatNomAff ( $fi ["nom"] );
+                                    $fi ["nom"] = $nom;
+                                    $torrent['type'] = "movie";
+                                    $f [] = $fi;
+                                }else if (in_array ( strtolower ( pathinfo ( $nom, PATHINFO_EXTENSION ) ), \config\Conf::$musicExtensions )) {
+                                    $torrent["erreur"] = 0;
+                                    $fi ["nom"] = $nom;
+                                    $torrent['type'] = "music";
                                     $f [] = $fi;
                                 }
                             }
                         }
-                        else if (in_array ( strtolower ( pathinfo ( $info ['name'], PATHINFO_EXTENSION ) ), Thumbnailers::$videoExtensions )) {
+                        else if (in_array ( strtolower ( pathinfo ( $info ['name'], PATHINFO_EXTENSION ) ),  \config\Conf::$videoExtensions )) {
                             $torrent["erreur"] = 0;
-                            $fi ["nom"] = basename($info ['name']);
-                            $fi ["ext"] = pathinfo ( $info ['name'], PATHINFO_EXTENSION );
+                            $fi ["nom"] = $info ['name'];
+                            //$fi ["ext"] = pathinfo ( $info ['name'], PATHINFO_EXTENSION );
+                            $torrent['type'] = "movie";
+                            //$fi ["nomaff"] = formatNomAff ( $fi ["nom"] );
+                            $f [] = $fi;
+                        }else if  (in_array ( strtolower ( pathinfo ( $info ['name'], PATHINFO_EXTENSION ) ),  \config\Conf::$musicExtensions )) {
+                            $torrent["erreur"] = 0;
+                            $fi ["nom"] = $info ['name'];
+                            //$fi ["ext"] = pathinfo ( $info ['name'], PATHINFO_EXTENSION );
+                            $torrent['type'] = "music";
                             //$fi ["nomaff"] = formatNomAff ( $fi ["nom"] );
                             $f [] = $fi;
                         }
                         if (is_null($f)){
-                            $to["status"] = "Aucun fichier compatible avec le site (" . Thumbnailers::getStringExtension () . ")";
+                            $torrent["status"] = "Aucun fichier compatible avec la bibliothèque (" ./* Thumbnailers::getStringExtension () .*/ ")";
                         }else{
-                            $to["file"] = $f;
+                            $torrent["files"] = $f;
                         }
                     }
                     unlink($des);
                 }
+                $torrents[]= $torrent;
             }
             /*$tor = null;
             foreach( $files as $file )
@@ -156,8 +167,16 @@ class Torrent extends Controller {
             $j['erreur'] = -1;*/
         }
         $this->set(array(
-            "file"=> $files,
-            "torrent"=> $torrent
+            "file"=> $_FILES,
+            "torrent"=> $torrents
+        ));
+    }
+    function streaming($host,$hashtorrent,$nofile,$file){
+        $this->layout = "streaming";
+        $user = \config\Conf::$user["user"]->login;
+        $keyconnexion = \config\Conf::$user["user"]->keyconnexion;
+        $this->set(array(
+            "src"=> "http://".$host."/torrent/download/".$hashtorrent."/".$nofile."/".$user."/".$keyconnexion."/".$file
         ));
     }
 
