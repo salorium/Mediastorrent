@@ -14,6 +14,7 @@ class Install extends  \core\Controller{
         $this->layout = "install";
         $memachedload = extension_loaded("memcached");
         $this->set(array(
+            "curl"=>extension_loaded("curl"),
             "memcached"=>$memachedload,
             "mysqli"=>extension_loaded("mysqli"),
             "imagick"=>extension_loaded("imagick"),

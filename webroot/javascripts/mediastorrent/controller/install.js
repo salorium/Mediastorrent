@@ -24,7 +24,7 @@ Install.controller =  {
             }
 
         });
-        setTimeout(function(){
+       // setTimeout(function(){
             $.ajax({
                 url: Base.controller.makeUrlBase()+'install/checkModule/'+$(e).attr("data-module")+'.json',
                 async : false,
@@ -43,7 +43,7 @@ Install.controller =  {
                 }
 
             });
-        },10000);
+        //},10000);
 
     },
     enableWriteFile : function(e){

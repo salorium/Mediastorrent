@@ -16,6 +16,10 @@
 </form>
 <table>
     <tr>
+        <td>Curl</td>
+        <td><a <?=(!$curl ? 'onclick="Install.controller.enableModule(this);"':'')?> data-module="memcached"><?=($curl ? \model\simple\String::styleSuccess("Ok"):\model\simple\String::styleError("Non ok"));?></a></td>
+    </tr>
+    <tr>
         <td>Memcached</td>
         <td><a <?=(!$memcached ? 'onclick="Install.controller.enableModule(this);"':'')?> data-module="memcached"><?=($memcached ? \model\simple\String::styleSuccess("Ok"):\model\simple\String::styleError("Non ok"));?></a></td>
     </tr>
