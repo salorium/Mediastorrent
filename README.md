@@ -41,3 +41,8 @@ sudo make install
 ```
 sudo ldconfig
 ```
+
+##Installation de Mediastorrent
+```
+git clone https://github.com/salorium/Mediastorrent.git
+```
