@@ -9,6 +9,8 @@
 namespace model\xmlrpc;
 
 
+use core\Debug;
+
 class rXMLRPCRequest extends \core\Model{
     public static $rpcTimout = 5;
     protected $commands = array();
@@ -128,6 +130,7 @@ class rXMLRPCRequest extends \core\Model{
         if($this->makeCall())
         {
             $answer = self::send($this->content,$this->portscgi);
+            Debug::startTimer("refac");
             if(!empty($answer))
             {
                 if($this->parseByTypes)
@@ -170,6 +173,7 @@ class rXMLRPCRequest extends \core\Model{
                         }
                     }
                 }
+                Debug::endTimer("refac");
             }
             //trigger_error($answer);
         }
