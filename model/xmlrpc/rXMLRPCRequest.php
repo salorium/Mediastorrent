@@ -164,8 +164,9 @@ class rXMLRPCRequest extends \core\Model{
                         Debug::endTimer("refacreplace");
                         $this->val = str_replace("\"","\\\"",$this->val);
                         Debug::startTimer("refacfor");
-                        foreach($this->val as &$string)
+                        /*foreach($this->val as &$string)
                             $string = html_entity_decode($string,ENT_COMPAT,"UTF-8");
+                        */
                         Debug::endTimer("refacfor");
                         $ret = true;
                     }
