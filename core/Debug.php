@@ -17,6 +17,7 @@ class Debug {
     static $error= null;
     static  $fatal = null;
     static $that = null;
+    static $timelog = null;
     private $loggedVars;
     function __construct($dispatcher)
     {
@@ -29,6 +30,15 @@ class Debug {
         }
     }
 
+    static function startTimer ( $nom){
+        self::$timelog[$nom] = \microtime(true);
+    }
+    static function endTimer($nom){
+        if (isset( self::$timelog[$nom])){
+            $d = self::$timelog[$nom];
+            self::$timelog[$nom] = (\microtime(true) - $d) * 1000;
+        }
+    }
 
     function handle_errors() {
 //error_reporting(E_ALL ^ E_STRICT | E_WARNING | E_DEPRECATED | E_ERROR | E_PARSE); //E_STRICT disabled
