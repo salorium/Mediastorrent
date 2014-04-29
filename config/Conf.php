@@ -13,7 +13,6 @@ namespace config;
 
 class Conf
 {
-    static $install = false;
     static $debug = true;
     static $nomdusite = "MediasTorrent";
     static $version = "#A.2.0";
