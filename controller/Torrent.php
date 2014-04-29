@@ -484,6 +484,9 @@ class Torrent extends Controller {
                 if($req->success())
                     $filename = $req->val[1];
             }
+            echo $filename;
+            echo $req->val;
+            die();
             \model\simple\Download::sendFile($filename);
         }
         throw new \Exception("FILE NOT FOUND");
