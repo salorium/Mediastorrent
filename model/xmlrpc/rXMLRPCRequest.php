@@ -155,7 +155,7 @@ class rXMLRPCRequest extends \core\Model{
                 else
                 {
                     Debug::startTimer("refacpreg");
-                    if((preg_match_all("/<value>(<string>|<i.>)(.*)(\n<\/string>|<\/i.>)<\/value>/Us",$answer,$this->val)!==false) &&
+                    if((preg_match_all("/<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>/Us",$answer,$this->val)!==false) &&
                         count($this->val)>2)
                     {
                         Debug::endTimer("refacpreg");
