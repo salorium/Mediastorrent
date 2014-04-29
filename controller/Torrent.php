@@ -59,7 +59,8 @@ class Torrent extends Controller {
         $req->success();
         Debug::endTimer("rtorrent");
         $this->set(array(
-            "torrent"=>$req->val
+            "torrent"=>$req->val,
+            "tt"=> $req->vals
         ));
         return true;
         if ($req->success()){
