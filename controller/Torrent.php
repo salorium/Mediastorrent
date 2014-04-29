@@ -56,7 +56,9 @@ class Torrent extends Controller {
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,$cmd);
         $t= null;
         Debug::startTimer("rtorrent");
-        if ($req->success()){
+        $req->success();
+        Debug::endTimer("rtorrent");
+        /*if ($req->success()){
             Debug::endTimer("rtorrent");
             $i = 0;
             $tmp=array();
@@ -250,7 +252,7 @@ class Torrent extends Controller {
             "hashtorrent"=>$hashtorrentselectionne,
             "host"=>HOST,
             "seedbox"=> \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
-        ));
+        ));*/
     }
     function pause($login=null,$keyconnexion=null){
         \model\simple\Utilisateur::authentificationPourRtorrent($login,$keyconnexion);
