@@ -59,7 +59,7 @@ class Torrent extends Controller {
         $req->success();
         Debug::endTimer("rtorrent");
         $this->set(array(
-            "torrent"=>$res->val
+            "torrent"=>$req->val
         ));
         return true;
         if ($req->success()){
