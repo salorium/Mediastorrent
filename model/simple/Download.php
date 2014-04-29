@@ -63,6 +63,11 @@ class Download extends Model{
         header('Accept-Ranges: bytes');
 
 // if requested, send extra headers and part of file...
+        if (is_readable($file)){
+            echo $file;
+            die();
+        }
+
         if ($partial) {
             header('HTTP/1.1 206 Partial Content');
             header("Content-Range: bytes $start-$end/$filesize");
