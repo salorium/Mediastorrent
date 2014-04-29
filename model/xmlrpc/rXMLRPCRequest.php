@@ -20,6 +20,8 @@ class rXMLRPCRequest extends \core\Model{
     public $parseByTypes = false;
     public $important = true;
     public $portscgi;
+    public static  $query = null;
+    public static  $time = 0;
 
     /**
      * @param null $cmds
@@ -41,6 +43,7 @@ class rXMLRPCRequest extends \core\Model{
     {
         /*if(Variable::$rpc_call)
             toLog($data);*/
+        $QueryStartTime = \microtime(true);
         $scgi_host = "127.0.0.1";
         $scgi_port = $portscgi;
         $result = false;
@@ -59,6 +62,9 @@ class rXMLRPCRequest extends \core\Model{
                 fclose($socket);
             }
         }
+        $QueryEndTime = microtime(true);
+        self::$time += ($QueryEndTime - $QueryStartTime) * 1000;
+        self::$query[] = array($data, ($QueryEndTime - $QueryStartTime) * 1000, $result);
         /*if(Variable::$rpc_call)
             toLog($result);*/
         return($result);
