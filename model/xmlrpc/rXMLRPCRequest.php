@@ -159,7 +159,7 @@ class rXMLRPCRequest extends \core\Model{
                     if((preg_match_all("/<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>/Us",$answer,$this->val)!==false) &&
                         count($this->val)>2)
                     {
-                        $this->vals = $this->val;
+                        $this->vals = $this->val[2];
                         Debug::endTimer("refacpreg");
                         Debug::startTimer("refacreplace");
                         $this->val = str_replace("\\","\\\\",$this->val[2]);
