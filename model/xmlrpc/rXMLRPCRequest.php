@@ -48,6 +48,7 @@ class rXMLRPCRequest extends \core\Model{
         $scgi_port = $portscgi;
         $result = false;
         $contentlength = strlen($data);
+        $d = $data;
         if($contentlength>0)
         {
             $socket = @fsockopen($scgi_host, $scgi_port, $errno, $errstr, rXMLRPCRequest::$rpcTimout);
@@ -64,7 +65,7 @@ class rXMLRPCRequest extends \core\Model{
         }
         $QueryEndTime = microtime(true);
         self::$time += ($QueryEndTime - $QueryStartTime) * 1000;
-        self::$query[] = array($data, ($QueryEndTime - $QueryStartTime) * 1000, $result);
+        self::$query[] = array($d, ($QueryEndTime - $QueryStartTime) * 1000, $result);
         /*if(Variable::$rpc_call)
             toLog($result);*/
         return($result);
