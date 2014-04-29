@@ -14,8 +14,10 @@ use core\Model;
 class Download extends Model{
     static function sendFile($file){
         if (!file_exists($file)) {
-            throw new \Exception("FILE NOT FOUND");
-            exit;
+            echo "dffd";
+            //throw new \Exception("FILE NOT FOUND");
+            die();
+            //exit;
         }
 
 // Get the 'Range' header if one was sent
