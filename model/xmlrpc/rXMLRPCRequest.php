@@ -127,9 +127,13 @@ class rXMLRPCRequest extends \core\Model{
         $this->i8s = array();
         $this->strings = array();
         $this->val = array();
+        Debug::startTimer("makecall");
         if($this->makeCall())
         {
+            Debug::endTimer("makecall");
+            Debug::startTimer("send");
             $answer = self::send($this->content,$this->portscgi);
+            Debug::endTimer("send");
             Debug::startTimer("refac");
             if(!empty($answer))
             {
