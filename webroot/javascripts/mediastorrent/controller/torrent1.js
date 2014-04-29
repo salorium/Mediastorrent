@@ -131,6 +131,16 @@ Torrent1.controller =  {
             //Assignation du conteneur listtorrent qui contienderas les torrent
             Torrent1.model.container.listtorrent = $("#listorrent");
             this.nbTorrent();
+            var input = $("#recherche")[0];
+            input.onupdate = input.onkeyup = function() {
+                if ($.trim(input.value).length > 1){
+                    Torrent1.controller.listTorrent.recherche();
+                    Torrent1.controller.listTorrent.affiche();
+                }else{
+                    Torrent1.controller.listTorrent.resetRecherche();
+                    Torrent1.controller.listTorrent.affiche();
+                }
+            }
         },
         resetRecherche : function(){
             Torrent1.model.listTorrent.listerecherche = [];
