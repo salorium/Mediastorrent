@@ -13,10 +13,6 @@ use core\Model;
 
 class Download extends Model{
     static function sendFile($file){
-        if (is_readable($file)){
-            echo $file;
-            die();
-        }
         if (!file_exists($file)) {
             throw new \Exception("FILE NOT FOUND");
             exit;
