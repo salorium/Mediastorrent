@@ -192,7 +192,7 @@ class rXMLRPCRequest extends \core\Model{
         $res =($this->run() && !$this->fault);
         Debug::endTimer("sucess");
 
-        return$res;
+        return $res;
 
     }
 
