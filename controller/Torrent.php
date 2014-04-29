@@ -55,13 +55,13 @@ class Torrent extends Controller {
         $cnt = count($cmd->params)-1;
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,$cmd);
         $t= null;
-        Debug::startTimer("rtorrent");
+        /*Debug::startTimer("rtorrent");
         $req->success();
         Debug::endTimer("rtorrent");
         $this->set(array(
             "torrent"=>$req->val
         ));
-        return true;
+        return true;*/
         if ($req->success()){
             Debug::endTimer("rtorrent");
             $i = 0;
