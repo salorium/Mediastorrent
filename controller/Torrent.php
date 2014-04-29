@@ -485,7 +485,7 @@ class Torrent extends Controller {
                     $filename = $req->val[1];
             }
             echo $filename;
-            echo $req->val;
+            var_dump( $req->val);
             die();
             \model\simple\Download::sendFile($filename);
         }
