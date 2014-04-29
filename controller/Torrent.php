@@ -58,7 +58,8 @@ class Torrent extends Controller {
         Debug::startTimer("rtorrent");
         $req->success();
         Debug::endTimer("rtorrent");
-        /*if ($req->success()){
+        return true;
+        if ($req->success()){
             Debug::endTimer("rtorrent");
             $i = 0;
             $tmp=array();
@@ -252,7 +253,7 @@ class Torrent extends Controller {
             "hashtorrent"=>$hashtorrentselectionne,
             "host"=>HOST,
             "seedbox"=> \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
-        ));*/
+        ));
     }
     function pause($login=null,$keyconnexion=null){
         \model\simple\Utilisateur::authentificationPourRtorrent($login,$keyconnexion);
