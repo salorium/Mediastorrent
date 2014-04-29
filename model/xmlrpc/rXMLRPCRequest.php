@@ -188,7 +188,12 @@ class rXMLRPCRequest extends \core\Model{
 
     public function success()
     {
-        return($this->run() && !$this->fault);
+        Debug::startTimer("sucess");
+        $res =($this->run() && !$this->fault);
+        Debug::endTimer("sucess");
+
+        return$res;
+
     }
 
     public function getValueParsed(){
