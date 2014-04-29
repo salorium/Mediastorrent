@@ -15,6 +15,7 @@ Torrent1.model =  {
         dStatus : { started : 1, paused : 2, checking : 4, hashing : 8, error : 16 },
         original : [],
         liste : [],
+        listerecherche : [],
         selectionne:[],
         selectionneid : -1,
         sortcolonne : -1,

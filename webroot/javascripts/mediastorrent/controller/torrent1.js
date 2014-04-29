@@ -56,6 +56,11 @@ Torrent1.controller =  {
                             torrent = res[0];
                             Torrent1.view.listTorrent.stats(res[2],res[3],res[4]);
                             Torrent1.controller.listTorrent.conversion(torrent);
+                            if ($("#recherche").val().length > 1){
+                                Torrent1.controller.listTorrent.recherche();
+                            }else{
+                                Torrent1.controller.listTorrent.resetRecherche();
+                            }
                             Torrent1.controller.listTorrent.affiche();
                             if (response.hashtorrent == Torrent1.model.listTorrent.selectionne[0]){
                                 if ( response.torrentselectionnee){
@@ -127,6 +132,9 @@ Torrent1.controller =  {
             Torrent1.model.container.listtorrent = $("#listorrent");
             this.nbTorrent();
         },
+        resetRecherche : function(){
+            Torrent1.model.listTorrent.listerecherche = [];
+        },
         nbTorrent : function(){
             //Calcul du nb de torrent max dans la liste des torrent
             var hauteurlisttorrent = $("#moitiegauche").height()-Base.model.html.hauteur("#moitiegauche dl");
@@ -135,6 +143,17 @@ Torrent1.controller =  {
             Torrent1.model.container.listtorrent.append(Torrent1.view.listTorrent.liste());
             Torrent1.model.listTorrent.nbtorrents =Math.floor(((hauteurlisttorrent - Base.model.html.hauteur("span.bt")*2)/Base.model.html.hauteur("fieldset.torrent")));
             Torrent1.model.container.listtorrent.empty();
+        },
+        recherche:function(){
+            var recher = new RegExp("("+$("#recherche").val()+")","gi");
+            Torrent1.model.listTorrent.listerecherche = [];
+            var liste = Torrent1.model.listTorrent.liste.clone();
+           $.each ( liste, function(k,v){
+                if ( recher.test(v[1])){
+                    v[1] = v[1].replace(recher,'<span class="success radius label">$1</span>');
+                    Torrent1.model.listTorrent.listerecherche.push(v);
+                }
+            });
         },
         details: function(){
             var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl)+'torrent/details/'+Torrent1.model.listTorrent.selectionne[0]+"/"+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion;
@@ -213,6 +232,9 @@ Torrent1.controller =  {
             var listtorrent = Torrent1.model.container.listtorrent;
             listtorrent.empty();
             var liste =  Torrent1.model.listTorrent.liste;
+            if ( Torrent1.model.listTorrent.listerecherche.length > 0){
+                liste = Torrent1.model.listTorrent.listerecherche;
+            }
             //Calcul des borne
             if (Torrent1.model.listTorrent.cpt > liste.length )
                 Torrent1.model.listTorrent.cpt = 0;
