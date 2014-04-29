@@ -10,6 +10,7 @@ namespace controller;
 
 
 use core\Controller;
+use core\Debug;
 
 
 class Torrent extends Controller {
@@ -54,7 +55,9 @@ class Torrent extends Controller {
         $cnt = count($cmd->params)-1;
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,$cmd);
         $t= null;
+        Debug::startTimer("test");
         if ($req->success()){
+            Debug::endTimer("test");
             $i = 0;
             $tmp=array();
             $status = array( 'started'=>1,'paused'=>2, 'checking'=>4,'hashing'=>8,'error'=>16);
