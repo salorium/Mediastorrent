@@ -13,6 +13,10 @@ use core\Model;
 
 class Download extends Model{
     static function sendFile($file){
+        if (is_readable($file)){
+            echo $file;
+            die();
+        }
         if (!file_exists($file)) {
             throw new \Exception("FILE NOT FOUND");
             exit;
@@ -63,11 +67,6 @@ class Download extends Model{
         header('Accept-Ranges: bytes');
 
 // if requested, send extra headers and part of file...
-        if (is_readable($file)){
-            echo $file;
-            die();
-        }
-
         if ($partial) {
             header('HTTP/1.1 206 Partial Content');
             header("Content-Range: bytes $start-$end/$filesize");
