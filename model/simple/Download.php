@@ -67,7 +67,7 @@ class Download extends Model{
             header('HTTP/1.1 206 Partial Content');
             header("Content-Range: bytes $start-$end/$filesize");
             if (!$fp = fopen($file, 'r')) { // Error out if we can't read the file
-                header("HTTP/1.1 500 Internal Server Error");
+                header("HTTP/1.1 403 Forbidden");
                 exit;
             }
             if ($start) fseek($fp,$start);
