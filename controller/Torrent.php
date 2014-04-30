@@ -285,11 +285,6 @@ class Torrent extends Controller {
 
                 if (!(\core\Memcached::value("detaillist".\config\Conf::$portscgi,sha1($ncid.$hashtorrentselectionne),$data,60*5))){
                     trigger_error("Impossible de mettre des données dans le cache");
-                    echo"detaillist".\config\Conf::$portscgi."<br>";
-                    echo sha1($ncid.$hashtorrentselectionne)."<br>";
-                    echo $ncid."<br>".$hashtorrentselectionne."<br>";
-                    var_dump( $data);
-                    die();
                 }
                 $torrent["detail"]= $tmp;
                 $cmds = array(
