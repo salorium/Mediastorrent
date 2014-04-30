@@ -18,17 +18,8 @@ class Ticket extends \core\ModelMysql {
 
     public function insert(){
         $query = "insert into ticket (id,donnee) values(";
-        if(is_null($this->id)){
-            $query.="NULL,";
-        }else{
-            $query.= "'". \core\Mysqli::real_escape_string($this->id)."', ";
-        }
-
-        if(is_null($this->donnee)){
-            $query.="NULL";
-        }else{
-            $query.= "'". \core\Mysqli::real_escape_string($this->donnee)."') ";
-        }
+            $query.=  \core\Mysqli::real_escape_string($this->id).", ";
+            $query.= \core\Mysqli::real_escape_string($this->donnee).") ";
         \core\Mysqli::query($query);
         $res =  (\core\Mysqli::nombreDeLigneAffecte() == 1 );
         \core\Mysqli::close();
@@ -39,7 +30,7 @@ class Ticket extends \core\ModelMysql {
     public  function delete(){
         if(!is_null($this->id)){
             $query = "delete from ticket ";
-            $query.= " where id='". \core\Mysqli::real_escape_string($this->id)."'";
+            $query.= " where id=". \core\Mysqli::real_escape_string($this->id);
             \core\Mysqli::query($query);
             $res =  (\core\Mysqli::nombreDeLigneAffecte() == 1 );
             \core\Mysqli::close();
@@ -55,7 +46,7 @@ class Ticket extends \core\ModelMysql {
         do {
         $id= sha1(uniqid());
         $query = "select * from ticket ";
-        $query.= " where id='". \core\Mysqli::real_escape_string($id)."'";
+        $query.= " where id=". \core\Mysqli::real_escape_string($id);
         \core\Mysqli::query($query);
         $u =  \core\Mysqli::getObjectAndClose(false,__CLASS__);
         } while ($u);
@@ -67,7 +58,7 @@ class Ticket extends \core\ModelMysql {
 
     public static function traiteTicket($id){
         $query = "select * from ticket ";
-        $query.= " where id='". \core\Mysqli::real_escape_string($id)."'";
+        $query.= " where id=". \core\Mysqli::real_escape_string($id);
         \core\Mysqli::query($query);
         return  \core\Mysqli::getObjectAndClose(false,__CLASS__);
     }

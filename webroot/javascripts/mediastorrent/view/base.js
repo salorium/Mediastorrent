@@ -15,6 +15,27 @@ Base.view =  {
     fixedHeight : function(container,hauteur){
         $(container).css("height",hauteur);
     },
+    image: {
+        input : function(name,id,container){
+            $("#"+container).append('<label for="'+id+'">'+name+' :</label>');
+            var $poster = $('<input class="large-2" type="text" name="'+id+'" id="'+id+'">');
+            $("#"+container).append($('<div class="row"></div>').append($('<div class="large-12"></div>').append($poster)));
+            var $img = $('<img height="300px" src="'+Base.controller.makeUrlBase()+"proxy/imageSetHeight/non/300.jpg"+'">');
+            $("#"+container).append($img);
+            $poster.on("change keyup update input", function() {
+                if ($.trim($poster.val()).length > 1){
+                    $img.attr("src",Base.controller.makeUrlBase()+"proxy/imageSetHeight/"+Base.model.converter.paramUrl($poster.val())+"/300.jpg");
+                }else{
+                    $img.attr("src",Base.controller.makeUrlBase()+"proxy/imageSetHeight/non/300.jpg");
+                }
+            });
+            $poster.on("paste", function(){
+                setTimeout(function(){
+                    $poster.change();
+                },1);
+            })
+        }
+    },
     noty : {
         generate : function (type,texte,layout){
             var n = noty({

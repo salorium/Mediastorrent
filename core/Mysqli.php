@@ -27,7 +27,9 @@ class Mysqli {
         if (!isset(self::$dblink)){
             self::connect();
         }
-        return self::$dblink->real_escape_string($str);
+        if ( is_null($str))
+            return "NULL";
+        return "'".self::$dblink->real_escape_string($str)."'";
     }
     public static function query($query){
         $QueryStartTime = \microtime(true);

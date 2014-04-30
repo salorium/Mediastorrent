@@ -14,6 +14,7 @@ namespace config;
 class Conf
 {
     static $debug = true;
+    static $debuglocal = true;
     static $nomdusite = "MediasTorrent";
     static $version = "#A.2.0";
     static $anneefondation = "2013";

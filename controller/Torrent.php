@@ -11,6 +11,7 @@ namespace controller;
 
 use core\Controller;
 use core\Debug;
+use model\xmlrpc\rXMLRPCCommand;
 
 
 class Torrent extends Controller {
@@ -63,7 +64,7 @@ class Torrent extends Controller {
             "tt"=> $req->vals
         ));
         return true;//*/
-        if ($req->success()){
+        if ($req->success(false)){
             Debug::endTimer("rtorrent");
             $i = 0;
             $tmp=array();
@@ -375,6 +376,12 @@ class Torrent extends Controller {
         if ( !\config\Conf::$user["user"] ) throw new \Exception("Non User");
         $erreur = 1;
         $torrents = null;
+        $clefunique = null;
+        if (isset($_REQUEST["mediastorrent"])){
+            for ( $idtorrent = 0 ; $idtorrent < $_REQUEST["nbtorrents"];$idtorrent++){
+
+            }
+        }
         if (isset ( $_FILES ['torrentfile'] )) {
             if( is_array($_FILES['torrentfile']['name']) )
             {
@@ -407,12 +414,17 @@ class Torrent extends Controller {
                 $ok = move_uploaded_file($file['tmp_name'],$des);
                 if ($ok ){
                     $to = new \model\simple\Torrent($des);
+
                     //$torrents[]= array($to->getFileName(),$to->info["name"]);
                     if ($to->errors()){
                         $torrent['status']= "Erreur du fichier torrent";
                     }else{
                         $torrent['erreur']= 0;
                         $torrent["status"]= \model\xmlrpc\rTorrent::sendTorrent($to,!isset($_REQUEST['autostart']));
+                        $torrent["clefunique"]= \model\simple\String::random(10);
+                        $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, array(
+                            new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.set_custom",array($to->hash_info(),"clefunique",$torrent["clefunique"]) )));
+                        $torrent["clefuniqueres"]= ($req->success() ? $req->val : $req->val);
 
                     }
                     unlink($des);
@@ -513,7 +525,10 @@ class Torrent extends Controller {
 
             \model\xmlrpc\rTorrentSettings::get(\config\Conf::$portscgi)->getOnEraseCommand(array('erasedata',
             \model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'branch=').\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'d.get_custom1').'=,"'.\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'execute').'={rm,-r,$'.\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'d.get_base_path').'=}"')),
-
+            $theSettings->getOnFinishedCommand(array('addbibliotheque',
+                \model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'execute').'={'.'php,'.ROOT.DS.'script/addbibliotheque.php,'.\config\Conf::$portscgi.',$'.\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'d.get_hash').'=,$'.\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'d.get_base_path').'=,$'.
+                \model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'d.get_base_filename').'=,$'.\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'d.is_multi_file').'=,$'.\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'d.get_custom')."=clefunique".'}'
+            ))
         ));
         if( $req->run()){
             echo "ok";

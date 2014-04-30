@@ -122,7 +122,7 @@ class rXMLRPCRequest extends \core\Model{
         $this->commands[] = $cmd;
     }
 
-    public function run()
+    public function run($factory=true)
     {
         $ret = false;
         $this->i8s = array();
@@ -135,9 +135,11 @@ class rXMLRPCRequest extends \core\Model{
             Debug::startTimer("send");
             $answer = self::send($this->content,$this->portscgi);
             Debug::endTimer("send");
-            Debug::startTimer("refac");
+
             if(!empty($answer))
             {
+                if ( $factory){
+                Debug::startTimer("refac");
                 if($this->parseByTypes)
                 {
                     if((preg_match_all("|<value><string>(.*)</string></value>|Us",$answer,$this->strings)!==false) &&
@@ -174,6 +176,8 @@ class rXMLRPCRequest extends \core\Model{
                         $ret = true;
                     }
                 }
+                Debug::endTimer("refac");
+                }
                 if($ret)
                 {
                     if(strstr($answer,"faultCode")!==false)
@@ -187,7 +191,7 @@ class rXMLRPCRequest extends \core\Model{
                         }
                     }
                 }
-                Debug::endTimer("refac");
+
             }
             //trigger_error($answer);
         }
@@ -196,10 +200,10 @@ class rXMLRPCRequest extends \core\Model{
         return($ret);
     }
 
-    public function success()
+    public function success($factory= true)
     {
         Debug::startTimer("sucess");
-        $res =($this->run() && !$this->fault);
+        $res =($this->run($factory) && !$this->fault);
         Debug::endTimer("sucess");
 
         return $res;

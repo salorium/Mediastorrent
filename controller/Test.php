@@ -10,10 +10,16 @@ namespace controller;
 
 
 use core\Controller;
+use model\mysql\Film;
 use model\simple\Mail;
 
 
 class Test extends Controller {
+    function addFilm(){
+        $f = Film::ajouteFilm("Titi","Titi","az","az");
+        echo $f->id;
+        die();
+    }
     function mailo($login,$mail,$mdp){
         $this->set(array(
             "mail"=>Mail::activationMotDePasse($mdp,$login,$mail)

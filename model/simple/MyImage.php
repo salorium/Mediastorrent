@@ -18,12 +18,72 @@ class MyImage extends \core\Model {
         if (filter_var($chemin, FILTER_VALIDATE_URL)){
             //URL
             $headers = @get_headers($chemin);
-            if (strpos($headers[0],'404') === true){
+            if (strpos($headers[0],'404') != false){
                //NOT FOUND
-               throw new \Exception("Not Found Image");
+               //throw new \Exception("Not Found Image");
+                $this->image = new \Imagick(  );
+                $this->image->newImage(600, 600, new \ImagickPixel('white'));
+                /* Création d'un nouvel objet imagick */
+                $im = new \Imagick();
+
+                /* Création d'une nouvelle image. Elle sera utilisée comme masque de remplissage */
+                $im->newPseudoImage(50, 100, "gradient:gray-black");
+
+                /* Création d'un nouvel objet imagickdraw */
+                $draw = new \ImagickDraw();
+
+                /* On commence un nouveau masque nommé "gradient" */
+                $draw->pushPattern('gradient', 0, 0, 50, 110);
+
+                /* Ajout du dégradé sur le masque */
+                $draw->composite(\Imagick::COMPOSITE_OVER, 0, 0, 50, 110, $im);
+
+                /* Fermeture du masque */
+                $draw->popPattern();
+
+                /* Utilisation du masque nommé "gradient" comme remplissage */
+                $draw->setFillPatternURL('#gradient');
+
+                /* Définition de la taille du texte à 52 */
+                $draw->setFontSize(92);
+                $draw->setFont(ROOT.DS.'font/comic.ttf');
+
+                /* Ajout d'un texte */
+                $draw->annotation(20,100, "Not Found !");
+                $this->image->drawImage($draw);
             }
         }else if (!file_exists($chemin)){
-            throw new \Exception("Not Found Image");
+            //throw new \Exception("Not Found Image");
+            $this->image = new \Imagick(  );
+            $this->image->newImage(600, 600, new \ImagickPixel('white'));
+            /* Création d'un nouvel objet imagick */
+            $im = new \Imagick();
+
+            /* Création d'une nouvelle image. Elle sera utilisée comme masque de remplissage */
+            $im->newPseudoImage(50, 100, "gradient:gray-black");
+
+            /* Création d'un nouvel objet imagickdraw */
+            $draw = new \ImagickDraw();
+
+            /* On commence un nouveau masque nommé "gradient" */
+            $draw->pushPattern('gradient', 0, 0, 50, 110);
+
+            /* Ajout du dégradé sur le masque */
+            $draw->composite(\Imagick::COMPOSITE_OVER, 0, 0, 50, 110, $im);
+
+            /* Fermeture du masque */
+            $draw->popPattern();
+
+            /* Utilisation du masque nommé "gradient" comme remplissage */
+            $draw->setFillPatternURL('#gradient');
+
+            /* Définition de la taille du texte à 52 */
+            $draw->setFontSize(92);
+            $draw->setFont(ROOT.DS.'font/comic.ttf');
+
+            /* Ajout d'un texte */
+            $draw->annotation(20,100, "Not Found !");
+            $this->image->drawImage($draw);
         }
 
         switch (strtolower(pathinfo($chemin,PATHINFO_EXTENSION)) ){

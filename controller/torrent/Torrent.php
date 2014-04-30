@@ -11,6 +11,7 @@ namespace controller\torrent;
 
 use core\Controller;
 
+
 class Torrent extends Controller {
     public $layout = "connecter";
     function all(){
@@ -66,30 +67,36 @@ class Torrent extends Controller {
                         $f = null;
                         $torrent['hash'] = $to->hash_info();
                         if (isset ( $info ['files'] )){
+                            $numfile = 0;
                             foreach ( $info ['files'] as $key => $tfile ) {
                                 $nom = $info ['name'].DS.implode ( DS, $tfile ['path'] );
                                 if (in_array ( strtolower ( pathinfo ( $nom, PATHINFO_EXTENSION ) ), \config\Conf::$videoExtensions )) {
                                     $torrent["erreur"] = 0;
                                     $fi ["nom"] = $nom;
+                                    $fi ["numfile"]= $numfile;
                                     $torrent['type'] = "movie";
                                     $f [] = $fi;
                                 }else if (in_array ( strtolower ( pathinfo ( $nom, PATHINFO_EXTENSION ) ), \config\Conf::$musicExtensions )) {
                                     $torrent["erreur"] = 0;
                                     $fi ["nom"] = $nom;
+                                    $fi ["numfile"]= $numfile;
                                     $torrent['type'] = "music";
                                     $f [] = $fi;
                                 }
+                                $numfile++;
                             }
                         }
                         else if (in_array ( strtolower ( pathinfo ( $info ['name'], PATHINFO_EXTENSION ) ),  \config\Conf::$videoExtensions )) {
                             $torrent["erreur"] = 0;
                             $fi ["nom"] = $info ['name'];
+                            $fi["numfile"]=0;
                             //$fi ["ext"] = pathinfo ( $info ['name'], PATHINFO_EXTENSION );
                             $torrent['type'] = "movie";
                             //$fi ["nomaff"] = formatNomAff ( $fi ["nom"] );
                             $f [] = $fi;
                         }else if  (in_array ( strtolower ( pathinfo ( $info ['name'], PATHINFO_EXTENSION ) ),  \config\Conf::$musicExtensions )) {
                             $torrent["erreur"] = 0;
+                            $fi["numfile"]=0;
                             $fi ["nom"] = $info ['name'];
                             //$fi ["ext"] = pathinfo ( $info ['name'], PATHINFO_EXTENSION );
                             $torrent['type'] = "music";
