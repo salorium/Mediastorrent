@@ -175,8 +175,11 @@ class rXMLRPCRequest extends \core\Model{
                         Debug::endTimer("refacfor");
                         $ret = true;
                     }
+                    Debug::endTimer("refacpreg");
                 }
                 Debug::endTimer("refac");
+                }else{
+                    $ret = true;
                 }
                 if($ret)
                 {
