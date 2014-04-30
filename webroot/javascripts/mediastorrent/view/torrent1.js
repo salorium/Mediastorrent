@@ -595,6 +595,7 @@ Torrent1.view =  {
                         $fieldset.append($inputserie);
                         $fieldset.append('<label for="torrent'+id+'typeserie">Série</label>');
                         $inputfilm.click(function(e){
+                            $("#torrent"+id+"details").empty();
                             Torrent1.view.addTorrent.files.file.movie.show(torrent.files,id);
                             var nom = torrent.nom.replace(/\.\d{4}.+/gi,"");
                             nom = nom.replace(/\./gi," ");
@@ -605,6 +606,7 @@ Torrent1.view =  {
 
                          $inputserie.click(function(e){
                              $("#torrent"+id+"files").empty();
+                             $("#torrent"+id+"details").empty();
                          //Torrent.view.addTorrent.showFileSerieTorrent(torrent.files,id);
                          });
                     }else{
@@ -702,6 +704,7 @@ Torrent1.view =  {
                                 console.log(film.code);
                                 $('#torrent'+id+'suggest').empty();
                                 $('#torrent'+id+'suggest').hide();
+                                Torrent1.controller.addTorrent.files.file.movie.allrecherche(id,film.code);
                             });
                             $table = $('<table class="noneventrowbg"></table>');
                             if (film.image){
@@ -720,6 +723,17 @@ Torrent1.view =  {
 
                             $fieldset.append($table);
                             $('#torrent'+id+'suggest').append($fieldset);
+                        },
+                        allrecherche : function( id,film){
+                            $("#torrent"+id+"details").empty();
+                            $table = $('<table></table>');
+                            $tbody = $('<tbody></tbody>');
+                            $.each( film, function(k,v){
+                                $tbody.append('<tr><td>'+k+'</td><td>'+v+'</td></tr>');
+                            });
+                            $table.append($tbody);
+                            $table.appendTo("#torrent"+id+"details");
+
                         }
                     }
 

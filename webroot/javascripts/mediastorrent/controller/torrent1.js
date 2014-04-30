@@ -858,6 +858,15 @@ Torrent1.controller =  {
         upload : function(e){
             e.preventDefault();
             var formData = new FormData($("#addtorrent")[0]);
+            var nbtorrent = $('input[name="nbtorrents"]').val();
+            if ( nbtorrent){
+                for( id=0;id< nbtorrent;id++){
+                    if ( $('.torrent'+id+'ajoutecheck').is(":checked")){
+                        formData.append("torrent"+id+"addbibli","on");
+                    }
+                }
+
+            }
             console.log(Base.model.conf.base_url+"/torrent/send/"+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion+".json");
             $.ajax({
                 url: Base.controller.makeUrlBase(Torrent1.model.baseUrl)+'torrent/send/'+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion+".json",
@@ -899,6 +908,8 @@ Torrent1.controller =  {
                         }
 
                     });
+                }else{
+                    $('#addTorrentDetails').empty();
                 }
             },
             file : {
@@ -922,7 +933,27 @@ Torrent1.controller =  {
                                 Base.view.noty.generate("error","Impossible de se connecter à "+Torrent1.model.nomseedbox);
                             }
                         });
+                    },
+                    allrecherche : function(id,idall){
+                        var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl)+'allocine/getInfosFilm/'+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion+"/"+idall;
+
+                        $.ajax({
+                            url: url+".json",
+                            dataType: "json",
+                            type: "GET",
+
+                            //contentType: "application/json",
+                            success: function(response, textStatus, jqXHR){
+                                console.log(response);
+                                Torrent1.view.addTorrent.files.file.movie.recherche.allrecherche(id,response.film);
+                                //Torrent1.view.addTorrent.files.file.movie.recherche.results(id,response.film);
+                            },
+                            error: function(jqXHR, textStatus, errorThrown){
+                                Base.view.noty.generate("error","Impossible de se connecter à "+Torrent1.model.nomseedbox);
+                            }
+                        });
                     }
+
                 }
             }
         }
