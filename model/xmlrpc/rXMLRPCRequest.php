@@ -180,6 +180,8 @@ class rXMLRPCRequest extends \core\Model{
                 Debug::endTimer("refac");
                 }else{
                     $ret = true;
+                    $nb = strpos($answer,"<methodResponse>");
+                    $this->val = substr( $answer, $nb);
                 }
                 if($ret)
                 {
