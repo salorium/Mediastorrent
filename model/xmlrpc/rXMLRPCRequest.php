@@ -163,15 +163,6 @@ class rXMLRPCRequest extends \core\Model{
                     {
                         Debug::startTimer("refacfor");
                         $this->val = $this->val[2];
-                        /*Debug::endTimer("refacpreg");
-                        Debug::startTimer("refacreplace");
-                        $this->val = str_replace("\\","\\\\",$this->val[2]);
-                        Debug::endTimer("refacreplace");
-                        $this->val = str_replace("\"","\\\"",$this->val);
-
-                        /*foreach($this->val as &$string)
-                            $string = html_entity_decode($string,ENT_COMPAT,"UTF-8");
-                        //*/
                         Debug::endTimer("refacfor");
                         $ret = true;
                     }
@@ -180,8 +171,7 @@ class rXMLRPCRequest extends \core\Model{
                 Debug::endTimer("refac");
                 }else{
                     $ret = true;
-                    $nb = strpos($answer,"<methodResponse>");
-                    $this->val = substr( $answer, $nb);
+                    $this->val = $answer;
                 }
                 if($ret)
                 {
