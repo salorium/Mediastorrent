@@ -37,7 +37,7 @@ class Mysqli {
         }
         if ( is_null($str))
             return "NULL";
-        return "'%".self::$dblink->real_escape_string($str)."%'";
+        return "'%".self::$dblink->real_escape_string(str_replace(" ","%",$str))."%'";
     }
     public static function query($query){
         $QueryStartTime = \microtime(true);
