@@ -638,6 +638,9 @@ Torrent1.view =  {
                             $tbody.append('<tr><td><label for="torrent'+id+'detailstitre">Titre :</label></td><td><input type="text" name="torrent'+id+'detailstitre" id="torrent'+id+'detailstitre"></td></tr>');
                             $tbody.append('<tr><td><label for="torrent'+id+'detailstitreoriginal">Titre original :</label></td><td><input type="text" name="torrent'+id+'detailstitreoriginal" id="torrent'+id+'detailstitreoriginal"></td></tr>');
                             $tbody.append('<tr><td><label for="torrent'+id+'detailsgenre">Genre (séparer par ",") :</label></td><td><input type="text" name="torrent'+id+'detailsgenre" id="torrent'+id+'detailsgenre"></td></tr>');
+                            $tbody.append('<tr><td><label for="torrent'+id+'detailsacteur">Acteur(s) (séparer par ",") :</label></td><td><input type="text" name="torrent'+id+'detailsacteur" id="torrent'+id+'detailsacteur"></td></tr>');
+                            $tbody.append('<tr><td><label for="torrent'+id+'detailsrealisateur">Réalisateur(s) (séparer par ",") :</label></td><td><input type="text" name="torrent'+id+'detailsrealisateur" id="torrent'+id+'detailsrealisateur"></td></tr>');
+                            $tbody.append('<tr><td><label for="torrent'+id+'detailsanneeprod">Année de production :</label></td><td><input type="text" name="torrent'+id+'detailsanneeprod" id="torrent'+id+'detailsanneeprod"></td></tr>');
                             $tbody.append('<tr><td><label for="torrent'+id+'detailssynopsis">Synopsis :</label></td><td><textarea rows="5" name="torrent'+id+'detailssynopsis" id="torrent'+id+'detailssynopsis"></textarea></td></tr>');
 
                             $table.append($tbody);
@@ -734,10 +737,12 @@ Torrent1.view =  {
                         allrecherche : function( id,film){
                             $("#torrent"+id+"details").empty();
                             if ( !film.type){
-                                $("#torrent"+id+"details").append()
+                                $("#torrent"+id+"details").append('<input type="hidden" name="torrent'+id+'typerecherche" value="local">');
+
                                 Base.view.image.input("torrent"+id+"details","Poster","torrent"+id+"detailsposter",film.imageposter,false,300);
                                 Base.view.image.input("torrent"+id+"details","Backdrop","torrent"+id+"detailsbackdrop",film.imagebackdrop,false,400);
                             }else{
+                                $("#torrent"+id+"details").append('<input type="hidden" name="torrent'+id+'typerecherche" value="allo">');
                                 Base.view.image.chooser("torrent"+id+"details","Poster","torrent"+id+"detailsposter",film.imageposter,300,150);
                                 Base.view.image.chooser("torrent"+id+"details","Backdrop","torrent"+id+"detailsbackdrop",film.imagebackdrop,400,200);
                             }
@@ -755,11 +760,11 @@ Torrent1.view =  {
                                     '<param name="allowFullscreen" value="true">'+
                                     '<param name="allowScriptAccess" value="always">'+
                                     '<param name="bgcolor" value="#000000">'+
-                                    '<param name="flashvars" value="autoPlay=false&amp;adVast=true&amp;blog=false&amp;canHideNav=true&amp;cmedia='+film.ba+'&amp;endScreen=true&amp;expandable=true&amp;host=http://www.allocine.fr&amp;isACLogoDisplay=false&amp;lg=FR&amp;modeOver=false&amp;postRoll=true&amp;partner=&amp;ref='+film.code+'&amp;refererUrl=http://www.allocine.fr&amp;smartIdPrerollSet=171792&amp;subContext=&amp;timeToShowAdPanel=15&amp;typeRef=Movie&amp;urlDirectVast=&amp;urlDirectVastPr=&amp;prtSystem=wads&amp;noSkipAdIds=&amp;urlDirectVastDfp=http%3A%2F%2Fpubads.g.doubleclick.net%2Fgampad%2Fads%3Fcmsid%3D2072%26correlator%3D1798639350%26cust_params%3Dgenre%253D13026%2526genres%253D13026%25252C13001%2526kids%253D1%2526movie%253D203691%2526video%253D'+film.ba+'%26env%3Dvp%26gdfp_req%3D1%26impl%3Ds%26iu%3D%252F120157152%252Ffr-classic%252Fmovie%252Fanimation-13026%26output%3Dxml_vast2%26sz%3D640x390%26unviewed_position_start%3D1%26url%3Dhttp%253A%252F%252Fwww.allocine.fr%252Fvideo%252Fplayer_gen_cmedia%253D'+film.ba+'%2526cfilm%253D203691.html%26vid%3D'+film.ba+'%26vpos%3Dpreroll&amp;vastUrlPostRoll1=http%3A%2F%2Fwww.allocine.fr%2F_prt%2F8758166075%2Fgenre%3D13026%257C13001%26kids%3D1%26movie%3D203691%26video%3D'+film.ba+'&amp;vastUrlPostRoll2=http%3A%2F%2Fwww.allocine.fr%2F_prt%2F8758166075%2Fgenre%3D13026%257C13001%26kids%3D1%26movie%3D203691%26video%3D'+film.ba+'"></object>'+
+                                    '<param name="flashvars" value="autoPlay=false&amp;adVast=true&amp;blog=false&amp;canHideNav=true&amp;cmedia='+film.ba+'&amp;endScreen=true&amp;expandable=true&amp;host=http://www.allocine.fr&amp;isACLogoDisplay=false&amp;lg=FR&amp;modeOver=false&amp;postRoll=true&amp;partner=&amp;ref='+film.codeall+'&amp;refererUrl=http://www.allocine.fr&amp;smartIdPrerollSet=171792&amp;subContext=&amp;timeToShowAdPanel=15&amp;typeRef=Movie&amp;urlDirectVast=&amp;urlDirectVastPr=&amp;prtSystem=wads&amp;noSkipAdIds=&amp;urlDirectVastDfp=http%3A%2F%2Fpubads.g.doubleclick.net%2Fgampad%2Fads%3Fcmsid%3D2072%26correlator%3D1798639350%26cust_params%3Dgenre%253D13026%2526genres%253D13026%25252C13001%2526kids%253D1%2526movie%253D203691%2526video%253D'+film.ba+'%26env%3Dvp%26gdfp_req%3D1%26impl%3Ds%26iu%3D%252F120157152%252Ffr-classic%252Fmovie%252Fanimation-13026%26output%3Dxml_vast2%26sz%3D640x390%26unviewed_position_start%3D1%26url%3Dhttp%253A%252F%252Fwww.allocine.fr%252Fvideo%252Fplayer_gen_cmedia%253D'+film.ba+'%2526cfilm%253D203691.html%26vid%3D'+film.ba+'%26vpos%3Dpreroll&amp;vastUrlPostRoll1=http%3A%2F%2Fwww.allocine.fr%2F_prt%2F8758166075%2Fgenre%3D13026%257C13001%26kids%3D1%26movie%3D203691%26video%3D'+film.ba+'&amp;vastUrlPostRoll2=http%3A%2F%2Fwww.allocine.fr%2F_prt%2F8758166075%2Fgenre%3D13026%257C13001%26kids%3D1%26movie%3D203691%26video%3D'+film.ba+'"></object>'+
                                     ' </td></tr>');
                             $table.append($tbody);
                             $table.appendTo("#torrent"+id+"details");
-                            $("#torrent"+id+"details").append('<input type="hidden" name="torrent'+id+'codeall" value="'+film.code+'">');
+                            $("#torrent"+id+"details").append('<input type="hidden" name="torrent'+id+'code" value="'+film.code+'">');
 
                         }
                     }

@@ -28,7 +28,7 @@ Base.view =  {
                     if ($.trim($poster.val()).length > 1){
                         $img.attr("src",Base.controller.makeUrlBase()+"proxy/imageSetHeight/"+Base.model.converter.paramUrl($poster.val())+"/"+height+".jpg");
                     }else{
-                        $img.attr("src",Base.controller.makeUrlBase()+"proxy/imageSetHeight/non/"+width+".jpg");
+                        $img.attr("src",Base.controller.makeUrlBase()+"proxy/imageSetHeight/non/"+height+".jpg");
                     }
                 });
                 $poster.on("paste", function(){

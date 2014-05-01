@@ -307,6 +307,7 @@ class Allocine extends Model {
         if ( $v != null){
             $tmp["type"] = "movie";
             $tmp["code"] = $v->code;
+            $tmp["codeall"] = $v->code;
             if (isset($v->originalTitle))
                 $tmp["Titre original"]= $v->originalTitle;
             if (isset($v->title))
@@ -348,7 +349,7 @@ class Allocine extends Model {
             if (isset($v->movieType->_))
                 $tmp["Type du film"] =  $v->movieType->_;
             if (isset($v->castingShort->directors))
-                $tmp["Réalisateur"] =  $v->castingShort->directors;
+                $tmp["Réalisateur(s)"] =  $v->castingShort->directors;
             if (isset($v->castingShort->actors))
                 $tmp["Acteur(s)"] =  $v->castingShort->actors;
             $maxratioposter = -1;
@@ -427,7 +428,78 @@ class Allocine extends Model {
             return $tmp;
         }
         return null;
+    }
+    function retourneResMovieFormatForBD(){
+        $v= $this->retourneResMovie();
+        if ( $v != null){
+            $tmp["codeall"] = $v->code;
+            if (isset($v->originalTitle))
+                $tmp["Titre original"]= $v->originalTitle;
+            if (isset($v->title))
+                $tmp["Titre"]= $v->title;
+            if (isset($v->productionYear))
+                $tmp["Année de production"] = $v->productionYear;
+            if (isset($v->runtime))
+                $tmp["Durée"] =  $this->dateFormat($v->runtime);
+            if (isset($v->trailer->href))
+                $tmp["Bande annonce"]=   $v->trailer->href;
+            if (isset($v->statistics->userRating))
+                $tmp["Note des spectacteurs"]= $v->statistics->userRating;
+            if(isset($v->statistics->pressRating))
+                $tmp["Note de la presse"]=  $v->statistics->pressRating;
+            if(isset($v->release->releaseDate))
+                $tmp["Date de sortie"]= preg_replace("#(\d+)\-(\d+)\-(\d+)#", "$3/$2/$1",  $v->release->releaseDate);
+            if (!isset($tmp["Date de sortie"]) ){
+                $content = file_get_contents("http://www.allocine.fr/film/fichefilm_gen_cfilm=".$tmp["code"].".html");
+                if ( preg_match('#datePublished"[^>]+>(\d+) (janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre) (\d+)#', $content,$o)){
+                    //">(\d+) (janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre) (\d+)
 
+                    $ta["janvier"]= "01";
+                    $ta["février"]= "02";
+                    $ta["mars"]= "03";
+                    $ta["avril"]= "04";
+                    $ta["mai"]= "05";
+                    $ta["juin"]= "06";
+                    $ta["juillet"]= "07";
+                    $ta["août"]= "08";
+                    $ta["septembre"]= "09";
+                    $ta["octobre"]= "10";
+                    $ta["novembre"]= "11";
+                    $ta["décembre"]= "12";
+                    $tmp["Date de sortie"]= $o[1]."/".$ta[$o[2]]."/".$o[3];
+                }
+            }
+            foreach($v->media AS $k=>$vv){
+                if ( $vv->class === "video" && $vv->type->_ === "Bande-annonce" && strpos($vv->title,'VF') !== false){
+                    $tmp["ba"]= $vv->code;
+                }
+            }
+            if (isset($v->release->distributor->name))
+                $tmp["Distributeur"]= $v->release->distributor->name;
+            if (isset($v->movieType->_))
+                $tmp["Type du film"] =  $v->movieType->_;
+            if (isset($v->castingShort->directors))
+                $tmp["Réalisateur(s)"] =  $v->castingShort->directors;
+            if (isset($v->castingShort->actors))
+                $tmp["Acteur(s)"] =  $v->castingShort->actors;
+            if (isset($v->movieCertificate->certificate->_))
+                $tmp["Interdiction"] =  $v->movieCertificate->certificate->_;
+            if (isset($v->nationality)){
+                $tmp["Origine"] = "";
+                foreach ($v->nationality as $k=>$vs)
+                    $tmp["Origine"] .= $vs->_.", ";
+                $tmp["Origine"] = substr($tmp["Origine"],0,-2);
+            }
+            if (isset($v->genre)){
+                $tmp["Genre"] = array();
+                foreach ($v->genre as $k=>$vs)
+                    $tmp["Genre"][] = ucfirst(strtolower(trim($vs->_)));
+            }
+            if (isset($v->synopsis))
+                $tmp["Synopsis"] =  $v->synopsis;
+            return $tmp;
+        }
+        return null;
     }
     function affiche($a){
         var_dump($a);

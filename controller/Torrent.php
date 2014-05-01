@@ -16,23 +16,6 @@ use model\xmlrpc\rXMLRPCCommand;
 
 class Torrent extends Controller {
     function liste($login=null,$keyconnexion=null,$cid=null,$hashtorrentselectionne=null){
-        /*if (!is_null($login) && ! is_null($keyconnexion)){
-            $u = \core\Memcached::value($login,"user");
-            if ( is_null($u)){
-                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                if ( $u)
-                    \core\Memcached::value($u->login,"user",$u,60*5);
-            }else{
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-                if ( is_bool($u)){
-                    $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login,$keyconnexion);
-                    if ( $u)
-                        \core\Memcached::value($u->login,"user",$u,60*5);
-                }
-                $u = $u->keyconnexion ===$keyconnexion ? $u:false ;
-            }
-            \config\Conf::$user["user"]= $u;
-        }*/
         \model\simple\Utilisateur::authentificationPourRtorrent($login,$keyconnexion);
         $tor = null ;
         if ( !\config\Conf::$user["user"] ) throw new \Exception("Non User");
@@ -378,7 +361,66 @@ class Torrent extends Controller {
         $clefunique = null;
         if (isset($_REQUEST["mediastorrent"])){
             for ( $idtorrent = 0 ; $idtorrent < $_REQUEST["nbtorrents"];$idtorrent++){
-
+                if ( isset( $_REQUEST["torrent".$idtorrent."addbibli"])){
+                    switch($_REQUEST["torrent".$idtorrent."type"] ){
+                        case 'film':
+                            if ($_REQUEST["torrent".$idtorrent."recherche"] === "manuel" ){
+                                //Manuel
+                                $titre = trim($_REQUEST["torrent".$idtorrent."detailstitre"]);
+                                $otitre = trim($_REQUEST["torrent".$idtorrent."detailstitreoriginal"]);
+                                $synopsis = trim($_REQUEST["torrent".$idtorrent."detailssynopsis"]);
+                                $genre = explode(",",$_REQUEST["torrent".$idtorrent."detailsgenre"]);
+                                array_walk ($genre, create_function('&$val', '$val = trim($val);'));
+                                array_walk ($genre, create_function('&$val', '$val = strtolower($val);'));
+                                array_walk ($genre, create_function('&$val', '$val = ucfirst($val);'));
+                                $acteurs = explode(",",$_REQUEST["torrent".$idtorrent."detailsacteur"]);
+                                array_walk ($acteurs, create_function('&$val', '$val = trim($val);'));
+                                array_walk ($acteurs, create_function('&$val', '$val = strtolower($val);'));
+                                array_walk ($acteurs, create_function('&$val', '$val = ucwords($val);'));
+                                $acteurs = implode(", ",$acteurs);
+                                $realisateurs = explode(",",$_REQUEST["torrent".$idtorrent."detailsrealisateur"]);
+                                array_walk ($realisateurs,create_function('&$val', '$val = trim($val);'));
+                                array_walk ($realisateurs,create_function('&$val', '$val = strtolower($val);'));
+                                array_walk ($realisateurs,create_function('&$val', '$val = ucwords($val);'));
+                                $realisateurs = implode(", ",$realisateurs);
+                                $anneeprod = trim($_REQUEST["torrent".$idtorrent."detailsanneeprod"]);
+                                $urlposter = trim($_REQUEST["torrent".$idtorrent."detailsposter"]);
+                                $urlbackdrop = trim($_REQUEST["torrent".$idtorrent."detailsbackdrop"]);
+                                $infos["Titre"]= $titre;
+                                $infos["Titre original"]= $otitre;
+                                $infos["Genre"]= implode(", ",$genre);
+                                $infos["Réalisateur(s)"]=$realisateurs;
+                                $infos["Acteur(s)"]=$acteurs;
+                                $infos["Année de production"]=$anneeprod;
+                                $infos["Synopsis"]=$synopsis;
+                                $film = \model\mysql\Film::ajouteFilm($titre,$otitre,json_encode($infos),$urlposter,$urlbackdrop,$anneeprod,$acteurs,$realisateurs);
+                                $idfilm =  $film->id;
+                            }else{
+                                //Auto
+                                if ( $_REQUEST["torrent".$idtorrent."typerecherche"] === "local"){
+                                    //Local
+                                    $idfilm =  $_REQUEST["torrent".$idtorrent."code"];
+                                }else{
+                                    //Allo
+                                    $o["typesearch"]="movie";
+                                    $allo = new \model\simple\Allocine($_REQUEST["torrent".$idtorrent."code"],$o);
+                                    $infos = $allo->retourneResMovieFormatForBD();
+                                    $genre = $infos["Genre"];
+                                    $infos["Genre"] = implode(", ",$genre);
+                                    $titre = (isset($infos["Titre"])?$infos["Titre"]:$infos["Titre original"]);
+                                    $otitre = $infos["Titre original"];
+                                    $urlposter = trim($_REQUEST["torrent".$idtorrent."detailsposter"]);
+                                    $urlbackdrop = trim($_REQUEST["torrent".$idtorrent."detailsbackdrop"]);
+                                    $realisateurs = $infos["Réalisateur(s)"];
+                                    $acteurs = $infos["Acteur(s)"];
+                                    $anneeprod = $infos["Année de production"];
+                                    $film = \model\mysql\Film::ajouteFilm($titre,$otitre,json_encode($infos),$urlposter,$urlbackdrop,$anneeprod,$acteurs,$realisateurs,$_REQUEST["torrent".$idtorrent."code"]);
+                                    $idfilm =  $film->id;
+                                }
+                            }
+                            break;
+                    }
+                }
             }
         }
         if (isset ( $_FILES ['torrentfile'] )) {

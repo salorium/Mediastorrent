@@ -13,6 +13,9 @@ class Film extends \core\Model{
     public $titre;
     public $titreoriginal;
     public $id;
+    public $acteurs;
+    public $realisateurs;
+    public $anneeprod;
     public $infos;
     public $urlposter;
     public $urlbackdrop;
@@ -21,7 +24,7 @@ class Film extends \core\Model{
     public function insert(){
         if ( is_null($this->titre) ||is_null($this->titreoriginal)||is_null($this->id)||is_null($this->infos) || is_null($this->urlbackdrop)|| is_null($this->urlposter))
             return false;
-        $query = "insert into film (titre,titreoriginal,id,infos,idallocine,idthemoviedb,urlposter,urlbackdrop) values(";
+        $query = "insert into film (titre,titreoriginal,id,infos,idallocine,idthemoviedb,urlposter,urlbackdrop,acteurs,realisateurs,anneeprod) values(";
         $query .= \core\Mysqli::real_escape_string($this->titre).",";
         $query .= \core\Mysqli::real_escape_string($this->titreoriginal).",";
         $query .= \core\Mysqli::real_escape_string($this->id).",";
@@ -29,14 +32,17 @@ class Film extends \core\Model{
         $query .= \core\Mysqli::real_escape_string($this->idallocine).",";
         $query .= \core\Mysqli::real_escape_string($this->idthemoviedb).",";
         $query .= \core\Mysqli::real_escape_string($this->urlposter).",";
-        $query .= \core\Mysqli::real_escape_string($this->urlbackdrop).")";
+        $query .= \core\Mysqli::real_escape_string($this->urlbackdrop).",";
+        $query .= \core\Mysqli::real_escape_string($this->acteurs).",";
+        $query .= \core\Mysqli::real_escape_string($this->realisateurs).",";
+        $query .= \core\Mysqli::real_escape_string($this->anneeprod).")";
         \core\Mysqli::query($query);
         $res =  (\core\Mysqli::nombreDeLigneAffecte() == 1 );
         \core\Mysqli::close();
         return $res;
 
     }
-    static function ajouteFilm($titre,$titreoriginal,$infos,$urlposter,$urlbackdrop,$idallocine=null,$idthemoviedb=null){
+    static function ajouteFilm($titre,$titreoriginal,$infos,$urlposter,$urlbackdrop,$anneeprod,$acteurs,$realisateurs,$idallocine=null,$idthemoviedb=null){
 
         if ($f = Film::checkIdallocine($idallocine) ){
             return $f;
@@ -49,6 +55,9 @@ class Film extends \core\Model{
             $film->idthemoviedb = $idthemoviedb;
             $film->urlbackdrop = $urlbackdrop;
             $film->urlposter = $urlposter;
+            $film->acteurs = $acteurs;
+            $film->anneeprod = $anneeprod;
+            $film->realisateurs = $realisateurs;
             do{
                 $film->id = \model\simple\String::random(10);
             }while ( !$film->insert());
@@ -57,7 +66,7 @@ class Film extends \core\Model{
 
     }
     static function rechercheFormat ( $titre){
-        $query = "select titre, titreoriginal as originaltitre, id as code, urlposter as image from film ";
+        $query = "select titre, titreoriginal as originaltitre, id as code, urlposter as image, realisateurs as realisateur, acteurs as acteur, anneeprod from film ";
         $query .="where titre like ".\core\Mysqli::real_escape_stringlike($titre)." or titreoriginal like ".\core\Mysqli::real_escape_stringlike($titre);
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(true,__CLASS__);
