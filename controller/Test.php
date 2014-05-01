@@ -16,7 +16,7 @@ use model\simple\Mail;
 
 class Test extends Controller {
     function addFilm(){
-        $f = Film::ajouteFilm("Titi","Titi","az","az");
+        $f = Film::ajouteFilm("Titi","Titi","az","az","dd");
         echo $f->id;
         die();
     }

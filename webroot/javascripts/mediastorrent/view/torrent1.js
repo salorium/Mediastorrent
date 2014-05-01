@@ -604,11 +604,11 @@ Torrent1.view =  {
                             //Torrent.controller.addTorrent.rechercher(id);
                         });
 
-                         $inputserie.click(function(e){
-                             $("#torrent"+id+"files").empty();
-                             $("#torrent"+id+"details").empty();
-                         //Torrent.view.addTorrent.showFileSerieTorrent(torrent.files,id);
-                         });
+                        $inputserie.click(function(e){
+                            $("#torrent"+id+"files").empty();
+                            $("#torrent"+id+"details").empty();
+                            //Torrent.view.addTorrent.showFileSerieTorrent(torrent.files,id);
+                        });
                     }else{
                         //Type MUSIQUE
                     }
@@ -642,20 +642,22 @@ Torrent1.view =  {
 
                             $table.append($tbody);
                             $table.appendTo("#torrent"+id+"details");
-                            Base.view.image.input("Poster","torrent'+id+'detailsposter","torrent"+id+"details");
-                            Base.view.image.input("Backdrop","torrent'+id+'detailsbackdrop","torrent"+id+"details");
+                            /*Base.view.image.input("Poster","torrent'+id+'detailsposter","torrent"+id+"details",300);
+                             Base.view.image.input("Backdrop","torrent'+id+'detailsbackdrop","torrent"+id+"details",400);*/
 
+                            Base.view.image.input("torrent"+id+"details","Poster","torrent"+id+"detailsposter","non",true,300);
+                            Base.view.image.input("torrent"+id+"details","Backdrop","torrent"+id+"detailsbackdrop","non",true,400);
                             /*$back = $('<input class="large-2" type="text" name="torrent'+id+'detailsbackdrop" id="torrent'+id+'detailsbackdrop">');
-                            $("#torrent"+id+"details").append($('<div class="row"></div>').append($('<div class="large-12"></div>').append($poster)));
-                            $img1 = $('<img height="500px" src="'+Base.controller.makeUrlBase()+"proxy/imageSetHeight/non/500.jpg"+'">');
-                            $("#torrent"+id+"details").append($img);
-                            $poster.on("change paste keyup update input", function() {
-                                if ($.trim($poster.val()).length > 1){
-                                    $img.attr("src",Base.controller.makeUrlBase()+"proxy/imageSetHeight/"+Base.model.converter.paramUrl($poster.val())+"/500.jpg");
-                                }else{
-                                    $img.attr("src",Base.controller.makeUrlBase()+"proxy/imageSetHeight/non/500.jpg");
-                                }
-                            });*/
+                             $("#torrent"+id+"details").append($('<div class="row"></div>').append($('<div class="large-12"></div>').append($poster)));
+                             $img1 = $('<img height="500px" src="'+Base.controller.makeUrlBase()+"proxy/imageSetHeight/non/500.jpg"+'">');
+                             $("#torrent"+id+"details").append($img);
+                             $poster.on("change paste keyup update input", function() {
+                             if ($.trim($poster.val()).length > 1){
+                             $img.attr("src",Base.controller.makeUrlBase()+"proxy/imageSetHeight/"+Base.model.converter.paramUrl($poster.val())+"/500.jpg");
+                             }else{
+                             $img.attr("src",Base.controller.makeUrlBase()+"proxy/imageSetHeight/non/500.jpg");
+                             }
+                             });*/
                         },
                         recherche: function(id){
                             $auto = $('<input type="radio" checked="checked" name="torrent'+id+'recherche" value="auto" id="torrent'+id+'rechercheauto">');
@@ -669,16 +671,16 @@ Torrent1.view =  {
                             $input =  $('<input type="text" id="torrent'+id+'suggestrecherche" name="torrent'+id+'suggestrecherche">');
                             $input[0].onupdate = $input[0].onkeyup = function() {
                                 if ( $auto.is(':checked')){
-                                if ($.trim($input[0].value).length > 1){
-                                    Torrent1.controller.addTorrent.files.file.movie.recherche(id);
-                                }else{
-                                    $('#torrent'+id+'suggest').hide();
-                                }
+                                    if ($.trim($input[0].value).length > 1){
+                                        Torrent1.controller.addTorrent.files.file.movie.recherche(id);
+                                    }else{
+                                        $('#torrent'+id+'suggest').hide();
+                                    }
                                 }
                             }
                             $auto.click(function(e){
-                                    $("#torrent"+id+"details").empty();
-                                    $input[0].onupdate();
+                                $("#torrent"+id+"details").empty();
+                                $input[0].onupdate();
                             });
                             $manuel.click(function(e){
                                 $('#torrent'+id+'suggest').empty();
@@ -693,18 +695,23 @@ Torrent1.view =  {
                         },
                         results : function(id,films){
                             $('#torrent'+id+'suggest').empty();
-                            $.each( films, function(k,v){
-                                Torrent1.view.addTorrent.files.file.movie.recherche.result(id,v);
+                            $("#torrent"+id+"details").empty();
+                            $.each( films.localfilm, function(k,v){
+                                Torrent1.view.addTorrent.files.file.movie.recherche.result(id,v,"red");
                             });
+                            $.each( films.film, function(k,v){
+                                Torrent1.view.addTorrent.files.file.movie.recherche.result(id,v,"yellow");
+                            });
+
                             $('#torrent'+id+'suggest').show();
                         },
-                        result : function(id,film){
-                            $fieldset = $('<fieldset><legend>'+(film.titre ? film.titre:film.originaltitre)+'</legend></fieldset>');
+                        result : function(id,film,color){
+                            $fieldset = $('<fieldset style="border-color: '+color+';"><legend>'+(film.titre ? film.titre:film.originaltitre)+'</legend></fieldset>');
                             $fieldset.click ( function(e){
                                 console.log(film.code);
                                 $('#torrent'+id+'suggest').empty();
                                 $('#torrent'+id+'suggest').hide();
-                                Torrent1.controller.addTorrent.files.file.movie.allrecherche(id,film.code);
+                                Torrent1.controller.addTorrent.files.file.movie.allrecherche(id,film.code,(film.type ? true:false));
                             });
                             $table = $('<table class="noneventrowbg"></table>');
                             if (film.image){
@@ -726,13 +733,33 @@ Torrent1.view =  {
                         },
                         allrecherche : function( id,film){
                             $("#torrent"+id+"details").empty();
+                            if ( !film.type){
+                                $("#torrent"+id+"details").append()
+                                Base.view.image.input("torrent"+id+"details","Poster","torrent"+id+"detailsposter",film.imageposter,false,300);
+                                Base.view.image.input("torrent"+id+"details","Backdrop","torrent"+id+"detailsbackdrop",film.imagebackdrop,false,400);
+                            }else{
+                                Base.view.image.chooser("torrent"+id+"details","Poster","torrent"+id+"detailsposter",film.imageposter,300,150);
+                                Base.view.image.chooser("torrent"+id+"details","Backdrop","torrent"+id+"detailsbackdrop",film.imagebackdrop,400,200);
+                            }
                             $table = $('<table></table>');
                             $tbody = $('<tbody></tbody>');
                             $.each( film, function(k,v){
-                                $tbody.append('<tr><td>'+k+'</td><td>'+v+'</td></tr>');
+                                if (/^[A-Z]+/.test(k))
+                                    $tbody.append('<tr><td>'+k+'</td><td>'+v+'</td></tr>');
                             });
+                            if ( film.ba)
+                                $tbody.append('<tr><td>Bande annonce</td><td><object width="640px" height="390px" type="application/x-shockwave-flash" id="V6_player" style="visibility: visible;" data="http://images.allocine.fr/commons/player/AcV5/AcPlayer_v5.2.swf">'+
+                                    '<param name="menu" value="false">'+
+                                    '<param name="wmode" value="window">'+
+                                    '<param name="scale" value="noScale">'+
+                                    '<param name="allowFullscreen" value="true">'+
+                                    '<param name="allowScriptAccess" value="always">'+
+                                    '<param name="bgcolor" value="#000000">'+
+                                    '<param name="flashvars" value="autoPlay=false&amp;adVast=true&amp;blog=false&amp;canHideNav=true&amp;cmedia='+film.ba+'&amp;endScreen=true&amp;expandable=true&amp;host=http://www.allocine.fr&amp;isACLogoDisplay=false&amp;lg=FR&amp;modeOver=false&amp;postRoll=true&amp;partner=&amp;ref='+film.code+'&amp;refererUrl=http://www.allocine.fr&amp;smartIdPrerollSet=171792&amp;subContext=&amp;timeToShowAdPanel=15&amp;typeRef=Movie&amp;urlDirectVast=&amp;urlDirectVastPr=&amp;prtSystem=wads&amp;noSkipAdIds=&amp;urlDirectVastDfp=http%3A%2F%2Fpubads.g.doubleclick.net%2Fgampad%2Fads%3Fcmsid%3D2072%26correlator%3D1798639350%26cust_params%3Dgenre%253D13026%2526genres%253D13026%25252C13001%2526kids%253D1%2526movie%253D203691%2526video%253D'+film.ba+'%26env%3Dvp%26gdfp_req%3D1%26impl%3Ds%26iu%3D%252F120157152%252Ffr-classic%252Fmovie%252Fanimation-13026%26output%3Dxml_vast2%26sz%3D640x390%26unviewed_position_start%3D1%26url%3Dhttp%253A%252F%252Fwww.allocine.fr%252Fvideo%252Fplayer_gen_cmedia%253D'+film.ba+'%2526cfilm%253D203691.html%26vid%3D'+film.ba+'%26vpos%3Dpreroll&amp;vastUrlPostRoll1=http%3A%2F%2Fwww.allocine.fr%2F_prt%2F8758166075%2Fgenre%3D13026%257C13001%26kids%3D1%26movie%3D203691%26video%3D'+film.ba+'&amp;vastUrlPostRoll2=http%3A%2F%2Fwww.allocine.fr%2F_prt%2F8758166075%2Fgenre%3D13026%257C13001%26kids%3D1%26movie%3D203691%26video%3D'+film.ba+'"></object>'+
+                                    ' </td></tr>');
                             $table.append($tbody);
                             $table.appendTo("#torrent"+id+"details");
+                            $("#torrent"+id+"details").append('<input type="hidden" name="torrent'+id+'codeall" value="'+film.code+'">');
 
                         }
                     }

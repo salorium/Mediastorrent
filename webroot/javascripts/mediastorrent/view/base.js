@@ -16,25 +16,72 @@ Base.view =  {
         $(container).css("height",hauteur);
     },
     image: {
-        input : function(name,id,container){
+        input : function(container,name,id,url,input,height){
             $("#"+container).append('<label for="'+id+'">'+name+' :</label>');
             var $poster = $('<input class="large-2" type="text" name="'+id+'" id="'+id+'">');
-            $("#"+container).append($('<div class="row"></div>').append($('<div class="large-12"></div>').append($poster)));
-            var $img = $('<img height="300px" src="'+Base.controller.makeUrlBase()+"proxy/imageSetHeight/non/300.jpg"+'">');
+            if ( input)
+                $("#"+container).append($('<div class="row"></div>').append($('<div class="large-12"></div>').append($poster)));
+            var $img = $('<img height="'+height+'px" src="'+Base.controller.makeUrlBase()+"proxy/imageSetHeight/"+Base.model.converter.paramUrl(url)+"/"+height+".jpg"+'">');
             $("#"+container).append($img);
+            if ( input){
+                $poster.on("change keyup update input", function() {
+                    if ($.trim($poster.val()).length > 1){
+                        $img.attr("src",Base.controller.makeUrlBase()+"proxy/imageSetHeight/"+Base.model.converter.paramUrl($poster.val())+"/"+height+".jpg");
+                    }else{
+                        $img.attr("src",Base.controller.makeUrlBase()+"proxy/imageSetHeight/non/"+width+".jpg");
+                    }
+                });
+                $poster.on("paste", function(){
+                    setTimeout(function(){
+                        $poster.change();
+                    },1);
+                });
+            }
+        },
+        chooser : function(container,name,id,images,height,width){
+            $("#"+container).append('<label for="'+id+'">'+name+' :</label>');
+            var $poster = $('<input class="large-2" type="text" name="'+id+'" id="'+id+'" value="'+images.url[0][0]+'">');
+            $("#"+container).append($('<div class="row"></div>').append($('<div class="large-12"></div>').append($poster)));
+            var $img = $('<img height="'+height+'px" src="'+Base.controller.makeUrlBase()+"proxy/imageSetHeight/"+Base.model.converter.paramUrl(images.url[0][0])+"/"+height+".jpg"+'">');
+            var $divimg = $('<div style="width: '+(images.url[0][1]*height/images.url[0][2])+'px; height:'+height+'px; position:relative;"></div>');
+            $divimg.append($img);
+            var $span = $('<span style="position: absolute; top: 0;right: 0;background-color: rgba(0,0,0,0.8);color: #ffffff; padding: 5px;">'+images.url[0][1]+'x'+images.url[0][2]+'</span>');
+            $divimg.append($span);
+            $("#"+container).append($divimg);
+
             $poster.on("change keyup update input", function() {
                 if ($.trim($poster.val()).length > 1){
-                    $img.attr("src",Base.controller.makeUrlBase()+"proxy/imageSetHeight/"+Base.model.converter.paramUrl($poster.val())+"/300.jpg");
+                    $img.attr("src",Base.controller.makeUrlBase()+"proxy/imageSetHeight/"+Base.model.converter.paramUrl($poster.val())+"/"+height+".jpg");
                 }else{
-                    $img.attr("src",Base.controller.makeUrlBase()+"proxy/imageSetHeight/non/300.jpg");
+                    $img.attr("src",Base.controller.makeUrlBase()+"proxy/imageSetHeight/non/"+height+".jpg");
                 }
             });
             $poster.on("paste", function(){
                 setTimeout(function(){
                     $poster.change();
                 },1);
-            })
+            });
+            var $fieldset = $('<fieldset><legend>'+name+'</legend></fieldset>');
+            var $divminiatureimage = $('<div style="height: 300px;overflow-y: auto;overflow-x: hidden;"></div>');
+            for (i=0;i<images.url.length;i++){
+
+                var $divcontaineminiatureimage = $('<div data-url="'+images.url[i][0]+'" data-x="'+images.url[i][1]+'" data-y="'+images.url[i][2]+'" class="'+(i==0 ?"active":"")+' miniature" style="width: '+(width)+'px; position:relative;"></div>');
+                $divcontaineminiatureimage.append('<img  width="'+width+'px" src="'+Base.controller.makeUrlBase()+"proxy/imageSetWidth/"+Base.model.converter.paramUrl(images.url[i][0])+"/"+width+".jpg"+'">')
+                $divcontaineminiatureimage.append('<span style="position: absolute; top: 0;right: 0;background-color: rgba(0,0,0,0.8);color: #ffffff; padding: 5px;">'+images.url[i][1]+'x'+images.url[i][2]+'</span>');
+                $divminiatureimage.append($('<div style="width: '+(width)+'px; height:'+(width*images.ratio+5)+'px; position:relative;float: left;"></div>').append($divcontaineminiatureimage));
+                $divcontaineminiatureimage.on("click", function(e){
+                    $(".miniature").removeClass("active");
+                    $(e.currentTarget).addClass("active");
+                    $poster.val($(e.currentTarget).attr("data-url"));
+                    $poster.change();
+                    $divimg.width($(e.currentTarget).attr("data-x")*height/$(e.currentTarget).attr("data-y"));
+                    $span.html($(e.currentTarget).attr("data-x")+"x"+$(e.currentTarget).attr("data-y"));
+                });
+            }
+            $("#"+container).append($fieldset);
+            $fieldset.append($divminiatureimage);
         }
+
     },
     noty : {
         generate : function (type,texte,layout){
@@ -59,13 +106,13 @@ Base.view =  {
                     {addClass: 'btn btn-primary', text: 'Oui', onClick: function ($noty) {
                         $noty.close();
                         if ( call_oui)
-                        call_oui();
+                            call_oui();
                     }
                     },
                     {addClass: 'btn btn-danger', text: 'Non', onClick: function ($noty) {
                         $noty.close();
                         if ( call_non)
-                        call_non();
+                            call_non();
                     }
                     }
                 ]

@@ -916,7 +916,7 @@ Torrent1.controller =  {
                 movie : {
                     recherche : function(id){
                         var recherche = $("#torrent"+id+"suggestrecherche").val();
-                        var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl)+'allocine/rechercheFilm/'+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion;
+                        var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl)+'film/recherche/'+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion;
 
                         $.ajax({
                             url: url+".json",
@@ -926,17 +926,18 @@ Torrent1.controller =  {
 
                             //contentType: "application/json",
                             success: function(response, textStatus, jqXHR){
-                                console.log(response);
-                                Torrent1.view.addTorrent.files.file.movie.recherche.results(id,response.film);
+                                //console.log(response);
+                                Torrent1.view.addTorrent.files.file.movie.recherche.results(id,response);
                             },
                             error: function(jqXHR, textStatus, errorThrown){
                                 Base.view.noty.generate("error","Impossible de se connecter à "+Torrent1.model.nomseedbox);
                             }
                         });
                     },
-                    allrecherche : function(id,idall){
-                        var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl)+'allocine/getInfosFilm/'+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion+"/"+idall;
-
+                    allrecherche : function(id,code,type){
+                        var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl)+'film/getInfosFilm/'+Base.model.utilisateur.login+"/"+Base.model.utilisateur.keyconnexion+"/"+code;
+                        if ( type)
+                            url += "/all"
                         $.ajax({
                             url: url+".json",
                             dataType: "json",
@@ -944,7 +945,7 @@ Torrent1.controller =  {
 
                             //contentType: "application/json",
                             success: function(response, textStatus, jqXHR){
-                                console.log(response);
+                                //console.log(response);
                                 Torrent1.view.addTorrent.files.file.movie.recherche.allrecherche(id,response.film);
                                 //Torrent1.view.addTorrent.files.file.movie.recherche.results(id,response.film);
                             },

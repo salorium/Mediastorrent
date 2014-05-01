@@ -351,6 +351,8 @@ class Allocine extends Model {
                 $tmp["Réalisateur"] =  $v->castingShort->directors;
             if (isset($v->castingShort->actors))
                 $tmp["Acteur(s)"] =  $v->castingShort->actors;
+            $maxratioposter = -1;
+            $maxratiobackdrop = -1;
             foreach($v->media AS $k=>$vv){
                 if ( $vv->class === "picture"){
                     $width=0;
@@ -365,10 +367,14 @@ class Allocine extends Model {
                     }
                     if ( $width > $height){
                         //Backdrop
-                        $tmp["imagebackdrop"][]= array($vv->thumbnail->href,$width,$height);
+                        if ( $maxratiobackdrop < $height/$width)
+                            $maxratiobackdrop = $height/$width;
+                        $tmp["imagebackdrop"]["url"][]= array($vv->thumbnail->href,$width,$height);
                     }else{
                         //Poster
-                        $tmp["imageposter"][]= array($vv->thumbnail->href,$width,$height);
+                        if ( $maxratioposter < $height/$width)
+                            $maxratioposter = $height/$width;
+                        $tmp["imageposter"]["url"][]= array($vv->thumbnail->href,$width,$height);
                     }
                 }
                 if ( $vv->class === "video" && $vv->type->_ === "Bande-annonce" && strpos($vv->title,'VF') !== false){
@@ -383,13 +389,24 @@ class Allocine extends Model {
                 foreach( $tmp1->backdrops as $k=>$vv){
                     //var_dump($vv);
                     //die();
-                    $tmp["imagebackdrop"][]= array("http://image.tmdb.org/t/p/original".$vv->file_path,$vv->width,$vv->height);
+                    if ( $maxratiobackdrop < $vv->height/$vv->width)
+                        $maxratiobackdrop = $vv->height/$vv->width;
+                    $tmp["imagebackdrop"]["url"][]= array("http://image.tmdb.org/t/p/original".$vv->file_path,$vv->width,$vv->height);
                 }
                 foreach( $tmp1->posters as $k=>$vv){
-                    $tmp["imageposter"][]= array("http://image.tmdb.org/t/p/original".$vv->file_path,$vv->width,$vv->height);
+                    if ( $maxratioposter < $vv->height/$vv->width)
+                        $maxratioposter = $vv->height/$vv->width;
+                    $tmp["imageposter"]["url"][]= array("http://image.tmdb.org/t/p/original".$vv->file_path,$vv->width,$vv->height);
                 }
             }
-                if (isset($v->movieCertificate->certificate->_))
+            if ( $maxratiobackdrop > -1){
+                $tmp["imagebackdrop"]["ratio"] = $maxratiobackdrop;
+            }
+            if ( $maxratioposter> -1){
+                $tmp["imageposter"]["ratio"] = $maxratioposter;
+            }
+
+            if (isset($v->movieCertificate->certificate->_))
                 $tmp["Interdiction"] =  $v->movieCertificate->certificate->_;
             if (isset($v->nationality)){
                 $tmp["Origine"] = "";

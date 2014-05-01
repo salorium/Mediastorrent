@@ -31,6 +31,14 @@ class Mysqli {
             return "NULL";
         return "'".self::$dblink->real_escape_string($str)."'";
     }
+    public static function real_escape_stringlike($str){
+        if (!isset(self::$dblink)){
+            self::connect();
+        }
+        if ( is_null($str))
+            return "NULL";
+        return "'%".self::$dblink->real_escape_string($str)."%'";
+    }
     public static function query($query){
         $QueryStartTime = \microtime(true);
         if (!isset(self::$dblink)){

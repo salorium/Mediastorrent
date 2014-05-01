@@ -811,6 +811,15 @@ input[type="submit"].btn.btn-mini {
 
       overflow-y: auto;
       overflow-x: hidden;
+      div.miniature{
+        border: rgba(0,0,0,0) 5px solid;
+      }
+      div.miniature:hover{
+        border: rgba(50,50,50,0.9) 5px solid;
+      }
+      div.active,div.active:hover {
+        border: rgba(0,155,0, 0.9) 5px solid;
+      }
     }
   }
 input[type="file"]{
