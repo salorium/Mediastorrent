@@ -22,7 +22,7 @@ class Film extends \core\Model{
     public $idallocine;
     public $idthemoviedb;
     public function insert(){
-        if ( is_null($this->titre) ||is_null($this->titreoriginal)||is_null($this->id)||is_null($this->infos) || is_null($this->urlbackdrop)|| is_null($this->urlposter))
+        if ( is_null($this->titre) ||is_null($this->titreoriginal)||is_null($this->id)||is_null($this->infos) || is_null($this->urlbackdrop)|| is_null($this->urlposter)|| is_null($this->acteurs)|| is_null($this->realisateurs)|| is_null($this->anneeprod))
             return false;
         $query = "insert into film (titre,titreoriginal,id,infos,idallocine,idthemoviedb,urlposter,urlbackdrop,acteurs,realisateurs,anneeprod) values(";
         $query .= \core\Mysqli::real_escape_string($this->titre).",";
@@ -41,6 +41,19 @@ class Film extends \core\Model{
         \core\Mysqli::close();
         return $res;
 
+    }
+    public function addGenre($genre){
+        $g = new Genre();
+        $g->id = $this->id;
+        if ( is_array($genre)){
+            foreach ( $genre as $k=>$v){
+                $g->label = $v;
+                $g->insert();
+            }
+        }else{
+            $g->label = $genre;
+            $g->insert();
+        }
     }
     static function ajouteFilm($titre,$titreoriginal,$infos,$urlposter,$urlbackdrop,$anneeprod,$acteurs,$realisateurs,$idallocine=null,$idthemoviedb=null){
 

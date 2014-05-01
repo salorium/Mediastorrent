@@ -395,6 +395,7 @@ class Torrent extends Controller {
                                 $infos["Synopsis"]=$synopsis;
                                 $film = \model\mysql\Film::ajouteFilm($titre,$otitre,json_encode($infos),$urlposter,$urlbackdrop,$anneeprod,$acteurs,$realisateurs);
                                 $idfilm =  $film->id;
+                                $film->addGenre($genre);
                             }else{
                                 //Auto
                                 if ( $_REQUEST["torrent".$idtorrent."typerecherche"] === "local"){
@@ -416,6 +417,7 @@ class Torrent extends Controller {
                                     $anneeprod = $infos["Année de production"];
                                     $film = \model\mysql\Film::ajouteFilm($titre,$otitre,json_encode($infos),$urlposter,$urlbackdrop,$anneeprod,$acteurs,$realisateurs,$_REQUEST["torrent".$idtorrent."code"]);
                                     $idfilm =  $film->id;
+                                    $film->addGenre($genre);
                                 }
                             }
                             break;
