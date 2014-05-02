@@ -54,7 +54,8 @@ if (file_exists($filetorrent)) {
             \model\simple\Console::println(dirname($base_path) . DS . $info['name']);
             switch ($typemedias) {
                 case "film":
-
+                    $torrentf = \model\mysql\Torrentfilm::rechercheParNumFileHashClefunique($numfile, $hash, $clefunique);
+                    \model\simple\Console::println((is_bool($torrentf) ? "Non Présent" : "Présent"));
                     break;
             }
         }
