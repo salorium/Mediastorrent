@@ -34,12 +34,11 @@ class Torrentfilm extends \core\Model
         $tofilm->nomrtorrent = $nomrtorrent;
         $tofilm->hashtorrent = $hashtorrent;
         $tofilm->clefunique = $clefunique;
-        $tofilm->fini = false;
+        $tofilm->fini = 0;
         $tofilm->partageamis = $partageamis;
-        do {
             $tofilm->id = \model\simple\String::random(10);
 
-        } while (!$tofilm->insert());
+        $tofilm->insert();
         return $tofilm;
     }
 
@@ -60,7 +59,7 @@ class Torrentfilm extends \core\Model
             return false;
         $query = "insert into torrentfilm (id,date,numfile,complementfichier,idfilm,login,nomrtorrent,hashtorrent,clefunique,fini,mediainfo,partageamis) values(";
         $query .= \core\Mysqli::real_escape_string($this->id) . ",";
-        $query .= $this->date . ",";
+        $query .= \core\Mysqli::real_escape_string($this->date) . ",";
         $query .= \core\Mysqli::real_escape_string($this->numfile) . ",";
         $query .= \core\Mysqli::real_escape_string($this->complementfichier) . ",";
         $query .= \core\Mysqli::real_escape_string($this->idfilm) . ",";
@@ -68,9 +67,9 @@ class Torrentfilm extends \core\Model
         $query .= \core\Mysqli::real_escape_string($this->nomrtorrent) . ",";
         $query .= \core\Mysqli::real_escape_string($this->hashtorrent) . ",";
         $query .= \core\Mysqli::real_escape_string($this->clefunique) . ",";
-        $query .= ($this->fini) . ",";
+        $query .= \core\Mysqli::real_escape_string($this->fini) . ",";
         $query .= \core\Mysqli::real_escape_string($this->mediainfo) . ",";
-        $query .= ($this->partageamis) . ")";
+        $query .= \core\Mysqli::real_escape_string($this->partageamis) . ")";
         \core\Mysqli::query($query);
         $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
         \core\Mysqli::close();

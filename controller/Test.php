@@ -16,6 +16,11 @@ use model\simple\Mail;
 
 class Test extends Controller
 {
+    function tfilm()
+    {
+        \model\mysql\Torrentfilm::addTorrentFilm("wHOXNvBDDy", "0", "ddd", "salorium", "BigTerra2", "dd", "a", false);
+    }
+
     function clefunique()
     {
         echo "FIN => " . \model\mysql\Torrentfilm::getClefUnique();

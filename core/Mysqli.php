@@ -44,6 +44,8 @@ class Mysqli
         }
         if (is_null($str))
             return "NULL";
+        if (is_bool($str))
+            return ($str ? 1 : 0);
         return "'%" . self::$dblink->real_escape_string(str_replace(" ", "%", $str)) . "%'";
     }
 
