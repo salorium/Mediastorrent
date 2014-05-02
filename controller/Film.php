@@ -29,7 +29,11 @@ class Film extends \core\Controller
     {
         \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
-        var_dump(\model\mysql\Torrentfilm::getFilmUser($id));
+        if ($torrentf = \model\mysql\Torrentfilm::getFilmUser($id)) {
+            echo "DL";
+        } else {
+            echo "Redirection";
+        }
     }
 
     function getInfosFilm($login, $keyconnexion, $code, $all = null)
