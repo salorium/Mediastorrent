@@ -46,8 +46,10 @@ if (file_exists($filetorrent)) {
                 switch ($typemedias) {
                     case "film":
                         $torrentf = \model\mysql\Torrentfilm::rechercheParNumFileHashClefunique($numfile, $hash, $clefunique);
-                        var_dump($torrentf);
                         \model\simple\Console::println((is_bool($torrentf) ? "Non Présent" : "Présent"));
+                        if (!is_bool($torrentf)) {
+                            \model\simple\Console::println($torrentf->fini() ? "Sav ok" : "Sav Non ok");
+                        }
                         break;
                 }
                 $numfile++;

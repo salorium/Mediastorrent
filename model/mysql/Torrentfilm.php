@@ -86,4 +86,16 @@ class Torrentfilm extends \core\Model
         \core\Mysqli::close();
         return $res;
     }
+
+    public function fini()
+    {
+        $this->fini = true;
+        $query = "update torrentfilm set ";
+        $query = "fini=" . \core\Mysqli::real_escape_string($this->fini);
+        $query = " where id=" . \core\Mysqli::real_escape_string($this->id);
+        \core\Mysqli::query($query);
+        $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
+        \core\Mysqli::close();
+        return $res;
+    }
 } 
