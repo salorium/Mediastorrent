@@ -359,9 +359,12 @@ class Torrent extends Controller {
         $erreur = 1;
         $torrents = null;
         $clefunique = null;
+        $typemedias = null;
         if (isset($_REQUEST["mediastorrent"])){
+            $tmpclefunique = null;
             for ( $idtorrent = 0 ; $idtorrent < $_REQUEST["nbtorrents"];$idtorrent++){
                 if ( isset( $_REQUEST["torrent".$idtorrent."addbibli"])){
+                    $typemedias[$_REQUEST["torrent".$idtorrent."hash"]]=$_REQUEST["torrent".$idtorrent."type"];
                     switch($_REQUEST["torrent".$idtorrent."type"] ){
                         case 'film':
                             if ($_REQUEST["torrent".$idtorrent."recherche"] === "manuel" ){

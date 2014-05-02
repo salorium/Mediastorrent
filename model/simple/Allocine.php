@@ -354,6 +354,7 @@ class Allocine extends Model {
                 $tmp["Acteur(s)"] =  $v->castingShort->actors;
             $maxratioposter = -1;
             $maxratiobackdrop = -1;
+            if ( isset($v->media))
             foreach($v->media AS $k=>$vv){
                 if ( $vv->class === "picture"){
                     $width=0;
