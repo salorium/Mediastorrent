@@ -442,7 +442,7 @@ class Torrent extends Controller
                             $clefunique[$_REQUEST["torrent" . $idtorrent . "hash"]] = $clef;
                             for ($idfile = 0; $idfile < $_REQUEST["torrent" . $idtorrent . "nbfiles"]; $idfile++) {
                                 if (isset($_REQUEST["torrent" . $idtorrent . "ajoutecheckfile" . $idfile])) {
-
+                                    \model\mysql\Torrentfilm::addTorrentFilm($idfile, $_REQUEST["torrent" . $idtorrent . "numfile" . $idfile], $_REQUEST["torrent" . $idtorrent . "filecomplement" . $idfile], \config\Conf::$user["user"]->login, $nomrtorrent, $_REQUEST["torrent" . $idtorrent . "hash"], $clef, (isset($_REQUEST["torrent" . $idtorrent . "partagecheckfile" . $idfile])));
                                 }
                             }
                             break;
