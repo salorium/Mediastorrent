@@ -120,8 +120,8 @@ class Torrentfilm extends \core\Model
     {
         $this->fini = true;
         $query = "update torrentfilm set ";
-        $query = "fini=" . \core\Mysqli::real_escape_string($this->fini);
-        $query = " where id=" . \core\Mysqli::real_escape_string($this->id);
+        $query .= "fini=" . \core\Mysqli::real_escape_string($this->fini);
+        $query .= " where id=" . \core\Mysqli::real_escape_string($this->id);
         \core\Mysqli::query($query);
         echo $query . "\n";
         $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
