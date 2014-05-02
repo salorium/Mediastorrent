@@ -487,7 +487,7 @@ class Allocine extends Model
             if (isset($v->release->releaseDate))
                 $tmp["Date de sortie"] = preg_replace("#(\d+)\-(\d+)\-(\d+)#", "$3/$2/$1", $v->release->releaseDate);
             if (!isset($tmp["Date de sortie"])) {
-                $content = file_get_contents("http://www.allocine.fr/film/fichefilm_gen_cfilm=" . $tmp["code"] . ".html");
+                $content = file_get_contents("http://www.allocine.fr/film/fichefilm_gen_cfilm=" . $tmp["codeall"] . ".html");
                 if (preg_match('#datePublished"[^>]+>(\d+) (janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre) (\d+)#', $content, $o)) {
                     //">(\d+) (janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre) (\d+)
 

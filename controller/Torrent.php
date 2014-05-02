@@ -438,7 +438,9 @@ class Torrent extends Controller
                                     $film->addGenre($genre);
                                 }
                             }
-                            $clefunique[$_REQUEST["torrent" . $idtorrent . "hash"]] = $_REQUEST["torrent" . $idtorrent . "type"];
+                            $clef = \model\mysql\Torrentfilm::getClefUnique();
+                            $clefunique[$_REQUEST["torrent" . $idtorrent . "hash"]] = $clef;
+                            //for( $idfile= 0;$idfile<)
                             break;
                     }
                 }
