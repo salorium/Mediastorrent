@@ -9,12 +9,15 @@
 namespace controller\moderateur;
 
 use core\Controller;
-class Pages extends Controller{
-    function moderateur($nom){
+
+class Pages extends Controller
+{
+    function moderateur($nom)
+    {
 
 
         $this->set(array(
-            "modo"   => $nom,
+            "modo" => $nom,
             "class" => __NAMESPACE__
         ));
     }

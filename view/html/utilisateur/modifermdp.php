@@ -7,7 +7,7 @@
  */
 
 
-if (isset ($erreur)){
+if (isset ($erreur)) {
     ?>
     <div data-alert class="alert-box warning radius connexion">
         Mail invalide

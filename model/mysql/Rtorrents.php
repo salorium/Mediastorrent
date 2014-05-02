@@ -10,6 +10,7 @@
 namespace model\mysql;
 
 
-class Rtorrents {
+class Rtorrents
+{
 
 }

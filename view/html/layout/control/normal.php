@@ -4,7 +4,8 @@
  * User: salorium
  * Date: 20/03/14
  * Time: 15:53
- */ ?>
+ */
+?>
 
 <nav class="top-bar" data-topbar="">
     <!-- Title -->
@@ -45,7 +46,8 @@
 
             <!-- Dropdown -->
             <li class="has-dropdown not-click"><a href="http://zurb.com">Item 1</a>
-                <ul class="dropdown"><li class="title back js-generated"><h5><a href="javascript:void(0)">Back</a></h5></li>
+                <ul class="dropdown">
+                    <li class="title back js-generated"><h5><a href="javascript:void(0)">Back</a></h5></li>
                     <li><label>Level One</label></li>
                     <li><a href="#">Sub-item 1</a></li>
                     <li><a href="#">Sub-item 2</a></li>
@@ -54,7 +56,8 @@
                     <li class="has-dropdown not-click"><a href="#">Sub-item 4</a>
 
                         <!-- Nested Dropdown -->
-                        <ul class="dropdown"><li class="title back js-generated"><h5><a href="javascript:void(0)">Back</a></h5></li>
+                        <ul class="dropdown">
+                            <li class="title back js-generated"><h5><a href="javascript:void(0)">Back</a></h5></li>
                             <li><label>Level Two</label></li>
                             <li><a href="#">Sub-item 2</a></li>
                             <li><a href="#">Sub-item 3</a></li>
@@ -76,4 +79,5 @@
                 <a href="http://foundation.zurb.com/docs" class="button">Get Lucky</a>
             </li>
         </ul>
-    </section></nav>
+    </section>
+</nav>

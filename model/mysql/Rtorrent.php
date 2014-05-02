@@ -10,22 +10,28 @@
 namespace model\mysql;
 
 
-class Rtorrent  extends \core\Model {
+class Rtorrent extends \core\Model
+{
     public $hostname;
     public $nom;
-    public function test(){
+
+    public function test()
+    {
         echo "Rtorrent";
     }
-    public static function getRtorrentsDeUtilisateur($login){
+
+    public static function getRtorrentsDeUtilisateur($login)
+    {
         $query = "select nom, portscgi, hostname from rtorrent, rtorrents ";
-        $query .="where login=".\core\Mysqli::real_escape_string($login)." and nom=nomrtorrent";
+        $query .= "where login=" . \core\Mysqli::real_escape_string($login) . " and nom=nomrtorrent";
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(true);
     }
 
-    public static function getPortscgiDeUtilisateur($login){
+    public static function getPortscgiDeUtilisateur($login)
+    {
         $query = "select portscgi from rtorrent, rtorrents ";
-        $query .="where login=".\core\Mysqli::real_escape_string($login)." and nom=nomrtorrent and hostname=".\core\Mysqli::real_escape_string(HOST);
+        $query .= "where login=" . \core\Mysqli::real_escape_string($login) . " and nom=nomrtorrent and hostname=" . \core\Mysqli::real_escape_string(HOST);
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(true);
     }

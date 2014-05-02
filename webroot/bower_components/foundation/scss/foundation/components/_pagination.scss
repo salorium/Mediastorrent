@@ -1,7 +1,6 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
-
 @import "global";
 
 //
@@ -41,8 +40,10 @@ $pagination-link-current-active-bg: $primary-color !default;
 //
 // Style the pagination container. Currently only used when centering elements.
 // $center - Default: false, Options: true
-@mixin pagination-container($center:false) {
-  @if $center { text-align: center; }
+@mixin pagination-container($center: false) {
+  @if $center {
+    text-align: center;
+  }
 }
 
 // @mixins
@@ -53,8 +54,11 @@ $pagination-link-current-active-bg: $primary-color !default;
     color: $pagination-link-unavailable-font-color;
   }
   &:hover a,
-  & a:focus { background: $pagination-link-unavailable-bg-active; }
+  & a:focus {
+    background: $pagination-link-unavailable-bg-active;
+  }
 }
+
 // @mixins
 // Style the current list item. Do not assume that the current item has
 // an anchor <a> element.
@@ -68,7 +72,9 @@ $pagination-link-current-active-bg: $primary-color !default;
       cursor: $pagination-link-current-cursor;
 
       &:hover,
-      &:focus { background: $pagination-link-current-active-bg; }
+      &:focus {
+        background: $pagination-link-current-active-bg;
+      }
     }
   } @else {
     height: auto;
@@ -80,7 +86,9 @@ $pagination-link-current-active-bg: $primary-color !default;
     @include radius;
 
     &:hover,
-    &:focus { background: $pagination-link-current-active-bg; }
+    &:focus {
+      background: $pagination-link-current-active-bg;
+    }
   }
 }
 
@@ -90,7 +98,7 @@ $pagination-link-current-active-bg: $primary-color !default;
 // $center - Left or center align the li elements. Default: false
 // $base-style - Sets base styles for pagination. Default: true, Options: false
 // $use-default-classes - Makes unavailable & current classes available for use. Default: true
-@mixin pagination($center:false, $base-style:true, $use-default-classes:true) {
+@mixin pagination($center: false, $base-style: true, $use-default-classes: true) {
 
   @if $base-style {
     display: block;
@@ -111,11 +119,17 @@ $pagination-link-current-active-bg: $primary-color !default;
       }
 
       &:hover a,
-      a:focus { background: $pagination-link-active-bg; }
+      a:focus {
+        background: $pagination-link-active-bg;
+      }
 
       @if $use-default-classes {
-        &.unavailable { @include pagination-unavailable-item(); }
-        &.current { @include pagination-current-item(); }
+        &.unavailable {
+          @include pagination-unavailable-item();
+        }
+        &.current {
+          @include pagination-current-item();
+        }
       }
     }
   }

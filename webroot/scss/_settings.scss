@@ -39,7 +39,7 @@
 $body-bg: #CCC;
 $body-font-color: #000;
 $rem-base: 16px;
- $body-font-family: "Comic Sans MS",sans-serif;
+$body-font-family: "Comic Sans MS", sans-serif;
 // $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // $body-font-weight: normal;
 // $body-font-style: normal;
@@ -61,9 +61,9 @@ $secondary-font-color: #FFF;
 
 // $primary-color: #008CBA;
 // $secondary-color: #e7e7e7;
- //$alert-color: #f04124;
- //$success-color: #43AC6A;
- //$warning-color: #f08a24;
+//$alert-color: #f04124;
+//$success-color: #43AC6A;
+//$warning-color: #f08a24;
 //$info-color: #a0d3e8;
 
 // We use these to make sure border radius matches unless we want it different.
@@ -77,7 +77,7 @@ $secondary-font-color: #FFF;
 
 // Media Query Ranges
 // $small-range: (0em, 40em);
- $medium-range: (40.063em, 64em);
+$medium-range: (40.063em, 64em);
 // $large-range: (64.063em, 90em);
 // $xlarge-range: (90.063em, 120em);
 // $xxlarge-range: (120.063em);
@@ -357,7 +357,7 @@ $secondary-font-color: #FFF;
 
 // We use these to style the fieldset border and spacing.
 // $fieldset-border-style: solid;
- $fieldset-border-width: 2px;
+$fieldset-border-width: 2px;
 // $fieldset-border-color: #ddd;
 // $fieldset-padding: rem-calc(20);
 // $fieldset-margin: rem-calc(18 0);
@@ -670,7 +670,6 @@ $legend-bg: transparent;
 // $price-money-size: rem-calc(32);
 // $price-money-font-family: $body-font-family;
 
-
 // We use these to control the description styles
 // $price-bg: #fff;
 // $price-desc-color: #777;
@@ -768,8 +767,6 @@ $legend-bg: transparent;
 // $side-nav-font-family: $body-font-family;
 // $side-nav-active-font-family: $side-nav-font-family;
 
-
-
 // We use these to control border styles
 // $side-nav-divider-size: 1px;
 // $side-nav-divider-style: solid;
@@ -830,11 +827,10 @@ $legend-bg: transparent;
 // $sub-nav-border-radius: 3px;
 // $sub-nav-font-color-hover: darken($sub-nav-font-color, 15%);
 
-
 // We use these to control the active item styles
 
 // $sub-nav-active-font-weight: normal;
- $sub-nav-active-bg: $secondary-color;
+$sub-nav-active-bg: $secondary-color;
 // $sub-nav-active-bg-hover: darken($sub-nav-active-bg, 5%);
 // $sub-nav-active-color: #fff;
 // $sub-nav-active-padding: rem-calc(3 16);
@@ -848,8 +844,8 @@ $legend-bg: transparent;
 // $include-html-table-classes: $include-html-classes;
 
 // These control the background color for the table and even rows
- $table-bg: #fff;
- $table-even-row-bg: darken($table-bg,10) ;
+$table-bg: #fff;
+$table-even-row-bg: darken($table-bg, 10);
 
 // These control the table cell border style
 // $table-border-style: solid;
@@ -857,9 +853,9 @@ $legend-bg: transparent;
 // $table-border-color: #ddd;
 
 // These control the table head styles
- $table-head-bg: #999  ;
+$table-head-bg: #999;
 // $table-head-font-size: rem-calc(14);
- $table-head-font-color: #FFF;
+$table-head-font-color: #FFF;
 // $table-head-font-weight: bold;
 // $table-head-padding: rem-calc(8 10 10);
 
@@ -880,11 +876,11 @@ $legend-bg: transparent;
 // $include-html-tabs-classes: $include-html-classes;
 
 // $tabs-navigation-padding: rem-calc(16);
- $tabs-navigation-bg-color: #999  ;
+$tabs-navigation-bg-color: #999;
 // $tabs-navigation-hover-bg-color: darken($tabs-navigation-bg-color, 5%);
-$tabs-navigation-active-bg-color:$secondary-color;
- $tabs-navigation-font-color: $secondary-font-color;
- //$tabs-navigation-font-size: rem-calc(1);
+$tabs-navigation-active-bg-color: $secondary-color;
+$tabs-navigation-font-color: $secondary-font-color;
+//$tabs-navigation-font-size: rem-calc(1);
 // $tabs-navigation-font-family: $body-font-family;
 
 // $tabs-content-margin-bottom: rem-calc(24);
@@ -942,7 +938,7 @@ $tabs-navigation-active-bg-color:$secondary-color;
 // $include-html-top-bar-classes: $include-html-classes;
 
 // Background color for the top bar
- $topbar-bg-color: #999;
+$topbar-bg-color: #999;
 
 // $topbar-bg: $topbar-bg-color;
 
@@ -971,7 +967,7 @@ $tabs-navigation-active-bg-color:$secondary-color;
 // $topbar-link-weight: normal;
 // $topbar-link-font-size: rem-calc(13);
 // $topbar-link-hover-lightness: -10%; // Darken by 10%
- $topbar-link-bg-hover: $secondary-color ;
+$topbar-link-bg-hover: $secondary-color;
 // $topbar-link-bg-active: $secondary-color;
 // $topbar-link-bg-active-hover: darken($primary-color, 5%);
 // $topbar-link-font-family: $body-font-family;
@@ -996,8 +992,9 @@ $tabs-navigation-active-bg-color:$secondary-color;
 // Transitions and breakpoint styles
 // $topbar-transition-speed: 300ms;
 // Using rem-calc for the below breakpoint causes issues with top bar
- $topbar-breakpoint: #{1300px}; // Change to 9999px for always mobile layout
- $topbar-media-query: "only screen and (min-width: #{1300px})";
+$topbar-breakpoint: #{1300px};
+// Change to 9999px for always mobile layout
+$topbar-media-query: "only screen and (min-width: #{1300px})";
 
 // Divider Styles
 // $topbar-divider-border-bottom: solid 1px lighten($topbar-bg-color, 10%);
@@ -1006,5 +1003,5 @@ $tabs-navigation-active-bg-color:$secondary-color;
 // Sticky Class
 // $topbar-sticky-class: ".sticky";
 // $topbar-arrows: true; //Set false to remove the triangle icon from the menu item
-$header-font-color : $body-font-color;
-$header-font-family:$body-font-family;
+$header-font-color: $body-font-color;
+$header-font-family: $body-font-family;

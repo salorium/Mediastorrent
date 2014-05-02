@@ -6,9 +6,9 @@
  * Time: 12:22
  */
 
-foreach ( $droits as $k=>$v){
-    foreach ( $v as $kk=>$vv){
-     echo $k."/".$vv."<br>";
+foreach ($droits as $k => $v) {
+    foreach ($v as $kk => $vv) {
+        echo $k . "/" . $vv . "<br>";
     }
 }
 ?>

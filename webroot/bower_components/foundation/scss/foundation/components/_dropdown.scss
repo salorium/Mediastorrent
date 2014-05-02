@@ -1,7 +1,6 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
-
 @import "global";
 
 //
@@ -60,14 +59,18 @@ $f-dropdown-content-padding: rem-calc(20) !default;
 // $content-list - Sets list-style. Default: list. Options: [list, content]
 // $triangle - Sets if dropdown has triangle. Default:true.
 // $max-width - Default: $f-dropdown-max-width || 200px.
-@mixin dropdown-container($content:list, $triangle:true, $max-width:$f-dropdown-max-width) {
+@mixin dropdown-container($content: list, $triangle: true, $max-width: $f-dropdown-max-width) {
   position: absolute;
   left: -9999px;
   list-style: $f-dropdown-list-style;
   margin-#{$default-float}: 0;
 
-  > *:first-child { margin-top: 0; }
-  > *:last-child { margin-bottom: 0; }
+  > *:first-child {
+    margin-top: 0;
+  }
+  > *:last-child {
+    margin-bottom: 0;
+  }
 
   @if $content == list {
     width: 100%;
@@ -77,8 +80,7 @@ $f-dropdown-content-padding: rem-calc(20) !default;
     border: $f-dropdown-border-style $f-dropdown-border-width $f-dropdown-border-color;
     font-size: $f-dropdown-font-size;
     z-index: 99;
-  }
-  @else if $content == content {
+  } @else if $content == content {
     padding: $f-dropdown-content-padding;
     width: 100%;
     height: $f-dropdown-height;
@@ -186,8 +188,11 @@ $f-dropdown-content-padding: rem-calc(20) !default;
 
   }
 
-  @if $max-width { max-width: $max-width; }
-  @else { max-width: $f-dropdown-max-width; }
+  @if $max-width {
+    max-width: $max-width;
+  } @else {
+    max-width: $f-dropdown-max-width;
+  }
 
 }
 
@@ -203,7 +208,9 @@ $f-dropdown-content-padding: rem-calc(20) !default;
   margin: 0;
 
   &:hover,
-  &:focus { background: $f-dropdown-list-hover-bg; }
+  &:focus {
+    background: $f-dropdown-list-hover-bg;
+  }
 
   a {
     display: block;
@@ -232,16 +239,28 @@ $f-dropdown-content-padding: rem-calc(20) !default;
       }
       // max-width: none;
 
-      li { @include dropdown-style; }
+      li {
+        @include dropdown-style;
+      }
 
       // You can also put custom content in these dropdowns
-      &.content { @include dropdown-container(content, $triangle:false); }
+      &.content {
+        @include dropdown-container(content, $triangle: false);
+      }
 
       // Sizes
-      &.tiny    { max-width: 200px; }
-      &.small   { max-width: 300px; }
-      &.medium  { max-width: 500px; }
-      &.large   { max-width: 800px; }
+      &.tiny {
+        max-width: 200px;
+      }
+      &.small {
+        max-width: 300px;
+      }
+      &.medium {
+        max-width: 500px;
+      }
+      &.large {
+        max-width: 800px;
+      }
     }
 
   }

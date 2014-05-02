@@ -11,8 +11,10 @@ namespace model\simple;
 
 use core\Model;
 
-class Download extends Model{
-    static function sendFile($file){
+class Download extends Model
+{
+    static function sendFile($file)
+    {
         if (!file_exists($file)) {
             throw new \Exception("FILE NOT FOUND");
             exit;
@@ -31,13 +33,13 @@ class Download extends Model{
         $filesize = filesize($file);
         if ($range) {
             $partial = true;
-            list($param,$range) = explode('=',$range);
+            list($param, $range) = explode('=', $range);
             if (strtolower(trim($param)) != 'bytes') { // Bad request - range unit is not 'bytes'
                 header("HTTP/1.1 400 Invalid Request");
                 exit;
             }
-            $range = explode(',',$range);
-            $range = explode('-',$range[0]); // We only deal with the first requested range
+            $range = explode(',', $range);
+            $range = explode('-', $range[0]); // We only deal with the first requested range
             if (count($range) != 2) { // Bad request - 'bytes' parameter is not valid
                 header("HTTP/1.1 400 Invalid Request");
                 exit;
@@ -57,9 +59,9 @@ class Download extends Model{
         } else $partial = false; // No range requested
 
 // Send standard headers
-        header("Content-Type: ".mime_content_type($file));
+        header("Content-Type: " . mime_content_type($file));
         header("Content-Length: $filesize");
-        header('Content-Disposition: attachment; filename="'.basename($file).'"');
+        header('Content-Disposition: attachment; filename="' . basename($file) . '"');
         header('Accept-Ranges: bytes');
 
 // if requested, send extra headers and part of file...
@@ -70,11 +72,11 @@ class Download extends Model{
                 header("HTTP/1.1 403 Forbidden");
                 exit;
             }
-            if ($start) fseek($fp,$start);
+            if ($start) fseek($fp, $start);
             while ($length) { // Read in blocks of 8KB so we don't chew up memory on the server
                 $read = ($length > 8192) ? 8192 : $length;
                 $length -= $read;
-                print(fread($fp,$read));
+                print(fread($fp, $read));
             }
             fclose($fp);
         } else readfile($file); // ...otherwise just send the whole file

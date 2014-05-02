@@ -1,7 +1,6 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
-
 @import "global";
 
 //
@@ -30,11 +29,10 @@ $block-grid-media-queries: true !default;
 // $per-row - # of items to display per row. Default: false.
 // $spacing - # of ems to use as padding on each block item. Default: rem-calc(20).
 // $base-style - Apply a base style to block grid. Default: true.
-@mixin block-grid(
-  $per-row:false, 
-  $spacing:$block-grid-default-spacing, 
-  $include-spacing:true,
-  $base-style:true) {
+@mixin block-grid($per-row: false,
+$spacing: $block-grid-default-spacing,
+$include-spacing: true,
+$base-style: true) {
 
   @if $base-style {
     display: block;
@@ -46,7 +44,7 @@ $block-grid-media-queries: true !default;
     }
     @include clearfix;
 
-    &>li {
+    & > li {
       display: block;
       height: auto;
       float: $default-float;
@@ -57,15 +55,19 @@ $block-grid-media-queries: true !default;
   }
 
   @if $per-row {
-    &>li {
+    & > li {
       width: 100%/$per-row;
       @if $include-spacing {
         padding: 0 ($spacing/2) $spacing;
       }
       list-style: none;
 
-      &:nth-of-type(n) { clear: none; }
-      &:nth-of-type(#{$per-row}n+1) { clear: both; }
+      &:nth-of-type(n) {
+        clear: none;
+      }
+      &:nth-of-type(#{$per-row}n+1) {
+        clear: both;
+      }
       @if $align-block-grid-to-grid {
         @include block-grid-aligned($per-row, $spacing);
       }
@@ -91,30 +93,32 @@ $block-grid-media-queries: true !default;
 // Generate presentational markup for block grid.
 //
 // $size - Name of class to use, i.e. "large" will generate .large-block-grid-1, .large-block-grid-2, etc.
-@mixin block-grid-html-classes($size,$include-spacing) {
+@mixin block-grid-html-classes($size, $include-spacing) {
   @for $i from 1 through $block-grid-elements {
     .#{$size}-block-grid-#{($i)} {
-      @include block-grid($i,$block-grid-default-spacing,$include-spacing,false);
+      @include block-grid($i, $block-grid-default-spacing, $include-spacing, false);
     }
   }
 }
 
 @include exports("block-grid") {
   @if $include-html-grid-classes {
-    
-    [class*="block-grid-"] { @include block-grid; }
-    
+
+    [class*="block-grid-"] {
+      @include block-grid;
+    }
+
     @if $block-grid-media-queries {
       @media #{$small-up} {
-        @include block-grid-html-classes($size:small,$include-spacing:false);
+        @include block-grid-html-classes($size: small, $include-spacing: false);
       }
-  
+
       @media #{$medium-up} {
-        @include block-grid-html-classes($size:medium,$include-spacing:false);
+        @include block-grid-html-classes($size: medium, $include-spacing: false);
       }
-  
+
       @media #{$large-up} {
-        @include block-grid-html-classes($size:large,$include-spacing:false);
+        @include block-grid-html-classes($size: large, $include-spacing: false);
       }
     }
   }

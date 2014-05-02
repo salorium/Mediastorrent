@@ -10,7 +10,6 @@
 namespace config;
 
 
-
 class Conf
 {
     static $debug = true;
@@ -28,16 +27,17 @@ class Conf
         )
     );
     static $memcachedserver = array(
-        array("localhost",11211)
+        array("localhost", 11211)
     );
     static $user = null;
     static $api_key_themoviedb = "57b59be276081344c6073b1989f4d57e";
-    static $numerorole = array("Visiteur","Normal",array("Torrent","Uploadeur"),"Sysop");
+    static $numerorole = array("Visiteur", "Normal", array("Torrent", "Uploadeur"), "Sysop");
     static $rolenumero; // Ne pas modifier
     static $rolevue;
-    static $videoExtensions = array ("avi", "asf", "flv", "mkv", "mov", "mp4", "mpg", "mpeg", "ogm", "rm", "wmv","rar" );
-    static $musicExtensions = array ("mp3", "flac", "ogg" );
+    static $videoExtensions = array("avi", "asf", "flv", "mkv", "mov", "mp4", "mpg", "mpeg", "ogm", "rm", "wmv", "rar");
+    static $musicExtensions = array("mp3", "flac", "ogg");
     static $portscgi = 5001;
     static $te = "dd";
 }
+
 ?>

@@ -7,10 +7,10 @@
  */
 
 ?>
-<h2><?=$serie["Titre"]?></h2>
+<h2><?= $serie["Titre"] ?></h2>
 <?
-foreach ($serie as $k=>$v){
-    switch ( $k){
+foreach ($serie as $k => $v) {
+    switch ($k) {
         case "Titre":
         case "code":
         case "type":
@@ -18,13 +18,13 @@ foreach ($serie as $k=>$v){
         case "imageposter":
         case "imagebackdrop":
             echo "<fieldset><legend>Image</legend>";
-            foreach($v as $kk=>$vv){
-                echo "<img width='150' src='".$vv[0]."'>";
+            foreach ($v as $kk => $vv) {
+                echo "<img width='150' src='" . $vv[0] . "'>";
             }
             echo "</fieldset>";
             break;
         default:
-            echo $k." ".$v."<br>";
+            echo $k . " " . $v . "<br>";
             break;
     }
 }

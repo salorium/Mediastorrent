@@ -11,9 +11,12 @@ namespace controller\normal;
 
 use core\Controller;
 
-class Film extends Controller {
+class Film extends Controller
+{
     public $layout = "connecter";
-    function nouveau(){
+
+    function nouveau()
+    {
 
     }
 } 

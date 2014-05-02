@@ -8,5 +8,5 @@
  */
 ?>
 <div class="hero-unit">
-    <h1>Bonjour <?php echo $nom;?></h1>
+    <h1>Bonjour <?php echo $nom; ?></h1>
 </div>

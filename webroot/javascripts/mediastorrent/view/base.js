@@ -1,117 +1,117 @@
 /**
  * Created by salorium on 15/03/14.
  */
-Base.view =  {
-    showRedirection : function (){
-        $(".container").append("<h2>Redirection dans <span id='redi'>"+Base.model.redirection.compteur+"</span> seconde.</h2>");
+Base.view = {
+    showRedirection: function () {
+        $(".container").append("<h2>Redirection dans <span id='redi'>" + Base.model.redirection.compteur + "</span> seconde.</h2>");
     },
-    updateCptRedirection : function (){
+    updateCptRedirection: function () {
         $("#redi").html(Base.model.redirection.compteur);
     },
-    fixedHeightContainer : function(){
+    fixedHeightContainer: function () {
         this.hauteurWindows = $(window).height();
-        Base.view.fixedHeight(".container",this.hauteurWindows-75);
+        Base.view.fixedHeight(".container", this.hauteurWindows - 75);
     },
-    fixedHeight : function(container,hauteur){
-        $(container).css("height",hauteur);
+    fixedHeight: function (container, hauteur) {
+        $(container).css("height", hauteur);
     },
     image: {
-        input : function(container,name,id,url,input,height){
-            $("#"+container).append('<label for="'+id+'">'+name+' :</label>');
-            var $poster = $('<input class="large-2" type="text" name="'+id+'" id="'+id+'">');
-            if ( input)
-                $("#"+container).append($('<div class="row"></div>').append($('<div class="large-12"></div>').append($poster)));
-            var $img = $('<img height="'+height+'px" src="'+Base.controller.makeUrlBase()+"proxy/imageSetHeight/"+Base.model.converter.paramUrl(url)+"/"+height+".jpg"+'">');
-            $("#"+container).append($img);
-            if ( input){
-                $poster.on("change keyup update input", function() {
-                    if ($.trim($poster.val()).length > 1){
-                        $img.attr("src",Base.controller.makeUrlBase()+"proxy/imageSetHeight/"+Base.model.converter.paramUrl($poster.val())+"/"+height+".jpg");
-                    }else{
-                        $img.attr("src",Base.controller.makeUrlBase()+"proxy/imageSetHeight/non/"+height+".jpg");
+        input: function (container, name, id, url, input, height) {
+            $("#" + container).append('<label for="' + id + '">' + name + ' :</label>');
+            var $poster = $('<input class="large-2" type="text" name="' + id + '" id="' + id + '">');
+            if (input)
+                $("#" + container).append($('<div class="row"></div>').append($('<div class="large-12"></div>').append($poster)));
+            var $img = $('<img height="' + height + 'px" src="' + Base.controller.makeUrlBase() + "proxy/imageSetHeight/" + Base.model.converter.paramUrl(url) + "/" + height + ".jpg" + '">');
+            $("#" + container).append($img);
+            if (input) {
+                $poster.on("change keyup update input", function () {
+                    if ($.trim($poster.val()).length > 1) {
+                        $img.attr("src", Base.controller.makeUrlBase() + "proxy/imageSetHeight/" + Base.model.converter.paramUrl($poster.val()) + "/" + height + ".jpg");
+                    } else {
+                        $img.attr("src", Base.controller.makeUrlBase() + "proxy/imageSetHeight/non/" + height + ".jpg");
                     }
                 });
-                $poster.on("paste", function(){
-                    setTimeout(function(){
+                $poster.on("paste", function () {
+                    setTimeout(function () {
                         $poster.change();
-                    },1);
+                    }, 1);
                 });
             }
         },
-        chooser : function(container,name,id,images,height,width){
-            $("#"+container).append('<label for="'+id+'">'+name+' :</label>');
-            var $poster = $('<input class="large-2" type="text" name="'+id+'" id="'+id+'" value="'+images.url[0][0]+'">');
-            $("#"+container).append($('<div class="row"></div>').append($('<div class="large-12"></div>').append($poster)));
-            var $img = $('<img height="'+height+'px" src="'+Base.controller.makeUrlBase()+"proxy/imageSetHeight/"+Base.model.converter.paramUrl(images.url[0][0])+"/"+height+".jpg"+'">');
-            var $divimg = $('<div style="width: '+(images.url[0][1]*height/images.url[0][2])+'px; height:'+height+'px; position:relative;"></div>');
+        chooser: function (container, name, id, images, height, width) {
+            $("#" + container).append('<label for="' + id + '">' + name + ' :</label>');
+            var $poster = $('<input class="large-2" type="text" name="' + id + '" id="' + id + '" value="' + images.url[0][0] + '">');
+            $("#" + container).append($('<div class="row"></div>').append($('<div class="large-12"></div>').append($poster)));
+            var $img = $('<img height="' + height + 'px" src="' + Base.controller.makeUrlBase() + "proxy/imageSetHeight/" + Base.model.converter.paramUrl(images.url[0][0]) + "/" + height + ".jpg" + '">');
+            var $divimg = $('<div style="width: ' + (images.url[0][1] * height / images.url[0][2]) + 'px; height:' + height + 'px; position:relative;"></div>');
             $divimg.append($img);
-            var $span = $('<span style="position: absolute; top: 0;right: 0;background-color: rgba(0,0,0,0.8);color: #ffffff; padding: 5px;">'+images.url[0][1]+'x'+images.url[0][2]+'</span>');
+            var $span = $('<span style="position: absolute; top: 0;right: 0;background-color: rgba(0,0,0,0.8);color: #ffffff; padding: 5px;">' + images.url[0][1] + 'x' + images.url[0][2] + '</span>');
             $divimg.append($span);
-            $("#"+container).append($divimg);
+            $("#" + container).append($divimg);
 
-            $poster.on("change keyup update input", function() {
-                if ($.trim($poster.val()).length > 1){
-                    $img.attr("src",Base.controller.makeUrlBase()+"proxy/imageSetHeight/"+Base.model.converter.paramUrl($poster.val())+"/"+height+".jpg");
-                }else{
-                    $img.attr("src",Base.controller.makeUrlBase()+"proxy/imageSetHeight/non/"+height+".jpg");
+            $poster.on("change keyup update input", function () {
+                if ($.trim($poster.val()).length > 1) {
+                    $img.attr("src", Base.controller.makeUrlBase() + "proxy/imageSetHeight/" + Base.model.converter.paramUrl($poster.val()) + "/" + height + ".jpg");
+                } else {
+                    $img.attr("src", Base.controller.makeUrlBase() + "proxy/imageSetHeight/non/" + height + ".jpg");
                 }
             });
-            $poster.on("paste", function(){
-                setTimeout(function(){
+            $poster.on("paste", function () {
+                setTimeout(function () {
                     $poster.change();
-                },1);
+                }, 1);
             });
-            var $fieldset = $('<fieldset><legend>'+name+'</legend></fieldset>');
+            var $fieldset = $('<fieldset><legend>' + name + '</legend></fieldset>');
             var $divminiatureimage = $('<div style="height: 300px;overflow-y: auto;overflow-x: hidden;"></div>');
-            for (i=0;i<images.url.length;i++){
+            for (i = 0; i < images.url.length; i++) {
 
-                var $divcontaineminiatureimage = $('<div data-url="'+images.url[i][0]+'" data-x="'+images.url[i][1]+'" data-y="'+images.url[i][2]+'" class="'+(i==0 ?"active":"")+' miniature" style="width: '+(width)+'px; position:relative;"></div>');
-                $divcontaineminiatureimage.append('<img  width="'+width+'px" src="'+Base.controller.makeUrlBase()+"proxy/imageSetWidth/"+Base.model.converter.paramUrl(images.url[i][0])+"/"+width+".jpg"+'">')
-                $divcontaineminiatureimage.append('<span style="position: absolute; top: 0;right: 0;background-color: rgba(0,0,0,0.8);color: #ffffff; padding: 5px;">'+images.url[i][1]+'x'+images.url[i][2]+'</span>');
-                $divminiatureimage.append($('<div style="width: '+(width)+'px; height:'+(width*images.ratio+5)+'px; position:relative;float: left;"></div>').append($divcontaineminiatureimage));
-                $divcontaineminiatureimage.on("click", function(e){
+                var $divcontaineminiatureimage = $('<div data-url="' + images.url[i][0] + '" data-x="' + images.url[i][1] + '" data-y="' + images.url[i][2] + '" class="' + (i == 0 ? "active" : "") + ' miniature" style="width: ' + (width) + 'px; position:relative;"></div>');
+                $divcontaineminiatureimage.append('<img  width="' + width + 'px" src="' + Base.controller.makeUrlBase() + "proxy/imageSetWidth/" + Base.model.converter.paramUrl(images.url[i][0]) + "/" + width + ".jpg" + '">')
+                $divcontaineminiatureimage.append('<span style="position: absolute; top: 0;right: 0;background-color: rgba(0,0,0,0.8);color: #ffffff; padding: 5px;">' + images.url[i][1] + 'x' + images.url[i][2] + '</span>');
+                $divminiatureimage.append($('<div style="width: ' + (width) + 'px; height:' + (width * images.ratio + 5) + 'px; position:relative;float: left;"></div>').append($divcontaineminiatureimage));
+                $divcontaineminiatureimage.on("click", function (e) {
                     $(".miniature").removeClass("active");
                     $(e.currentTarget).addClass("active");
                     $poster.val($(e.currentTarget).attr("data-url"));
                     $poster.change();
-                    $divimg.width($(e.currentTarget).attr("data-x")*height/$(e.currentTarget).attr("data-y"));
-                    $span.html($(e.currentTarget).attr("data-x")+"x"+$(e.currentTarget).attr("data-y"));
+                    $divimg.width($(e.currentTarget).attr("data-x") * height / $(e.currentTarget).attr("data-y"));
+                    $span.html($(e.currentTarget).attr("data-x") + "x" + $(e.currentTarget).attr("data-y"));
                 });
             }
-            $("#"+container).append($fieldset);
+            $("#" + container).append($fieldset);
             $fieldset.append($divminiatureimage);
         }
 
     },
-    noty : {
-        generate : function (type,texte,layout){
+    noty: {
+        generate: function (type, texte, layout) {
             var n = noty({
-                text        : texte,
-                type        : type,
+                text: texte,
+                type: type,
                 dismissQueue: true,
-                layout      : (layout ? layout:'bottomRight'),
-                theme       : 'defaultTheme',
+                layout: (layout ? layout : 'bottomRight'),
+                theme: 'defaultTheme',
                 timeout: 2000
             });
 
         },
-        generateConfirm :function(texte,call_oui,call_non){
+        generateConfirm: function (texte, call_oui, call_non) {
             var n = noty({
-                text        : texte,
-                type        : 'alert',
+                text: texte,
+                type: 'alert',
                 dismissQueue: true,
-                layout      : 'center',
-                theme       : 'defaultTheme',
-                buttons     : [
+                layout: 'center',
+                theme: 'defaultTheme',
+                buttons: [
                     {addClass: 'btn btn-primary', text: 'Oui', onClick: function ($noty) {
                         $noty.close();
-                        if ( call_oui)
+                        if (call_oui)
                             call_oui();
                     }
                     },
                     {addClass: 'btn btn-danger', text: 'Non', onClick: function ($noty) {
                         $noty.close();
-                        if ( call_non)
+                        if (call_non)
                             call_non();
                     }
                     }

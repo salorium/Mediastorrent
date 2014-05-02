@@ -9,57 +9,63 @@
 namespace model\mysql;
 
 
-class Ticket extends \core\ModelMysql {
+class Ticket extends \core\ModelMysql
+{
     public $id;
     public $donnee;
+
     function __construct()
     {
     }
 
-    public function insert(){
+    public function insert()
+    {
         $query = "insert into ticket (id,donnee) values(";
-            $query.=  \core\Mysqli::real_escape_string($this->id).", ";
-            $query.= \core\Mysqli::real_escape_string($this->donnee).") ";
+        $query .= \core\Mysqli::real_escape_string($this->id) . ", ";
+        $query .= \core\Mysqli::real_escape_string($this->donnee) . ") ";
         \core\Mysqli::query($query);
-        $res =  (\core\Mysqli::nombreDeLigneAffecte() == 1 );
+        $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
         \core\Mysqli::close();
         return $res;
 
     }
 
-    public  function delete(){
-        if(!is_null($this->id)){
+    public function delete()
+    {
+        if (!is_null($this->id)) {
             $query = "delete from ticket ";
-            $query.= " where id=". \core\Mysqli::real_escape_string($this->id);
+            $query .= " where id=" . \core\Mysqli::real_escape_string($this->id);
             \core\Mysqli::query($query);
-            $res =  (\core\Mysqli::nombreDeLigneAffecte() == 1 );
+            $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
             \core\Mysqli::close();
             return $res;
         }
         return false;
     }
 
-    public static function savTicket($classe,$fonction,$args){
-        $data = array("classe"=>$classe,"fonction"=>$fonction,"args"=>$args);
+    public static function savTicket($classe, $fonction, $args)
+    {
+        $data = array("classe" => $classe, "fonction" => $fonction, "args" => $args);
         $data = json_encode($data);
-        $id=0;
+        $id = 0;
         do {
-        $id= sha1(uniqid());
-        $query = "select * from ticket ";
-        $query.= " where id=". \core\Mysqli::real_escape_string($id);
-        \core\Mysqli::query($query);
-        $u =  \core\Mysqli::getObjectAndClose(false,__CLASS__);
+            $id = sha1(uniqid());
+            $query = "select * from ticket ";
+            $query .= " where id=" . \core\Mysqli::real_escape_string($id);
+            \core\Mysqli::query($query);
+            $u = \core\Mysqli::getObjectAndClose(false, __CLASS__);
         } while ($u);
-            $t = new Ticket();
-            $t->id = $id;
-            $t->donnee = $data;
-            return ($t->insert() ? $id:false);
+        $t = new Ticket();
+        $t->id = $id;
+        $t->donnee = $data;
+        return ($t->insert() ? $id : false);
     }
 
-    public static function traiteTicket($id){
+    public static function traiteTicket($id)
+    {
         $query = "select * from ticket ";
-        $query.= " where id=". \core\Mysqli::real_escape_string($id);
+        $query .= " where id=" . \core\Mysqli::real_escape_string($id);
         \core\Mysqli::query($query);
-        return  \core\Mysqli::getObjectAndClose(false,__CLASS__);
+        return \core\Mysqli::getObjectAndClose(false, __CLASS__);
     }
 } 

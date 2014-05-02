@@ -9,9 +9,11 @@
 namespace model\simple;
 
 
-class MakerCache {
-    static function maker($filename,$option){
-$contenu = '<?php
+class MakerCache
+{
+    static function maker($filename, $option)
+    {
+        $contenu = '<?php
 namespace config;
 class Conf
 {

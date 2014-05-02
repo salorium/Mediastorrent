@@ -11,24 +11,24 @@ var Accueil = {
     largeurcentraldiv: null,
     cpt: -1,
     largeurcotediv: null,
-    backup : null,
+    backup: null,
     init: function () {
         inilistener = false;
         console.info("init");
-        if (this.backup == null){
+        if (this.backup == null) {
             $(".carrousel")
                 // Englobage de la liste par la zone de visualisation
                 .wrap('<div class="carrousel-conteneur"></div>');
             this.backup = $("div.carrousel-conteneur").html();
             inilistener = true;
 
-        }else{
+        } else {
             $("div.carrousel-conteneur").empty();
             $("div.carrousel-conteneur").html(this.backup);
         }
-       /* $(".carrousel")
-            // Englobage de la liste par la zone de visualisation
-            .wrap('<div class="carrousel-conteneur"></div>');*/
+        /* $(".carrousel")
+         // Englobage de la liste par la zone de visualisation
+         .wrap('<div class="carrousel-conteneur"></div>');*/
         //Récupération de la largeur de l'image central soit 30 % de la taille de la fenêtre
         this.largeurcentralimg = $(window).width() * 0.3;
         this.largeurcotediv = $(window).width() * 0.2;
@@ -64,9 +64,9 @@ var Accueil = {
             // Application de la hauteur d'une seule diapositive
             .height(this.largeurcentralimg)
             // Blocage des débordements
-            .css("overflow", "hidden").css({"top": $(window).height()/2 - this.largeurcentralimg /2+ "px", "position": "relative"});
+            .css("overflow", "hidden").css({"top": $(window).height() / 2 - this.largeurcentralimg / 2 + "px", "position": "relative"});
         this.listener();
-        if (inilistener){
+        if (inilistener) {
 
             this.resize();
         }
@@ -86,40 +86,40 @@ var Accueil = {
                 o.cpt--;
                 annimate = true;
             }
-            if (annimate){
-            $(".carrousel img").animate({
-                opacity: 0
+            if (annimate) {
+                $(".carrousel img").animate({
+                    opacity: 0
 
-            }, 250);
-            $(".carrouselimage").animate({
-                width: o.largeurcotediv
+                }, 250);
+                $(".carrouselimage").animate({
+                    width: o.largeurcotediv
 
-            }, 250);
-            $(".carrousel li:nth-child(" + (o.cpt + 2) + ") div").animate({
-                width: o.largeurcentraldiv
+                }, 250);
+                $(".carrousel li:nth-child(" + (o.cpt + 2) + ") div").animate({
+                    width: o.largeurcentraldiv
 
-            }, 250);
-            $(".carrousel li:nth-child(" + (o.cpt + 3) + ") img").animate({
-                width: o.largeurcentralimg * 0.6,
-                opacity: 0.5
-            }, 250);
-            $(".carrousel li:nth-child(" + (o.cpt + 1) + ") img").animate({
-                width: o.largeurcentralimg * 0.6,
-                opacity: 0.5
-            }, 250);
-            $(".carrousel li:nth-child(" + (o.cpt + 2) + ") img").animate({
-                width: o.largeurcentralimg,
-                opacity: 1
-            }, 250);
-            console.info("Cpt " + o.cpt);
-            $(".carrousel").animate({
-                marginLeft: -(o.largeurcotediv * o.cpt)
-            }, 250);
+                }, 250);
+                $(".carrousel li:nth-child(" + (o.cpt + 3) + ") img").animate({
+                    width: o.largeurcentralimg * 0.6,
+                    opacity: 0.5
+                }, 250);
+                $(".carrousel li:nth-child(" + (o.cpt + 1) + ") img").animate({
+                    width: o.largeurcentralimg * 0.6,
+                    opacity: 0.5
+                }, 250);
+                $(".carrousel li:nth-child(" + (o.cpt + 2) + ") img").animate({
+                    width: o.largeurcentralimg,
+                    opacity: 1
+                }, 250);
+                console.info("Cpt " + o.cpt);
+                $(".carrousel").animate({
+                    marginLeft: -(o.largeurcotediv * o.cpt)
+                }, 250);
             }
         });
     },
 
-    resize : function () {
+    resize: function () {
         var o = this;
         $(window).resize(function () {
             o.init();

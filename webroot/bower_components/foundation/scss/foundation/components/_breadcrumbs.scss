@@ -1,7 +1,6 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
-
 @import "global";
 
 //
@@ -63,7 +62,9 @@ $crumb-slash: "/" !default;
   font-size: $crumb-font-size;
   text-transform: $crumb-font-transform;
 
-  &:hover a, &:focus a { text-decoration: $crumb-link-decor; }
+  &:hover a, &:focus a {
+    text-decoration: $crumb-link-decor;
+  }
 
   a,
   span {
@@ -81,13 +82,17 @@ $crumb-slash: "/" !default;
     }
 
     &:hover, &:hover a,
-    &:focus, &:focus a { text-decoration: none; }
+    &:focus, &:focus a {
+      text-decoration: none;
+    }
   }
 
   // Unavailable removed color and link styles so it looks inactive.
   &.unavailable {
     color: $crumb-font-color-unavailable;
-    a { color: $crumb-font-color-unavailable; }
+    a {
+      color: $crumb-font-color-unavailable;
+    }
 
     &:hover,
     &:hover a,
@@ -119,7 +124,7 @@ $crumb-slash: "/" !default;
       @include crumb-container;
       @include radius($crumb-radius);
 
-      &>* {
+      & > * {
         @include crumbs;
       }
     }

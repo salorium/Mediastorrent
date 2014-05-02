@@ -1,7 +1,6 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
-
 @import "global";
 
 //
@@ -32,7 +31,6 @@ $price-money-color: #333 !default;
 $price-money-weight: normal !default;
 $price-money-size: rem-calc(32) !default;
 $price-money-font-family: $body-font-family !default;
-
 
 // We use these to control the description styles
 $price-bg: #fff !default;
@@ -70,6 +68,7 @@ $price-cta-padding: rem-calc(20 20 0) !default;
     line-height: 1;
   }
 }
+
 // @mixins
 //
 // We use this mixin to create the pricing table title styles
@@ -139,11 +138,21 @@ $price-cta-padding: rem-calc(20 20 0) !default;
     .pricing-table {
       @include pricing-table-container;
 
-      .title { @include pricing-table-title; }
-      .price { @include pricing-table-price; }
-      .description { @include pricing-table-description; }
-      .bullet-item { @include pricing-table-bullet; }
-      .cta-button { @include pricing-table-cta; }
+      .title {
+        @include pricing-table-title;
+      }
+      .price {
+        @include pricing-table-price;
+      }
+      .description {
+        @include pricing-table-description;
+      }
+      .bullet-item {
+        @include pricing-table-bullet;
+      }
+      .cta-button {
+        @include pricing-table-cta;
+      }
     }
 
   }

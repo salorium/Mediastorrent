@@ -7,8 +7,10 @@
  * To change this template use File | Settings | File Templates.
  */
 namespace core;
-class Format {
-    public static function get_size($Size, $Levels = 2) {
+class Format
+{
+    public static function get_size($Size, $Levels = 2)
+    {
         $Units = array(' o', ' Ko', ' Mo', ' Go', ' To', ' Po', ' Eo', ' Zo', ' Yo');
         $Size = (double)$Size;
         for ($Steps = 0; abs($Size) >= 1024; $Size /= 1024, $Steps++) {

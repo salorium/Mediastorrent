@@ -10,68 +10,73 @@
 namespace controller;
 
 
-class Utilisateur extends \core\Controller {
-    function view($nom){
-        $this->set("nom",$nom);
+class Utilisateur extends \core\Controller
+{
+    function view($nom)
+    {
+        $this->set("nom", $nom);
         $test = new \model\mysql\Utilisateur();
         $test->find(array(
             "conditions" => array(
-                array(array("colums"=>"login","table"=>new \model\mysql\Utilisateur()),"=",array("colums"=>"login","table"=>new \model\mysql\Rtorrents()))
+                array(array("colums" => "login", "table" => new \model\mysql\Utilisateur()), "=", array("colums" => "login", "table" => new \model\mysql\Rtorrents()))
             )
 
         ));
         \core\Mysqli::query("select * from tr");
     }
 
-    function index(){
+    function index()
+    {
         //\debug($_SERVER);
         //throw new \Exception("dds");
     }
 
-    function connexion(){
+    function connexion()
+    {
         if (!(isset($_POST["login"]) && isset($_POST["motdepasse"])))
             $this->render("index");
-        $u = \model\mysql\Utilisateur::authentifierUtilisateurParMotDePasse($_POST["login"],$_POST["motdepasse"]);
-        if (is_object($u)){
+        $u = \model\mysql\Utilisateur::authentifierUtilisateurParMotDePasse($_POST["login"], $_POST["motdepasse"]);
+        if (is_object($u)) {
             // header("HTTP/1.1 307 Temporary Redirect");
-            if (! \core\Memcached::value($u->login,"user",$u,60*5))
+            if (!\core\Memcached::value($u->login, "user", $u, 60 * 5))
                 trigger_error("Impossible de mettre des données dans memcached");
-            setcookie ("login", htmlspecialchars($u->login), strtotime( '+1 days' ),"/");
-            setcookie ("keyconnexion", htmlspecialchars($u->keyconnexion), strtotime( '+1 days' ),"/");
-            header ("Location: ".BASE_URL);
+            setcookie("login", htmlspecialchars($u->login), strtotime('+1 days'), "/");
+            setcookie("keyconnexion", htmlspecialchars($u->keyconnexion), strtotime('+1 days'), "/");
+            header("Location: " . BASE_URL);
             exit();
-        }else{
+        } else {
             // header("HTTP/1.1 307 Temporary Redirect");
             $this->set(array(
-                "login"=>$_POST["login"],
-                "erreur"=> true
+                "login" => $_POST["login"],
+                "erreur" => true
 
             ));
             $this->render("index");
         }
     }
 
-    function mdpoublier(){
-        if ( isset ($_POST["mail"] )){
+    function mdpoublier()
+    {
+        if (isset ($_POST["mail"])) {
             $u = \model\mysql\Utilisateur::getUtilisateurParMail($_POST["mail"]);
-            if ($u){
-                do{
+            if ($u) {
+                do {
                     $mdp = \model\simple\String::random(8);
-                }while ( preg_match('/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/',$mdp) != 1);
+                } while (preg_match('/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/', $mdp) != 1);
 
-                $args["login"]= $u->login;
-                $args["mdp"]= $mdp;
-                $t = \model\mysql\Ticket::savTicket("controller\\horsligne\\Utilisateur","modifierMdp",$args);
-                $f= false;
+                $args["login"] = $u->login;
+                $args["mdp"] = $mdp;
+                $t = \model\mysql\Ticket::savTicket("controller\\horsligne\\Utilisateur", "modifierMdp", $args);
+                $f = false;
                 if (!is_bool($t))
-                $f = \model\simple\Mail::activationMotDePasse($u->mail,$u->login,$mdp,$t);
+                    $f = \model\simple\Mail::activationMotDePasse($u->mail, $u->login, $mdp, $t);
                 $this->set(array(
-                    "succereinitialmdp"=> $f,
+                    "succereinitialmdp" => $f,
                 ));
                 $this->render("index");
-            }else{
+            } else {
                 $this->set(array(
-                    "erreur"=> true
+                    "erreur" => true
                 ));
             }
         }

@@ -7,11 +7,11 @@
  */
 
 var Connexion = {
-    login :null,
+    login: null,
     keyconnexion: null,
-    idlogin : "#login",
+    idlogin: "#login",
     idmotdepasse: "#motdepasse",
-    authentificationParMotDePasse : function (){
+    authentificationParMotDePasse: function () {
         $(this.idlogin)
     }
 }

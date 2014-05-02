@@ -10,6 +10,8 @@
 ?>
 <div>
     <h1><?php echo $url; ?></h1>
+
     <h1><?php echo $size; ?></h1>
-    <p><?php echo ( $image); ?></p>
+
+    <p><?php echo($image); ?></p>
 </div>

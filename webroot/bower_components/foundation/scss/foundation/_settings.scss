@@ -1,14 +1,11 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
-
 //
 // FOUNDATION SETTINGS
 //
-
 // This is the default html and body font-size for the base rem value.
 // $rem-base: 16px;
-
 // Allows the use of rem-calc() or lower-bound() in your settings
 @import "foundation/functions";
 
@@ -816,7 +813,6 @@
 // $price-money-size: rem-calc(32);
 // $price-money-font-family: $body-font-family;
 
-
 // We use these to control the description styles
 // $price-bg: #fff;
 // $price-desc-color: #777;
@@ -915,8 +911,6 @@
 // $side-nav-font-family: $body-font-family;
 // $side-nav-active-font-family: $side-nav-font-family;
 
-
-
 // We use these to control border styles
 // $side-nav-divider-size: 1px;
 // $side-nav-divider-style: solid;
@@ -976,7 +970,6 @@
 // $sub-nav-text-decoration: none;
 // $sub-nav-border-radius: 3px;
 // $sub-nav-font-color-hover: scale-color($sub-nav-font-color, $lightness: -25%);
-
 
 // We use these to control the active item styles
 

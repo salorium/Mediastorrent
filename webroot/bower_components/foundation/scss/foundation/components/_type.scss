@@ -1,7 +1,6 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
-
 @import "global";
 
 $include-html-type-classes: $include-html-classes !default;
@@ -111,38 +110,20 @@ $microformat-abbr-font-decoration: none !default;
 //
 
 // Text Breakpoints
-$text-breakpoint-sizes:
-  small,
-  medium,
-  large,
-  xlarge,
-  xxlarge
-;
-$text-breakpoint-only-queries:
-  unquote($small-only),
-  unquote($medium-only),
-  unquote($large-only),
-  unquote($xlarge-only),
-  unquote($xxlarge-only)
-;
-$text-breakpoint-up-queries:
-  unquote($small-up),
-  unquote($medium-up),
-  unquote($large-up),
-  unquote($xlarge-up),
-  unquote($xxlarge-up)
-;
+$text-breakpoint-sizes: small, medium, large, xlarge, xxlarge;
+$text-breakpoint-only-queries: unquote($small-only), unquote($medium-only), unquote($large-only), unquote($xlarge-only), unquote($xxlarge-only);
+$text-breakpoint-up-queries: unquote($small-up), unquote($medium-up), unquote($large-up), unquote($xlarge-up), unquote($xxlarge-up);
 
 @mixin text-alignment-loop {
   $text-alignments: left, right, center, justify;
-  
+
   // Global Text Styles
   @each $alignment in $text-alignments {
     .text-#{$alignment} {
       text-align: #{$alignment} !important;
     }
   }
-  
+
   @each $current-text-breakpoint in $text-breakpoint-sizes {
     @media #{nth($text-breakpoint-only-queries, index($text-breakpoint-sizes, $current-text-breakpoint))} {
       @each $alignment in $text-alignments {
@@ -180,83 +161,172 @@ $text-breakpoint-up-queries:
   margin-top: $subheader-top-margin;
   margin-bottom: $subheader-bottom-margin;
 }
+
 @include exports("type") {
   @if $include-html-type-classes {
 
     // Global Text Styles
-    .text-left    { text-align: left !important; }
-    .text-right   { text-align: right !important; }
-    .text-center  { text-align: center !important; }
-    .text-justify { text-align: justify !important; }
+    .text-left {
+      text-align: left !important;
+    }
+    .text-right {
+      text-align: right !important;
+    }
+    .text-center {
+      text-align: center !important;
+    }
+    .text-justify {
+      text-align: justify !important;
+    }
 
     @media #{$small-only} {
-        .small-only-text-left    { text-align: left !important; }
-        .small-only-text-right   { text-align: right !important; }
-        .small-only-text-center  { text-align: center !important; }
-        .small-only-text-justify { text-align: justify !important; }
+      .small-only-text-left {
+        text-align: left !important;
+      }
+      .small-only-text-right {
+        text-align: right !important;
+      }
+      .small-only-text-center {
+        text-align: center !important;
+      }
+      .small-only-text-justify {
+        text-align: justify !important;
+      }
     }
 
     @media #{$small-up} {
-        .small-text-left    { text-align: left !important; }
-        .small-text-right   { text-align: right !important; }
-        .small-text-center  { text-align: center !important; }
-        .small-text-justify { text-align: justify !important; }
+      .small-text-left {
+        text-align: left !important;
+      }
+      .small-text-right {
+        text-align: right !important;
+      }
+      .small-text-center {
+        text-align: center !important;
+      }
+      .small-text-justify {
+        text-align: justify !important;
+      }
     }
 
     @media #{$medium-only} {
-        .medium-only-text-left    { text-align: left !important; }
-        .medium-only-text-right   { text-align: right !important; }
-        .medium-only-text-center  { text-align: center !important; }
-        .medium-only-text-justify { text-align: justify !important; }
+      .medium-only-text-left {
+        text-align: left !important;
+      }
+      .medium-only-text-right {
+        text-align: right !important;
+      }
+      .medium-only-text-center {
+        text-align: center !important;
+      }
+      .medium-only-text-justify {
+        text-align: justify !important;
+      }
     }
 
     @media #{$medium-up} {
-        .medium-text-left    { text-align: left !important; }
-        .medium-text-right   { text-align: right !important; }
-        .medium-text-center  { text-align: center !important; }
-        .medium-text-justify { text-align: justify !important; }
+      .medium-text-left {
+        text-align: left !important;
+      }
+      .medium-text-right {
+        text-align: right !important;
+      }
+      .medium-text-center {
+        text-align: center !important;
+      }
+      .medium-text-justify {
+        text-align: justify !important;
+      }
     }
 
     @media #{$large-only} {
-        .large-only-text-left    { text-align: left !important; }
-        .large-only-text-right   { text-align: right !important; }
-        .large-only-text-center  { text-align: center !important; }
-        .large-only-text-justify { text-align: justify !important; }
+      .large-only-text-left {
+        text-align: left !important;
+      }
+      .large-only-text-right {
+        text-align: right !important;
+      }
+      .large-only-text-center {
+        text-align: center !important;
+      }
+      .large-only-text-justify {
+        text-align: justify !important;
+      }
     }
 
     @media #{$large-up} {
-        .large-text-left    { text-align: left !important; }
-        .large-text-right   { text-align: right !important; }
-        .large-text-center  { text-align: center !important; }
-        .large-text-justify { text-align: justify !important; }
+      .large-text-left {
+        text-align: left !important;
+      }
+      .large-text-right {
+        text-align: right !important;
+      }
+      .large-text-center {
+        text-align: center !important;
+      }
+      .large-text-justify {
+        text-align: justify !important;
+      }
     }
 
     @media #{$xlarge-only} {
-        .xlarge-only-text-left    { text-align: left !important; }
-        .xlarge-only-text-right   { text-align: right !important; }
-        .xlarge-only-text-center  { text-align: center !important; }
-        .xlarge-only-text-justify { text-align: justify !important; }
+      .xlarge-only-text-left {
+        text-align: left !important;
+      }
+      .xlarge-only-text-right {
+        text-align: right !important;
+      }
+      .xlarge-only-text-center {
+        text-align: center !important;
+      }
+      .xlarge-only-text-justify {
+        text-align: justify !important;
+      }
     }
 
     @media #{$xlarge-up} {
-        .xlarge-text-left    { text-align: left !important; }
-        .xlarge-text-right   { text-align: right !important; }
-        .xlarge-text-center  { text-align: center !important; }
-        .xlarge-text-justify { text-align: justify !important; }
+      .xlarge-text-left {
+        text-align: left !important;
+      }
+      .xlarge-text-right {
+        text-align: right !important;
+      }
+      .xlarge-text-center {
+        text-align: center !important;
+      }
+      .xlarge-text-justify {
+        text-align: justify !important;
+      }
     }
 
     @media #{$xxlarge-only} {
-        .xxlarge-only-text-left    { text-align: left !important; }
-        .xxlarge-only-text-right   { text-align: right !important; }
-        .xxlarge-only-text-center  { text-align: center !important; }
-        .xxlarge-only-text-justify { text-align: justify !important; }
+      .xxlarge-only-text-left {
+        text-align: left !important;
+      }
+      .xxlarge-only-text-right {
+        text-align: right !important;
+      }
+      .xxlarge-only-text-center {
+        text-align: center !important;
+      }
+      .xxlarge-only-text-justify {
+        text-align: justify !important;
+      }
     }
 
     @media #{$xxlarge-up} {
-        .xxlarge-text-left    { text-align: left !important; }
-        .xxlarge-text-right   { text-align: right !important; }
-        .xxlarge-text-center  { text-align: center !important; }
-        .xxlarge-text-justify { text-align: justify !important; }
+      .xxlarge-text-left {
+        text-align: left !important;
+      }
+      .xxlarge-text-right {
+        text-align: right !important;
+      }
+      .xxlarge-text-center {
+        text-align: center !important;
+      }
+      .xxlarge-text-justify {
+        text-align: justify !important;
+      }
     }
 
     /* Typography resets */
@@ -279,8 +349,8 @@ $text-breakpoint-up-queries:
     blockquote,
     th,
     td {
-      margin:0;
-      padding:0;
+      margin: 0;
+      padding: 0;
     }
 
     /* Default Link Styles */
@@ -290,9 +360,13 @@ $text-breakpoint-up-queries:
       line-height: inherit;
 
       &:hover,
-      &:focus { color: $anchor-font-color-hover; }
+      &:focus {
+        color: $anchor-font-color-hover;
+      }
 
-      img { border:none; }
+      img {
+        border: none;
+      }
     }
 
     /* Default paragraph styles */
@@ -304,7 +378,9 @@ $text-breakpoint-up-queries:
       margin-bottom: $paragraph-margin-bottom;
       text-rendering: $paragraph-text-rendering;
 
-      &.lead { @include lead; }
+      &.lead {
+        @include lead;
+      }
 
       & aside {
         font-size: $paragraph-aside-font-size;
@@ -331,14 +407,28 @@ $text-breakpoint-up-queries:
       }
     }
 
-    h1 { font-size: $h1-font-size - rem-calc(10); }
-    h2 { font-size: $h2-font-size - rem-calc(10); }
-    h3 { font-size: $h3-font-size - rem-calc(5); }
-    h4 { font-size: $h4-font-size - rem-calc(5); }
-    h5 { font-size: $h5-font-size; }
-    h6 { font-size: $h6-font-size; }
+    h1 {
+      font-size: $h1-font-size - rem-calc(10);
+    }
+    h2 {
+      font-size: $h2-font-size - rem-calc(10);
+    }
+    h3 {
+      font-size: $h3-font-size - rem-calc(5);
+    }
+    h4 {
+      font-size: $h4-font-size - rem-calc(5);
+    }
+    h5 {
+      font-size: $h5-font-size;
+    }
+    h6 {
+      font-size: $h6-font-size;
+    }
 
-    .subheader { @include subheader; }
+    .subheader {
+      @include subheader;
+    }
 
     hr {
       border: $hr-border-style $hr-border-color;
@@ -410,13 +500,26 @@ $text-breakpoint-up-queries:
       &.square,
       &.circle,
       &.disc {
-        li ul { list-style: inherit; }
+        li ul {
+          list-style: inherit;
+        }
       }
 
-      &.square { list-style-type: square; margin-#{$default-float}: $list-side-margin;}
-      &.circle { list-style-type: circle; margin-#{$default-float}: $list-side-margin;}
-      &.disc { list-style-type: disc; margin-#{$default-float}: $list-side-margin;}
-      &.no-bullet { list-style: none; }
+      &.square {
+        list-style-type: square;
+        margin-#{$default-float}: $list-side-margin;
+      }
+      &.circle {
+        list-style-type: circle;
+        margin-#{$default-float}: $list-side-margin;
+      }
+      &.disc {
+        list-style-type: disc;
+        margin-#{$default-float}: $list-side-margin;
+      }
+      &.no-bullet {
+        list-style: none;
+      }
     }
 
     /* Ordered Lists */
@@ -437,7 +540,9 @@ $text-breakpoint-up-queries:
         margin-bottom: $definition-list-header-margin-bottom;
         font-weight: $definition-list-header-weight;
       }
-      dd { margin-bottom: $definition-list-margin-bottom; }
+      dd {
+        margin-bottom: $definition-list-margin-bottom;
+      }
     }
 
     /* Abbreviations */
@@ -497,7 +602,9 @@ $text-breakpoint-up-queries:
     }
 
     .vevent {
-      .summary { font-weight: $microformat-summary-font-weight; }
+      .summary {
+        font-weight: $microformat-summary-font-weight;
+      }
 
       abbr {
         cursor: $cursor-default-value;
@@ -508,13 +615,22 @@ $text-breakpoint-up-queries:
       }
     }
 
-
     @media #{$medium-up} {
-      h1,h2,h3,h4,h5,h6 { line-height: $header-line-height; }
-      h1 { font-size: $h1-font-size; }
-      h2 { font-size: $h2-font-size; }
-      h3 { font-size: $h3-font-size; }
-      h4 { font-size: $h4-font-size; }
+      h1, h2, h3, h4, h5, h6 {
+        line-height: $header-line-height;
+      }
+      h1 {
+        font-size: $h1-font-size;
+      }
+      h2 {
+        font-size: $h2-font-size;
+      }
+      h3 {
+        font-size: $h3-font-size;
+      }
+      h4 {
+        font-size: $h4-font-size;
+      }
     }
 
     // Only include these styles if you want them.
@@ -525,7 +641,9 @@ $text-breakpoint-up-queries:
        * Inlined to avoid required HTTP connection: www.phpied.com/delay-loading-your-print-css/
        * Credit to Paul Irish and HTML5 Boilerplate (html5boilerplate.com)
       */
-      .print-only { display: none !important; }
+      .print-only {
+        display: none !important;
+      }
       @media print {
         * {
           background: transparent !important;
@@ -535,15 +653,23 @@ $text-breakpoint-up-queries:
         }
 
         a,
-        a:visited { text-decoration: underline;}
-        a[href]:after { content: " (" attr(href) ")"; }
+        a:visited {
+          text-decoration: underline;
+        }
+        a[href]:after {
+          content: " (" attr(href) ")";
+        }
 
-        abbr[title]:after { content: " (" attr(title) ")"; }
+        abbr[title]:after {
+          content: " (" attr(title) ")";
+        }
 
         // Don't show links for images, or javascript/internal links
         .ir a:after,
         a[href^="javascript:"]:after,
-        a[href^="#"]:after { content: ""; }
+        a[href^="#"]:after {
+          content: "";
+        }
 
         pre,
         blockquote {
@@ -551,14 +677,22 @@ $text-breakpoint-up-queries:
           page-break-inside: avoid;
         }
 
-        thead { display: table-header-group; /* h5bp.com/t */ }
+        thead {
+          display: table-header-group; /* h5bp.com/t */
+        }
 
         tr,
-        img { page-break-inside: avoid; }
+        img {
+          page-break-inside: avoid;
+        }
 
-        img { max-width: 100% !important; }
+        img {
+          max-width: 100% !important;
+        }
 
-        @page { margin: 0.5cm; }
+        @page {
+          margin: 0.5cm;
+        }
 
         p,
         h2,
@@ -568,12 +702,22 @@ $text-breakpoint-up-queries:
         }
 
         h2,
-        h3 { page-break-after: avoid; }
+        h3 {
+          page-break-after: avoid;
+        }
 
-        .hide-on-print { display: none !important; }
-        .print-only { display: block !important; }
-        .hide-for-print { display: none !important; }
-        .show-for-print { display: inherit !important; }
+        .hide-on-print {
+          display: none !important;
+        }
+        .print-only {
+          display: block !important;
+        }
+        .hide-for-print {
+          display: none !important;
+        }
+        .show-for-print {
+          display: inherit !important;
+        }
       }
     }
 

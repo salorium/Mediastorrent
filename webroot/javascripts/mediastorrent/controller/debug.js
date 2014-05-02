@@ -1,7 +1,7 @@
 /**
  * Created by Salorium on 06/12/13.
  */
-Debug.controller =  {
+Debug.controller = {
 
     init: function (debugged) {
         that = Debug;

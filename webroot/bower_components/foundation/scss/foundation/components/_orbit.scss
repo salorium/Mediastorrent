@@ -1,7 +1,6 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
-
 @import "global";
 
 // @variables
@@ -10,21 +9,22 @@ $include-html-orbit-classes: $include-html-classes !default;
 
 // We use these to control the caption styles
 $orbit-container-bg: none !default;
-$orbit-caption-bg: rgba(51,51,51, 0.8) !default;
+$orbit-caption-bg: rgba(51, 51, 51, 0.8) !default;
 $orbit-caption-font-color: #fff !default;
 $orbit-caption-font-size: rem-calc(14) !default;
-$orbit-caption-position: "bottom" !default; // Supported values: "bottom", "under"
+$orbit-caption-position: "bottom" !default;
+// Supported values: "bottom", "under"
 $orbit-caption-padding: rem-calc(10 14) !default;
 $orbit-caption-height: auto !default;
 
 // We use these to control the left/right nav styles
 $orbit-nav-bg: none !default;
-$orbit-nav-bg-hover: rgba(0,0,0,0.3) !default;
+$orbit-nav-bg-hover: rgba(0, 0, 0, 0.3) !default;
 $orbit-nav-arrow-color: #fff !default;
 $orbit-nav-arrow-color-hover: #fff !default;
 
 // We use these to control the timer styles
-$orbit-timer-bg: rgba(255,255,255,0.3) !default;
+$orbit-timer-bg: rgba(255, 255, 255, 0.3) !default;
 $orbit-timer-show-progress-bar: true !default;
 
 // We use these to control the bullet nav styles
@@ -33,7 +33,7 @@ $orbit-bullet-nav-color-active: #999 !default;
 $orbit-bullet-radius: rem-calc(9) !default;
 
 // We use these to controls the style of slide numbers
-$orbit-slide-number-bg: rgba(0,0,0,0) !default;
+$orbit-slide-number-bg: rgba(0, 0, 0, 0) !default;
 $orbit-slide-number-font-color: #fff !default;
 $orbit-slide-number-padding: rem-calc(5) !default;
 
@@ -46,21 +46,37 @@ $preloader-class: "preloader" !default;
 
     @if $experimental {
       @-webkit-keyframes rotate {
-        from { -webkit-transform: rotate(0deg); }
-        to { -webkit-transform: rotate(360deg); }
+        from {
+          -webkit-transform: rotate(0deg);
+        }
+        to {
+          -webkit-transform: rotate(360deg);
+        }
       }
       @-moz-keyframes rotate {
-        from { -moz-transform: rotate(0deg); }
-        to { -moz-transform: rotate(360deg); }
+        from {
+          -moz-transform: rotate(0deg);
+        }
+        to {
+          -moz-transform: rotate(360deg);
+        }
       }
       @-o-keyframes rotate {
-        from { -o-transform: rotate(0deg); }
-        to { -o-transform: rotate(360deg); }
+        from {
+          -o-transform: rotate(0deg);
+        }
+        to {
+          -o-transform: rotate(360deg);
+        }
       }
     }
     @keyframes rotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     /* Orbit Graceful Loading */
@@ -74,18 +90,26 @@ $preloader-class: "preloader" !default;
 
         // Hide all list items
         li,
-        li .orbit-caption { display: none; }
+        li .orbit-caption {
+          display: none;
+        }
 
         // ...except for the first one
-        li:first-child { display: block; }
+        li:first-child {
+          display: block;
+        }
       }
 
-      .orbit-container { background-color: transparent;
+      .orbit-container {
+        background-color: transparent;
 
         // Show images when .orbit-container is loaded
-        li { display: block;
+        li {
+          display: block;
 
-          .orbit-caption { display: block; }
+          .orbit-caption {
+            display: block;
+          }
         }
       }
     }
@@ -138,10 +162,13 @@ $preloader-class: "preloader" !default;
         // Prevents images (and captions) from disappearing after first rotation on Chrome for Android
         -webkit-transform: translateZ(0);
 
-        img { display: block; max-width: 100%; }
-        
+        img {
+          display: block;
+          max-width: 100%;
+        }
+
         &.fade > * {
-          -webkit-transform: translate3d(0,0,0);
+          -webkit-transform: translate3d(0, 0, 0);
           opacity: 0.01;
           transition: opacity .25s ease-in-out;
           -moz-transition: opacity .25s ease-in-out;
@@ -162,81 +189,81 @@ $preloader-class: "preloader" !default;
           }
         }
         &.swipe-next > * {
-          -webkit-transform: translate3d(100%,0,0);
+          -webkit-transform: translate3d(100%, 0, 0);
           &.animate-in {
-            -webkit-transform:translate3d(0,0,0);
-            -moz-transform:translate3d(0,0,0);
-            -ms-transform:translate3d(0,0,0);
-            -o-transform:translate3d(0,0,0);
-            transform:translate3d(0,0,0);
-            -webkit-transition-duration:500ms;
-            -moz-transition-duration:500ms;
-            -o-transition-duration:500ms;
-            transition-duration:500ms;
+            -webkit-transform: translate3d(0, 0, 0);
+            -moz-transform: translate3d(0, 0, 0);
+            -ms-transform: translate3d(0, 0, 0);
+            -o-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+            -webkit-transition-duration: 500ms;
+            -moz-transition-duration: 500ms;
+            -o-transition-duration: 500ms;
+            transition-duration: 500ms;
           }
           &.animate-out {
-            -webkit-transform:translate3d(-100%,0,0);
-            -moz-transform:translate3d(-100%,0,0);
-            -ms-transform:translate3d(-100%,0,0);
-            -o-transform:translate3d(-100%,0,0);
-            transform:translate3d(-100%,0,0);
-            -webkit-transition-duration:500ms;
-            -moz-transition-duration:500ms;
-            -o-transition-duration:500ms;
-            transition-duration:500ms;
+            -webkit-transform: translate3d(-100%, 0, 0);
+            -moz-transform: translate3d(-100%, 0, 0);
+            -ms-transform: translate3d(-100%, 0, 0);
+            -o-transform: translate3d(-100%, 0, 0);
+            transform: translate3d(-100%, 0, 0);
+            -webkit-transition-duration: 500ms;
+            -moz-transition-duration: 500ms;
+            -o-transition-duration: 500ms;
+            transition-duration: 500ms;
           }
         }
 
         &.swipe-prev > * {
-          -webkit-transform:translate3d(-100%,0,0);
-          -moz-transform:translate3d(-100%,0,0);
-          -ms-transform:translate3d(-100%,0,0);
-          -o-transform:translate3d(-100%,0,0);
-          transform:translate3d(-100%,0,0);
+          -webkit-transform: translate3d(-100%, 0, 0);
+          -moz-transform: translate3d(-100%, 0, 0);
+          -ms-transform: translate3d(-100%, 0, 0);
+          -o-transform: translate3d(-100%, 0, 0);
+          transform: translate3d(-100%, 0, 0);
           &.animate-in {
-            -webkit-transform:translate3d(0,0,0);
-            -moz-transform:translate3d(0,0,0);
-            -ms-transform:translate3d(0,0,0);
-            -o-transform:translate3d(0,0,0);
-            transform:translate3d(0,0,0);
-            -webkit-transition-duration:500ms;
-            -moz-transition-duration:500ms;
-            -o-transition-duration:500ms;
-            transition-duration:500ms;
+            -webkit-transform: translate3d(0, 0, 0);
+            -moz-transform: translate3d(0, 0, 0);
+            -ms-transform: translate3d(0, 0, 0);
+            -o-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+            -webkit-transition-duration: 500ms;
+            -moz-transition-duration: 500ms;
+            -o-transition-duration: 500ms;
+            transition-duration: 500ms;
           }
           &.animate-out {
-            -webkit-transform:translate3d(100%,0,0);
-            -moz-transform:translate3d(100%,0,0);
-            -ms-transform:translate3d(100%,0,0);
-            -o-transform:translate3d(100%,0,0);
-            transform:translate3d(100%,0,0);
-            -webkit-transition-duration:500ms;
-            -moz-transition-duration:500ms;
-            -o-transition-duration:500ms;
-            transition-duration:500ms;
+            -webkit-transform: translate3d(100%, 0, 0);
+            -moz-transform: translate3d(100%, 0, 0);
+            -ms-transform: translate3d(100%, 0, 0);
+            -o-transform: translate3d(100%, 0, 0);
+            transform: translate3d(100%, 0, 0);
+            -webkit-transition-duration: 500ms;
+            -moz-transition-duration: 500ms;
+            -o-transition-duration: 500ms;
+            transition-duration: 500ms;
           }
         }
 
-        &>* {
+        & > * {
           position: absolute;
           top: 0;
           left: 0;
           width: 100%;
-          -webkit-transform:translate3d(100%,0,0);
-          -moz-transform:translate3d(100%,0,0);
-          -ms-transform:translate3d(100%,0,0);
-          -o-transform:translate3d(100%,0,0);
-          transform:translate3d(100%,0,0);
+          -webkit-transform: translate3d(100%, 0, 0);
+          -moz-transform: translate3d(100%, 0, 0);
+          -ms-transform: translate3d(100%, 0, 0);
+          -o-transform: translate3d(100%, 0, 0);
+          transform: translate3d(100%, 0, 0);
 
           &.active {
             opacity: 1;
             top: 0;
             left: 0;
-            -webkit-transform:translate3d(0,0,0);
-            -moz-transform:translate3d(0,0,0);
-            -ms-transform:translate3d(0,0,0);
-            -o-transform:translate3d(0,0,0);
-            transform:translate3d(0,0,0);
+            -webkit-transform: translate3d(0, 0, 0);
+            -moz-transform: translate3d(0, 0, 0);
+            -ms-transform: translate3d(0, 0, 0);
+            -o-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
           }
 
           .orbit-caption {
@@ -261,7 +288,10 @@ $preloader-class: "preloader" !default;
         top: 10px;
         #{$default-float}: 10px;
         font-size: 12px;
-        span { font-weight: 700; padding: $orbit-slide-number-padding;}
+        span {
+          font-weight: 700;
+          padding: $orbit-slide-number-padding;
+        }
         color: $orbit-slide-number-font-color;
         background: $orbit-slide-number-bg;
         z-index: 10;
@@ -298,7 +328,7 @@ $preloader-class: "preloader" !default;
           border-top: none;
           border-bottom: none;
         }
-      
+
         // Pause button
         &.paused {
           & > span {
@@ -309,16 +339,16 @@ $preloader-class: "preloader" !default;
             border: inset 8px;
             border-right-style: solid;
             border-color: transparent transparent transparent #fff;
-            &.dark { 
+            &.dark {
               border-color: transparent transparent transparent #333;
             }
           }
         }
       }
-      
-      
 
-      &:hover .orbit-timer > span { display: block; }
+      &:hover .orbit-timer > span {
+        display: block;
+      }
 
       // Let's get those controls to be right in the center on each side
       .orbit-prev,
@@ -348,7 +378,8 @@ $preloader-class: "preloader" !default;
           border: inset 10px;
         }
       }
-      .orbit-prev { #{$default-float}: 0;
+      .orbit-prev {
+        #{$default-float}: 0;
         & > span {
           border-#{$opposite-direction}-style: solid;
           border-color: transparent;
@@ -358,7 +389,8 @@ $preloader-class: "preloader" !default;
           border-#{$opposite-direction}-color: $orbit-nav-arrow-color-hover;
         }
       }
-      .orbit-next { #{$opposite-direction}: 0;
+      .orbit-next {
+        #{$opposite-direction}: 0;
         & > span {
           border-color: transparent;
           border-#{$default-float}-style: solid;
@@ -372,7 +404,9 @@ $preloader-class: "preloader" !default;
       }
     }
 
-    .orbit-bullets-container { text-align: center; }
+    .orbit-bullets-container {
+      text-align: center;
+    }
     .orbit-bullets {
       margin: 0 auto 30px auto;
       overflow: hidden;
@@ -396,36 +430,47 @@ $preloader-class: "preloader" !default;
           background: $orbit-bullet-nav-color-active;
         }
 
-        &:last-child { margin-#{$opposite-direction}: 0; }
+        &:last-child {
+          margin-#{$opposite-direction}: 0;
+        }
       }
     }
 
     .touch {
       .orbit-container {
         .orbit-prev,
-        .orbit-next { display: none; }
+        .orbit-next {
+          display: none;
+        }
       }
 
-      .orbit-bullets { display: none; }
+      .orbit-bullets {
+        display: none;
+      }
     }
-
 
     @media #{$medium-up} {
 
       .touch {
         .orbit-container {
           .orbit-prev,
-          .orbit-next { display: inherit; }
+          .orbit-next {
+            display: inherit;
+          }
         }
 
-        .orbit-bullets { display: block; }
+        .orbit-bullets {
+          display: block;
+        }
       }
 
     }
 
     @media #{$small-only} {
       .orbit-stack-on-small {
-        .orbit-slides-container {height: auto !important;}
+        .orbit-slides-container {
+          height: auto !important;
+        }
         .orbit-slides-container > * {
           position: relative;
           margin-left: 0% !important;
@@ -433,7 +478,9 @@ $preloader-class: "preloader" !default;
         .orbit-timer,
         .orbit-next,
         .orbit-prev,
-        .orbit-bullets {display: none;}
+        .orbit-bullets {
+          display: none;
+        }
       }
     }
 

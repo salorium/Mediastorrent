@@ -10,10 +10,12 @@
 namespace core;
 
 
-class SimpleXMLElement extends \SimpleXMLElement{
+class SimpleXMLElement extends \SimpleXMLElement
+{
 
 
-    function addChild ($name ,$value=null , $namespace=null){
-        parent::addChild($value,$name,$namespace);
+    function addChild($name, $value = null, $namespace = null)
+    {
+        parent::addChild($value, $name, $namespace);
     }
 }

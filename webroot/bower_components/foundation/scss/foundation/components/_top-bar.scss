@@ -1,7 +1,6 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
-
 @import "global";
 @import "grid";
 
@@ -38,7 +37,8 @@ $topbar-link-color-active: #fff !default;
 $topbar-link-color-active-hover: #fff !default;
 $topbar-link-weight: normal !default;
 $topbar-link-font-size: rem-calc(13) !default;
-$topbar-link-hover-lightness: -10% !default; // Darken by 10%
+$topbar-link-hover-lightness: -10% !default;
+// Darken by 10%
 $topbar-link-bg: $topbar-bg !default;
 $topbar-link-bg-hover: #272727 !default;
 $topbar-link-bg-active: $primary-color !default;
@@ -68,16 +68,18 @@ $topbar-menu-icon-color-toggled: #888 !default;
 // Transitions and breakpoint styles
 $topbar-transition-speed: 300ms !default;
 // Using rem-calc for the below breakpoint causes issues with top bar
-$topbar-breakpoint: #{lower-bound($medium-range)} !default; // Change to 9999px for always mobile layout
+$topbar-breakpoint: #{lower-bound($medium-range)} !default;
+// Change to 9999px for always mobile layout
 $topbar-media-query: $medium-up !default;
 
 // Divider Styles
-$topbar-divider-border-bottom: solid 1px  scale-color($topbar-bg-color, $lightness: 13%) !default;
+$topbar-divider-border-bottom: solid 1px scale-color($topbar-bg-color, $lightness: 13%) !default;
 $topbar-divider-border-top: solid 1px scale-color($topbar-bg-color, $lightness: -50%) !default;
 
 // Sticky Class
 $topbar-sticky-class: ".sticky" !default;
-$topbar-arrows: true !default; //Set false to remove the triangle icon from the menu item
+$topbar-arrows: true !default;
+//Set false to remove the triangle icon from the menu item
 
 // Accessibility mixins for hiding and showing the menu dropdown items
 @mixin topbar-hide-dropdown {
@@ -109,7 +111,9 @@ $topbar-arrows: true !default; //Set false to remove the triangle icon from the 
       width: 100%;
       background: $topbar-bg;
 
-      .top-bar { margin-bottom: $topbar-margin-bottom; }
+      .top-bar {
+        margin-bottom: $topbar-margin-bottom;
+      }
     }
 
     // Wrapped around .top-bar to make it stick to the top
@@ -121,10 +125,10 @@ $topbar-arrows: true !default; //Set false to remove the triangle icon from the 
       z-index: 99;
 
       &.expanded:not(.top-bar) {
-          overflow-y: auto;
-          height: auto;
-          width: 100%;
-          max-height: 100%;
+        overflow-y: auto;
+        height: auto;
+        width: 100%;
+        max-height: 100%;
 
         .title-area {
           position: fixed;
@@ -153,20 +157,29 @@ $topbar-arrows: true !default; //Set false to remove the triangle icon from the 
         list-style: none;
       }
 
-      .row { max-width: none; }
+      .row {
+        max-width: none;
+      }
 
       form,
-      input { margin-bottom: 0; }
+      input {
+        margin-bottom: 0;
+      }
 
-      input { height: auto; padding-top: .35rem; padding-bottom: .35rem; font-size: $topbar-button-font-size; }
+      input {
+        height: auto;
+        padding-top: .35rem;
+        padding-bottom: .35rem;
+        font-size: $topbar-button-font-size;
+      }
 
       .button {
         padding-top: .45rem;
         padding-bottom: .35rem;
         margin-bottom: 0;
         font-size: $topbar-button-font-size;
-          // position: relative;
-          // top: -1px;
+        // position: relative;
+        // top: -1px;
 
       }
 
@@ -232,22 +245,18 @@ $topbar-arrows: true !default; //Set false to remove the triangle icon from the 
             position: relative;
 
             &::after {
-              content:"";
+              content: "";
               position: absolute;
               #{$opposite-direction}: 0;
               display: block;
               width: 16px;
-              top:0;
+              top: 0;
               height: 0;
               // Shh, don't tell, but box-shadows create the menu icon :)
               @if $experimental {
-                -webkit-box-shadow: 1px 10px 1px 1px $topbar-menu-icon-color,
-                                    1px 16px 1px 1px $topbar-menu-icon-color,
-                                    1px 22px 1px 1px $topbar-menu-icon-color;
+                -webkit-box-shadow: 1px 10px 1px 1px $topbar-menu-icon-color, 1px 16px 1px 1px $topbar-menu-icon-color, 1px 22px 1px 1px $topbar-menu-icon-color;
               }
-              box-shadow:         0 10px 0 1px $topbar-menu-icon-color,
-                                  0 16px 0 1px $topbar-menu-icon-color,
-                                  0 22px 0 1px $topbar-menu-icon-color;
+              box-shadow: 0 10px 0 1px $topbar-menu-icon-color, 0 16px 0 1px $topbar-menu-icon-color, 0 22px 0 1px $topbar-menu-icon-color;
             }
           }
         }
@@ -258,26 +267,23 @@ $topbar-arrows: true !default; //Set false to remove the triangle icon from the 
         height: auto;
         background: transparent;
 
-        .title-area { background: $topbar-bg; }
+        .title-area {
+          background: $topbar-bg;
+        }
 
         .toggle-topbar {
-          a { color: $topbar-menu-link-color-toggled;
+          a {
+            color: $topbar-menu-link-color-toggled;
             &::after {
               // Shh, don't tell, but box-shadows create the menu icon :)
               @if $experimental {
-                -webkit-box-shadow: 1px 10px 1px 1px $topbar-menu-icon-color-toggled,
-                                    1px 16px 1px 1px $topbar-menu-icon-color-toggled,
-                                    1px 22px 1px 1px $topbar-menu-icon-color-toggled;
+                -webkit-box-shadow: 1px 10px 1px 1px $topbar-menu-icon-color-toggled, 1px 16px 1px 1px $topbar-menu-icon-color-toggled, 1px 22px 1px 1px $topbar-menu-icon-color-toggled;
               }
-              box-shadow:         0 10px 0 1px $topbar-menu-icon-color-toggled,
-                                  0 16px 0 1px $topbar-menu-icon-color-toggled,
-                                  0 22px 0 1px $topbar-menu-icon-color-toggled;
+              box-shadow: 0 10px 0 1px $topbar-menu-icon-color-toggled, 0 16px 0 1px $topbar-menu-icon-color-toggled, 0 22px 0 1px $topbar-menu-icon-color-toggled;
             }
           }
         }
       }
-
-
 
     }
 
@@ -321,8 +327,8 @@ $topbar-arrows: true !default; //Set false to remove the triangle icon from the 
           &.button {
             background: $primary-color;
             font-size: $topbar-link-font-size;
-             padding-#{$opposite-direction}: $topbar-link-padding;
-             padding-#{$default-float}: $topbar-link-padding;
+            padding-#{$opposite-direction}: $topbar-link-padding;
+            padding-#{$default-float}: $topbar-link-padding;
             &:hover {
               background: scale-color($primary-color, $lightness: -27%);
             }
@@ -360,14 +366,16 @@ $topbar-arrows: true !default; //Set false to remove the triangle icon from the 
           background: $topbar-link-bg-active;
           color: $topbar-link-color-active;
           &:hover {
-                background: $topbar-link-bg-active-hover;
-                color: $topbar-link-color-active-hover;
+            background: $topbar-link-bg-active-hover;
+            color: $topbar-link-color-active-hover;
           }
         }
       }
 
       // Add some extra padding for list items contains buttons
-      .has-form { padding: $topbar-link-padding; }
+      .has-form {
+        padding: $topbar-link-padding;
+      }
 
       // Styling for list items that have a dropdown within them.
       .has-dropdown {
@@ -386,7 +394,8 @@ $topbar-arrows: true !default; //Set false to remove the triangle icon from the 
           }
         }
 
-        &.moved { position: static;
+        &.moved {
+          position: static;
           & > .dropdown {
             @include topbar-show-dropdown();
             width: 100%;
@@ -417,15 +426,20 @@ $topbar-arrows: true !default; //Set false to remove the triangle icon from the 
             }
           }
 
-          &.title h5 { margin-bottom: 0;
+          &.title h5 {
+            margin-bottom: 0;
             a {
               color: $topbar-link-color;
               line-height: $topbar-height / 2;
               display: block;
             }
           }
-          &.has-form { padding: 8px $topbar-link-padding; }
-          .button { top: auto; }
+          &.has-form {
+            padding: 8px $topbar-link-padding;
+          }
+          .button {
+            top: auto;
+          }
         }
 
         label {
@@ -439,8 +453,9 @@ $topbar-arrows: true !default; //Set false to remove the triangle icon from the 
       }
     }
 
-    .js-generated { display: block; }
-
+    .js-generated {
+      display: block;
+    }
 
     // Top Bar styles intended for screen sizes above the breakpoint.
     @media #{$topbar-media-query} {
@@ -449,10 +464,16 @@ $topbar-arrows: true !default; //Set false to remove the triangle icon from the 
         @include clearfix;
         overflow: visible;
 
-        .toggle-topbar { display: none; }
+        .toggle-topbar {
+          display: none;
+        }
 
-        .title-area { float: $default-float; }
-        .name h1 a { width: auto; }
+        .title-area {
+          float: $default-float;
+        }
+        .name h1 a {
+          width: auto;
+        }
 
         input,
         .button {
@@ -461,7 +482,9 @@ $topbar-arrows: true !default; //Set false to remove the triangle icon from the 
           top: $topbar-button-top;
         }
 
-        &.expanded { background: $topbar-bg; }
+        &.expanded {
+          background: $topbar-bg;
+        }
       }
 
       .contain-to-grid .top-bar {
@@ -471,7 +494,7 @@ $topbar-arrows: true !default; //Set false to remove the triangle icon from the 
       }
 
       .top-bar-section {
-        @include single-transition(none,0,0);
+        @include single-transition(none, 0, 0);
         #{$default-float}: 0 !important;
 
         ul {
@@ -481,7 +504,9 @@ $topbar-arrows: true !default; //Set false to remove the triangle icon from the 
 
           li {
             float: $default-float;
-            .js-generated { display: none; }
+            .js-generated {
+              display: none;
+            }
           }
         }
 
@@ -497,7 +522,9 @@ $topbar-arrows: true !default; //Set false to remove the triangle icon from the 
               padding: 0 $topbar-link-padding;
               line-height: $topbar-height;
               background: $topbar-link-bg;
-              &:hover { background: $topbar-link-bg-hover; }
+              &:hover {
+                background: $topbar-link-bg-hover;
+              }
             }
           }
           &.active:not(.has-form) {
@@ -506,7 +533,9 @@ $topbar-arrows: true !default; //Set false to remove the triangle icon from the 
               line-height: $topbar-height;
               color: $topbar-link-color-active;
               background: $topbar-link-bg-active;
-              &:hover { background: $topbar-link-bg-active-hover; }
+              &:hover {
+                background: $topbar-link-bg-active-hover;
+              }
             }
           }
         }
@@ -526,7 +555,8 @@ $topbar-arrows: true !default; //Set false to remove the triangle icon from the 
 
           }
 
-          &.moved { position: relative;
+          &.moved {
+            position: relative;
             & > .dropdown {
               @include topbar-hide-dropdown();
             }
@@ -603,7 +633,9 @@ $topbar-arrows: true !default; //Set false to remove the triangle icon from the 
             #{$default-float}: auto;
             #{$opposite-direction}: 0;
 
-            li .dropdown { #{$opposite-direction}: 100%; }
+            li .dropdown {
+              #{$opposite-direction}: 100%;
+            }
           }
         }
         .left {
@@ -611,7 +643,9 @@ $topbar-arrows: true !default; //Set false to remove the triangle icon from the 
             #{$opposite-direction}: auto;
             #{$default-float}: 0;
 
-            li .dropdown { #{$default-float}: 100%; }
+            li .dropdown {
+              #{$default-float}: 100%;
+            }
           }
         }
       }
