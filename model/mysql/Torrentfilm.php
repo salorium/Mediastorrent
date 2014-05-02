@@ -48,6 +48,7 @@ class Torrentfilm extends \core\Model
         $query .= "where clefunique=" . \core\Mysqli::real_escape_string($clefunique);
         $query .= " and hashtorrent=" . \core\Mysqli::real_escape_string($hash);
         $query .= " and numfile=" . \core\Mysqli::real_escape_string($numfile);
+        echo $query;
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(false, __CLASS__);
     }
