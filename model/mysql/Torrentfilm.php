@@ -36,32 +36,10 @@ class Torrentfilm extends \core\Model
         $tofilm->clefunique = $clefunique;
         $tofilm->fini = 0;
         $tofilm->partageamis = $partageamis;
-            $tofilm->id = \model\simple\String::random(10);
+        $tofilm->id = \model\simple\String::random(10);
 
         $tofilm->insert();
         return $tofilm;
-    }
-
-    static function rechercheParNumFileHashClefunique($numfile, $hash, $clefunique)
-    {
-        $query = "select * from torrentfilm ";
-        $query .= "where clefunique=" . \core\Mysqli::real_escape_string($clefunique);
-        $query .= " and hashtorrent=" . \core\Mysqli::real_escape_string($hash);
-        $query .= " and numfile=" . \core\Mysqli::real_escape_string($numfile);
-        echo $query . "\n";
-        \core\Mysqli::query($query);
-        return \core\Mysqli::getObjectAndClose(false, __CLASS__);
-    }
-
-    static function getClefUnique()
-    {
-        do {
-            $query = "select * from torrentfilm ";
-            $clefunique = \model\simple\String::random(10);
-            $query .= "where clefunique=" . \core\Mysqli::real_escape_string($clefunique);
-            \core\Mysqli::query($query);
-        } while (!is_bool(\core\Mysqli::getObjectAndClose(false, __CLASS__)));
-        return $clefunique;
     }
 
     public function insert()
@@ -85,6 +63,57 @@ class Torrentfilm extends \core\Model
         $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
         \core\Mysqli::close();
         return $res;
+    }
+
+    static function rechercheParNumFileHashClefunique($numfile, $hash, $clefunique)
+    {
+        $query = "select * from torrentfilm ";
+        $query .= "where clefunique=" . \core\Mysqli::real_escape_string($clefunique);
+        $query .= " and hashtorrent=" . \core\Mysqli::real_escape_string($hash);
+        $query .= " and numfile=" . \core\Mysqli::real_escape_string($numfile);
+        echo $query . "\n";
+        \core\Mysqli::query($query);
+        return \core\Mysqli::getObjectAndClose(false, __CLASS__);
+    }
+
+    /**
+     * Retourne le films d'un user les seins + ceux que c'est amis lui partage
+     * id
+     */
+    static function getFilmUser($id)
+    {
+        $query = "select tf.numfile as numfile, tf.complementfichier as complement,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre ";
+        $query .= "from torrentfilm tf, film f,rtorrent r,rtorrents rs ";
+        $query .= "where( tf.fini = true ";
+        $query .= "and tf.idfilm = f.id ";
+        $query .= "and r.nom = tf.nomrtorrent ";
+        $query .= "and tf.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login);
+        $query .= " and rs.nomrtorrent = r.nom ";
+        $query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
+        $query .= " and tf.id = " . \core\Mysqli::real_escape_string($id);
+        $query .= ") or (";
+        $query .= "tf.fini = true ";
+        $query .= "and tf.partageamis = true ";
+        $query .= "and tf.idfilm = f.id ";
+        $query .= "and r.nom = tf.nomrtorrent ";
+        $query .= "and rs.nomrtorrent = r.nom ";
+        $query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
+        $query .= " and tf.id = " . \core\Mysqli::real_escape_string($id);
+        $query .= " and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
+        $query .= ")";
+        \core\Mysqli::query($query);
+        return \core\Mysqli::getObjectAndClose(false, __CLASS__);
+    }
+
+    static function getClefUnique()
+    {
+        do {
+            $query = "select * from torrentfilm ";
+            $clefunique = \model\simple\String::random(10);
+            $query .= "where clefunique=" . \core\Mysqli::real_escape_string($clefunique);
+            \core\Mysqli::query($query);
+        } while (!is_bool(\core\Mysqli::getObjectAndClose(false, __CLASS__)));
+        return $clefunique;
     }
 
     public function fini()

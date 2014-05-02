@@ -25,6 +25,13 @@ class Film extends \core\Controller
         ));
     }
 
+    function download($id, $login = null, $keyconnexion = null)
+    {
+        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
+        var_dump(\model\mysql\Torrentfilm::getFilmUser($id));
+    }
+
     function getInfosFilm($login, $keyconnexion, $code, $all = null)
     {
         \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
