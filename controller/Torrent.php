@@ -490,7 +490,7 @@ class Torrent extends Controller
                         $torrent["clefunique"] = \model\simple\String::random(10);
                         usleep(40000);
                         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, array(
-                            new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.set_custom", array($to->hash_info(), "clefunique", $torrent["clefunique"])),
+                            new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.set_custom", array($to->hash_info(), "clefunique", $clefunique[$to->hash_info()])),
                             new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.set_custom", array($to->hash_info(), "typemedias", "film"))));
                         $torrent["clefuniqueres"] = ($req->success() ? $req->val : $req->val);
 

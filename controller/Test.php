@@ -18,7 +18,8 @@ class Test extends Controller
 {
     function tfilm()
     {
-        \model\mysql\Torrentfilm::addTorrentFilm("wHOXNvBDDy", "0", "ddd", "salorium", "BigTerra2", "dd", "a", false);
+        \model\mysql\Torrentfilm::rechercheParNumFileHashClefunique(0, 'FA0C487D79DD07DB1BE85E9639D9E5B112DD39EE', '9JkOBaF1Hs');
+        //\model\mysql\Torrentfilm::addTorrentFilm("wHOXNvBDDy", "0", "ddd", "salorium", "BigTerra2", "dd", "a", false);
     }
 
     function clefunique()
