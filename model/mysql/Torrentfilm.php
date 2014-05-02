@@ -24,9 +24,23 @@ class Torrentfilm extends \core\Model
     public $mediainfo;
     public $partageamis;
 
-    static function addTorrentFilm()
+    static function addTorrentFilm($idfilm, $numfile, $complementfichier, $login, $nomrtorrent, $hashtorrent, $clefunique, $partageamis)
     {
+        $tofilm = new Torrentfilm();
+        $tofilm->numfile = $numfile;
+        $tofilm->complementfichier = $complementfichier;
+        $tofilm->idfilm = $idfilm;
+        $tofilm->login = $login;
+        $tofilm->nomrtorrent = $nomrtorrent;
+        $tofilm->hashtorrent = $hashtorrent;
+        $tofilm->clefunique = $clefunique;
+        $tofilm->fini = false;
+        $tofilm->partageamis = $partageamis;
+        do {
+            $tofilm->id = \model\simple\String::random(10);
 
+        } while (!$tofilm->insert());
+        return $tofilm;
     }
 
     static function getClefUnique()

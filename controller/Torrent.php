@@ -367,7 +367,7 @@ class Torrent extends Controller
 
     }
 
-    function send($login = null, $keyconnexion = null)
+    function send($nomrtorrent, $login = null, $keyconnexion = null)
     {
         \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
@@ -440,7 +440,11 @@ class Torrent extends Controller
                             }
                             $clef = \model\mysql\Torrentfilm::getClefUnique();
                             $clefunique[$_REQUEST["torrent" . $idtorrent . "hash"]] = $clef;
-                            //for( $idfile= 0;$idfile<)
+                            for ($idfile = 0; $idfile < $_REQUEST["torrent" . $idtorrent . "nbfiles"]; $idfile++) {
+                                if (isset($_REQUEST["torrent" . $idtorrent . "ajoutecheckfile" . $idfile])) {
+
+                                }
+                            }
                             break;
                     }
                 }

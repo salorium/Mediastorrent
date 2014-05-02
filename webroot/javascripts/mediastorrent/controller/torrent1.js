@@ -867,7 +867,7 @@ Torrent1.controller = {
             }
             console.log(Base.model.conf.base_url + "/torrent/send/" + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion + ".json");
             $.ajax({
-                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/send/' + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion + ".json",
+                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/send/' + Torrent1.model.nomseedbox + "/" + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion + ".json",
                 async: false,
                 //dataType :"json",
                 type: "post",
