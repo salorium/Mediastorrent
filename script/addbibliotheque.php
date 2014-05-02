@@ -26,6 +26,7 @@ $base_path = $argv[3];
 $base_name = $argv[4];
 $is_multi = $argv[5];
 $clefunique = $argv[6];
+define('LOG', ROOT . DS . "log" . DS . $portscgi . "_ini.log");
 \model\simple\Console::println("Début");
 file_put_contents(ROOT . DS . "log" . DS . "test.txt", $portscgi . " " . $hash . " " . $base_path . " " . $base_name . " " . $is_multi . " " . $clefunique);
 //if ( $is_multi){

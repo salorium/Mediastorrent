@@ -17,6 +17,6 @@ class Console extends Model
     static function println($str)
     {
         if (Conf::$debuglocal)
-            echo "[" . date("j/n/Y G:i:s") . "] " . $str . "\n";
+            file_put_contents(LOG, "[" . date("j/n/Y G:i:s") . "] " . $str . "\n", FILE_APPEND);
     }
 } 
