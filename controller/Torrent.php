@@ -28,7 +28,7 @@ class Torrent extends Controller {
             "d.get_chunks_hashed="/*25*/, "d.get_base_path="/*26*/, "d.get_creation_date="/*27*/, "d.get_tracker_focus="/*28*/, "d.is_active="/*29*/,
             "d.get_message="/*30*/, "d.get_custom2="/*31 A supprimer*/, "d.get_free_diskspace="/*32*/, "d.is_private="/*33*/, "d.is_multi_file="/*34*/,"d.get_throttle_name="/*35*/,"d.get_custom=chk-state"/*36*/,
             "d.get_custom=chk-time"/*37*/,"d.get_custom=sch_ignore"/*38*/,'cat="$t.multicall=d.get_hash=,t.get_scrape_complete=,cat={#}"'/*39*/,'cat="$t.multicall=d.get_hash=,t.get_scrape_incomplete=,cat={#}"'/*40*/,
-            'cat=$d.views='/*41*/,"d.get_custom=seedingtime"/*42*/,"d.get_custom=addtime"/*43*/
+            'cat=$d.views='/*41*/,"d.get_custom=seedingtime"/*42*/,"d.get_custom=addtime"/*43*/,"d.get_custom=clefunique","d.get_custom=typemedias"
         );
         $cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.multicall", "main" );
         $res = array();
@@ -52,8 +52,8 @@ class Torrent extends Controller {
             $i = 0;
             $tmp=array();
             $status = array( 'started'=>1,'paused'=>2, 'checking'=>4,'hashing'=>8,'error'=>16);
-            $i = preg_match_all("/<array><data>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<\/data><\/array>/Us",$req->val,$tmp1);
-           for ( $ii=0;$ii<$i;$ii++){
+            $i = preg_match_all("/<array><data>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<\/data><\/array>/Us",$req->val,$tmp1);
+            for ( $ii=0;$ii<$i;$ii++){
                 $torrent=null;
                 $state = 0;
                 $is_open =$tmp1[2+4*1][$ii];
@@ -94,43 +94,45 @@ class Torrent extends Controller {
                 /*$get_peers_not_connected = $tmp1[2+4*17][$ii];
                 $get_peers_connected = $tmp1[2+4*18][$ii];
                 $get_peers_all = $get_peers_not_connected+$get_peers_connected;*/
-                  $torrent[] = intval ($tmp1[2+4*16][$ii]); //Peer Actual 10
-                    $torrent[] = intval ($tmp1[2+4*19][$ii]); //Seed Actual 11
-                    $seeds=0;
-                    foreach(explode("#",$tmp1[2+4*39][$ii]) as $k=> $v){
-                        $seeds += $v;
-                    }
-                    $peers=0;
-                    foreach(explode("#",$tmp1[2+4*40][$ii]) as $k=> $v){
-                        $peers += $v;
-                    }
-                    $torrent[] = $peers; //Peer total 12
-                    $torrent[] = $seeds; //Seed tota 13
+                $torrent[] = intval ($tmp1[2+4*16][$ii]); //Peer Actual 10
+                $torrent[] = intval ($tmp1[2+4*19][$ii]); //Seed Actual 11
+                $seeds=0;
+                foreach(explode("#",$tmp1[2+4*39][$ii]) as $k=> $v){
+                    $seeds += $v;
+                }
+                $peers=0;
+                foreach(explode("#",$tmp1[2+4*40][$ii]) as $k=> $v){
+                    $peers += $v;
+                }
+                $torrent[] = $peers; //Peer total 12
+                $torrent[] = $seeds; //Seed tota 13
 
 
-                    $torrent[] = intval ($tmp1[2+4*20][$ii]);//Taille restant 14
-                    $torrent[] = intval ($tmp1[2+4*21][$ii]);//Priority 15 (0 ne pas télécharger, 1 basse, 2 moyenne, 3 haute)
-                    $torrent[] = intval ($tmp1[2+4*22][$ii]);//State change 16 (dernière date de change d'état)
-                    $torrent[] = intval ($tmp1[2+4*23][$ii]);//Skip total Contiens les rejets en mo 17
-                    $torrent[] = $tmp1[2+4*26][$ii];//Base Path 18
-                    $torrent[] = intval ($tmp1[2+4*27][$ii]);//Date create 19
-                    $torrent[] = intval ($tmp1[2+4*28][$ii]);//Focus tracker 20
-                    /*try {
-                        torrent.comment = this.getValue(values,31);
-                        if(torrent.comment.search("VRS24mrker")==0)
-                            torrent.comment = decodeURIComponent(torrent.comment.substr(10));
-                    } catch(e) { torrent.comment = ''; }*/
-                  $torrent[] = intval ($tmp1[2+4*32][$ii]);//Torrent free diskspace 21
-                   $torrent[] = intval ($tmp1[2+4*33][$ii]);//Torrent is private 22
-                   $torrent[] = intval ($tmp1[2+4*34][$ii]);//Torrent is multifile 23
-                   $torrent[] = preg_replace("#\n#","",$tmp1[2+4*42][$ii]);//Torrent seed time 24
-                   $torrent[] = preg_replace("#\n#","",$tmp1[2+4*43][$ii]);//Torrent add time 25
-                   $torrent[] = $msg;//Message tracker 26
-                   $torrent[] =$tmp1[2+4*0][$ii];//Hash 27
-                   if ( $hashtorrentselectionne == $tmp1[2+4*0][$ii])
-                       $tor = $torrent;
-                   $tmp[$tmp1[2+4*0][$ii]]= $torrent;
-               }
+                $torrent[] = intval ($tmp1[2+4*20][$ii]);//Taille restant 14
+                $torrent[] = intval ($tmp1[2+4*21][$ii]);//Priority 15 (0 ne pas télécharger, 1 basse, 2 moyenne, 3 haute)
+                $torrent[] = intval ($tmp1[2+4*22][$ii]);//State change 16 (dernière date de change d'état)
+                $torrent[] = intval ($tmp1[2+4*23][$ii]);//Skip total Contiens les rejets en mo 17
+                $torrent[] = $tmp1[2+4*26][$ii];//Base Path 18
+                $torrent[] = intval ($tmp1[2+4*27][$ii]);//Date create 19
+                $torrent[] = intval ($tmp1[2+4*28][$ii]);//Focus tracker 20
+                /*try {
+                    torrent.comment = this.getValue(values,31);
+                    if(torrent.comment.search("VRS24mrker")==0)
+                        torrent.comment = decodeURIComponent(torrent.comment.substr(10));
+                } catch(e) { torrent.comment = ''; }*/
+                $torrent[] = intval ($tmp1[2+4*32][$ii]);//Torrent free diskspace 21
+                $torrent[] = intval ($tmp1[2+4*33][$ii]);//Torrent is private 22
+                $torrent[] = intval ($tmp1[2+4*34][$ii]);//Torrent is multifile 23
+                $torrent[] = preg_replace("#\n#","",$tmp1[2+4*42][$ii]);//Torrent seed time 24
+                $torrent[] = preg_replace("#\n#","",$tmp1[2+4*43][$ii]);//Torrent add time 25
+                $torrent[] = $msg;//Message tracker 26
+                $torrent[] =$tmp1[2+4*0][$ii];//Hash 27
+                $torrent[]= $tmp1[2+4*44][$ii];//Clefunique
+                $torrent[]= $tmp1[2+4*45][$ii];//Type medias
+                if ( $hashtorrentselectionne == $tmp1[2+4*0][$ii])
+                    $tor = $torrent;
+                $tmp[$tmp1[2+4*0][$ii]]= $torrent;
+            }
             $data = $tmp;
             if (!is_null($cid)){
                 if ($anc = \core\Memcached::value("torrentlist".\config\Conf::$portscgi,$cid)){
@@ -171,68 +173,68 @@ class Torrent extends Controller {
         }
         if(is_null($t)) trigger_error("Impossible de se connecter à rtorrent :(");
         $torrent = null;
-            if ( !is_null($hashtorrentselectionne)){
-                $tmp = $tor;
-                $data = $tmp;
-                if (!is_null($cid)){
-                    if ($anc = \core\Memcached::value("detaillist".\config\Conf::$portscgi,sha1($cid.$hashtorrentselectionne))){
-                        foreach ($anc as $k=>$v){
-                            if (isset($tmp[$k]) && $tmp[$k] == $v){
-                                  unset($tmp[$k]);
-                            }
-                         }
-                    }
-                }
-
-                if (!(\core\Memcached::value("detaillist".\config\Conf::$portscgi,sha1($ncid.$hashtorrentselectionne),$data,60*5))){
-                    trigger_error("Impossible de mettre des données dans le cache");
-                }
-                $torrent["detail"]= $tmp;
-                $cmds = array(
-                    "f.get_path=", "f.get_completed_chunks=", "f.get_size_chunks=", "f.get_size_bytes=", "f.get_priority=","f.prioritize_first=","f.prioritize_last="
-                );
-                $cmd = new \model\xmlrpc\rXMLRPCCommand( \config\Conf::$portscgi,"f.multicall", array( $hashtorrentselectionne, "" ) );
-
-                foreach($cmds as $prm){
-                    $cmd->addParameter( \model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,$prm) );
-                }
-                $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,$cmd);
-                $files  = null;
-                $to = null;
-                if(!$req->success()){
-                    trigger_error("Impossible de récupéré la liste des fichiers de ".$hashtorrentselectionne);
-                    $files = $req->val;
-                }else{
-                    $taille = count($req->val);
-                    $j=0;
-                    for($i=0;$i<$taille;$i+=7 ){
-                        $files[]= array($j,$req->val[$i],$req->val[$i+1],$req->val[$i+2],$req->val[$i+3],$req->val[$i+4],$req->val[$i+5],$req->val[$i+6]);
-                        $j++;
-                    }
-                    $tmp = $files;
-                    $data = $tmp;
-                    if (!is_null($cid)){
-                        if ($anc = \core\Memcached::value("fileslist".\config\Conf::$portscgi,sha1($cid.$hashtorrentselectionne))){
-                            foreach ($anc as $k=>$v){
-                                if (!isset($tmp[$k]))
-                                    $tmp[$k]=false;
-                                foreach($v as $kk=>$vv){
-                                    if (isset($tmp[$k][$kk]) && $tmp[$k][$kk] == $vv){
-                                        unset($tmp[$k][$kk]);
-                                    }
-                                }
-                                if (count($tmp[$k]) ==0)
-                                    unset($tmp[$k]);
-                            }
+        if ( !is_null($hashtorrentselectionne)){
+            $tmp = $tor;
+            $data = $tmp;
+            if (!is_null($cid)){
+                if ($anc = \core\Memcached::value("detaillist".\config\Conf::$portscgi,sha1($cid.$hashtorrentselectionne))){
+                    foreach ($anc as $k=>$v){
+                        if (isset($tmp[$k]) && $tmp[$k] == $v){
+                            unset($tmp[$k]);
                         }
                     }
+                }
+            }
 
-                    if (!(\core\Memcached::value("fileslist".\config\Conf::$portscgi,sha1($ncid.$hashtorrentselectionne),$data,60*5)))
-                        trigger_error("Impossible de mettre des données dans le cache");
-                    $torrent["files"]= $tmp;
+            if (!(\core\Memcached::value("detaillist".\config\Conf::$portscgi,sha1($ncid.$hashtorrentselectionne),$data,60*5))){
+                trigger_error("Impossible de mettre des données dans le cache");
+            }
+            $torrent["detail"]= $tmp;
+            $cmds = array(
+                "f.get_path=", "f.get_completed_chunks=", "f.get_size_chunks=", "f.get_size_bytes=", "f.get_priority=","f.prioritize_first=","f.prioritize_last="
+            );
+            $cmd = new \model\xmlrpc\rXMLRPCCommand( \config\Conf::$portscgi,"f.multicall", array( $hashtorrentselectionne, "" ) );
+
+            foreach($cmds as $prm){
+                $cmd->addParameter( \model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,$prm) );
+            }
+            $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,$cmd);
+            $files  = null;
+            $to = null;
+            if(!$req->success()){
+                trigger_error("Impossible de récupéré la liste des fichiers de ".$hashtorrentselectionne);
+                $files = $req->val;
+            }else{
+                $taille = count($req->val);
+                $j=0;
+                for($i=0;$i<$taille;$i+=7 ){
+                    $files[]= array($j,$req->val[$i],$req->val[$i+1],$req->val[$i+2],$req->val[$i+3],$req->val[$i+4],$req->val[$i+5],$req->val[$i+6]);
+                    $j++;
+                }
+                $tmp = $files;
+                $data = $tmp;
+                if (!is_null($cid)){
+                    if ($anc = \core\Memcached::value("fileslist".\config\Conf::$portscgi,sha1($cid.$hashtorrentselectionne))){
+                        foreach ($anc as $k=>$v){
+                            if (!isset($tmp[$k]))
+                                $tmp[$k]=false;
+                            foreach($v as $kk=>$vv){
+                                if (isset($tmp[$k][$kk]) && $tmp[$k][$kk] == $vv){
+                                    unset($tmp[$k][$kk]);
+                                }
+                            }
+                            if (count($tmp[$k]) ==0)
+                                unset($tmp[$k]);
+                        }
+                    }
                 }
 
+                if (!(\core\Memcached::value("fileslist".\config\Conf::$portscgi,sha1($ncid.$hashtorrentselectionne),$data,60*5)))
+                    trigger_error("Impossible de mettre des données dans le cache");
+                $torrent["files"]= $tmp;
             }
+
+        }
 
         $this->set(array(
             "torrent"=>$t,
@@ -469,7 +471,8 @@ class Torrent extends Controller {
                         $torrent["status"]= \model\xmlrpc\rTorrent::sendTorrent($to,!isset($_REQUEST['autostart']));
                         $torrent["clefunique"]= \model\simple\String::random(10);
                         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, array(
-                            new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.set_custom",array($to->hash_info(),"clefunique",$torrent["clefunique"]) )));
+                            new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.set_custom",array($to->hash_info(),"clefunique",$torrent["clefunique"]) ),
+                            new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.set_custom",array($to->hash_info(),"typemedias","film") )));
                         $torrent["clefuniqueres"]= ($req->success() ? $req->val : $req->val);
 
                     }
@@ -570,7 +573,7 @@ class Torrent extends Controller {
                 \model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'d.get_custom').'=seedingtime,,"'.\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'d.set_custom').'=seedingtime,$'.\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'d.get_custom').'=addtime'.'"')),
 
             \model\xmlrpc\rTorrentSettings::get(\config\Conf::$portscgi)->getOnEraseCommand(array('erasedata',
-            \model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'branch=').\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'d.get_custom1').'=,"'.\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'execute').'={rm,-r,$'.\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'d.get_base_path').'=}"')),
+                \model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'branch=').\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'d.get_custom1').'=,"'.\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'execute').'={rm,-r,$'.\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'d.get_base_path').'=}"')),
             $theSettings->getOnFinishedCommand(array('addbibliotheque',
                 \model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'execute').'={'.'php,'.ROOT.DS.'script/addbibliotheque.php,'.\config\Conf::$portscgi.',$'.\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'d.get_hash').'=,$'.\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'d.get_base_path').'=,$'.
                 \model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'d.get_base_filename').'=,$'.\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'d.is_multi_file').'=,$'.\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi,'d.get_custom')."=clefunique".'}'

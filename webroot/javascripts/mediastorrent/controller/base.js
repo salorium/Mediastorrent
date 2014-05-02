@@ -27,6 +27,7 @@ Base.controller =  {
     setUtilisateur : function(args){
         Base.model.utilisateur.login = args[0];
         Base.model.utilisateur.keyconnexion = args[1];
+        Base.model.utilisateur.role = args[2];
     },
 
     fixeHeightContainer: function(){

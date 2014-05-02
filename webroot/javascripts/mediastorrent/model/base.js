@@ -184,7 +184,8 @@ Base.model =  {
 
     utilisateur : {
         login : null,
-        keyconnexion:null
+        keyconnexion:null,
+        role : null
     },
     pannelClicDroit: {
         make: function(lines,x,y){

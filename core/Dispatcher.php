@@ -103,7 +103,7 @@ class Dispatcher {
         Conf::$user["role"]= $role;
         Conf::$user["roletxt"] = $roletext;
         if ( $u){
-            LoaderJavascript::add("base","controller.setUtilisateur", array(Conf::$user["user"]->login,Conf::$user["user"]->keyconnexion));
+            LoaderJavascript::add("base","controller.setUtilisateur", array(Conf::$user["user"]->login,Conf::$user["user"]->keyconnexion,Conf::$user["user"]->role));
         }
     }
 
