@@ -648,6 +648,7 @@ Torrent1.view = {
                 movie: {
                     show: function (files, id) {
                         $("#torrent" + id + "files").empty();
+                        $("#torrent" + id + "files").append('<input type="hidden" name="torrent' + id + 'nbfiles" value="' + files.length + '">');
                         $tablefile = $('<table><thead><tr><th><input onchange="Base.controller.checkerCheckbox(this);" id="torrent' + id + 'ajoutecheck" class="torrent' + id + 'ajoutecheck" type="checkbox"><label for="torrent' + id + 'ajoutecheck">Ajoute</label></th><th><input onchange="Base.controller.checkerCheckbox(this);" id="torrent' + id + 'partagecheck" class="torrent' + id + 'partagecheck" type="checkbox"><label for="torrent' + id + 'partagecheck">Partage</label></th><th>Fichier</th><th>Complément</th></tr></thead></table>');
                         $tbodyfile = $("<tbody></tbody>");
                         $.each(files, function (k, v) {
