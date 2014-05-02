@@ -42,6 +42,16 @@ class Torrentfilm extends \core\Model
         return $tofilm;
     }
 
+    static function rechercheParNumFileHashClefunique($numfile, $hash, $clefunique)
+    {
+        $query = "select * from torrentfilm ";
+        $query .= "where clefunique=" . \core\Mysqli::real_escape_string($clefunique);
+        $query .= " and hashtorrent=" . \core\Mysqli::real_escape_string($hash);
+        $query .= " and numfile=" . \core\Mysqli::real_escape_string($numfile);
+        \core\Mysqli::query($query);
+        return \core\Mysqli::getObjectAndClose(false, __CLASS__);
+    }
+
     static function getClefUnique()
     {
         do {

@@ -26,23 +26,39 @@ $base_path = $argv[3];
 $base_name = $argv[4];
 $is_multi = $argv[5];
 $clefunique = $argv[6];
+$typemedias = $argv[7];
 define('LOG', ROOT . DS . "log" . DS . $portscgi . "_addbibli.log");
 \model\simple\Console::println("Début");
-file_put_contents(ROOT . DS . "log" . DS . "test.txt", $portscgi . " " . $hash . " " . $base_path . " " . $base_name . " " . $is_multi . " " . $clefunique);
 //if ( $is_multi){
-
+\model\simple\Console::println($hash);
+\model\simple\Console::println($typemedias);
 $filetorrent = \model\xmlrpc\rTorrentSettings::get($portscgi)->session . DS . $hash . ".torrent";
 if (file_exists($filetorrent)) {
     $torrent = new \model\simple\Torrent($filetorrent);
     if (!$torrent->errors()) {
         $info = $torrent->info;
-        if (isset($info['files']))
+        $numfile = 0;
+        if (isset($info['files'])) {
             foreach ($info['files'] as $key => $file) {
 
                 \model\simple\Console::println($base_path . DS . implode('/', $file['path']));
+                switch ($typemedias) {
+                    case "film":
+                        $torrentf = \model\mysql\Torrentfilm::rechercheParNumFileHashClefunique($numfile, $hash, $clefunique);
+                        \model\simple\Console::println((is_bool($torrentf) ? "Non Présent" : "Présent"));
+                        break;
+                }
+                $numfile++;
             }
-        else
+        } else {
             \model\simple\Console::println(dirname($base_path) . DS . $info['name']);
+            switch ($typemedias) {
+                case "film":
+
+                    break;
+            }
+        }
+
     } else {
         \model\simple\Console::println("Erreur fichier torrent");
     }
