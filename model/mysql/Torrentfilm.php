@@ -71,24 +71,24 @@ class Torrentfilm extends \core\Model
         $query .= "where clefunique=" . \core\Mysqli::real_escape_string($clefunique);
         $query .= " and hashtorrent=" . \core\Mysqli::real_escape_string($hash);
         $query .= " and numfile=" . \core\Mysqli::real_escape_string($numfile);
-        echo $query . "\n";
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(false, __CLASS__);
     }
 
     /**
-     * Retourne le films d'un user les seins + ceux que c'est amis lui partage
+     * Retourne le film d'un user les seins + ceux que c'est amis lui partage
      * id
      */
-    static function getFilmUser($id)
+    static function getFilmUserDuServeur($id)
     {
-        $query = "select tf.numfile as numfile, tf.complementfichier as complement,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre ";
+        $query = "select tf.numfile as numfile, tf.complementfichier as complement,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre, tf.mediainfo as mediainfo ";
         $query .= "from torrentfilm tf, film f,rtorrent r,rtorrents rs ";
         $query .= "where( tf.fini = true ";
         $query .= "and tf.idfilm = f.id ";
         $query .= "and r.nom = tf.nomrtorrent ";
         $query .= "and tf.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login);
         $query .= " and rs.nomrtorrent = r.nom ";
+        $query .= " and rs.login = tf.login ";
         $query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
         $query .= " and tf.id = " . \core\Mysqli::real_escape_string($id);
         $query .= ") or (";
@@ -96,6 +96,7 @@ class Torrentfilm extends \core\Model
         $query .= "and tf.partageamis = true ";
         $query .= "and tf.idfilm = f.id ";
         $query .= "and r.nom = tf.nomrtorrent ";
+        $query .= "and rs.login = tf.login ";
         $query .= "and rs.nomrtorrent = r.nom ";
         $query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
         $query .= " and tf.id = " . \core\Mysqli::real_escape_string($id);
@@ -103,6 +104,54 @@ class Torrentfilm extends \core\Model
         $query .= ")";
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(false, __CLASS__);
+    }
+
+    static function getAdresseServeurFilmUser($id)
+    {
+        $query = "select r.hostname as hostname ";
+        $query .= "from torrentfilm tf, film f,rtorrent r,rtorrents rs ";
+        $query .= "where( tf.fini = true ";
+        $query .= "and tf.idfilm = f.id ";
+        $query .= "and r.nom = tf.nomrtorrent ";
+        $query .= "and tf.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login);
+        $query .= " and rs.nomrtorrent = r.nom ";
+        $query .= "and rs.login = tf.login ";
+        //$query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
+        $query .= " and tf.id = " . \core\Mysqli::real_escape_string($id);
+        $query .= ") or (";
+        $query .= "tf.fini = true ";
+        $query .= "and tf.partageamis = true ";
+        $query .= "and tf.idfilm = f.id ";
+        $query .= "and r.nom = tf.nomrtorrent ";
+        $query .= "and rs.nomrtorrent = r.nom ";
+        $query .= "and rs.login = tf.login ";
+        //$query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
+        $query .= " and tf.id = " . \core\Mysqli::real_escape_string($id);
+        $query .= " and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
+        $query .= ")";
+        \core\Mysqli::query($query);
+        return \core\Mysqli::getObjectAndClose(false, __CLASS__);
+    }
+
+    static function getAllFilmUserDateDesc()
+    {
+        $query = "select distinct * from ( select f.titre as titre , f.urlposter as poster, f.urlbackdrop as backdrop ";
+        $query .= "from torrentfilm tf, film f ";
+        $query .= "where ( ";
+        $query .= "tf.idfilm = f.id ";
+        //$query .= "and r.nom = tf.nomrtorrent ";
+        $query .= "and tf.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login);
+        //$query .= " and rs.nomrtorrent = r.nom ";
+        $query .= " ) or ( ";
+        //$query .= "tf.fini = true ";
+        $query .= "tf.partageamis = true ";
+        $query .= "and tf.idfilm = f.id ";
+        //$query .= "and r.nom = tf.nomrtorrent ";
+        //$query .= "and rs.nomrtorrent = r.nom ";
+        $query .= "and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
+        $query .= ") ORDER BY tf.date DESC ) t";
+        \core\Mysqli::query($query);
+        return \core\Mysqli::getObjectAndClose(false);
     }
 
     static function getClefUnique()
@@ -121,9 +170,10 @@ class Torrentfilm extends \core\Model
         $this->fini = true;
         $query = "update torrentfilm set ";
         $query .= "fini=" . \core\Mysqli::real_escape_string($this->fini);
+        $query .= ", mediainfo=" . \core\Mysqli::real_escape_string($this->mediainfo);
         $query .= " where id=" . \core\Mysqli::real_escape_string($this->id);
         \core\Mysqli::query($query);
-        echo $query . "\n";
+        echo $query;
         $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
         \core\Mysqli::close();
         return $res;

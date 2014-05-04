@@ -39,7 +39,11 @@
 $body-bg: #CCC;
 $body-font-color: #000;
 $rem-base: 16px;
-$body-font-family: "Comic Sans MS", sans-serif;
+//@import url(http://fonts.googleapis.com/css?family=Droid+Serif|Anonymous+Pro:700);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans|Ubuntu);
+//@import url(http://fonts.googleapis.com/css?family=Anonymous+Pro);
+//font-family: 'Open Sans', sans-serif;
+$body-font-family: 'Open Sans', sans-serif;
 // $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // $body-font-weight: normal;
 // $body-font-style: normal;

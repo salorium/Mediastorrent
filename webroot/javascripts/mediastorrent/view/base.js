@@ -15,6 +15,76 @@ Base.view = {
     fixedHeight: function (container, hauteur) {
         $(container).css("height", hauteur);
     },
+    loader: {
+        recursiveHauteurParent: function (container, $breaks, h) {
+            console.log(container);
+            if (!$breaks.attr("id")) {
+                $breaks.attr("id", "IDLOADERCATCHER");
+            }
+            console.log($breaks.attr("id"));
+            console.log(container == $breaks);
+
+            var i = 0;
+            var childs = $(container).children(":not(script)");
+            console.log(childs[0]);
+            var exit = $(childs[0]).attr("id") == $breaks.attr("id");
+
+            var nbmax = childs.length;
+            while (i < nbmax && !exit) {
+                console.log(Base.model.html.hauteur($(childs[i])));
+                console.log(childs[i]);
+
+                if ($(childs[i + 1]).attr("id") == $breaks.attr("id")) {
+                    exit = true;
+                    if ($breaks.attr('id') === "IDLOADERCATCHER")
+                        $breaks.removeAttr('id');
+                }
+                else {
+                    i++;
+                }
+
+
+            }
+            if ($breaks.attr('id') === "IDLOADERCATCHER")
+                $breaks.removeAttr('id');
+
+
+        },
+        make: function (container) {
+            $container = $("#" + container);
+            $loader = $('<div style="background-color: rgba(0,0,0,0.9); position: absolute; top: 0px;left: 0px; bottom: 0px;right: 0px;display: none"><h3 style="color: #ffffff;">Veuillez patienter</h3><span class="loader loader-circles"></span></div>');
+            //console.log($container.top);
+            //$loader.height($container.height());
+            //$loader.width($container.width());
+            /*var i = 0;
+             var $parent = $container.parent();
+             var childs = $container.parent().children(":not(script)");
+             var exit = $(childs[0]).attr("id") == container;
+             var nbmax= childs.length;
+             while( i < nbmax && !exit){
+             console.log(Base.model.html.hauteur($(childs[i])));
+             console.log(childs[i]);
+             if ($(childs[i+1]).attr("id") == container ){
+             exit = true;
+             }
+             else{
+             i++;
+             }
+
+
+             }
+             if ( ! $("body").attr("id")){
+             $("body").attr("id","BODYLOADERCATCHER");
+             }
+             console.log(this.recursiveHauteurParent($parent.parent(),$parent));
+             */
+            $("#" + container).css("position", "relative");
+            $loader.css("padding", $("#" + container).css("padding"));
+            $("#" + container).append($loader);
+            return $loader;
+            // $container.parent().append($loader);
+        }
+    },
     image: {
         input: function (container, name, id, url, input, height) {
             $("#" + container).append('<label for="' + id + '">' + name + ' :</label>');

@@ -14,13 +14,14 @@ class Conf
 {
     static $debug = true;
     static $debuglocal = true;
+    static $debuglocalfile = false;
     static $nomdusite = "MediasTorrent";
     static $version = "#A.2.0";
     static $anneefondation = "2013";
     static $author = "Salorium";
     static $databases = array(
         "default" => array(
-            "host" => "mysql.salorium.com",
+            "host" => "localhost",
             "database" => "mediastorrent",
             "login" => "mediastorrent",
             "password" => "azerty"

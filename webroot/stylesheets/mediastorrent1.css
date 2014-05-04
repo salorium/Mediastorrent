@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans|Ubuntu);
+
 /* line 305, ../bower_components/foundation/scss/foundation/components/_global.scss */
 meta.foundation-version {
     font-family: "/5.2.1/";
@@ -64,7 +66,7 @@ body {
     color: black;
     padding: 0;
     margin: 0;
-    font-family: "Comic Sans MS", sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-weight: normal;
     font-style: normal;
     line-height: 1;
@@ -1630,7 +1632,7 @@ select {
     color: #222222;
     padding: 1rem;
     display: block;
-    font-family: "Comic Sans MS", sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 1rem;
 }
 
@@ -3834,7 +3836,7 @@ button, .button {
     border-style: solid;
     border-width: 0px;
     cursor: pointer;
-    font-family: "Comic Sans MS", sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-weight: normal;
     line-height: normal;
     margin: 0 0 1.25rem;
@@ -5842,7 +5844,7 @@ kbd {
 /* line 100, ../bower_components/foundation/scss/foundation/components/_labels.scss */
 .label {
     font-weight: normal;
-    font-family: "Comic Sans MS", sans-serif;
+    font-family: "Open Sans", sans-serif;
     text-align: center;
     text-decoration: none;
     line-height: 1;
@@ -6581,7 +6583,7 @@ ul.pagination li {
     color: #eeeeee;
     font-weight: normal;
     font-size: 1rem;
-    font-family: "Comic Sans MS", sans-serif;
+    font-family: "Open Sans", sans-serif;
 }
 
 /* line 144, ../bower_components/foundation/scss/foundation/components/_pricing-tables.scss */
@@ -6592,7 +6594,7 @@ ul.pagination li {
     color: #333333;
     font-weight: normal;
     font-size: 2rem;
-    font-family: "Comic Sans MS", sans-serif;
+    font-family: "Open Sans", sans-serif;
 }
 
 /* line 147, ../bower_components/foundation/scss/foundation/components/_pricing-tables.scss */
@@ -6973,7 +6975,7 @@ dialog[open] {
     padding: 0.875rem 0;
     list-style-type: none;
     list-style-position: inside;
-    font-family: "Comic Sans MS", sans-serif;
+    font-family: "Open Sans", sans-serif;
 }
 
 /* line 56, ../bower_components/foundation/scss/foundation/components/_side-nav.scss */
@@ -6997,7 +6999,7 @@ dialog[open] {
 .side-nav li.active > a:first-child:not(.button) {
     color: #707070;
     font-weight: normal;
-    font-family: "Comic Sans MS", sans-serif;
+    font-family: "Open Sans", sans-serif;
 }
 
 /* line 75, ../bower_components/foundation/scss/foundation/components/_side-nav.scss */
@@ -7193,7 +7195,7 @@ dialog[open] {
     display: inline;
     margin-left: 1rem;
     margin-bottom: 0.625rem;
-    font-family: "Comic Sans MS", sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-weight: normal;
     font-size: 0.875rem;
     color: #999999;
@@ -7584,7 +7586,7 @@ table tfoot tr td {
     background: #999999;
     color: white;
     padding: 1rem 2rem;
-    font-family: "Comic Sans MS", sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 1rem;
 }
 
@@ -8073,7 +8075,7 @@ meta.foundation-mq-topbar {
     color: white;
     padding: 12px 0 12px 0;
     padding-left: 15px;
-    font-family: "Comic Sans MS", sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 0.8125rem;
     font-weight: normal;
     text-transform: none;
@@ -9063,7 +9065,7 @@ p aside {
 /* Default header styles */
 /* line 393, ../bower_components/foundation/scss/foundation/components/_type.scss */
 h1, h2, h3, h4, h5, h6 {
-    font-family: "Comic Sans MS", sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-weight: normal;
     font-style: normal;
     color: black;
@@ -10841,7 +10843,6 @@ a.button {
 div.container {
     width: 98%;
     margin: auto;
-    margin-top: 10px;
 }
 
 /* line 267, ../scss/mediastorrent1.scss */
@@ -11450,7 +11451,7 @@ input[type="submit"].btn.btn-mini {
 /* line 814, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentTitle a {
     color: inherit;
-    font-family: "Comic Sans MS", sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 1.0625rem;
     line-height: 45px;
     cursor: default;

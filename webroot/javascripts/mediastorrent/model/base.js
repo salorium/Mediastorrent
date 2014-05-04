@@ -14,7 +14,11 @@ Base.model = {
         "compteur": null,
         "timer": null
     },
-
+    id: 0,
+    getUniqueId: function () {
+        this.id++;
+        return this.id;
+    },
     converter: {
         paramUrl: function (val) {
             return val.replace(/\//gi, "\\");

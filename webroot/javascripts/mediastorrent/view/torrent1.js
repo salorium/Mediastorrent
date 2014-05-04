@@ -81,7 +81,7 @@ Torrent1.view = {
     seedbox: {
         init: function (id) {
             if (!Torrent1.model.seedbox.changed) {
-                Torrent1.view.loader.show();
+                Torrent1.view.loaders.showListeTorrent();
                 seedbox = Torrent1.model.seedbox.seedboxs;
                 res = "";
                 for (i = seedbox.length - 1; i > -1; i--) {
@@ -106,18 +106,15 @@ Torrent1.view = {
             }
         }
     },
-    loader: {
+    loaders: {
         init: function () {
-            $("#loader").css("top", (Base.model.converter.iv($(".container").css("margin-top")) + Base.model.html.hauteur(".container nav") + Base.model.html.hauteur(".container nav")) + "px");
-            $("#loader").css("bottom", ($("body").height() - Base.model.html.hauteur(".container") - Base.model.html.hauteur("nav")) + "px");
-            $("#loader").css("left", (($("body").width() - $(".container").width()) / 2) + "px");
-            $("#loader").css("right", (($("body").width() - $(".container").width()) / 2) + "px");
+            Torrent1.model.loader.listeTorrent = Base.view.loader.make("contenu");
         },
-        show: function () {
-            $("#loader").show();
+        showListeTorrent: function () {
+            Torrent1.model.loader.listeTorrent.show();
         },
-        hide: function () {
-            $("#loader").hide();
+        hideListeTorrent: function () {
+            Torrent1.model.loader.listeTorrent.hide();
         }
     },
     listTorrent: {
@@ -236,7 +233,7 @@ Torrent1.view = {
                 '<table style="width: 100%">' +
                 '<tr><td width="80px;" style="vertical-align: bottom;">Ajouté</td><td width="170px">: ' + ((torrent[25] > 3600 * 24 * 365) ? Base.model.converter.date(Base.model.converter.iv(torrent[25])) : "") + '</td><td width="60px;">Seedtime</td><td>: ' + ((torrent[24] > 3600 * 24 * 365) ? Base.model.converter.time(new Date().getTime() / 1000 - (Base.model.converter.iv(torrent[24])), true) : "") + '</td><td align="right">Ratio : ' + torrent[6] / 1000 + '</td></tr>' +
                 '<tr><td style="vertical-align: bottom;">Sources</td><td>: ' + (torrent[13] ? torrent[13] : "0" ) + '(' + (torrent[11] ? torrent[11] : "0" ) + ')</td><td>Clients</td><td>: ' + (torrent[12] ? torrent[12] : "0" ) + '(' + (torrent[10] ? torrent[10] : "0" ) + ')</td><td align="right">Upload : ' + (Base.model.converter.speed(torrent[7]) != "" ? Base.model.converter.speed(torrent[7]) : "-") + ' Download : ' + (Base.model.converter.speed(torrent[8]) != "" ? Base.model.converter.speed(torrent[8]) : "-") + '</td></tr>' +
-                '<tr><td style="vertical-align: bottom;">Télécharger</td><td >: ' + (Base.model.converter.bytes(torrent[4], 2) != "" ? Base.model.converter.bytes(torrent[4], 2) : "-" ) + '/' + (Base.model.converter.bytes(torrent[2], 2) != "" ? Base.model.converter.bytes(torrent[2], 2) : "-" ) + '</td><td>Envoyé</td><td>: ' + (Base.model.converter.bytes(torrent[5], 2) != "" ? Base.model.converter.bytes(torrent[5], 2) : "-" ) + '</td><td align="right">Temps restant : ' + (torrent[9] != -1 ? Base.model.converter.time(torrent[9]) : "∞") + '</td></tr>' +
+                '<tr><td style="vertical-align: bottom;">Téléchargé</td><td >: ' + (Base.model.converter.bytes(torrent[4], 2) != "" ? Base.model.converter.bytes(torrent[4], 2) : "-" ) + '/' + (Base.model.converter.bytes(torrent[2], 2) != "" ? Base.model.converter.bytes(torrent[2], 2) : "-" ) + '</td><td>Envoyé</td><td>: ' + (Base.model.converter.bytes(torrent[5], 2) != "" ? Base.model.converter.bytes(torrent[5], 2) : "-" ) + '</td><td align="right">Temps restant : ' + (torrent[9] != -1 ? Base.model.converter.time(torrent[9]) : "∞") + '</td></tr>' +
                 ( Base.model.utilisateur.role == "Sysop" ? '<tr><td style="vertical-align: bottom;">Clef unique</td><td>: ' + torrent[28] + '</td><td>Type</td><td>: ' + torrent[29] + '</td><td align="right"></td></tr>' : '') +
                 '</table></fieldset>';
         },
@@ -626,7 +623,7 @@ Torrent1.view = {
                         $inputfilm.click(function (e) {
                             $("#torrent" + id + "details").empty();
                             Torrent1.view.addTorrent.files.file.movie.show(torrent.files, id);
-                            var nom = torrent.nom.replace(/\.\d{4}.+/gi, "");
+                            var nom = torrent.nom.replace(/\.(\d{4}|FRENCH).+/gi, "");
                             nom = nom.replace(/\./gi, " ");
                             $('#torrent' + id + 'suggestrecherche').val(nom);
                             Torrent1.controller.addTorrent.files.file.movie.recherche(id);

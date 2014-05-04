@@ -32,7 +32,7 @@ define('LOG', ROOT . DS . "log" . DS . $portscgi . "_addbibli.log");
 \model\simple\Console::println("Début");
 \model\simple\Console::println($hash);
 \model\simple\Console::println($typemedias);
-file_put_contents(ROOT . DS . "log" . DS . "start.log", $portscgi . " " . $hash . ' "' . $base_path . '" "' . $base_name . '" ' . $is_multi . " " . $clefunique . " " . $typemedias, FILE_APPEND);
+file_put_contents(ROOT . DS . "log" . DS . "start.log", $portscgi . " " . $hash . ' "' . $base_path . '" "' . $base_name . '" ' . $is_multi . " " . $clefunique . " " . $typemedias . "\n", FILE_APPEND);
 $filetorrent = \model\xmlrpc\rTorrentSettings::get($portscgi)->session . DS . $hash . ".torrent";
 if (file_exists($filetorrent)) {
     $torrent = new \model\simple\Torrent($filetorrent);
@@ -41,13 +41,15 @@ if (file_exists($filetorrent)) {
         $numfile = 0;
         if (isset($info['files'])) {
             foreach ($info['files'] as $key => $file) {
-
-                \model\simple\Console::println($base_path . DS . implode('/', $file['path']));
+                $file = $base_path . DS . implode('/', $file['path']);
+                \model\simple\Console::println($file);
                 switch ($typemedias) {
                     case "film":
                         $torrentf = \model\mysql\Torrentfilm::rechercheParNumFileHashClefunique($numfile, $hash, $clefunique);
                         \model\simple\Console::println((is_bool($torrentf) ? "Non Présent" : "Présent"));
                         if (!is_bool($torrentf)) {
+                            $mediainfo = new \model\simple\Mediainfo($file);
+                            $torrentf->mediainfo = json_encode($mediainfo->getFormatFilm());
                             \model\simple\Console::println($torrentf->fini() ? "Sav ok" : "Sav Non ok");
                         }
                         break;
@@ -55,12 +57,15 @@ if (file_exists($filetorrent)) {
                 $numfile++;
             }
         } else {
-            \model\simple\Console::println(dirname($base_path) . DS . $info['name']);
+            $file = dirname($base_path) . DS . $info['name'];
+            \model\simple\Console::println($file);
             switch ($typemedias) {
                 case "film":
                     $torrentf = \model\mysql\Torrentfilm::rechercheParNumFileHashClefunique($numfile, $hash, $clefunique);
                     \model\simple\Console::println((is_bool($torrentf) ? "Non Présent" : "Présent"));
                     if (!is_bool($torrentf)) {
+                        $mediainfo = new \model\simple\Mediainfo($file);
+                        $torrentf->mediainfo = json_encode($mediainfo->getFormatFilm());
                         \model\simple\Console::println($torrentf->fini() ? "Sav ok" : "Sav Non ok");
                     }
                     break;

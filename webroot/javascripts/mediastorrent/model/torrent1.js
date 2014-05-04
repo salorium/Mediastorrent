@@ -9,6 +9,9 @@ Torrent1.model = {
     container: {
         listtorrent: null
     },
+    loader: {
+        listeTorrent: null
+    },
     listTorrent: {
         cpt: 0,
         nbtorrents: 0,

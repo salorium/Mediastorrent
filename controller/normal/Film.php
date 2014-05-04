@@ -17,7 +17,10 @@ class Film extends Controller
 
     function nouveau()
     {
-
+        $a = \model\mysql\Torrentfilm::getAllFilmUserDateDesc();
+        //var_dump(json_encode($a));
+        $this->set("film", json_encode($a));
+        // die();
     }
 
 } 

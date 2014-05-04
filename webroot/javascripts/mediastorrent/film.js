@@ -18,7 +18,6 @@ $(document).ready(function () {
          break;
          }
          M6Group.load(a.attr("type_replay"),a.attr("methode_replay"),load,a.attr("id_replay"));*/
-
         Film.genereControlTopBar(parseInt(a.attr("mediastorrent_id")), true);
         console.info("tt");
     });
@@ -35,8 +34,8 @@ $(document).ready(function () {
         } else {
             Film.compteur++;
 
-            if (Film.compteur >= Film.tonObjet.film.length) {
-                Film.compteur = Film.tonObjet.film.length;
+            if (Film.compteur >= Film.tonObjet.length) {
+                Film.compteur = Film.tonObjet.length;
             }
         }
         Film.genereControlTopBar(Film.compteur, true);
@@ -60,7 +59,8 @@ $(document).ready(function () {
         console.info("tt");
 
         timer = setInterval(function () {
-            Film.genereControlTopBar(parseInt(a.attr("mediastorrent_id")), false);
+
+            Film.genereControlTopBar(parseInt(a.attr("mediastorrent_id")), true);
         }, 100);
 
 
@@ -83,6 +83,7 @@ $(document).ready(function () {
         console.info("tt");
 
         clearInterval(timer);
+
         Film.genereControlTopBar(parseInt(a.attr("mediastorrent_id")), true);
 
     });
@@ -302,7 +303,8 @@ var Film = {
     containerDetailsFilm: null,
     CssModulable: "",
     zindex: 1,
-    init: function () {
+    init: function (all) {
+        this.tonObjet = all;
         if (this.container) {
             $(this.container).remove();
         }
@@ -315,8 +317,8 @@ var Film = {
     initTopBar: function () {
         this.container = $('<div></div>').appendTo(".container");
         this.container.append('<div style="height: 1px;"></div>')
-        this.containerDetailsFilm = $('<div class="detailsFilm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, accusamus aliquam autem enim error et eum id itaque molestias natus placeat, quod quos ratione reprehenderit repudiandae, sed sint sunt veritatis.</div>').appendTo(this.container);
-        this.containerDetailsFilm.hide();
+        this.containerDetailsFilm = $('<div id="detailsFilm" class="detailsFilm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, accusamus aliquam autem enim error et eum id itaque molestias natus placeat, quod quos ratione reprehenderit repudiandae, sed sint sunt veritatis.</div>').appendTo(this.container);
+
         this.containerControl = $('<div></div>').attr({
             "class": "control"
         }).appendTo(this.container);
@@ -348,37 +350,37 @@ var Film = {
         this.largeurControl = Math.round(this.hauteurControl * this.largeurReferenceControl / this.hauteurReferenceControl);
         id = 0;
         ok = false;
-        while (id < this.tonObjet.poster_sizes.length && !ok) {
-            var tmp = this.tonObjet.poster_sizes[id];
-            var patt1 = /([0-9])+/g;
-            var tmp1 = parseInt(tmp.match(patt1));
-            if (this.largeurControl < tmp1) {
-                ok = true;
-            } else {
-                id++;
-            }
-        }
-        this.qualiteposter = this.tonObjet.poster_sizes[id];
-        id = 0;
-        ok = false;
-        while (id < this.tonObjet.backdrop_sizes.length && !ok) {
-            var tmp = this.tonObjet.backdrop_sizes[id];
-            var patt1 = /([0-9])+/g;
-            var tmp1 = parseInt(tmp.match(patt1));
-            if (this.largeurWindows < tmp1) {
-                ok = true;
-            } else {
-                id++;
-            }
-        }
-        if (id >= this.tonObjet.backdrop_sizes.length) id--;
-        this.qualitebackdrop = this.tonObjet.backdrop_sizes[id];
+        /*while (id < this.tonObjet.poster_sizes.length && !ok) {
+         var tmp = this.tonObjet.poster_sizes[id];
+         var patt1 = /([0-9])+/g;
+         var tmp1 = parseInt(tmp.match(patt1));
+         if (this.largeurControl < tmp1) {
+         ok = true;
+         } else {
+         id++;
+         }
+         }
+         this.qualiteposter = this.tonObjet.poster_sizes[id];
+         id = 0;
+         ok = false;
+         while (id < this.tonObjet.backdrop_sizes.length && !ok) {
+         var tmp = this.tonObjet.backdrop_sizes[id];
+         var patt1 = /([0-9])+/g;
+         var tmp1 = parseInt(tmp.match(patt1));
+         if (this.largeurWindows < tmp1) {
+         ok = true;
+         } else {
+         id++;
+         }
+         }
+         if (id >= this.tonObjet.backdrop_sizes.length) id--;*/
+        //this.qualitebackdrop = this.tonObjet.backdrop_sizes[id];
         this.demiLargeurControl = Math.round(this.largeurControl / 2);
         this.hauteurRefletControl = Math.round(this.hauteurControl / 4);
         this.topControl = this.hauteurWindows - this.hauteurControl - this.hauteurRefletControl;
         this.pixelArrondi = Math.round(this.largeurControl * this.percentageArrondi / 100);
         this.nombreControlDansLargeur = Math.floor((this.largeurWindows - 200 - this.largeurControl) / this.demiLargeurControl) + 1;
-        if (this.tonObjet.film.length <= this.nombreControlDansLargeur) this.nombreControlDansLargeur = this.tonObjet.film.length;
+        if (this.tonObjet.length <= this.nombreControlDansLargeur) this.nombreControlDansLargeur = this.tonObjet.length;
         this.borneControlPartieGauche = Math.floor(this.nombreControlDansLargeur / 2);
         this.borneControlPartieCentral = this.borneControlPartieGauche + 1;
         this.containerCss.append(this.genereCssRotationTopBar());
@@ -390,7 +392,7 @@ var Film = {
             "top": 15 + "px",
             "height": (this.hauteurControl + this.hauteurRefletControl) + "px"
         });
-        this.qualitebackdrop = "w780";
+        //this.qualitebackdrop = "w780";
         $("#rec1").attr("height", this.hauteurRefletControl);
         this.containerControl.css({
             "width": ((this.nombreControlDansLargeur - 1) * this.demiLargeurControl + 200 + this.largeurControl) + "px"
@@ -401,13 +403,15 @@ var Film = {
         this.containerBtControl.css({
             "width": ((this.nombreControlDansLargeur - 1) * this.demiLargeurControl + this.largeurControl) + "px"
         })
+        Base.view.loader.make("detailsFilm");
+        this.containerDetailsFilm.hide();
         this.genereControlTopBar(null, true);
     },
 
     genereControlTopBar: function (milieux, screenshot) {
         var central = this.borneControlPartieCentral;
         if (milieux != null) {
-            if (0 <= milieux && milieux <= this.tonObjet.film.length) {
+            if (0 <= milieux && milieux <= this.tonObjet.length) {
                 central = milieux;
 
             } else {
@@ -424,8 +428,8 @@ var Film = {
         }
         btd = central + 1;
         console.info(btd);
-        if (btd > this.tonObjet.film.length) {
-            btd = this.tonObjet.film.length;
+        if (btd > this.tonObjet.length) {
+            btd = this.tonObjet.length;
         }
         this.containerBtG.attr("mediastorrent_id", btg);
         this.containerBtD.attr("mediastorrent_id", btd);
@@ -433,13 +437,14 @@ var Film = {
         id = central - this.borneControlPartieCentral;
         if (central - this.borneControlPartieCentral < 0) id = 0;
         max = id + this.nombreControlDansLargeur;
-        if (max > this.tonObjet.film.length) max = this.tonObjet.film.length;
+        if (max > this.tonObjet.length) max = this.tonObjet.length;
         if (max - id < this.nombreControlDansLargeur) {
             id = max - this.nombreControlDansLargeur;
         }
-        console.info("Nombre controle dans la largeur : " + this.nombreControlDansLargeur + " Nb film " + this.tonObjet.film.length + " id " + id + " max " + max);
+        Film.compteur = central;
+        //console.info("Nombre controle dans la largeur : " + this.nombreControlDansLargeur + " Nb film " + this.tonObjet.film.length + " id " + id + " max " + max);
         while (id < max) {
-            this.afficheControlTopBar(this.tonObjet.film[id], id + 1, central, screenshot);
+            this.afficheControlTopBar(this.tonObjet[id], id + 1, central, screenshot);
             id++;
         }
         this.containerCss.append(this.CssModulable);
@@ -447,7 +452,7 @@ var Film = {
     afficheControlTopBar: function (control, id, centre, screenshot) {
         if (id <= centre - 1) {
             if (control.poster) {
-                this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.demiLargeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="' + this.tonObjet.secure_base_url + this.qualiteposter + control.poster + '" alt="' + control.titre + '"></a></div> </div></div>');
+                this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.demiLargeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="' + Base.controller.makeUrlBase() + "proxy/imageSetWidth/" + Base.model.converter.paramUrl(control.poster) + '/200.jpg" alt="' + control.titre + '"></a></div> </div></div>');
             } else {
                 this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.demiLargeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="proxy-image.php?titre=' + encodeURIComponent(control.titre) + '" alt="' + control.titre + '"></a></div> </div></div>');
             }
@@ -455,25 +460,27 @@ var Film = {
             this.addUniqueCssGaucheTopBar(id);
         } else if (id <= centre) {
             if (control.poster) {
-                this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.largeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot2"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="' + this.tonObjet.secure_base_url + this.qualiteposter + control.poster + '" alt="' + control.titre + '"></a></div> </div></div>');
+                this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.largeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot2"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="' + Base.controller.makeUrlBase() + "proxy/imageSetWidth/" + Base.model.converter.paramUrl(control.poster) + '/200.jpg" alt="' + control.titre + '"></a></div> </div></div>');
             } else {
                 this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.largeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot2"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="proxy-image.php?titre=' + encodeURIComponent(control.titre) + '" alt="' + control.titre + '"></a></div> </div></div>');
             }
+
             if (control.backdrop && screenshot) {
-                $(".container").css({
-                    "background": 'url("' + this.tonObjet.secure_base_url + this.qualitebackdrop + control.backdrop + '") center center fixed',
+                console.log(Base.model.converter.paramUrl(control.backdrop));
+                $("#background").css({
+                    "background": 'url("' + Base.controller.makeUrlBase() + "proxy/imageSetWidth/" + encodeURIComponent(Base.model.converter.paramUrl(control.backdrop)) + '/1000.jpg") center center fixed',
                     "background-size": "cover"
                 });
                 console.log($('html'));
             } else {
-                $(".container").css("background", 'url("http://mediastorrent/images/fondEcran/black_hole_scene-1920x1080.jpg") no-repeat center center fixed');
+                $("#background").css("background", 'url("http://mediastorrent/images/fondEcran/black_hole_scene-1920x1080.jpg") no-repeat center center fixed');
             }
             this.zindex--;
             this.afficheDetailsFilm(id - 1);
             this.addUniqueCssGaucheTopBar(id);
         } else {
             if (control.poster) {
-                this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.demiLargeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot1"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="' + this.tonObjet.secure_base_url + this.qualiteposter + control.poster + '" alt="' + control.titre + '"></a></div> </div></div>');
+                this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.demiLargeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot1"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="' + Base.controller.makeUrlBase() + "proxy/imageSetWidth/" + Base.model.converter.paramUrl(control.poster) + '/200.jpg" alt="' + control.titre + '"></a></div> </div></div>');
             } else {
                 this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.demiLargeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot1"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="proxy-image.php?titre=' + encodeURIComponent(control.titre) + '" alt="' + control.titre + '"></a></div> </div></div>');
 

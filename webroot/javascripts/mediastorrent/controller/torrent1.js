@@ -8,13 +8,14 @@ Torrent1.controller = {
         //Fixation de la hauteur du panneaux contenu
         var hauteur = Base.model.conf.containerHeight() - Base.model.html.hauteur(".container nav");
         Torrent1.view.fixedHeightContenu(hauteur);
+        this.loader.init();
         this.seedbox.init(seedbox);
         this.listTorrent.init();
         this.detailsTorrent.init();
         this.filesTorrent.init();
         this.addTorrent.init();
         Torrent1.view.addTorrent.hide();
-        this.loader.init();
+
     },
     seedbox: {
         init: function (seedbox) {
@@ -50,7 +51,7 @@ Torrent1.controller = {
                 //contentType: "application/json",
                 success: function (response, textStatus, jqXHR) {
                     if (response.host === Torrent1.model.baseUrl) {
-                        Torrent1.view.loader.hide();
+                        Torrent1.view.loaders.hideListeTorrent();
                         if (response.showdebugger === "ok") {
                             var res = response.torrent;
                             torrent = res[0];
@@ -958,7 +959,7 @@ Torrent1.controller = {
     },
     loader: {
         init: function () {
-            Torrent1.view.loader.init();
+            Torrent1.view.loaders.init();
         }
     }
 

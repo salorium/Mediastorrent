@@ -17,7 +17,6 @@ class Film extends \core\Controller
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         if (is_null($re))
             $re = $_REQUEST["recherche"];
-
         $all = new \model\simple\Allocine($re);
         $this->set(array(
             "localfilm" => \model\mysql\Film::rechercheFormat($re),
@@ -29,7 +28,7 @@ class Film extends \core\Controller
     {
         \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
-        if ($torrentf = \model\mysql\Torrentfilm::getFilmUser($id)) {
+        if ($torrentf = \model\mysql\Torrentfilm::getFilmUserDuServeur($id)) {
             $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
                 new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.get_frozen_path", array($torrentf->hash, intval($torrentf->numfile))));
             if ($req->success()) {
@@ -42,11 +41,45 @@ class Film extends \core\Controller
                     if ($req->success())
                         $filename = $req->val[1];
                 }
-                \model\simple\Download::sendFileName($filename, $torrentf->titre);
+                $mediainfo = json_decode($torrentf->mediainfo, true);
+                $compfile = "";
+                switch ($mediainfo["typequalite"]) {
+                    case "SD":
+                        $compfile .= "[" . $mediainfo["codec"];
+                        break;
+                    case "HD":
+                        $compfile .= "[" . $mediainfo["qualite"] . "." . $mediainfo["codec"];
+                        break;
+                }
+                $audios = array();
+                foreach ($mediainfo["audios"] as $v) {
+                    $res = "";
+                    if ($v["type"] !== "MP3") {
+                        $res .= "." . $v["type"] . " " . $v["cannal"];
+                        if (isset($v["lang"]))
+                            $res .= " " . $v["lang"];
+
+                    }
+                    $audios[] = $res;
+                }
+                if (count($audios) > 1) {
+                    $compfile .= implode(" / " . $audios) . "]";
+                } else {
+                    $compfile .= $audios[0] . "]";
+                }
+
+                $tmp = \model\simple\Download::sendFileName($filename, $torrentf->titre . " " . $compfile);
             }
-            throw new \Exception("FILE NOT FOUND");
+
         } else {
-            echo "Redirection";
+            if ($torrentf = \model\mysql\Torrentfilm::getAdresseServeurFilmUser($id)) {
+                //echo ('Location: http'.($_SERVER["SERVER_PORT"] == 80 ? "" : "s") . "://" . $torrentf->hostname."/film/download/".$id."/".\config\Conf::$user["user"]->login."/".\config\Conf::$user["user"]->keyconnexion);
+                //die();
+                header('Location: http' . ($_SERVER["SERVER_PORT"] == 80 ? "" : "s") . "://" . $torrentf->hostname . "/film/download/" . $id . "/" . \config\Conf::$user["user"]->login . "/" . \config\Conf::$user["user"]->keyconnexion);
+                exit();
+            } else {
+                throw new \Exception("FILE NOT FOUND");
+            }
         }
     }
 

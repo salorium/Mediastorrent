@@ -16,6 +16,7 @@
 <script>
     document.oncontextmenu = new Function("return false");
 </script>
+<div class="container">
 <nav class="top-bar" data-topbar>
     <!-- Title -->
     <ul class="title-area">
@@ -290,3 +291,4 @@
 </div>
 
 <div id="cliquedroit" style="background-color: darkslategray;width: 150px;display: none;"></div>
+</div>

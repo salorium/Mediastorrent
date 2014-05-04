@@ -84,8 +84,11 @@ if (isset ($erreur)) {
                         <li>
                             <button class="button small secondary" value="Connexion" type="submit">Connexion</button>
                         </li>
-                        <li><a class="button small" href="<?= \core\Router::url("utilisateur/mdpoublier") ?>">Mot de
-                                passe oublié ?</a></li>
+                        <li>
+                            <button onclick="window.location.href='<?= \core\Router::url("utilisateur/mdpoublier") ?>'"
+                                    class="button small" type="button">Mot de passe oublié ?
+                            </button>
+                        </li>
 
 
                     </ul>
