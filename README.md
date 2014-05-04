@@ -2,6 +2,11 @@
 ## Introduction
 Mediastorrent un front-end pour rtorrent avec gestion multi-user, multi-seedbox et multi-médias
 
+##Mettre à jour la liste des paquets de votre système
+```
+sudo apt-get update
+```
+
 ##Installation de rtorrent
 - Base
 ```
@@ -44,8 +49,21 @@ sudo make install
 sudo ldconfig
 ```
 
+##Installation de Memcached
+```
+sudo apt-get install memcached
+```
+
+##Installation de mysql-server
+```
+sudo apt-get install mysql-server
+```
+
 ##Installation de Mediastorrent
 ```
-sudo apt-get install apache2 php5 libapache2-mod-php5 php5-mysql php5-json php5-imagick php5-memcached php5-curl
+sudo apt-get install apache2 libapache2-mod-php5 php5-mysqlnd php5-json php5-imagick php5-memcached php5-curl
 git clone https://github.com/salorium/Mediastorrent.git
 ```
+
+##Configuration de Mediastorrent
+Il faut éditer le fichier config/Conf.php dans le répertoire Mediastorrent
