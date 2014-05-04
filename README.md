@@ -1,7 +1,7 @@
 #Mediastorrent
 ## Introduction
-Mediastorrent un front-end pour rtorrent avec gestion multi-user, multi-seedbox et gestion des fichiers torrent du type FILM, SERIE et MUSIQUE.
-Mediastorrent une plateforme de partage des fichiers des torrents.
+Mediastorrent un front-end pour rtorrent avec gestion multi-user, multi-seedbox et multi-médias
+
 ##Installation de rtorrent
 - Base
 ```
