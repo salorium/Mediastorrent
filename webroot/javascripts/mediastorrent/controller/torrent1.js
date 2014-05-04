@@ -33,7 +33,7 @@ Torrent1.controller = {
             Torrent1.view.seedbox.init(id);
             Torrent1.model.seedbox.changed = true;
             Torrent1.controller.listTorrent.resetSelectionne();
-            Torrent1.controller.filesTorrent.resetSelectionne();
+            Torrent1.controller.filesTorrent.reset();
             if (Torrent1.model.errorServer) {
                 this.update("");
                 Torrent1.model.errorServer = false;
@@ -683,6 +683,7 @@ Torrent1.controller = {
         },
         reset: function () {
             this.resetSelectionne();
+            $("#torrentdetailsfiles").empty();
             Torrent1.model.filesTorrent.changed = false;
             Torrent1.model.filesTorrent.original = [];
             Torrent1.model.filesTorrent.liste = [];

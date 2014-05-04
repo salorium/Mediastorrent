@@ -18,8 +18,8 @@
     <title>MediasTorrent</title>
 
 
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>stylesheets/app.css">
-
+    <!-- <link rel="stylesheet" href="<?php echo BASE_URL; ?>stylesheets/app.css">
+-->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>stylesheets/mediastorrent1.css">
     <script src="<?php echo BASE_URL; ?>bower_components/modernizr/modernizr.js"></script>
 </head>
