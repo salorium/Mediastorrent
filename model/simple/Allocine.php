@@ -506,7 +506,8 @@ class Allocine extends Model
                     $tmp["Date de sortie"] = $o[1] . "/" . $ta[$o[2]] . "/" . $o[3];
                 }
             }
-            foreach ($v->media AS $k => $vv) {
+            if (isset($v->media))
+                foreach ($v->media AS $k => $vv) {
                 if ($vv->class === "video" && $vv->type->_ === "Bande-annonce" && strpos($vv->title, 'VF') !== false) {
                     $tmp["ba"] = $vv->code;
                 }

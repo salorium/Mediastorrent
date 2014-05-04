@@ -431,7 +431,9 @@ class Torrent extends Controller
                                     $urlposter = trim($_REQUEST["torrent" . $idtorrent . "detailsposter"]);
                                     $urlbackdrop = trim($_REQUEST["torrent" . $idtorrent . "detailsbackdrop"]);
                                     $realisateurs = $infos["Réalisateur(s)"];
-                                    $acteurs = $infos["Acteur(s)"];
+                                    $acteurs = "";
+                                    if (isset($infos["Acteur(s)"]))
+                                        $acteurs = $infos["Acteur(s)"];
                                     $anneeprod = $infos["Année de production"];
                                     $film = \model\mysql\Film::ajouteFilm($titre, $otitre, json_encode($infos), $urlposter, $urlbackdrop, $anneeprod, $acteurs, $realisateurs, $_REQUEST["torrent" . $idtorrent . "code"]);
                                     $idfilm = $film->id;
