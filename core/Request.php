@@ -14,15 +14,17 @@ namespace core;
  * Class Request
  * @package core
  */
-class Request {
+class Request
+{
     public $url; // URL appellé par l'utilisateur
     public $controller;
     public $action;
     public $params;
+
     function __construct()
     {
-        $url = str_replace($_SERVER["DOCUMENT_ROOT"],"",(isset ($_SERVER["PATH_INFO"]) ?$_SERVER["PATH_INFO"]:"" ) );
-        $this->url = $url == "" ? "/":$url;
+        $url = str_replace($_SERVER["DOCUMENT_ROOT"], "", (isset ($_SERVER["PATH_INFO"]) ? $_SERVER["PATH_INFO"] : ""));
+        $this->url = $url == "" ? "/" : $url;
 
     }
 }

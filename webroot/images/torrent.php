@@ -11,7 +11,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 
-	 width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+     width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
 
 <path id="download-13-icon" d="M461.4,243.858c0,50.852-41.371,92.221-92.221,92.221h-35.596v-40h35.596
 

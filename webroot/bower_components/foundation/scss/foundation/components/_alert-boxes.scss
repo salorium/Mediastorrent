@@ -1,7 +1,6 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
-
 @import "global";
 
 //
@@ -61,7 +60,7 @@ $alert-radius: $global-radius !default;
 // We use this mixin to add alert styles
 //
 // $bg - The background of the alert. Default: $primary-color.
-@mixin alert-style($bg:$primary-color) {
+@mixin alert-style($bg: $primary-color) {
 
   // This find the lightness percentage of the background color.
   $bg-lightness: lightness($bg);
@@ -71,8 +70,11 @@ $alert-radius: $global-radius !default;
   border-color: scale-color($bg, $lightness: $alert-function-factor);
 
   // We control the text color for you based on the background color.
-  @if $bg-lightness > 70% { color: $alert-font-color-alt; }
-  @else                   { color: $alert-font-color; }
+  @if $bg-lightness > 70% {
+    color: $alert-font-color-alt;
+  } @else {
+    color: $alert-font-color;
+  }
 
 }
 
@@ -88,14 +90,16 @@ $alert-radius: $global-radius !default;
   color: $alert-close-color;
   opacity: $alert-close-opacity;
   &:hover,
-  &:focus { opacity: $alert-close-opacity-hover; }
+  &:focus {
+    opacity: $alert-close-opacity-hover;
+  }
 }
 
 // We use this to quickly create alerts with a single mixin.
 //
 // $bg - Background of alert. Default: $primary-color.
 // $radius - Radius of alert box. Default: false.
-@mixin alert($bg:$primary-color, $radius:false) {
+@mixin alert($bg: $primary-color, $radius: false) {
   @include alert-base;
   @include alert-style($bg);
   @include radius($radius);
@@ -106,16 +110,32 @@ $alert-radius: $global-radius !default;
     .alert-box {
       @include alert;
 
-      .close      { @include alert-close; }
+      .close {
+        @include alert-close;
+      }
 
-      &.radius    { @include radius($alert-radius); }
-      &.round     { @include radius($global-rounded); }
+      &.radius {
+        @include radius($alert-radius);
+      }
+      &.round {
+        @include radius($global-rounded);
+      }
 
-      &.success   { @include alert-style($success-color); }
-      &.alert     { @include alert-style($alert-color); }
-      &.secondary { @include alert-style($secondary-color); }
-      &.warning { @include alert-style($warning-color); }
-      &.info { @include alert-style($info-color); }
+      &.success {
+        @include alert-style($success-color);
+      }
+      &.alert {
+        @include alert-style($alert-color);
+      }
+      &.secondary {
+        @include alert-style($secondary-color);
+      }
+      &.warning {
+        @include alert-style($warning-color);
+      }
+      &.info {
+        @include alert-style($info-color);
+      }
     }
   }
 }

@@ -1,7 +1,6 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
-
 @import "global";
 
 //
@@ -20,7 +19,7 @@ $reveal-modal-bg: #fff !default;
 $reveal-position-top: rem-calc(100) !default;
 $reveal-default-width: 80% !default;
 $reveal-modal-padding: rem-calc(20) !default;
-$reveal-box-shadow: 0 0 10px rgba(#000,.4) !default;
+$reveal-box-shadow: 0 0 10px rgba(#000, .4) !default;
 
 // We use these to style the reveal close button
 $reveal-close-font-size: rem-calc(40) !default;
@@ -59,20 +58,19 @@ $close-reveal-modal-class: "close-reveal-modal" !default;
 // $base-style - Provides reveal base styles, can be set to false to override. Default: true, Options: false
 // $width - Sets reveal width Default: $reveal-default-width || 80%
 //
-@mixin reveal-modal-base(
-  $base-style:true,
-  $width:$reveal-default-width) {
+@mixin reveal-modal-base($base-style: true,
+$width: $reveal-default-width) {
   @if $base-style {
     visibility: hidden;
     display: none;
     position: absolute;
     z-index: 100;
     width: 100vw;
-    top:0;
+    top: 0;
     #{$default-float}: 0;
     @media #{$small-only} {
       height: 100vh;
-      min-height:100vh;
+      min-height: 100vh;
     }
     @media #{$medium-up} {
       #{$default-float}: 50%;
@@ -80,11 +78,17 @@ $close-reveal-modal-class: "close-reveal-modal" !default;
 
     // Make sure rows don't have a min-width on them
     .column,
-    .columns { min-width: 0; }
+    .columns {
+      min-width: 0;
+    }
 
     // Get rid of margin from first and last element inside modal
-    & > :first-child { margin-top: 0; }
-    & > :last-child { margin-bottom: 0; }
+    & > :first-child {
+      margin-top: 0;
+    }
+    & > :last-child {
+      margin-bottom: 0;
+    }
   }
 
   @if $width {
@@ -105,20 +109,25 @@ $close-reveal-modal-class: "close-reveal-modal" !default;
 // $border-color - Color of border. Default: $reveal-border-color.
 // $box-shadow - Choose whether or not to include the default box-shadow. Default: true, Options: false
 // $top-offset - Default: $reveal-position-top || 50px
-@mixin reveal-modal-style(
-  $bg:$reveal-modal-bg,
-  $padding:$reveal-modal-padding,
-  $border:true,
-  $border-style:$reveal-border-style,
-  $border-width:$reveal-border-width,
-  $border-color:$reveal-border-color,
-  $box-shadow:true,
-  $top-offset:$reveal-position-top) {
+@mixin reveal-modal-style($bg: $reveal-modal-bg,
+$padding: $reveal-modal-padding,
+$border: true,
+$border-style: $reveal-border-style,
+$border-width: $reveal-border-width,
+$border-color: $reveal-border-color,
+$box-shadow: true,
+$top-offset: $reveal-position-top) {
 
-  @if $bg { background-color: $bg; }
-  @if $padding { padding: $padding; }
+  @if $bg {
+    background-color: $bg;
+  }
+  @if $padding {
+    padding: $padding;
+  }
 
-  @if $border { border: $border-style $border-width $border-color; }
+  @if $border {
+    border: $border-style $border-width $border-color;
+  }
 
   // We can choose whether or not to include the default box-shadow.
   @if $box-shadow {
@@ -138,7 +147,7 @@ $close-reveal-modal-class: "close-reveal-modal" !default;
 // We use this to create a close button for the reveal modal
 //
 // $color - Default: $reveal-close-color || #aaa
-@mixin reveal-close($color:$reveal-close-color) {
+@mixin reveal-close($color: $reveal-close-color) {
   font-size: $reveal-close-font-size;
   line-height: 1;
   position: absolute;
@@ -153,18 +162,22 @@ $close-reveal-modal-class: "close-reveal-modal" !default;
   @if $include-html-reveal-classes {
 
     // Reveal Modals
-    .reveal-modal-bg { @include reveal-bg; }
+    .reveal-modal-bg {
+      @include reveal-bg;
+    }
 
     dialog, .#{$reveal-modal-class} {
       @include reveal-modal-base;
       @include reveal-modal-style;
 
-      .#{$close-reveal-modal-class} { @include reveal-close; }
+      .#{$close-reveal-modal-class} {
+        @include reveal-close;
+      }
     }
 
     dialog[open] {
-	display:block;
-	visibility: visible;
+      display: block;
+      visibility: visible;
     }
 
     @media #{$medium-up} {
@@ -172,20 +185,30 @@ $close-reveal-modal-class: "close-reveal-modal" !default;
       dialog, .#{$reveal-modal-class} {
         @include reveal-modal-style(false, $reveal-modal-padding * 1.5, false, $box-shadow: false, $top-offset: $reveal-position-top);
 
-        &.tiny  { @include reveal-modal-base(false, 30%); }
-        &.small { @include reveal-modal-base(false, 40%); }
-        &.medium  { @include reveal-modal-base(false, 60%); }
-        &.large { @include reveal-modal-base(false, 70%); }
-        &.xlarge { @include reveal-modal-base(false, 95%); }
+        &.tiny {
+          @include reveal-modal-base(false, 30%);
+        }
+        &.small {
+          @include reveal-modal-base(false, 40%);
+        }
+        &.medium {
+          @include reveal-modal-base(false, 60%);
+        }
+        &.large {
+          @include reveal-modal-base(false, 70%);
+        }
+        &.xlarge {
+          @include reveal-modal-base(false, 95%);
+        }
       }
 
       dialog, .#{$reveal-modal-class} {
         &.full {
           @include reveal-modal-base(false, 100vw);
-          top:0;
-          left:0;
+          top: 0;
+          left: 0;
           height: 100vh;
-          min-height:100vh;
+          min-height: 100vh;
           margin-left: 0 !important;
         }
       }
@@ -193,7 +216,9 @@ $close-reveal-modal-class: "close-reveal-modal" !default;
 
     // Reveal Print Styles
     @media print {
-      dialog, .#{$reveal-modal-class} {background: #fff !important;}
+      dialog, .#{$reveal-modal-class} {
+        background: #fff !important;
+      }
     }
   }
 }

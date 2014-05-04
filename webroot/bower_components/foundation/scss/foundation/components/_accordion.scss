@@ -1,7 +1,6 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
-
 @import "global";
 
 //
@@ -24,11 +23,14 @@ $accordion-content-active-bg-color: #fff !default;
 @include exports("accordion") {
   @if $include-html-accordion-classes {
     .accordion {
-      @include clearfix; margin-bottom: 0;
+      @include clearfix;
+      margin-bottom: 0;
       dd {
         display: block;
         margin-bottom: 0 !important;
-        &.active > a { background: $accordion-navigation-active-bg-color; }
+        &.active > a {
+          background: $accordion-navigation-active-bg-color;
+        }
         > a {
           background: $accordion-navigation-bg-color;
           color: $accordion-navigation-font-color;
@@ -36,7 +38,9 @@ $accordion-content-active-bg-color: #fff !default;
           display: block;
           font-family: $accordion-navigation-font-family;
           font-size: $accordion-navigation-font-size;
-          &:hover { background: $accordion-navigation-hover-bg-color; }
+          &:hover {
+            background: $accordion-navigation-hover-bg-color;
+          }
         }
       }
       .content {

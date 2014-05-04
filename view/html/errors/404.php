@@ -8,4 +8,6 @@
  */
 
 ?>
-<div style="width: 600px;margin: auto;"><h2 >Page introuvable</h2><p><?php echo $message;?></p></div>
+<div style="width: 600px;margin: auto;"><h2>Page introuvable</h2>
+
+    <p><?php echo $message; ?></p></div>

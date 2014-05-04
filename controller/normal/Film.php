@@ -11,9 +11,16 @@ namespace controller\normal;
 
 use core\Controller;
 
-class Film extends Controller {
+class Film extends Controller
+{
     public $layout = "connecter";
-    function nouveau(){
 
+    function nouveau()
+    {
+        $a = \model\mysql\Torrentfilm::getAllFilmUserDateDesc();
+        //var_dump(json_encode($a));
+        $this->set("film", json_encode($a));
+        // die();
     }
+
 } 

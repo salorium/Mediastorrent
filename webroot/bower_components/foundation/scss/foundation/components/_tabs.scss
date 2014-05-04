@@ -1,7 +1,6 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
-
 @import "global";
 @import "grid";
 
@@ -40,16 +39,24 @@ $tabs-vertical-navigation-margin-bottom: 1.25rem !default;
           padding: $tabs-navigation-padding $tabs-navigation-padding * 2;
           font-family: $tabs-navigation-font-family;
           font-size: $tabs-navigation-font-size;
-          &:hover { background: $tabs-navigation-hover-bg-color; }
+          &:hover {
+            background: $tabs-navigation-hover-bg-color;
+          }
         }
-        &.active a { background: $tabs-navigation-active-bg-color; }
+        &.active a {
+          background: $tabs-navigation-active-bg-color;
+        }
       }
       &.radius {
         dd:first-child {
-          a { @include side-radius($default-float, $global-radius); }
+          a {
+            @include side-radius($default-float, $global-radius);
+          }
         }
         dd:last-child {
-          a { @include side-radius($opposite-direction, $global-radius); }
+          a {
+            @include side-radius($opposite-direction, $global-radius);
+          }
         }
       }
       &.vertical {
@@ -71,12 +78,19 @@ $tabs-vertical-navigation-margin-bottom: 1.25rem !default;
         float: $default-float;
         padding: $tabs-content-padding 0;
         width: 100%;
-        &.active { display: block; float: none; }
-        &.contained { padding: $tabs-content-padding; }
+        &.active {
+          display: block;
+          float: none;
+        }
+        &.contained {
+          padding: $tabs-content-padding;
+        }
       }
       &.vertical {
         display: block;
-        > .content { padding: 0 $tabs-content-padding; }
+        > .content {
+          padding: 0 $tabs-content-padding;
+        }
       }
     }
     @media #{$medium-up} {

@@ -7,7 +7,7 @@
  */
 
 
-if (isset ($erreur)){
+if (isset ($erreur)) {
     ?>
     <div data-alert class="alert-box warning radius connexion">
         Mail invalide
@@ -18,12 +18,13 @@ if (isset ($erreur)){
 ?>
 
 <div class="connexion">
-    <form data-abide class="custom" action="<?=\core\Router::url("utilisateur/mdpoublier")?>" method="POST">
+    <form data-abide class="custom" action="<?= \core\Router::url("utilisateur/mdpoublier") ?>" method="POST">
         <fieldset>
             <legend>Récupération du mot de passe</legend>
             <div class="row">
                 <div class="columns">
-                    <label>Mail <small>obligatoire</small>
+                    <label>Mail
+                        <small>obligatoire</small>
                         <input name="mail" type="text" required pattern="email"/>
                     </label>
                     <small class="error">L' e-mail est obligatoire !</small>
@@ -32,7 +33,11 @@ if (isset ($erreur)){
             <div class="row">
                 <div class="columns">
                     <ul class="button-group round">
-                        <li>    <button class="button small secondary" value="Reinitialisation" type="submit">Réinitialisation</button></li>
+                        <li>
+                            <button class="button small secondary" value="Reinitialisation" type="submit">
+                                Réinitialisation
+                            </button>
+                        </li>
                     </ul>
                 </div>
             </div>

@@ -11,9 +11,12 @@ namespace controller\normal;
 
 use core\Controller;
 
-class Mediastorrent extends Controller {
+class Mediastorrent extends Controller
+{
     public $layout = "connecter";
-    function accueil(){
+
+    function accueil()
+    {
 
     }
 } 

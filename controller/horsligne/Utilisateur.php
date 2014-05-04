@@ -9,16 +9,18 @@
 namespace controller\horsligne;
 
 
-class Utilisateur extends \core\Controller {
-    function modifierMdp($login,$mdp){
-        if ( isset($login)&& isset($mdp)){
-            $res = \model\mysql\Utilisateur::modifierMotDePasse($login,$mdp);
-            $this->set("modifiermdp",$res);
+class Utilisateur extends \core\Controller
+{
+    function modifierMdp($login, $mdp)
+    {
+        if (isset($login) && isset($mdp)) {
+            $res = \model\mysql\Utilisateur::modifierMotDePasse($login, $mdp);
+            $this->set("modifiermdp", $res);
             $this->render("index");
             return $res;
 
-        }else{
-            header ("Location: ".BASE_URL);
+        } else {
+            header("Location: " . BASE_URL);
             exit();
         }
     }

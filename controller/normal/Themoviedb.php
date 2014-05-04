@@ -11,7 +11,8 @@ namespace controller\normal;
 
 use core\Controller;
 
-class Themoviedb extends Controller {
+class Themoviedb extends Controller
+{
     /*function recherche($re){
         $all = new \model\simple\Allocine($re);
         $this->set(array(
@@ -20,25 +21,32 @@ class Themoviedb extends Controller {
 
         ));
     }*/
-    function rechercheFilm($re){
+    function rechercheFilm($re)
+    {
         $all = new \model\simple\TheMovieDb();
         $this->set(array(
             "film" => $all->searchFilm($re)
         ));
     }
-    function rechercheSerie($re){
+
+    function rechercheSerie($re)
+    {
         $all = new \model\simple\TheMovieDb();
         $this->set(array(
             "serie" => $all->searchSerie($re)
         ));
     }
-    function getInfosSerie($id){
+
+    function getInfosSerie($id)
+    {
         $all = new \model\simple\TheMovieDb();
         $this->set(array(
             "serie" => $all->getSerie($id)
         ));
     }
-    function getInfosFilm($id){
+
+    function getInfosFilm($id)
+    {
         $all = new \model\simple\TheMovieDb();
         $this->set(array(
             "film" => $all->getMovie($id)

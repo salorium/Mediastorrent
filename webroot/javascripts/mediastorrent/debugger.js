@@ -8,17 +8,17 @@
 $(document).on('click', ".debugger-deroule", function (event) {
     event.preventDefault();
     var a = $(this);
-    if ($("#"+a.data("id")).is(":visible")){
-        $("#"+a.data("id")).hide(100);
+    if ($("#" + a.data("id")).is(":visible")) {
+        $("#" + a.data("id")).hide(100);
 
-    }else{
-        $("#"+a.data("id")).show();
+    } else {
+        $("#" + a.data("id")).show();
     }
     console.info("tt");
 });
 
-var Debugger ={
-    show : function (){
+var Debugger = {
+    show: function () {
         $(".debugger").show();
         $.ajax({
             type: "POST",
@@ -28,7 +28,7 @@ var Debugger ={
             dataType: "json"
         });
     },
-    close : function(){
+    close: function () {
         $("#debugger").hide();
     }
 };

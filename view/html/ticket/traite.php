@@ -6,7 +6,7 @@
  * Time: 17:50
  */
 
-\core\LoaderJavascript::add("base","controller.redirection",$url);
+\core\LoaderJavascript::add("base", "controller.redirection", $url);
 ?>
 <div data-alert class="alert-box warning radius connexion">
     Erreur ticket, (Ticket introuvable)

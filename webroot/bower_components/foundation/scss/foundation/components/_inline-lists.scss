@@ -1,7 +1,6 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
-
 @import "global";
 
 //
@@ -43,7 +42,9 @@ $inline-list-children-display: block !default;
     float: $default-float;
     margin-#{$default-float}: rem-calc(22);
     display: $inline-list-display;
-    &>* { display: $inline-list-children-display; }
+    & > * {
+      display: $inline-list-children-display;
+    }
   }
 }
 
