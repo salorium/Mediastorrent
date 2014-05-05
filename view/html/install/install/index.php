@@ -82,19 +82,24 @@
             </td>
         </tr>
         <tr>
-            <td>Ecriture dans le fichier Conf</td>
+            <td>Ecriture dans le log</td>
+            <td><?= ($ecrituredossierlog ? \model\simple\String::styleSuccess("Ok") : \model\simple\String::styleError("Non ok : pour rendre l'écriture possible veuillez faire : sudo chmod -R a+w " . ROOT . DS . "log")); ?>
+            </td>
+        </tr>
+        <tr>
+        <td>Ecriture dans le fichier Conf</td>
             <td><?= ($ecriturefileconfig ? \model\simple\String::styleSuccess("Ok") : \model\simple\String::styleError("Non ok : pour rendre l'écriture possible veuillez faire : sudo chmod -R a+w " . ROOT . DS . "config" . DS . "Conf.php")); ?>
             </td>
         </tr>
     </table>
 <?php
-if ($ecriturefileconfig && $ecriturefileconfig && $json && $curl && $imagick && $mysqli && $memcached) {
+if ($ecriturefileconfig && $ecrituredossiercache && $json && $curl && $imagick && $mysqli && $memcached && $ecrituredossierlog) {
     ?>
     <a class="button secondary" href="<?= \core\Router::url("install/mysqlinit") ?>">Suite</a>
 <?
 } else {
     ?>
-    <a class="button">Recharger la page</a>
+    <a class="button" href="<?= \core\Router::url("") ?>">Recharger la page</a>
 
 <?
 }
