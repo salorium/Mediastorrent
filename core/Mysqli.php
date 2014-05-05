@@ -17,9 +17,15 @@ class Mysqli
     public static $default = "default";
     public static $id = 0;
 
-    private static function connect()
+    private static function connect($host = null, $login = null, $pass = null)
     {
         $conf = \config\Conf::$databases[Mysqli::$default];
+        if (!(is_null($host) && is_null($login) && is_null($pass))) {
+            $conf["host"] = $host;
+            $conf["login"] = $login;
+            $conf["password"] = $pass;
+            $conf["database"] = "test";
+        }
         self::$dblink = new \mysqli($conf["host"], $conf["login"], $conf["password"], $conf["database"]);
         //self::$dblink->connect(Variable::$host_mysql,Variable::$login_mysql,Variable::$password_mysql,Variable::$dbname_mysql);
         if (self::$dblink->connect_errno) {
@@ -34,7 +40,7 @@ class Mysqli
         }
         if (is_null($str))
             return "NULL";
-        return "'" . self::$dblink->real_escape_string($str) . "'";
+        return "'" . self::$dblink->real_escape_string(\htmlentities($str, ENT_NOQUOTES)) . "'";
     }
 
     public static function real_escape_stringlike($str)
@@ -74,6 +80,52 @@ class Mysqli
 
         self::$query[] = array($query, ($QueryEndTime - $QueryStartTime) * 1000, self::$res, $Errno, $Error);
         self::$id++;
+
+    }
+
+    public static function initmultiquery($host, $login, $pass, $query)
+    {
+        $QueryStartTime = \microtime(true);
+        if (!isset(self::$dblink)) {
+            self::connect($host, $login, $pass);
+        }
+        for ($i = 1; $i < 6; $i++) {
+            self::$res = self::$dblink->multi_query($query);
+            if (!in_array(self::$dblink->errno, array(1213, 1205))) {
+                break;
+            }
+            sleep($i * rand(2, 5)); // Wait longer as attempts increase
+        }
+        $QueryEndTime = microtime(true);
+        self::$time += ($QueryEndTime - $QueryStartTime) * 1000;
+        $Errno = null;
+        $Error = null;
+        if (!self::$res) {
+            $Errno = self::$dblink->errno;
+            $Error = self::$dblink->error;
+
+        }
+
+        self::$query[] = array($query, ($QueryEndTime - $QueryStartTime) * 1000, self::$res, $Errno, $Error);
+        self::$id++;
+
+    }
+
+    public static function startTransaction()
+    {
+        if (!isset(self::$dblink)) {
+            self::connect();
+        }
+        self::$dblink->autocommit(FALSE);
+
+    }
+
+    public static function endTransaction()
+    {
+        if (isset(self::$dblink)) {
+            self::$dblink->commit();
+        }
+
 
     }
 
