@@ -441,8 +441,11 @@ var Film = {
         if (max - id < this.nombreControlDansLargeur) {
             id = max - this.nombreControlDansLargeur;
         }
-        Film.compteur = central;
+        //Film.compteur = central;
         //console.info("Nombre controle dans la largeur : " + this.nombreControlDansLargeur + " Nb film " + this.tonObjet.film.length + " id " + id + " max " + max);
+        console.log(this.tonObjet.length)
+        console.log(max > this.tonObjet.length);
+        console.log(this.tonObjet.length);
         while (id < max) {
             this.afficheControlTopBar(this.tonObjet[id], id + 1, central, screenshot);
             id++;
@@ -450,6 +453,7 @@ var Film = {
         this.containerCss.append(this.CssModulable);
     },
     afficheControlTopBar: function (control, id, centre, screenshot) {
+        console.log(control);
         if (id <= centre - 1) {
             if (control.poster) {
                 this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.demiLargeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="' + Base.controller.makeUrlBase() + "proxy/imageSetWidth/" + Base.model.converter.paramUrl(control.poster) + '/200.jpg" alt="' + control.titre + '"></a></div> </div></div>');

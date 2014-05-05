@@ -80,8 +80,8 @@ if (isset ($erreur)) {
             </div>
             <div class="row">
                 <div class="columns">
-                    <ul class="button-group round">
-                        <li>
+                    <ul class="button-group">
+                    <li>
                             <button class="button small secondary" value="Connexion" type="submit">Connexion</button>
                         </li>
                         <li>
