@@ -23,6 +23,7 @@ class Install extends \core\Controller
             "json" => extension_loaded("json"),
             "curl" => extension_loaded("curl"),
             "ecrituredossiercache" => is_writable(ROOT . DS . "cache"),
+            "ecrituredossierlog" => is_writable(ROOT . DS . "log"),
             "ecriturefileconfig" => is_writable(ROOT . DS . "config" . DS . "Conf.php")
         ));
     }
