@@ -70,7 +70,7 @@ sudo ln -s /home/<utilisateur>/Mediastorrent /var/www/Mediastorrent
 
 ##Configuration d'apache2
 
-Dans  /etc/apache2/sites-available/default-ssl.conf, il faut ajouter ce code dans le <VirtualHost *:80> :
+Dans  /etc/apache2/sites-available/default-ssl.conf, il faut ajouter ce code dans le ```<VirtualHost *:80>``` :
 ```
 <Directory /var/www>
 AllowOverride All
