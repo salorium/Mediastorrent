@@ -101,25 +101,9 @@ Exemple :
 
 	ErrorLog ${APACHE_LOG_DIR}/error.log
 	CustomLog ${APACHE_LOG_DIR}/access.log combined
-<Directory /var/www/mediastorrent>
-                RewriteEngine On
-#RewriteCond %{REQUEST_FILENAME} !-d
-#RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule (.*) webroot/$1 [L]
-AddType application/x-httpd-php .svg
-                Options FollowSymLinks
-                AllowOverride all
-        </Directory>
-
-<Directory /var/www/mediastorrent/webroot>
-                RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule (.*) index.php/$1 [L]
-AddType application/x-httpd-php .svg
-                Options FollowSymLinks
-                AllowOverride all
-        </Directory>
+<Directory /var/www>
+AllowOverride All
+</Directory>
 
 
 	# For most configuration files from conf-available/, which are

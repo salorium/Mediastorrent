@@ -15,15 +15,15 @@ class Conf
     static $debug = true;
     static $debuglocal = true;
     static $debuglocalfile = true;
-    static $install = true;
+    static $install = false;
     static $nomdusite = "MediasTorrent";
     static $version = "#A.2.0";
     static $anneefondation = "2013";
     static $author = "Salorium";
     static $databases = array(
         "default" => array(
-            "host" => "mysql",
-            "database" => "test",
+            "host" => "mysql.salorium.com",
+            "database" => "mediastorrent",
             "login" => "mediastorrent",
             "password" => "azerty"
         )
