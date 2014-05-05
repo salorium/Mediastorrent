@@ -175,6 +175,11 @@ class Torrent extends Controller
         if (is_null($t)) trigger_error("Impossible de se connecter à rtorrent :(");
         $torrent = null;
         if (!is_null($hashtorrentselectionne)) {
+            /*
+             * =================================================
+             * Détails du torrent hashtorrent
+             * =================================================
+             */
             $tmp = $tor;
             $data = $tmp;
             if (!is_null($cid)) {
@@ -191,6 +196,11 @@ class Torrent extends Controller
                 trigger_error("Impossible de mettre des données dans le cache");
             }
             $torrent["detail"] = $tmp;
+            /*
+             * =================================================
+             * Détails du torrent hashtorrent (file liste)
+             * =================================================
+             */
             $cmds = array(
                 "f.get_path=", "f.get_completed_chunks=", "f.get_size_chunks=", "f.get_size_bytes=", "f.get_priority=", "f.prioritize_first=", "f.prioritize_last="
             );
@@ -233,6 +243,56 @@ class Torrent extends Controller
                 if (!(\core\Memcached::value("fileslist" . \config\Conf::$portscgi, sha1($ncid . $hashtorrentselectionne), $data, 60 * 5)))
                     trigger_error("Impossible de mettre des données dans le cache");
                 $torrent["files"] = $tmp;
+            }
+            /*
+             * =================================================
+             * Détails du torrent hashtorrent (traker liste)
+             * =================================================
+             */
+            $cmds = array(
+                "t.get_url=", "t.get_type=", "t.is_enabled=", "t.get_group=", "t.get_scrape_complete=",
+                "t.get_scrape_incomplete=", "t.get_scrape_downloaded=",
+                "t.get_normal_interval=", "t.get_scrape_time_last="
+            );
+            $cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "t.multicall", array($hashtorrentselectionne, ""));
+
+            foreach ($cmds as $prm) {
+                $cmd->addParameter(\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi, $prm));
+            }
+            $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, $cmd);
+            if (!$req->success()) {
+                trigger_error("Impossible de récupéré la liste des trakers de " . $hashtorrentselectionne);
+                $traker = $req->val;
+            } else {
+                /*
+                $taille = count($req->val);
+                $j = 0;
+                for ($i = 0; $i < $taille; $i += 9) {
+                    $files[] = array($j, $req->val[$i], $req->val[$i + 1], $req->val[$i + 2], $req->val[$i + 3], $req->val[$i + 4], $req->val[$i + 5], $req->val[$i + 6]);
+                    $j++;
+                }
+                $tmp = $files;
+                $data = $tmp;
+                if (!is_null($cid)) {
+                    if ($anc = \core\Memcached::value("fileslist" . \config\Conf::$portscgi, sha1($cid . $hashtorrentselectionne))) {
+                        foreach ($anc as $k => $v) {
+                            if (!isset($tmp[$k]))
+                                $tmp[$k] = false;
+                            foreach ($v as $kk => $vv) {
+                                if (isset($tmp[$k][$kk]) && $tmp[$k][$kk] == $vv) {
+                                    unset($tmp[$k][$kk]);
+                                }
+                            }
+                            if (count($tmp[$k]) == 0)
+                                unset($tmp[$k]);
+                        }
+                    }
+                }
+
+                if (!(\core\Memcached::value("fileslist" . \config\Conf::$portscgi, sha1($ncid . $hashtorrentselectionne), $data, 60 * 5)))
+                    trigger_error("Impossible de mettre des données dans le cache");
+                */
+                $torrent["trackers"] = $req->val;
             }
 
         }
