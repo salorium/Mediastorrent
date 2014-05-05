@@ -232,6 +232,26 @@
                     </div>
                 </div>
                 <div class="content" id="panel2-3">
+                    <div style="overflow-y: auto;position: relative;height: inherit;">
+                        <table style="width: 100%;">
+                            <thead>
+                            <tr>
+                                <th style='width: 200px;'>Nom</th>
+                                <th>Type</th>
+                                <th>Activé</th>
+                                <th>Groupe</th>
+                                <th>Sources</th>
+                                <th>Clients</th>
+                                <th>Téléchargé</th>
+                                <th>A été mis à jour</th>
+                                <th>Intervalle</th>
+                                <th>Privé</th>
+                            </tr>
+                            </thead>
+                            <tbody id="torrentdetailstrackers">
+                            </tbody>
+                        </table>
+                    </div>
 
                 </div>
                 <div class="content" id="panel2-4"><p>Fourth panel content goes here...</p></div>

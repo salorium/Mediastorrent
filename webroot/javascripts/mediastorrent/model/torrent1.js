@@ -47,5 +47,10 @@ Torrent1.model = {
                 return '?';
             return this.priorite[noprio];
         }
+    },
+    trackerTorrent: {
+        original: [],
+        type: [0, "http", "udp", "dht"],
+        liste: []
     }
 };
