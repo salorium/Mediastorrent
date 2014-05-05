@@ -59,9 +59,11 @@ sudo apt-get install memcached
 sudo apt-get install mysql-server
 ```
 
+
 ##Installation de Mediastorrent
 ```
 sudo apt-get install apache2 libapache2-mod-php5 php5-mysqlnd php5-json php5-imagick php5-memcached php5-curl
+sudo a2enmod rewrite
 git clone https://github.com/salorium/Mediastorrent.git
 ```
 

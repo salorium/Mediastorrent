@@ -22,6 +22,23 @@ class Utilisateur extends \core\ModelMysql
     {
     }
 
+    public function insert()
+    {
+        if (is_null($this->login))
+            return false;
+        $query = "insert into utilisateur (login,motdepasse,mail,role,keyconnexion) values(";
+        $query .= \core\Mysqli::real_escape_string($this->login) . ",";
+        $query .= \core\Mysqli::real_escape_string($this->motdepasse) . ",";
+        $query .= \core\Mysqli::real_escape_string($this->mail) . ",";
+        $query .= \core\Mysqli::real_escape_string($this->role) . ",";
+        $query .= \core\Mysqli::real_escape_string($this->keyconnexion) . ")";
+        \core\Mysqli::query($query);
+        $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
+        \core\Mysqli::close();
+        return $res;
+
+    }
+
     public function update()
     {
         if (!is_null($this->login)) {
@@ -37,6 +54,16 @@ class Utilisateur extends \core\ModelMysql
             return $res;
         }
         return false;
+    }
+
+    public static function insertUtilisateurSysop($login, $mdp, $mail)
+    {
+        $u = new Utilisateur();
+        $u->login = $login;
+        $u->motdepasse = sha1($mdp);
+        $u->mail = $mail;
+        $u->role = "Sysop";
+        return $u->insert();
     }
 
     public static function authentifierUtilisateurParMotDePasse($login, $mdp)

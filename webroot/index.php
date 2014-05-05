@@ -56,11 +56,13 @@ function debug($var)
     echo "</pre></div></a>";
 }
 
-/*if ( \config\Conf::$install){
-    core\Router::connect("Visiteur","/","install/index");
-}else{*/
-core\Router::connect("Visiteur", "/", "utilisateur/index");
-//}
+if (\config\Conf::$install) {
+    core\Router::connect("Install", "/", "install/index");
+} else {
+    //*
+    core\Router::connect("Visiteur", "/", "utilisateur/index");
+//
+}
 
 core\Router::connect("Torrent", "/", "mediastorrent/accueil");
 core\Router::connect("Sysop", "/", "mediastorrent/accueil");

@@ -40,8 +40,8 @@ class Utilisateur extends \core\Controller
             // header("HTTP/1.1 307 Temporary Redirect");
             if (!\core\Memcached::value($u->login, "user", $u, 60 * 5))
                 trigger_error("Impossible de mettre des données dans memcached");
-            setcookie("login", htmlspecialchars($u->login), strtotime('+1 days'), "/");
-            setcookie("keyconnexion", htmlspecialchars($u->keyconnexion), strtotime('+1 days'), "/");
+            setcookie("login", $u->login, strtotime('+1 days'), "/");
+            setcookie("keyconnexion", $u->keyconnexion, strtotime('+1 days'), "/");
             header("Location: " . BASE_URL);
             exit();
         } else {
