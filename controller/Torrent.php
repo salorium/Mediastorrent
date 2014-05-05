@@ -156,7 +156,7 @@ class Torrent extends Controller
                 trigger_error("Impossible de mettre des données dans le cache");
             $t[] = $tmp;
             $t[] = $ncid;
-            $path = ROOT . DS . ".." . DS . "rtorrent" . DS . "data";
+            $path = DS . "home" . DS . \config\Conf::$user["user"]->login . DS . "rtorrent" . DS . "data";
             $t[] = disk_total_space($path) - disk_free_space($path);
             $t[] = disk_total_space($path);
 
