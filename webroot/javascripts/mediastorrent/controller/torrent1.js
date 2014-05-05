@@ -69,6 +69,7 @@ Torrent1.controller = {
                                         var t = Torrent1.model.listTorrent.changed && response.torrentselectionnee.files != [] && response.torrentselectionnee.detail != [];
                                         Torrent1.controller.detailsTorrent.conversion(response.torrentselectionnee.detail, t);
                                         Torrent1.controller.filesTorrent.conversion(response.torrentselectionnee.files, t);
+                                        Torrent1.controller.trackerTorrent.conversion(response.torrentselectionnee.trackers, t);
                                         Torrent1.model.listTorrent.changed = false;
                                     }
 
@@ -80,6 +81,7 @@ Torrent1.controller = {
                             }
                             Torrent1.view.detailsTorrent.affiche();
                             Torrent1.view.filesTorrent.afficheArbre();
+                            Torrent1.view.trackersTorrent.afficheTrackers();
                             Torrent1.model.seedbox.changed = false;
                             setTimeout(function () {
                                 Torrent1.controller.seedbox.update(res[1]);
@@ -843,6 +845,14 @@ Torrent1.controller = {
 
 
             }
+        }
+    },
+    trackerTorrent: {
+        init: function () {
+            Torrent1.view.trackerTorrent.init();
+        },
+        conversion: function (liste, force) {
+            Torrent1.model.trackerTorrent.liste = liste;
         }
     },
     addTorrent: {

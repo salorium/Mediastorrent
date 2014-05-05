@@ -260,18 +260,19 @@ class Torrent extends Controller
                 $cmd->addParameter(\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi, $prm));
             }
             $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, $cmd);
+            $trackers = null;
             if (!$req->success()) {
                 trigger_error("Impossible de récupéré la liste des trakers de " . $hashtorrentselectionne);
                 $traker = $req->val;
             } else {
-                /*
+
                 $taille = count($req->val);
                 $j = 0;
                 for ($i = 0; $i < $taille; $i += 9) {
-                    $files[] = array($j, $req->val[$i], $req->val[$i + 1], $req->val[$i + 2], $req->val[$i + 3], $req->val[$i + 4], $req->val[$i + 5], $req->val[$i + 6]);
+                    $trackers[] = array($j, $req->val[$i], $req->val[$i + 1], $req->val[$i + 2], $req->val[$i + 3], $req->val[$i + 4], $req->val[$i + 5], $req->val[$i + 6], $req->val[$i + 7], $req->val[$i + 8]);
                     $j++;
                 }
-                $tmp = $files;
+                /*$tmp = $files;
                 $data = $tmp;
                 if (!is_null($cid)) {
                     if ($anc = \core\Memcached::value("fileslist" . \config\Conf::$portscgi, sha1($cid . $hashtorrentselectionne))) {
@@ -292,7 +293,7 @@ class Torrent extends Controller
                 if (!(\core\Memcached::value("fileslist" . \config\Conf::$portscgi, sha1($ncid . $hashtorrentselectionne), $data, 60 * 5)))
                     trigger_error("Impossible de mettre des données dans le cache");
                 */
-                $torrent["trackers"] = $req->val;
+                $torrent["trackers"] = $trackers;
             }
 
         }

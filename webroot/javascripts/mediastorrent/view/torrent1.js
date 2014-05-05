@@ -588,6 +588,22 @@ Torrent1.view = {
             }
         }
     },
+    trackersTorrent: {
+        init: function () {
+            Base.view.fixedHeight("#panel2-3", $("#moitiedroite").height() - Base.model.html.hauteur("#moitiedroite > dl"));
+        },
+        afficheTrackers: function () {
+            $("#torrentdetailstrackers").empty();
+            $.each(Torrent1.model.trackerTorrent.liste, function (k, v) {
+                //var $tr = $('<tr style="cursor: pointer;" class="' + ($.inArray(cpt + "", Torrent1.model.filesTorrent.selectionne) > -1 ? "active" : "") + '" id="file' + cpt + '" data-cpt="' + cpt + '" data-dossier="1" data-dossierk="' + k + '"><td><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dossier.svg">' + v[0] + '</td><td>' + Base.model.converter.bytes(v[4], 2) + '</td><td>' + Base.model.converter.bytes(v[4] * v[2] / v[3], 2) + '</td><td><progress class="' + (v[2] == v[3] ? "ul" : "dl") + '"  value="' + v[2] + '" max="' + v[3] + '" title="' + (v[2] != 0 ? v[2] / v[3] * 100 : 0) + '%"></progress></td><td>' + Torrent1.model.filesTorrent.getPriorite(v[5]) + '</td></tr>');
+                var $tr = $('<tr style="cursor: pointer;"><td>' + v[1] + '</td><td>' + Torrent1.model.trackerTorrent.type[v[2]] + '</td><td>' + Base.model.converter.bytes(v[4] * v[2] / v[3], 2) + '</td><td><progress class="' + (v[2] == v[3] ? "ul" : "dl") + '"  value="' + v[2] + '" max="' + v[3] + '" title="' + (v[2] != 0 ? v[2] / v[3] * 100 : 0) + '%"></progress></td><td>' + Torrent1.model.filesTorrent.getPriorite(v[5]) + '</td></tr>');
+
+                $("#torrentdetailstrackers").append(
+                    $tr
+                );
+            });
+        }
+    },
     addTorrent: {
         init: function () {
             Base.view.fixedHeight("#addTorrentContenu", $("#addTorrent").height() - Base.model.html.hauteur("#addTorrentTitle"));
