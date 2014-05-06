@@ -111,7 +111,7 @@ Torrent1.controller = {
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    Torrent1.view.loader.hide();
+                    Torrent1.view.loaders.hideListeTorrent();
                     Torrent1.controller.listTorrent.resetSelectionne();
                     Torrent1.controller.filesTorrent.reset();
                     Torrent1.controller.detailsTorrent.reset();

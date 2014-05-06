@@ -114,3 +114,6 @@ AllowOverride All
 	#Include conf-available/serve-cgi-bin.conf
 </VirtualHost>
 ```
+
+##Utilisation
+Je vous conseil d'utiliser Mediastorrent avec firefox.
