@@ -6,7 +6,7 @@
  * Time: 13:47
  */
 
-namespace controller;
+namespace controller\install;
 
 
 class Install extends \core\Controller
@@ -14,14 +14,34 @@ class Install extends \core\Controller
     function index()
     {
         $this->layout = "install";
-        $memachedload = extension_loaded("memcached");
+        //$memachedload = extension_loaded("memcached");
         $this->set(array(
             //"curl"=>extension_loaded("curl"),
-            "memcached" => $memachedload,
+            "memcached" => extension_loaded("memcached"),
             "mysqli" => extension_loaded("mysqli"),
             "imagick" => extension_loaded("imagick"),
+            "json" => extension_loaded("json"),
+            "curl" => extension_loaded("curl"),
             "ecrituredossiercache" => is_writable(ROOT . DS . "cache"),
+            "ecrituredossierlog" => is_writable(ROOT . DS . "log"),
+            "ecriturefileconfig" => is_writable(ROOT . DS . "config" . DS . "Conf.php")
         ));
+    }
+
+    function mysqlinit()
+    {
+        $this->layout = "install";
+        if (isset($_REQUEST["hostmysql"]) && isset($_REQUEST["loginmysql"]) && isset($_REQUEST["passmysql"])) {
+            $querys = file_get_contents(ROOT . DS . "mysql" . DS . "mediastorrent.sql");
+            \core\Mysqli::initmultiquery($_REQUEST["hostmysql"], $_REQUEST["loginmysql"], $_REQUEST["passmysql"], $querys);
+            \model\simple\MakerConf::makerConfSavBDD($_REQUEST["hostmysql"], $_REQUEST["loginmysql"], $_REQUEST["passmysql"]);
+            $this->set("res", true);
+        } else if (isset($_REQUEST["login"]) && isset($_REQUEST["pass"]) && isset($_REQUEST["mail"])) {
+            \model\mysql\Utilisateur::insertUtilisateurSysop($_REQUEST["login"], $_REQUEST["pass"], $_REQUEST["mail"]);
+            \model\simple\MakerConf::makerConfEnd();
+        } else {
+
+        }
     }
 
     function enableModule($pass = null, $action = null)

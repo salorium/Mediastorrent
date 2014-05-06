@@ -14,7 +14,8 @@ class Conf
 {
     static $debug = true;
     static $debuglocal = true;
-    static $debuglocalfile = false;
+    static $debuglocalfile = true;
+    static $install = true;
     static $nomdusite = "MediasTorrent";
     static $version = "#A.2.0";
     static $anneefondation = "2013";
@@ -22,7 +23,7 @@ class Conf
     static $databases = array(
         "default" => array(
             "host" => "localhost",
-            "database" => "mediastorrent",
+            "database" => "test",
             "login" => "mediastorrent",
             "password" => "azerty"
         )
@@ -30,15 +31,14 @@ class Conf
     static $memcachedserver = array(
         array("localhost", 11211)
     );
-    static $user = null;
+    static $user = array("user" => null, "role" => 0, "roletxt" => "Install");
     static $api_key_themoviedb = "57b59be276081344c6073b1989f4d57e";
-    static $numerorole = array("Visiteur", "Normal", array("Torrent", "Uploadeur"), "Sysop");
+    static $numerorole = array("Install", "Visiteur", "Normal", array("Torrent", "Uploadeur"), "Sysop");
     static $rolenumero; // Ne pas modifier
     static $rolevue;
     static $videoExtensions = array("avi", "asf", "flv", "mkv", "mov", "mp4", "mpg", "mpeg", "ogm", "rm", "wmv", "rar");
     static $musicExtensions = array("mp3", "flac", "ogg");
     static $portscgi = 5001;
-    static $te = "dd";
 }
 
 ?>

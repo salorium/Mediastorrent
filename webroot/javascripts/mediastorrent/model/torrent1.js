@@ -47,5 +47,19 @@ Torrent1.model = {
                 return '?';
             return this.priorite[noprio];
         }
+    },
+    trackerTorrent: {
+        original: [],
+        type: [0, "http", "udp", "dht"],
+        liste: [],
+        estPrive: function (url) {
+            return(
+                (/(http|https|udp):\/\/[a-z0-9-\.]+\.[a-z]{2,4}((:(\d){2,5})|).*\/an.*\?.+=.+/i).test(url) ||
+                    (/(http|https|udp):\/\/[a-z0-9-\.]+\.[a-z]{2,4}((:(\d){2,5})|)\/.*[0-9a-z]{8,32}\/an/i).test(url) ? 1 : 0 );
+        },
+        nom: function (url) {
+            return url.match(/(http|https|udp):\/\/([^\/]+)/i);
+        }
+
     }
 };

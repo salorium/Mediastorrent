@@ -16,6 +16,13 @@ use model\simple\Mail;
 
 class Test extends Controller
 {
+    function isql()
+    {
+        $querys = file_get_contents(ROOT . DS . "mysql" . DS . "mediastorrent.sql");
+        $t = \core\Mysqli::multiquery($querys);
+        \core\Mysqli::getObjectAndClose(false);
+    }
+
     function tfilm()
     {
         \model\mysql\Torrentfilm::rechercheParNumFileHashClefunique(0, 'FA0C487D79DD07DB1BE85E9639D9E5B112DD39EE', '9JkOBaF1Hs');

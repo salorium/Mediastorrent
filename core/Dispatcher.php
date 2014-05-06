@@ -21,7 +21,8 @@ class Dispatcher
         LoaderJavascript::add("test", "controller.init");
         $this->debug = new Debug($this);
         $this->debug->handle_errors();
-        $this->roleUser();
+        if (!Conf::$install)
+            $this->roleUser();
         $this->request = new Request();
         Router::parse($this->request->url, $this->request);
     }
@@ -48,17 +49,17 @@ class Dispatcher
                 } else {
                     $num--;
                 }
-                if ($role === \config\Conf::$numerorole[0]) {
+                if ($role === \config\Conf::$numerorole[1]) {
                     $cname = '\controller\\' . ucfirst($this->request->controller);
                 } else {
                     $cname = '\controller\\' . strtolower($role) . '\\' . ucfirst($this->request->controller);
                 }
 
-            } while (!file_exists(ROOT . DS . str_replace("\\", DS, $cname) . ".php") && $num > -1);
+            } while (!file_exists(ROOT . DS . str_replace("\\", DS, $cname) . ".php") && $num > 0);
 
             Conf::$rolevue = strtolower($role);
             $controller = new $cname($this->request, $this->debug);
-        } while (!in_array($this->request->action, get_class_methods($controller)) && $num > -1);
+        } while (!in_array($this->request->action, get_class_methods($controller)) && $num > 0);
         if (!in_array($this->request->action, get_class_methods($controller))) {
             trigger_error("Le controller " . $this->request->controller . " n'a pas de méthode " . $this->request->action);
             $this->error("Le controller " . $this->request->controller . " n'a pas de méthode " . $this->request->action);
@@ -97,7 +98,7 @@ class Dispatcher
             }
 
         }
-        $role = 0;
+        $role = 1;
         $roletext = "Visiteur";
         if ($u && !is_null($u)) {
             $role = Conf::$rolenumero[$u->role];
