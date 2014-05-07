@@ -23,6 +23,8 @@ class Rtorrents
         \core\Mysqli::query($query);
         $rtorrent = \core\Mysqli::getObjectAndClose(true);
         $rtable = array();
+        var_dump($rtorrent);
+        die();
         foreach ($rtorrent as $v) {
             if (isset($rtable[$v->nomrtorrent . ""])) {
                 if (!is_null($v->portscgi)) {
