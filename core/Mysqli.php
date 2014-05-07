@@ -24,7 +24,7 @@ class Mysqli
             $conf["host"] = $host;
             $conf["login"] = $login;
             $conf["password"] = $pass;
-            $conf["database"] = "test";
+            $conf["database"] = "mysql";
         }
         self::$dblink = new \mysqli($conf["host"], $conf["login"], $conf["password"], $conf["database"]);
         //self::$dblink->connect(Variable::$host_mysql,Variable::$login_mysql,Variable::$password_mysql,Variable::$dbname_mysql);

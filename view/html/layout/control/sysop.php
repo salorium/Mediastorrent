@@ -139,6 +139,22 @@
         <!-- Top Bar Right Nav Elements -->
         <ul class="right">
             <li class="divider hide-for-small"></li>
+            <li class="has-dropdown"><a>Administration</a>
+
+                <ul class="dropdown">
+                    <?php if (\model\mysql\Rtorrent::isRtorrentServeur()) { ?>
+                        <li>
+                            <a onclick="Base.view.noty.generateConfirm('Être vous sur de vouloir supprimer ce serveur des serveurs de rtorrent ?<br>Attention, toutes les seedbox et fichiers torrent de la médiathèque qui sont associés a cette seedbox seront également supprimés',function(){window.location = '<?= \core\Router::url("system/delRtorrent") ?>'})">Supprimer
+                                ce serveur des serveur de rtorrent</a></li>
+                    <? } else { ?>
+                        <li><a href="<?= \core\Router::url("system/addRtorrent") ?>">Ajouter ce serveur en tant que
+                                serveur de rtorrent</a></li>
+                    <? } ?>
+                    <li class="divider"></li>
+                    <li><a href="<?= \core\Router::url("utilisateur/liste") ?>">Gérer les utilisateurs</a></li>
+                </ul>
+            </li>
+            <li class="divider"></li>
             <li class="has-form">
                 <? echo isset($debug_performance_for_layout) ? $debug_performance_for_layout : ""; ?>
             </li>
