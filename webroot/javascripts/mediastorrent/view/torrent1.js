@@ -238,7 +238,7 @@ Torrent1.view = {
                 '</table></fieldset>';
         },
         stats: function (hdduse, hddtotal, statreso) {
-            $("#storage").attr({"value": hdduse, "max": hddtotal, "title": Base.model.converter.bytes(hdduse, 2) + " / " + Base.model.converter.bytes(hddtotal, 2)});
+            $("#storage").attr({"value": hdduse, "max": hddtotal, "title": Base.model.converter.bytes(hddtotal - hdduse, 2) + " | " + Base.model.converter.bytes(hddtotal, 2)});
             $("#vup").html((statreso[0] == 0 ? "" : Base.model.converter.speed(statreso[0])));
             $("#vupl").html((statreso[1] == 0 ? "∞" : Base.model.converter.speed(statreso[1])));
             $("#vupt").html(Base.model.converter.bytes(statreso[2], 2));
@@ -443,7 +443,7 @@ Torrent1.view = {
                                      if ( Base.model.path.ext(v[1]) == "avi" || Base.model.path.ext(v[1]) == "mp4" || Base.model.path.ext(v[1]) == "mkv"){
                                      button.push({nom:"Streaming",dest : function(){Torrent.controller.streamingFileTorrent($(e.currentTarget).attr("data-cpt"));}});
                                      }*/
-                                    Base.model.pannelClicDroit.make(button, e.clientX, e.clientY);
+                                    Base.model.pannelClicDroit.make(button, e.pageX, e.pageY);
                                 }
                                 break;
                         }
@@ -571,7 +571,8 @@ Torrent1.view = {
                                             Torrent1.controller.filesTorrent.streaming($(e.currentTarget).attr("data-id"));
                                         }});
                                     }
-                                    Base.model.pannelClicDroit.make(button, e.clientX, e.clientY);
+                                    console.log(e);
+                                    Base.model.pannelClicDroit.make(button, e.pageX, e.pageY);
                                 }
                                 break;
                         }
