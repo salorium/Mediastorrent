@@ -121,12 +121,11 @@ class Utilisateur extends \core\ModelMysql
         return \core\Mysqli::getObjectAndClose(true, __CLASS__);
     }
 
-    public static function existeUtilisteur($login)
+    public static function getUtilisteur($login)
     {
-        $query = "select count(*) as nb from utilisateur";
-        $query .= " where login=" . \core\Mysqli::real_escape_string(HOST);
+        $query = "select * from utilisateur";
+        $query .= " where login=" . \core\Mysqli::real_escape_string($login);
         \core\Mysqli::query($query);
-        $objet = \core\Mysqli::getObjectAndClose();
-        return ($objet->nb == 1);
+        return \core\Mysqli::getObjectAndClose(false, __CLASS__);
     }
 }

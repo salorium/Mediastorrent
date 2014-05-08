@@ -5,5 +5,9 @@ Sysoputilisateur.controller = {
     init: function () {
         var hauteur = Base.model.conf.containerHeight() - Base.model.html.hauteur(".container nav");
         Sysoputilisateur.view.fixedHeightContenu(hauteur);
+    },
+    updateUser: function (element) {
+        $('#updateuser').append("<input type='hidden' name='login' value='" + $(element).html() + "'>");
+        $('#updateuser').submit();
     }
 }
