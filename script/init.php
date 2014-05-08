@@ -45,6 +45,7 @@ $req = new \model\xmlrpc\rXMLRPCRequest($portscgi, array(
 if ($req->run()) {
     \model\simple\Console::println("ok");
 } else {
+    \model\simple\Console::println("Non ok");
     \model\simple\Console::println($req->val);
 }
 
