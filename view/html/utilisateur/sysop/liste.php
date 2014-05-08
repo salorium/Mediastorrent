@@ -106,8 +106,7 @@
                     <label>Port SCGI :
                         <small>obligatoire</small>
                         <input type="text" required pattern="[0-9]{4}"/>
-                        <small class="error">Le mot de passe est obligatoire ! (Au moins 8 caractères avec une lettre
-                            majuscule, un chiffre / un caractère spécial.)
+                        <small class="error">Le ports scgi est obligatoire, un nombre à 4 chiffres!
                         </small>
                     </label>
                     <button type="submit" class="secondary tiny small-3">Ajouter</button>
