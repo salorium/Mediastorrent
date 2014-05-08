@@ -27,13 +27,13 @@
         <ul class="left">
             <li id="utilisateur" class="has-dropdown not-click">
 
-                <a><?= $login ?></a>
+                <a><?= $user->login ?></a>
                 <ul class="dropdown">
                     <?
                     foreach ($users as $v) {
-                        if ($v->login !== $login) {
+                        if ($v->login !== $user->login) {
                             ?>
-                            <li><a><?= $v->login; ?></a></li>
+                            <li><a onclick="Sysoputilisateur.controller.updateUser(this);"><?= $v->login; ?></a></li>
                         <?
                         }
                     }
@@ -57,22 +57,30 @@
 <div id="contenu">
     <div id="souscontenu" class="heightfixed">
         <div id="moitiegauche" class="large-5 columns panel heightfixed">
-            <form id="updateuser">
-                <input type="hidden" value="updateuser">
+            <form id="updateuser" method="post">
+                <input type="hidden" value="updateuser" name="action">
             </form>
-            <input type="hidden" id="login" value="<?= $login; ?>"/>
+            <input type="hidden" id="login" value="<?= $user->login; ?>"/>
 
             <form data-abide method="post">
                 <fieldset>
                     <legend>Changer le mot de passe</legend>
-                    <input type="password" required pattern="password"/>
-                    <small class="error">Le mot de passe est obligatoire ! (Au moins 8 caractères avec une lettre
-                        majuscule, un chiffre / un caractère spécial.)
-                    </small>
-                    <button type="submit" class="secondary small-3">Modifier</button>
+                    <div class="row">
+                        <div class="large-8 columns"><input type="password" required pattern="password"/>
+                            <small class="error">Le mot de passe est obligatoire ! (Au moins 8 caractères avec une
+                                lettre
+                                majuscule, un chiffre / un caractère spécial.)
+                            </small>
+                        </div>
+                        <div class="large-4 columns">
+                            <button type="submit" class="secondary tiny">Modifier</button>
+                        </div>
+                    </div>
+
                 </fieldset>
             </form>
-            <form data-abide method="post">
+            <? if (count($rtorrents) > 0) { ?>
+                <form data-abide method="post">
                 <fieldset>
                     <legend>Ajouter un serveur rtorrent</legend>
                     <label for="customDropdown1">Sélection du serveur rtorrent
@@ -85,7 +93,7 @@
                                 <option value="<?= $k; ?>"><?= $k; ?> (<?= $rt["host"]; ?>)
                                     <?
                                     if (count($rt["scgi"]) > 0)
-                                        echo " ports scgi déjà pris (" . implode(", ", $rt["scgi"]) . ")";
+                                        echo " [" . implode(", ", $rt["scgi"]) . "]";
                                     ?>
                                 </option>
                             <?
@@ -102,9 +110,10 @@
                             majuscule, un chiffre / un caractère spécial.)
                         </small>
                     </label>
-                    <button type="submit" class="secondary small-3">Ajouter</button>
+                    <button type="submit" class="secondary tiny small-3">Ajouter</button>
                 </fieldset>
             </form>
+            <? } ?>
         </div>
         <div id="moitiedroite" class="large-7 columns panel heightfixed">
             <dl class="tabs" data-tab>

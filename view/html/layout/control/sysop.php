@@ -151,7 +151,7 @@
                                 serveur de rtorrent</a></li>
                     <? } ?>
                     <li class="divider"></li>
-                    <li><a href="<?= \core\Router::url("utilisateur/liste") ?>">Gérer les utilisateurs</a></li>
+                    <li><a href="<?= \core\Router::url("utilisateur/liste") ?>">Utilisateurs</a></li>
                 </ul>
             </li>
             <li class="divider"></li>

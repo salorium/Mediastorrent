@@ -31,7 +31,7 @@ class Conf
 {
     static $debug = true;
     static $debuglocal = true;
-    static $debuglocalfile = false;
+    static $debuglocalfile = true;
     static $install = true;
     static $nomdusite = "MediasTorrent";
     static $version = "#A.2.0";
@@ -82,7 +82,7 @@ class Conf
 {
     static $debug = true;
     static $debuglocal = true;
-    static $debuglocalfile = false;
+    static $debuglocalfile = true;
     static $install = false;
     static $nomdusite = "MediasTorrent";
     static $version = "#A.2.0";

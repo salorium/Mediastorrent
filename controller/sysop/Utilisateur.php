@@ -16,15 +16,19 @@ class Utilisateur extends \core\Controller
     function liste()
     {
         $users = \model\mysql\Utilisateur::getAllUtilisateur();
-        $login = $users[0]->login;
-        if (isset($_REQUEST["login"]) && \model\mysql\Utilisateur::existeUtilisteur($_REQUEST["login"]))
-            $login = $_REQUEST["login"];
-        $rtorrents = \model\mysql\Rtorrents::getRtorrentsDispoPourUtilisateur($login);
+        $user = $users[0];
+        if (isset($_REQUEST["login"])) {
+            $u = \model\mysql\Utilisateur::getUtilisteur($_REQUEST["login"]);
+            if (!is_bool($u)) {
+                $user = $u;
+            }
+        }
+        $rtorrents = \model\mysql\Rtorrents::getRtorrentsDispoPourUtilisateur($user->login);
         //debug($rtorrents["VPS1"]);
         $this->set(array(
             "users" => $users,
             "rtorrents" => $rtorrents,
-            "login" => $login
+            "user" => $user
         ));
     }
 } 
