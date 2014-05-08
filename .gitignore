@@ -1,3 +1,3 @@
-/config/*
-/cache/*
-/log/*
+config/*
+cache/*
+log/*
