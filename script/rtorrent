@@ -14,8 +14,7 @@ SCRIPTNAME=/etc/init.d/$NAME
 
 if [ -n "$2" ]; then
 USER=$2
-if [ -n "$3" ]; then
-SCGI=$2
+SCGI=$3
 
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 # path du fichier temporaire

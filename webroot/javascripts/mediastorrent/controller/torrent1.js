@@ -15,7 +15,6 @@ Torrent1.controller = {
         this.filesTorrent.init();
         this.addTorrent.init();
         Torrent1.view.addTorrent.hide();
-
     },
     seedbox: {
         init: function (seedbox) {
@@ -160,7 +159,9 @@ Torrent1.controller = {
         recherche: function () {
             var recher = new RegExp("(" + $("#recherche").val() + ")", "gi");
             Torrent1.model.listTorrent.listerecherche = [];
-            var liste = Torrent1.model.listTorrent.liste.clone();
+            console.log(Torrent1.model.listTorrent.liste);
+            var liste = Torrent1.model.listTorrent.liste.slice(0, Torrent1.model.listTorrent.liste.length);
+            ;
             $.each(liste, function (k, v) {
                 if (recher.test(v[1])) {
                     v[1] = v[1].replace(recher, '<span class="success radius label">$1</span>');
