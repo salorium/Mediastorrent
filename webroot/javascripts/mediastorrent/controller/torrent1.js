@@ -160,8 +160,7 @@ Torrent1.controller = {
             var recher = new RegExp("(" + $("#recherche").val() + ")", "gi");
             Torrent1.model.listTorrent.listerecherche = [];
             console.log(Torrent1.model.listTorrent.liste);
-            var liste = Torrent1.model.listTorrent.liste.slice(0, Torrent1.model.listTorrent.liste.length);
-            ;
+            var liste = Torrent1.model.listTorrent.liste.clone();
             $.each(liste, function (k, v) {
                 if (recher.test(v[1])) {
                     v[1] = v[1].replace(recher, '<span class="success radius label">$1</span>');
