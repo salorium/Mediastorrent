@@ -12,6 +12,7 @@ namespace controller;
 use core\Controller;
 use model\mysql\Film;
 use model\simple\Mail;
+use model\xmlrpc\rTorrentSettings;
 
 
 class Test extends Controller
@@ -21,6 +22,12 @@ class Test extends Controller
         $querys = file_get_contents(ROOT . DS . "mysql" . DS . "mediastorrent.sql");
         $t = \core\Mysqli::multiquery($querys);
         \core\Mysqli::getObjectAndClose(false);
+    }
+
+    function portrtorrent($portscgi)
+    {
+        //\config\Conf::$portscgi = $portscgi;
+        $this->set("rtorrent", rTorrentSettings::get($portscgi)->port);
     }
 
     function tfilm()
