@@ -595,37 +595,37 @@ Torrent1.view = {
         },
         afficheTrackers: function () {
             $("#torrentdetailstrackers").empty();
-            $.each(Torrent1.model.trackerTorrent.liste, function (k, v) {
+            $.each(Torrent1.model.trackersTorrent.liste, function (k, v) {
                 //var $tr = $('<tr style="cursor: pointer;" class="' + ($.inArray(cpt + "", Torrent1.model.filesTorrent.selectionne) > -1 ? "active" : "") + '" id="file' + cpt + '" data-cpt="' + cpt + '" data-dossier="1" data-dossierk="' + k + '"><td><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dossier.svg">' + v[0] + '</td><td>' + Base.model.converter.bytes(v[4], 2) + '</td><td>' + Base.model.converter.bytes(v[4] * v[2] / v[3], 2) + '</td><td><progress class="' + (v[2] == v[3] ? "ul" : "dl") + '"  value="' + v[2] + '" max="' + v[3] + '" title="' + (v[2] != 0 ? v[2] / v[3] * 100 : 0) + '%"></progress></td><td>' + Torrent1.model.filesTorrent.getPriorite(v[5]) + '</td></tr>');
                 console.log(v[1]);
-                var $tr = $('<tr style="cursor: pointer;"><td>' + (v[1] != "dht://" ? Torrent1.model.trackerTorrent.nom(v[1])[2] : "dht://" ) + '</td><td>' + Torrent1.model.trackerTorrent.type[v[2]] + '</td><td>' + v[3] + '</td><td>' + v[4] + '</td><td>' + v[5] + '</td><td>' + v[6] + '</td><td>' + v[7] + '</td><td>' + (Base.model.converter.iv(v[9]) ? Base.model.converter.time((new Date().getTime() - v[9] * 1000) / 1000) : "") + '</td><td>' + Base.model.converter.time(v[8]) + '</td><td>' + Torrent1.model.trackerTorrent.estPrive(v[1]) + '</td></tr>');
+                var $tr = $('<tr style="cursor: pointer;"><td>' + (v[1] != "dht://" ? Torrent1.model.trackersTorrent.nom(v[1])[2] : "dht://" ) + '</td><td>' + Torrent1.model.trackersTorrent.type[v[2]] + '</td><td>' + v[3] + '</td><td>' + v[4] + '</td><td>' + v[5] + '</td><td>' + v[6] + '</td><td>' + v[7] + '</td><td>' + (Base.model.converter.iv(v[9]) ? Base.model.converter.time((new Date().getTime() - v[9] * 1000) / 1000) : "") + '</td><td>' + Base.model.converter.time(v[8]) + '</td><td>' + Torrent1.model.trackersTorrent.estPrive(v[1]) + '</td></tr>');
 
                 $("#torrentdetailstrackers").append(
                     $tr
                 );
             });
-            $.each(Torrent1.model.trackerTorrent.liste, function (k, v) {
+            $.each(Torrent1.model.trackersTorrent.liste, function (k, v) {
                 //var $tr = $('<tr style="cursor: pointer;" class="' + ($.inArray(cpt + "", Torrent1.model.filesTorrent.selectionne) > -1 ? "active" : "") + '" id="file' + cpt + '" data-cpt="' + cpt + '" data-dossier="1" data-dossierk="' + k + '"><td><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dossier.svg">' + v[0] + '</td><td>' + Base.model.converter.bytes(v[4], 2) + '</td><td>' + Base.model.converter.bytes(v[4] * v[2] / v[3], 2) + '</td><td><progress class="' + (v[2] == v[3] ? "ul" : "dl") + '"  value="' + v[2] + '" max="' + v[3] + '" title="' + (v[2] != 0 ? v[2] / v[3] * 100 : 0) + '%"></progress></td><td>' + Torrent1.model.filesTorrent.getPriorite(v[5]) + '</td></tr>');
                 console.log(v[1]);
-                var $tr = $('<tr style="cursor: pointer;"><td>' + (v[1] != "dht://" ? Torrent1.model.trackerTorrent.nom(v[1])[2] : "dht://" ) + '</td><td>' + Torrent1.model.trackerTorrent.type[v[2]] + '</td><td>' + v[3] + '</td><td>' + v[4] + '</td><td>' + v[5] + '</td><td>' + v[6] + '</td><td>' + v[7] + '</td><td>' + (Base.model.converter.iv(v[9]) ? Base.model.converter.time((new Date().getTime() - v[9] * 1000) / 1000) : "") + '</td><td>' + Base.model.converter.time(v[8]) + '</td><td>' + Torrent1.model.trackerTorrent.estPrive(v[1]) + '</td></tr>');
+                var $tr = $('<tr style="cursor: pointer;"><td>' + (v[1] != "dht://" ? Torrent1.model.trackersTorrent.nom(v[1])[2] : "dht://" ) + '</td><td>' + Torrent1.model.trackersTorrent.type[v[2]] + '</td><td>' + v[3] + '</td><td>' + v[4] + '</td><td>' + v[5] + '</td><td>' + v[6] + '</td><td>' + v[7] + '</td><td>' + (Base.model.converter.iv(v[9]) ? Base.model.converter.time((new Date().getTime() - v[9] * 1000) / 1000) : "") + '</td><td>' + Base.model.converter.time(v[8]) + '</td><td>' + Torrent1.model.trackersTorrent.estPrive(v[1]) + '</td></tr>');
 
                 $("#torrentdetailstrackers").append(
                     $tr
                 );
             });
-            $.each(Torrent1.model.trackerTorrent.liste, function (k, v) {
+            $.each(Torrent1.model.trackersTorrent.liste, function (k, v) {
                 //var $tr = $('<tr style="cursor: pointer;" class="' + ($.inArray(cpt + "", Torrent1.model.filesTorrent.selectionne) > -1 ? "active" : "") + '" id="file' + cpt + '" data-cpt="' + cpt + '" data-dossier="1" data-dossierk="' + k + '"><td><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dossier.svg">' + v[0] + '</td><td>' + Base.model.converter.bytes(v[4], 2) + '</td><td>' + Base.model.converter.bytes(v[4] * v[2] / v[3], 2) + '</td><td><progress class="' + (v[2] == v[3] ? "ul" : "dl") + '"  value="' + v[2] + '" max="' + v[3] + '" title="' + (v[2] != 0 ? v[2] / v[3] * 100 : 0) + '%"></progress></td><td>' + Torrent1.model.filesTorrent.getPriorite(v[5]) + '</td></tr>');
                 console.log(v[1]);
-                var $tr = $('<tr style="cursor: pointer;"><td>' + (v[1] != "dht://" ? Torrent1.model.trackerTorrent.nom(v[1])[2] : "dht://" ) + '</td><td>' + Torrent1.model.trackerTorrent.type[v[2]] + '</td><td>' + v[3] + '</td><td>' + v[4] + '</td><td>' + v[5] + '</td><td>' + v[6] + '</td><td>' + v[7] + '</td><td>' + (Base.model.converter.iv(v[9]) ? Base.model.converter.time((new Date().getTime() - v[9] * 1000) / 1000) : "") + '</td><td>' + Base.model.converter.time(v[8]) + '</td><td>' + Torrent1.model.trackerTorrent.estPrive(v[1]) + '</td></tr>');
+                var $tr = $('<tr style="cursor: pointer;"><td>' + (v[1] != "dht://" ? Torrent1.model.trackersTorrent.nom(v[1])[2] : "dht://" ) + '</td><td>' + Torrent1.model.trackersTorrent.type[v[2]] + '</td><td>' + v[3] + '</td><td>' + v[4] + '</td><td>' + v[5] + '</td><td>' + v[6] + '</td><td>' + v[7] + '</td><td>' + (Base.model.converter.iv(v[9]) ? Base.model.converter.time((new Date().getTime() - v[9] * 1000) / 1000) : "") + '</td><td>' + Base.model.converter.time(v[8]) + '</td><td>' + Torrent1.model.trackersTorrent.estPrive(v[1]) + '</td></tr>');
 
                 $("#torrentdetailstrackers").append(
                     $tr
                 );
             });
-            $.each(Torrent1.model.trackerTorrent.liste, function (k, v) {
+            $.each(Torrent1.model.trackersTorrent.liste, function (k, v) {
                 //var $tr = $('<tr style="cursor: pointer;" class="' + ($.inArray(cpt + "", Torrent1.model.filesTorrent.selectionne) > -1 ? "active" : "") + '" id="file' + cpt + '" data-cpt="' + cpt + '" data-dossier="1" data-dossierk="' + k + '"><td><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dossier.svg">' + v[0] + '</td><td>' + Base.model.converter.bytes(v[4], 2) + '</td><td>' + Base.model.converter.bytes(v[4] * v[2] / v[3], 2) + '</td><td><progress class="' + (v[2] == v[3] ? "ul" : "dl") + '"  value="' + v[2] + '" max="' + v[3] + '" title="' + (v[2] != 0 ? v[2] / v[3] * 100 : 0) + '%"></progress></td><td>' + Torrent1.model.filesTorrent.getPriorite(v[5]) + '</td></tr>');
                 console.log(v[1]);
-                var $tr = $('<tr style="cursor: pointer;"><td>' + (v[1] != "dht://" ? Torrent1.model.trackerTorrent.nom(v[1])[2] : "dht://" ) + '</td><td>' + Torrent1.model.trackerTorrent.type[v[2]] + '</td><td>' + v[3] + '</td><td>' + v[4] + '</td><td>' + v[5] + '</td><td>' + v[6] + '</td><td>' + v[7] + '</td><td>' + (Base.model.converter.iv(v[9]) ? Base.model.converter.time((new Date().getTime() - v[9] * 1000) / 1000) : "") + '</td><td>' + Base.model.converter.time(v[8]) + '</td><td>' + Torrent1.model.trackerTorrent.estPrive(v[1]) + '</td></tr>');
+                var $tr = $('<tr style="cursor: pointer;"><td>' + (v[1] != "dht://" ? Torrent1.model.trackersTorrent.nom(v[1])[2] : "dht://" ) + '</td><td>' + Torrent1.model.trackersTorrent.type[v[2]] + '</td><td>' + v[3] + '</td><td>' + v[4] + '</td><td>' + v[5] + '</td><td>' + v[6] + '</td><td>' + v[7] + '</td><td>' + (Base.model.converter.iv(v[9]) ? Base.model.converter.time((new Date().getTime() - v[9] * 1000) / 1000) : "") + '</td><td>' + Base.model.converter.time(v[8]) + '</td><td>' + Torrent1.model.trackersTorrent.estPrive(v[1]) + '</td></tr>');
 
                 $("#torrentdetailstrackers").append(
                     $tr
