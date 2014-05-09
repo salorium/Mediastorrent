@@ -28,8 +28,7 @@ if ($argc == 4) {
     $pass = $argv[3];
     $querys = file_get_contents(ROOT . DS . "mysql" . DS . "mediastorrent.sql");
     \core\Mysqli::initmultiquery($host, $login, $pass, $querys);
-    \model\simple\MakerConf::makerConfSavBDD($host, $login, $pass);
-    \model\simple\MakerConf::makerConfEnd();
+    \model\simple\MakerConf::makerConfSavBDDEnd($host, $login, $pass);
 } else {
     \model\simple\Console::println(basename(__FILE__) . " <hostmysql> <loginmysql> <passmysql>");
 }
