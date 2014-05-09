@@ -29,7 +29,7 @@ if ($argc == 7) {
     $mail = $argv[3];
     $url = $argv[4];
     $nomrtorrent = $argv[5];
-    $scgi = $argc[6];
+    $scgi = $argv[6];
     $res = \model\mysql\Utilisateur::insertUtilisateurSysop($login, $pass, $mail);
     \model\simple\Console::println("Insertion de l'utilisateur");
     \model\simple\Console::println($res);

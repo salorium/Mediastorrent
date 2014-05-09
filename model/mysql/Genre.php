@@ -9,7 +9,7 @@
 namespace model\mysql;
 
 
-class Genre extends \core\Model
+class Genre extends \core\ModelMysql
 {
     public $id;
     public $label;

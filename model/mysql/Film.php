@@ -9,7 +9,7 @@
 namespace model\mysql;
 
 
-class Film extends \core\Model
+class Film extends \core\ModelMysql
 {
     public $titre;
     public $titreoriginal;
