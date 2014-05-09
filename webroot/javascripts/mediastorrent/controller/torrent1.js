@@ -13,6 +13,7 @@ Torrent1.controller = {
         this.listTorrent.init();
         this.detailsTorrent.init();
         this.filesTorrent.init();
+        this.trackerTorrent.init();
         this.addTorrent.init();
         Torrent1.view.addTorrent.hide();
     },
