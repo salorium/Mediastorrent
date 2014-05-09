@@ -12,6 +12,24 @@ namespace model\mysql;
 
 class Rtorrents
 {
+    public $nomrtorrent;
+    public $login;
+    public $portscgi;
+
+    public function insert()
+    {
+        if (is_null($this->nomrtorrent) || is_null($this->login) || is_null($this->portscgi))
+            return false;
+        $query = "insert into rtorrents (nomrtorrent,login,portscgi) values(";
+        $query .= \core\Mysqli::real_escape_string($this->nomrtorrent) . ",";
+        $query .= \core\Mysqli::real_escape_string($this->login) . ",";
+        $query .= \core\Mysqli::real_escape_string($this->portscgi) . ")";
+        \core\Mysqli::query($query);
+        $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
+        \core\Mysqli::close();
+        return $res;
+
+    }
 
     static function getRtorrentsDispoPourUtilisateur($login)
     {
@@ -37,5 +55,14 @@ class Rtorrents
             }
         }
         return $rtable;
+    }
+
+    static function addRtorrentUtilisateurScgi($login, $nomrtorrent, $scgi)
+    {
+        $rtorrents = new Rtorrents();
+        $rtorrents->login = $login;
+        $rtorrents->nomrtorrent = $nomrtorrent;
+        $rtorrents->portscgi = $scgi;
+        return $rtorrents->insert();
     }
 }
