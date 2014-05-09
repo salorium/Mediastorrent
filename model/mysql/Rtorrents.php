@@ -10,7 +10,7 @@
 namespace model\mysql;
 
 
-class Rtorrents
+class Rtorrents extends \core\ModelMysql
 {
     public $nomrtorrent;
     public $login;

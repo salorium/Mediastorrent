@@ -9,7 +9,7 @@
 namespace model\mysql;
 
 
-class Torrentfilm extends \core\Model
+class Torrentfilm extends \core\ModelMysql
 {
     public $id;
     public $date;
