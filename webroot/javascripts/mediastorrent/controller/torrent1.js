@@ -13,7 +13,7 @@ Torrent1.controller = {
         this.listTorrent.init();
         this.detailsTorrent.init();
         this.filesTorrent.init();
-        this.trackerTorrent.init();
+        this.trackersTorrent.init();
         this.addTorrent.init();
         Torrent1.view.addTorrent.hide();
     },
@@ -848,12 +848,12 @@ Torrent1.controller = {
             }
         }
     },
-    trackerTorrent: {
+    trackersTorrent: {
         init: function () {
-            Torrent1.view.trackerTorrent.init();
+            Torrent1.view.trackersTorrent.init();
         },
         conversion: function (liste, force) {
-            Torrent1.model.trackerTorrent.liste = liste;
+            Torrent1.model.trackersTorrent.liste = liste;
         }
     },
     addTorrent: {
