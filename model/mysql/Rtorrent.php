@@ -37,6 +37,14 @@ class Rtorrent extends \core\Model
         return $rtorrent->insert();
     }
 
+    public static function addRtorrentServeur1($nom, $host)
+    {
+        $rtorrent = new Rtorrent();
+        $rtorrent->nom = $nom;
+        $rtorrent->hostname = $host;
+        return $rtorrent->insert();
+    }
+
     public static function getRtorrentsDeUtilisateur($login)
     {
         $query = "select nom, portscgi, hostname from rtorrent, rtorrents ";
