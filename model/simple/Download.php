@@ -59,9 +59,11 @@ class Download extends Model
         } else $partial = false; // No range requested
 
 // Send standard headers
-        echo mime_content_type($file);
-        die();
-        header("Content-Type: " . mime_content_type($file));
+        if (pathinfo($file, PATHINFO_EXTENSION) == "avi") {
+            header("Content-Type: video/divx");
+        } else {
+            header("Content-Type: " . mime_content_type($file));
+        }
         header("Content-Length: $filesize");
         header('Content-Disposition: attachment; filename="' . basename($file) . '"');
         header('Accept-Ranges: bytes');
