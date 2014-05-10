@@ -30,8 +30,11 @@ if ($argc == 7) {
     $url = $argv[4];
     $nomrtorrent = $argv[5];
     $scgi = $argv[6];
-    $res = \model\mysql\Utilisateur::insertUtilisateurSysop($login, $pass, $mail);
     \model\simple\Console::println("Insertion de l'utilisateur");
+    \model\simple\Console::println("Login :[" . $login . "]");
+    \model\simple\Console::println("Password :[" . $pass . "]");
+    \model\simple\Console::println("Mail :[" . $mail . "]");
+    $res = \model\mysql\Utilisateur::insertUtilisateurSysop($login, $pass, $mail);
     \model\simple\Console::println($res);
     $res = \model\mysql\Rtorrent::addRtorrentServeur1($nomrtorrent, $url);
     \model\simple\Console::println("Initialisation du rtorrent");
@@ -39,6 +42,8 @@ if ($argc == 7) {
     $res = \model\mysql\Rtorrents::addRtorrentUtilisateurScgi($login, $nomrtorrent, $scgi);
     \model\simple\Console::println("Ajout de la seedbox " . $nomrtorrent . " à " . $login . " scgi " . $scgi);
     \model\simple\Console::println($res);
+
+    \model\simple\Console::println("Log des requête sql :[" . \core\Mysqli::$query . "]");
 
 } else {
     \model\simple\Console::println(basename(__FILE__) . " <login> <pass> <mail> <url accé a mediastorrent pour ce serveur sans le http exemple pour http://localhost/Mediastorrent il faut mettre localhost/Mediastorrent > <nomrtorrent> <portscgi le même qui est dans ~/.rtorrent.rc>");
