@@ -1,4 +1,3 @@
 RewriteEngine On
 RewriteRule (.*) webroot/$1 [L]
 AddType application/x-httpd-php .svg
-AddType video/divx .avi
