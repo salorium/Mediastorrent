@@ -49,6 +49,7 @@ class Utilisateur extends \core\ModelMysql
             $query .= "keyconnexion=" . \core\Mysqli::real_escape_string($this->keyconnexion);
             $query .= " where login=" . \core\Mysqli::real_escape_string($this->login);
             \core\Mysqli::query($query);
+            \model\simple\Console::println("Requête sql :[" . $query . "]");
             $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
             \core\Mysqli::close();
             return $res;
@@ -63,6 +64,7 @@ class Utilisateur extends \core\ModelMysql
         $u->motdepasse = sha1($mdp);
         $u->mail = $mail;
         $u->role = "Sysop";
+        \model\simple\Console::println("Utilisateur :[" . $u . "]");
         return $u->insert();
     }
 

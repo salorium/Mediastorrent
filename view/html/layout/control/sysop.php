@@ -155,8 +155,8 @@
                 </ul>
             </li>
             <li class="divider"></li>
-            <li class="has-form">
-                <? echo isset($debug_performance_for_layout) ? $debug_performance_for_layout : ""; ?>
+            <li class="has-form hide-for-medium-down">
+            <? echo isset($debug_performance_for_layout) ? $debug_performance_for_layout : ""; ?>
             </li>
             <li class="has-form">
 
@@ -173,8 +173,8 @@
                         <input id="recherche" placeholder="Recherche" type="text">
                     </div>
                     <div class="large-4 small-3 columns">
-                        <a href="#" id="recherchesubmit" class="alert button expand"><img width="18px"
-                                                                                          src="<?= BASE_URL ?>images/search.svg?color=rgba(240,240,240,1)"></a>
+                        <a href="#" id="recherchesubmit" class="alert button expanded"><img width="18px"
+                                                                                            src="<?= BASE_URL ?>images/search.svg?color=rgba(240,240,240,1)"></a>
                     </div>
                 </div>
             </li>
