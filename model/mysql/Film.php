@@ -115,4 +115,25 @@ class Film extends \core\ModelMysql
         return \core\Mysqli::getObjectAndClose(false, __CLASS__);
 
     }
+
+    static function getAllFilmUserDateDesc()
+    {
+        $query = "select distinct * from ( select f.id as id, f.urlposter as poster, f.urlbackdrop as backdrop , f.infos as infos ";
+        $query .= "from torrentfilm tf, film f ";
+        $query .= "where ( ";
+        $query .= "tf.idfilm = f.id ";
+        //$query .= "and r.nom = tf.nomrtorrent ";
+        $query .= "and tf.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login);
+        //$query .= " and rs.nomrtorrent = r.nom ";
+        $query .= " ) or ( ";
+        //$query .= "tf.fini = true ";
+        $query .= "tf.partageamis = true ";
+        $query .= "and tf.idfilm = f.id ";
+        //$query .= "and r.nom = tf.nomrtorrent ";
+        //$query .= "and rs.nomrtorrent = r.nom ";
+        $query .= "and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
+        $query .= ") ORDER BY tf.date DESC ) t";
+        \core\Mysqli::query($query);
+        return \core\Mysqli::getObjectAndClose(true);
+    }
 } 

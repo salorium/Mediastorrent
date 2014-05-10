@@ -122,6 +122,7 @@ var Film = {
     containerDetailsFilm: null,
     CssModulable: "",
     zindex: 1,
+    time: null,
     init: function (all) {
         if (this.tonObjet.length == 0)
             this.tonObjet = all;
@@ -137,8 +138,12 @@ var Film = {
     initTopBar: function () {
         this.container = $('<div></div>').appendTo(".container");
         this.container.append('<div style="height: 1px;"></div>')
-        this.containerDetailsFilm = $('<div id="detailsFilm" class="detailsFilm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, accusamus aliquam autem enim error et eum id itaque molestias natus placeat, quod quos ratione reprehenderit repudiandae, sed sint sunt veritatis.</div>').appendTo(this.container);
-
+        this.containerDetailsFilm = $('<div id="detailsFilm" class="detailsFilm"></div>').appendTo(this.container);
+        $div = $('<div></div>');
+        this.cdetail = $('<div class="large-6 columns"></div> ');
+        $div.append(this.cdetail);
+        $div.append(this.cdetail);
+        this.containerDetailsFilm.append($div);
         this.containerControl = $('<div></div>').attr({
             "class": "control"
         }).appendTo(this.container);
@@ -163,7 +168,7 @@ var Film = {
         this.CssModulable = "";
         this.hauteurWindows = $(window).height();
         this.hauteurWindows = this.hauteurWindows - 75;
-        $(".container").css("height", this.hauteurWindows);
+        $(".container").css("height", this.hauteurWindows + 20);
         console.info(this.hauteurWindows);
         this.largeurWindows = $(".container").width();
         this.hauteurControl = Math.round(this.percentageHauteurControl * this.hauteurWindows / 100);
@@ -222,7 +227,7 @@ var Film = {
          });*/
         this.containerBtControl.css({
             "width": ((this.nombreControlDansLargeur - 1) * this.demiLargeurControl + this.largeurControl) + "px"
-        })
+        });
         Base.view.loader.make("detailsFilm");
         this.containerDetailsFilm.hide();
         this.genereControlTopBar(null, true);
@@ -300,7 +305,7 @@ var Film = {
                 $("#background").css("background", 'url("http://mediastorrent/images/fondEcran/black_hole_scene-1920x1080.jpg") no-repeat center center fixed');
             }
             this.zindex--;
-            this.afficheDetailsFilm(id - 1);
+            this.afficheDetailsFilm(control);
             this.addUniqueCssGaucheTopBar(id);
         } else {
             if (control.poster) {
@@ -315,7 +320,57 @@ var Film = {
         }
 
     },
-    afficheDetailsFilm: function (id) {
+    afficheDetailsFilm: function (film) {
         this.containerDetailsFilm.show();
+        $fieldset = $('<fieldset><legend>' + film.Titre + '</legend></fieldset>');
+        this.containerDetailsFilm.empty();
+        this.containerDetailsFilm.append($fieldset);
+        $divimg = $('<div class="float" style="margin-right: 10px;width: ' + this.containerDetailsFilm.width() * 0.20 + 'px;"> <img style="height:' + (this.topControl - 180) + 'px;" src="' + Base.controller.makeUrlBase() + "proxy/imageSetHeight/" + Base.model.converter.paramUrl(film.poster) + '/' + (this.topControl - 180) + '.jpg" alt="' + film.titre + '"></div>');
+        $fieldset.append($divimg);
+        console.log((this.containerDetailsFilm.width() - $divimg.width()));
+        $divv = $('<div class="float" style="width: 78%;"></div>');
+        //$div.append($divv);
+        $.each(film, function (k, v) {
+            if (/^[A-Z]/.test(k)) {
+                switch (k) {
+                    case "Titre original":
+                    case "Acteur(s)":
+                    case "Réalisateur(s)":
+                    case "Genre":
+                    case "Durée":
+                        $divv.append('<span>' + k + ' : ' + v + '</span><br><br>');
+                        break;
+                }
+
+            }
+        });
+        $fieldset.append($divv);
+        //$fieldset.append('<div>'+film['Synopsis']+'</div>');
+        heigh = $divv.height();
+        console.log(heigh);
+        $divv.append('<div style="height: ' + (this.topControl - 180 - heigh - 100) + 'px; overflow:auto;"><p>' + film["Synopsis"] + '</p></div>');
+        $tbody = $('<tbody></tbody>');
+        $divv.append($('<div style="height: 100px; overflow: auto;"></div> ').append($('<table style="width: 100%;"></table>').append($tbody)));
+        if (this.time)this.time.abort();
+        this.time = $.ajax({
+            url: Base.controller.makeUrlBase() + 'film/getFile/' + film.id + ".json",
+            dataType: "json",
+            type: "GET",
+            //data: {hash: listafaire},
+            //contentType: "application/json",
+            success: function (response, textStatus, jqXHR) {
+                if (response.showdebugger == "ok") {
+
+                } else {
+
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (textStatus != "abort")
+                    Base.view.noty.generate("error", textStatus + " " + jqXHR + " " + errorThrown);
+
+            }
+        });
+
     }
 }

@@ -6,8 +6,8 @@
  * Time: 14:28
  */
 ?>
-<!--<embed type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="640px"  height="480px" id="vlc" loop="yes" autoplay="yes" target="<?= $src ?>"></embed>-->
-<!--
+<!--<embed type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="640px"  height="480px" id="vlc" loop="yes" autoplay="yes" target="<?= $src ?>"></embed><!----->
+
 <object id="ie_plugin" classid="clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616" width="640" height="480"
         codebase="http://go.divx.com/plugin/DivXBrowserPlugin.cab">
 
@@ -42,8 +42,8 @@
 
 
 </script><!---->
-
+<!--
 <video width="640" height="360" src="<?= $src ?>" controls autobuffer>
 
 
-</video>
+</video>-->
