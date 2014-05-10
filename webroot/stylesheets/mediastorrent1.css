@@ -66,7 +66,7 @@ body {
     color: black;
     padding: 0;
     margin: 0;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Ubuntu", sans-serif;
     font-weight: normal;
     font-style: normal;
     line-height: 1;
@@ -1632,7 +1632,7 @@ select {
     color: #222222;
     padding: 1rem;
     display: block;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Ubuntu", sans-serif;
     font-size: 1rem;
 }
 
@@ -3836,7 +3836,7 @@ button, .button {
     border-style: solid;
     border-width: 0px;
     cursor: pointer;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Ubuntu", sans-serif;
     font-weight: normal;
     line-height: normal;
     margin: 0 0 1.25rem;
@@ -5844,7 +5844,7 @@ kbd {
 /* line 100, ../bower_components/foundation/scss/foundation/components/_labels.scss */
 .label {
     font-weight: normal;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Ubuntu", sans-serif;
     text-align: center;
     text-decoration: none;
     line-height: 1;
@@ -6583,7 +6583,7 @@ ul.pagination li {
     color: #eeeeee;
     font-weight: normal;
     font-size: 1rem;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Ubuntu", sans-serif;
 }
 
 /* line 144, ../bower_components/foundation/scss/foundation/components/_pricing-tables.scss */
@@ -6594,7 +6594,7 @@ ul.pagination li {
     color: #333333;
     font-weight: normal;
     font-size: 2rem;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Ubuntu", sans-serif;
 }
 
 /* line 147, ../bower_components/foundation/scss/foundation/components/_pricing-tables.scss */
@@ -6975,7 +6975,7 @@ dialog[open] {
     padding: 0.875rem 0;
     list-style-type: none;
     list-style-position: inside;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Ubuntu", sans-serif;
 }
 
 /* line 56, ../bower_components/foundation/scss/foundation/components/_side-nav.scss */
@@ -6999,7 +6999,7 @@ dialog[open] {
 .side-nav li.active > a:first-child:not(.button) {
     color: #707070;
     font-weight: normal;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Ubuntu", sans-serif;
 }
 
 /* line 75, ../bower_components/foundation/scss/foundation/components/_side-nav.scss */
@@ -7195,7 +7195,7 @@ dialog[open] {
     display: inline;
     margin-left: 1rem;
     margin-bottom: 0.625rem;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Ubuntu", sans-serif;
     font-weight: normal;
     font-size: 0.875rem;
     color: #999999;
@@ -7586,7 +7586,7 @@ table tfoot tr td {
     background: #999999;
     color: white;
     padding: 1rem 2rem;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Ubuntu", sans-serif;
     font-size: 1rem;
 }
 
@@ -8075,7 +8075,7 @@ meta.foundation-mq-topbar {
     color: white;
     padding: 12px 0 12px 0;
     padding-left: 15px;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Ubuntu", sans-serif;
     font-size: 0.8125rem;
     font-weight: normal;
     text-transform: none;
@@ -9065,7 +9065,7 @@ p aside {
 /* Default header styles */
 /* line 393, ../bower_components/foundation/scss/foundation/components/_type.scss */
 h1, h2, h3, h4, h5, h6 {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Ubuntu", sans-serif;
     font-weight: normal;
     font-style: normal;
     color: black;
@@ -10834,113 +10834,129 @@ a.button {
 
 /* line 251, ../scss/mediastorrent1.scss */
 .detailsFilm {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(0, 0, 0, 0.4);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
     margin: 20px;
     margin-top: 19px;
+    color: #ffffff;
 }
 
-/* line 260, ../scss/mediastorrent1.scss */
+/* line 262, ../scss/mediastorrent1.scss */
+.detailsFilm legend {
+    color: #ffffff;
+}
+
+/* line 265, ../scss/mediastorrent1.scss */
+.detailsFilm div.float {
+    position: relative;
+    float: left;
+}
+
+/* line 272, ../scss/mediastorrent1.scss */
 div.container {
     width: 98%;
     margin: auto;
 }
 
-/* line 267, ../scss/mediastorrent1.scss */
+/* line 279, ../scss/mediastorrent1.scss */
 .diskspace::-moz-progress-bar {
     background-color: lightgreen;
-}
-
-/* line 271, ../scss/mediastorrent1.scss */
-.diskspace::-webkit-progress-value {
-    background-color: lightgreen;
-}
-
-/* line 275, ../scss/mediastorrent1.scss */
-.checking::-moz-progress-bar {
-    background-color: orange;
-}
-
-/* line 279, ../scss/mediastorrent1.scss */
-.checking::-webkit-progress-value {
-    background-color: orange;
 }
 
 /* line 283, ../scss/mediastorrent1.scss */
-.diskspace::-moz-progress-bar {
+.diskspace::-webkit-progress-value {
     background-color: lightgreen;
 }
 
 /* line 287, ../scss/mediastorrent1.scss */
+.checking::-moz-progress-bar {
+    background-color: orange;
+}
+
+/* line 291, ../scss/mediastorrent1.scss */
+.checking::-webkit-progress-value {
+    background-color: orange;
+}
+
+/* line 295, ../scss/mediastorrent1.scss */
+.diskspace::-moz-progress-bar {
+    background-color: lightgreen;
+}
+
+/* line 299, ../scss/mediastorrent1.scss */
 .diskspace::-webkit-progress-value {
     background-color: lightgreen;
 }
 
-/* line 291, ../scss/mediastorrent1.scss */
+/* line 303, ../scss/mediastorrent1.scss */
 .dl::-moz-progress-bar {
     background-color: #1832C7;
 }
 
-/* line 295, ../scss/mediastorrent1.scss */
+/* line 307, ../scss/mediastorrent1.scss */
 .dl::-webkit-progress-value {
     background-color: #1832C7;
 }
 
-/* line 299, ../scss/mediastorrent1.scss */
+/* line 311, ../scss/mediastorrent1.scss */
 .ul::-moz-progress-bar {
     background-color: #18C72F;
 }
 
-/* line 303, ../scss/mediastorrent1.scss */
+/* line 315, ../scss/mediastorrent1.scss */
 .ul::-webkit-progress-value {
     background-color: #18C72F;
 }
 
-/* line 307, ../scss/mediastorrent1.scss */
+/* line 319, ../scss/mediastorrent1.scss */
 .queue::-moz-progress-bar {
     background-color: purple;
 }
 
-/* line 311, ../scss/mediastorrent1.scss */
+/* line 323, ../scss/mediastorrent1.scss */
 .queue::-webkit-progress-value {
     background-color: purple;
 }
 
-/* line 315, ../scss/mediastorrent1.scss */
+/* line 327, ../scss/mediastorrent1.scss */
 .pause::-moz-progress-bar {
     background-color: gold;
 }
 
-/* line 319, ../scss/mediastorrent1.scss */
+/* line 331, ../scss/mediastorrent1.scss */
 .pause::-webkit-progress-value {
     background-color: gold;
 }
 
-/* line 323, ../scss/mediastorrent1.scss */
+/* line 335, ../scss/mediastorrent1.scss */
 .noncomplet::-moz-progress-bar {
     background-color: gray;
 }
 
-/* line 327, ../scss/mediastorrent1.scss */
+/* line 339, ../scss/mediastorrent1.scss */
 .noncomplet::-webkit-progress-value {
     background-color: gray;
 }
 
-/* line 331, ../scss/mediastorrent1.scss */
+/* line 343, ../scss/mediastorrent1.scss */
 .error::-moz-progress-bar {
     background-color: #FF0000;
 }
 
-/* line 335, ../scss/mediastorrent1.scss */
+/* line 347, ../scss/mediastorrent1.scss */
 .error::-webkit-progress-value {
     background-color: #FF0000;
 }
 
-/* line 339, ../scss/mediastorrent1.scss */
+/* line 351, ../scss/mediastorrent1.scss */
 .terminer::-moz-progress-bar {
     background-color: mediumseagreen;
 }
 
-/* line 343, ../scss/mediastorrent1.scss */
+/* line 355, ../scss/mediastorrent1.scss */
 .terminer::-webkit-progress-value {
     background-color: mediumseagreen;
 }
@@ -10965,23 +10981,23 @@ progress::-moz-progress-bar {
 
 }
 */
-/* line 367, ../scss/mediastorrent1.scss */
+/* line 379, ../scss/mediastorrent1.scss */
 progress {
     width: 100%;
     -webkit-appearance: none;
 }
 
-/* line 378, ../scss/mediastorrent1.scss */
+/* line 390, ../scss/mediastorrent1.scss */
 dl {
     line-height: 1;
 }
 
-/* line 384, ../scss/mediastorrent1.scss */
+/* line 396, ../scss/mediastorrent1.scss */
 table.noneventrowbg tr {
     background: none;
 }
 
-/* line 393, ../scss/mediastorrent1.scss */
+/* line 405, ../scss/mediastorrent1.scss */
 fieldset.torrent {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -10994,20 +11010,20 @@ fieldset.torrent {
     padding-top: 0px;
 }
 
-/* line 394, ../scss/mediastorrent1.scss */
+/* line 406, ../scss/mediastorrent1.scss */
 fieldset.torrent table {
     border: none;
     margin-bottom: 0px;
     background: none;
 }
 
-/* line 399, ../scss/mediastorrent1.scss */
+/* line 411, ../scss/mediastorrent1.scss */
 fieldset.torrent table tr {
     background: none;
     height: 13px;
 }
 
-/* line 402, ../scss/mediastorrent1.scss */
+/* line 414, ../scss/mediastorrent1.scss */
 fieldset.torrent table tr td {
     border: none;
     padding: 0;
@@ -11015,18 +11031,18 @@ fieldset.torrent table tr td {
     background: none;
 }
 
-/* line 422, ../scss/mediastorrent1.scss */
+/* line 434, ../scss/mediastorrent1.scss */
 fieldset.torrentselect {
     background-color: rgba(0, 155, 0, 0.2);
 }
 
-/* line 426, ../scss/mediastorrent1.scss */
+/* line 438, ../scss/mediastorrent1.scss */
 .heightfixed {
     height: 100%;
     margin: 0px;
 }
 
-/* line 431, ../scss/mediastorrent1.scss */
+/* line 443, ../scss/mediastorrent1.scss */
 span.bt {
     display: block;
     text-align: center;
@@ -11043,7 +11059,7 @@ span.bt {
  *
  * Designed and built with all the love in the world @twitter by @mdo and @fat.
  */
-/* line 449, ../scss/mediastorrent1.scss */
+/* line 461, ../scss/mediastorrent1.scss */
 .btn {
     display: inline-block;
     *display: inline;
@@ -11081,7 +11097,7 @@ span.bt {
     *margin-left: .3em;
 }
 
-/* line 491, ../scss/mediastorrent1.scss */
+/* line 503, ../scss/mediastorrent1.scss */
 .btn:hover,
 .btn:active,
 .btn.active,
@@ -11090,18 +11106,18 @@ span.bt {
     background-color: #e6e6e6;
 }
 
-/* line 496, ../scss/mediastorrent1.scss */
+/* line 508, ../scss/mediastorrent1.scss */
 .btn:active,
 .btn.active {
     background-color: #cccccc \9;
 }
 
-/* line 500, ../scss/mediastorrent1.scss */
+/* line 512, ../scss/mediastorrent1.scss */
 .btn:first-child {
     *margin-left: 0;
 }
 
-/* line 504, ../scss/mediastorrent1.scss */
+/* line 516, ../scss/mediastorrent1.scss */
 .btn:hover {
     color: #333333;
     text-decoration: none;
@@ -11114,14 +11130,14 @@ span.bt {
     transition: background-position 0.1s linear;
 }
 
-/* line 516, ../scss/mediastorrent1.scss */
+/* line 528, ../scss/mediastorrent1.scss */
 .btn:focus {
     outline: thin dotted #333;
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px;
 }
 
-/* line 523, ../scss/mediastorrent1.scss */
+/* line 535, ../scss/mediastorrent1.scss */
 .btn.active,
 .btn:active {
     background-image: none;
@@ -11133,7 +11149,7 @@ span.bt {
     outline: 0;
 }
 
-/* line 534, ../scss/mediastorrent1.scss */
+/* line 546, ../scss/mediastorrent1.scss */
 .btn.disabled,
 .btn[disabled] {
     cursor: default;
@@ -11146,7 +11162,7 @@ span.bt {
     box-shadow: none;
 }
 
-/* line 545, ../scss/mediastorrent1.scss */
+/* line 557, ../scss/mediastorrent1.scss */
 .btn-large {
     padding: 9px 14px;
     font-size: 15px;
@@ -11156,31 +11172,31 @@ span.bt {
     border-radius: 5px;
 }
 
-/* line 554, ../scss/mediastorrent1.scss */
+/* line 566, ../scss/mediastorrent1.scss */
 .btn-large [class^="icon-"] {
     margin-top: 1px;
 }
 
-/* line 558, ../scss/mediastorrent1.scss */
+/* line 570, ../scss/mediastorrent1.scss */
 .btn-small {
     padding: 5px 9px;
     font-size: 11px;
     line-height: 16px;
 }
 
-/* line 564, ../scss/mediastorrent1.scss */
+/* line 576, ../scss/mediastorrent1.scss */
 .btn-small [class^="icon-"] {
     margin-top: -1px;
 }
 
-/* line 568, ../scss/mediastorrent1.scss */
+/* line 580, ../scss/mediastorrent1.scss */
 .btn-mini {
     padding: 2px 6px;
     font-size: 11px;
     line-height: 14px;
 }
 
-/* line 585, ../scss/mediastorrent1.scss */
+/* line 597, ../scss/mediastorrent1.scss */
 .btn-primary,
 .btn-primary:hover,
 .btn-warning,
@@ -11197,7 +11213,7 @@ span.bt {
     color: #ffffff;
 }
 
-/* line 595, ../scss/mediastorrent1.scss */
+/* line 607, ../scss/mediastorrent1.scss */
 .btn-primary.active,
 .btn-warning.active,
 .btn-danger.active,
@@ -11207,7 +11223,7 @@ span.bt {
     color: rgba(255, 255, 255, 0.75);
 }
 
-/* line 599, ../scss/mediastorrent1.scss */
+/* line 611, ../scss/mediastorrent1.scss */
 .btn-primary {
     background-color: #0074cc;
     background-image: -moz-linear-gradient(top, #0088cc, #0055cc);
@@ -11223,7 +11239,7 @@ span.bt {
     filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 
-/* line 618, ../scss/mediastorrent1.scss */
+/* line 630, ../scss/mediastorrent1.scss */
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary.active,
@@ -11232,13 +11248,13 @@ span.bt {
     background-color: #0055cc;
 }
 
-/* line 623, ../scss/mediastorrent1.scss */
+/* line 635, ../scss/mediastorrent1.scss */
 .btn-primary:active,
 .btn-primary.active {
     background-color: #004099 \9;
 }
 
-/* line 627, ../scss/mediastorrent1.scss */
+/* line 639, ../scss/mediastorrent1.scss */
 .btn-warning {
     background-color: #faa732;
     background-image: -moz-linear-gradient(top, #fbb450, #f89406);
@@ -11254,7 +11270,7 @@ span.bt {
     filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 
-/* line 646, ../scss/mediastorrent1.scss */
+/* line 658, ../scss/mediastorrent1.scss */
 .btn-warning:hover,
 .btn-warning:active,
 .btn-warning.active,
@@ -11263,13 +11279,13 @@ span.bt {
     background-color: #f89406;
 }
 
-/* line 651, ../scss/mediastorrent1.scss */
+/* line 663, ../scss/mediastorrent1.scss */
 .btn-warning:active,
 .btn-warning.active {
     background-color: #c67605 \9;
 }
 
-/* line 655, ../scss/mediastorrent1.scss */
+/* line 667, ../scss/mediastorrent1.scss */
 .btn-danger {
     background-color: #da4f49;
     background-image: -moz-linear-gradient(top, #ee5f5b, #bd362f);
@@ -11285,7 +11301,7 @@ span.bt {
     filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 
-/* line 674, ../scss/mediastorrent1.scss */
+/* line 686, ../scss/mediastorrent1.scss */
 .btn-danger:hover,
 .btn-danger:active,
 .btn-danger.active,
@@ -11294,13 +11310,13 @@ span.bt {
     background-color: #bd362f;
 }
 
-/* line 679, ../scss/mediastorrent1.scss */
+/* line 691, ../scss/mediastorrent1.scss */
 .btn-danger:active,
 .btn-danger.active {
     background-color: #942a25 \9;
 }
 
-/* line 683, ../scss/mediastorrent1.scss */
+/* line 695, ../scss/mediastorrent1.scss */
 .btn-success {
     background-color: #5bb75b;
     background-image: -moz-linear-gradient(top, #62c462, #51a351);
@@ -11316,7 +11332,7 @@ span.bt {
     filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 
-/* line 702, ../scss/mediastorrent1.scss */
+/* line 714, ../scss/mediastorrent1.scss */
 .btn-success:hover,
 .btn-success:active,
 .btn-success.active,
@@ -11325,13 +11341,13 @@ span.bt {
     background-color: #51a351;
 }
 
-/* line 707, ../scss/mediastorrent1.scss */
+/* line 719, ../scss/mediastorrent1.scss */
 .btn-success:active,
 .btn-success.active {
     background-color: #408140 \9;
 }
 
-/* line 711, ../scss/mediastorrent1.scss */
+/* line 723, ../scss/mediastorrent1.scss */
 .btn-info {
     background-color: #49afcd;
     background-image: -moz-linear-gradient(top, #5bc0de, #2f96b4);
@@ -11347,7 +11363,7 @@ span.bt {
     filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 
-/* line 730, ../scss/mediastorrent1.scss */
+/* line 742, ../scss/mediastorrent1.scss */
 .btn-info:hover,
 .btn-info:active,
 .btn-info.active,
@@ -11356,13 +11372,13 @@ span.bt {
     background-color: #2f96b4;
 }
 
-/* line 735, ../scss/mediastorrent1.scss */
+/* line 747, ../scss/mediastorrent1.scss */
 .btn-info:active,
 .btn-info.active {
     background-color: #24748c \9;
 }
 
-/* line 739, ../scss/mediastorrent1.scss */
+/* line 751, ../scss/mediastorrent1.scss */
 .btn-inverse {
     background-color: #414141;
     background-image: -moz-linear-gradient(top, #555555, #222222);
@@ -11378,7 +11394,7 @@ span.bt {
     filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 
-/* line 758, ../scss/mediastorrent1.scss */
+/* line 770, ../scss/mediastorrent1.scss */
 .btn-inverse:hover,
 .btn-inverse:active,
 .btn-inverse.active,
@@ -11387,48 +11403,48 @@ span.bt {
     background-color: #222222;
 }
 
-/* line 763, ../scss/mediastorrent1.scss */
+/* line 775, ../scss/mediastorrent1.scss */
 .btn-inverse:active,
 .btn-inverse.active {
     background-color: #080808 \9;
 }
 
-/* line 768, ../scss/mediastorrent1.scss */
+/* line 780, ../scss/mediastorrent1.scss */
 button.btn,
 input[type="submit"].btn {
     *padding-top: 2px;
     *padding-bottom: 2px;
 }
 
-/* line 774, ../scss/mediastorrent1.scss */
+/* line 786, ../scss/mediastorrent1.scss */
 button.btn::-moz-focus-inner,
 input[type="submit"].btn::-moz-focus-inner {
     padding: 0;
     border: 0;
 }
 
-/* line 780, ../scss/mediastorrent1.scss */
+/* line 792, ../scss/mediastorrent1.scss */
 button.btn.btn-large,
 input[type="submit"].btn.btn-large {
     *padding-top: 7px;
     *padding-bottom: 7px;
 }
 
-/* line 786, ../scss/mediastorrent1.scss */
+/* line 798, ../scss/mediastorrent1.scss */
 button.btn.btn-small,
 input[type="submit"].btn.btn-small {
     *padding-top: 3px;
     *padding-bottom: 3px;
 }
 
-/* line 792, ../scss/mediastorrent1.scss */
+/* line 804, ../scss/mediastorrent1.scss */
 button.btn.btn-mini,
 input[type="submit"].btn.btn-mini {
     *padding-top: 1px;
     *padding-bottom: 1px;
 }
 
-/* line 797, ../scss/mediastorrent1.scss */
+/* line 809, ../scss/mediastorrent1.scss */
 .addTorrent {
     background-color: #f2f2f2;
     position: absolute;
@@ -11440,7 +11456,7 @@ input[type="submit"].btn.btn-mini {
     border-color: #d8d8d8;
 }
 
-/* line 808, ../scss/mediastorrent1.scss */
+/* line 820, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentTitle {
     background-color: #999999;
     height: 45px;
@@ -11448,16 +11464,16 @@ input[type="submit"].btn.btn-mini {
     text-align: center;
 }
 
-/* line 814, ../scss/mediastorrent1.scss */
+/* line 826, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentTitle a {
     color: inherit;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Ubuntu", sans-serif;
     font-size: 1.0625rem;
     line-height: 45px;
     cursor: default;
 }
 
-/* line 823, ../scss/mediastorrent1.scss */
+/* line 835, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentTitle .close {
     cursor: pointer;
     float: right;
@@ -11466,19 +11482,19 @@ input[type="submit"].btn.btn-mini {
     font-size: 20px;
 }
 
-/* line 835, ../scss/mediastorrent1.scss */
+/* line 847, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentContenu div.suggest {
     overflow-y: auto;
     overflow-x: hidden;
     height: 200px;
 }
 
-/* line 837, ../scss/mediastorrent1.scss */
+/* line 849, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentContenu div.suggest img {
     width: 90px;
 }
 
-/* line 840, ../scss/mediastorrent1.scss */
+/* line 852, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentContenu div.suggest table {
     width: 100%;
     border: none;
@@ -11486,23 +11502,23 @@ input[type="submit"].btn.btn-mini {
     background: none;
 }
 
-/* line 848, ../scss/mediastorrent1.scss */
+/* line 860, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentContenu div.suggest fieldset {
     cursor: pointer;
     padding: 0;
 }
 
-/* line 852, ../scss/mediastorrent1.scss */
+/* line 864, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentContenu div.suggest fieldset:hover {
     background-color: rgba(0, 155, 0, 0.2);
 }
 
-/* line 860, ../scss/mediastorrent1.scss */
+/* line 872, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentContenu table input[type="text"] {
     margin: 0;
 }
 
-/* line 865, ../scss/mediastorrent1.scss */
+/* line 877, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentDetails {
     height: 100px;
     padding: 15px;
@@ -11510,22 +11526,22 @@ input[type="submit"].btn.btn-mini {
     overflow-x: hidden;
 }
 
-/* line 872, ../scss/mediastorrent1.scss */
+/* line 884, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentDetails div.miniature {
     border: rgba(0, 0, 0, 0) 5px solid;
 }
 
-/* line 875, ../scss/mediastorrent1.scss */
+/* line 887, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentDetails div.miniature:hover {
     border: rgba(50, 50, 50, 0.9) 5px solid;
 }
 
-/* line 878, ../scss/mediastorrent1.scss */
+/* line 890, ../scss/mediastorrent1.scss */
 .addTorrent .addTorrentDetails div.active, .addTorrent .addTorrentDetails div.active:hover {
     border: rgba(0, 155, 0, 0.9) 5px solid;
 }
 
-/* line 884, ../scss/mediastorrent1.scss */
+/* line 896, ../scss/mediastorrent1.scss */
 input[type="file"] {
     font-family: inherit;
     color: rgba(0, 0, 0, 0.75);
@@ -11535,27 +11551,27 @@ input[type="file"] {
     padding: 0.5rem;
 }
 
-/* line 893, ../scss/mediastorrent1.scss */
+/* line 905, ../scss/mediastorrent1.scss */
 .expansion {
     max-width: none;
 }
 
-/* line 897, ../scss/mediastorrent1.scss */
+/* line 909, ../scss/mediastorrent1.scss */
 iframe.perso {
     display: none;
 }
 
-/* line 901, ../scss/mediastorrent1.scss */
+/* line 913, ../scss/mediastorrent1.scss */
 table tbody tr.active {
     background-color: rgba(0, 155, 0, 0.2);
 }
 
-/* line 905, ../scss/mediastorrent1.scss */
+/* line 917, ../scss/mediastorrent1.scss */
 table label {
     color: inherit;
 }
 
-/* line 909, ../scss/mediastorrent1.scss */
+/* line 921, ../scss/mediastorrent1.scss */
 ul.CMenu {
     -moz-border-bottom-colors: none;
     -moz-border-left-colors: none;
@@ -11577,7 +11593,7 @@ ul.CMenu {
     z-index: 1000;
 }
 
-/* line 931, ../scss/mediastorrent1.scss */
+/* line 943, ../scss/mediastorrent1.scss */
 ul.CMenu li {
     background: none repeat scroll 0 0 #FFFFFF;
     float: left;
@@ -11586,29 +11602,29 @@ ul.CMenu li {
     width: 195px;
 }
 
-/* line 939, ../scss/mediastorrent1.scss */
+/* line 951, ../scss/mediastorrent1.scss */
 ul.CMenu li a {
     display: block;
 }
 
-/* line 943, ../scss/mediastorrent1.scss */
+/* line 955, ../scss/mediastorrent1.scss */
 ul.CMenu li a.dis {
     color: #C0C0C0;
 }
 
-/* line 947, ../scss/mediastorrent1.scss */
+/* line 959, ../scss/mediastorrent1.scss */
 ul.CMenu li a.dis:hover {
     background-color: #FFFFFF;
     color: #C0C0C0;
 }
 
-/* line 952, ../scss/mediastorrent1.scss */
+/* line 964, ../scss/mediastorrent1.scss */
 ul.CMenu li a {
     font-weight: normal;
     padding: 3px 4px 3px 16px;
 }
 
-/* line 958, ../scss/mediastorrent1.scss */
+/* line 970, ../scss/mediastorrent1.scss */
 ul.CMenu li hr {
     border-top: 1px solid #D0D0D0;
     height: 0;
@@ -11617,30 +11633,30 @@ ul.CMenu li hr {
     width: 90%;
 }
 
-/* line 966, ../scss/mediastorrent1.scss */
+/* line 978, ../scss/mediastorrent1.scss */
 .ie ul.CMenu li hr {
     font-size: 1px;
     line-height: 1px;
     margin: 0;
 }
 
-/* line 972, ../scss/mediastorrent1.scss */
+/* line 984, ../scss/mediastorrent1.scss */
 ul.CMenu li a.exp {
     background: url("../images/menuexp.gif") no-repeat scroll 190px center rgba(0, 0, 0, 0);
 }
 
-/* line 976, ../scss/mediastorrent1.scss */
+/* line 988, ../scss/mediastorrent1.scss */
 ul.CMenu li a.sel {
     background: url("../images/menusel.gif") no-repeat scroll 4px center rgba(0, 0, 0, 0);
 }
 
-/* line 980, ../scss/mediastorrent1.scss */
+/* line 992, ../scss/mediastorrent1.scss */
 ul.CMenu li a:hover {
     background-color: rgba(0, 155, 0, 0.2);
     color: #000000;
 }
 
-/* line 985, ../scss/mediastorrent1.scss */
+/* line 997, ../scss/mediastorrent1.scss */
 ul.CMenu li:hover ul {
     display: block;
     left: 190px;
@@ -11649,41 +11665,41 @@ ul.CMenu li:hover ul {
     width: 200px;
 }
 
-/* line 993, ../scss/mediastorrent1.scss */
+/* line 1005, ../scss/mediastorrent1.scss */
 ul.CMenu li:hover ul li ul {
     display: none;
 }
 
-/* line 997, ../scss/mediastorrent1.scss */
+/* line 1009, ../scss/mediastorrent1.scss */
 ul.CMenu li:hover ul li a {
     background-color: #FFFFFF;
     color: #000000;
     display: block;
 }
 
-/* line 1003, ../scss/mediastorrent1.scss */
+/* line 1015, ../scss/mediastorrent1.scss */
 ul.CMenu li:hover ul li a:hover {
     background-color: rgba(0, 155, 0, 0.2);
     color: #000000;
 }
 
-/* line 1008, ../scss/mediastorrent1.scss */
+/* line 1020, ../scss/mediastorrent1.scss */
 ul.CMenu li:hover ul.left {
     left: -200px;
 }
 
-/* line 1012, ../scss/mediastorrent1.scss */
+/* line 1024, ../scss/mediastorrent1.scss */
 ul.CMenu li ul li a.dis {
     color: #C0C0C0;
 }
 
-/* line 1016, ../scss/mediastorrent1.scss */
+/* line 1028, ../scss/mediastorrent1.scss */
 ul.CMenu li ul li a.dis:hover {
     background-color: #FFFFFF;
     color: #C0C0C0;
 }
 
-/* line 1023, ../scss/mediastorrent1.scss */
+/* line 1035, ../scss/mediastorrent1.scss */
 .loader {
     width: 100px;
     height: 100px;
@@ -11692,7 +11708,7 @@ ul.CMenu li ul li a.dis:hover {
     position: relative;
 }
 
-/* line 1031, ../scss/mediastorrent1.scss */
+/* line 1043, ../scss/mediastorrent1.scss */
 .loader-circles {
     border-radius: 100px;
     border: 3px solid transparent;
@@ -11702,7 +11718,7 @@ ul.CMenu li ul li a.dis:hover {
     animation: spin 1s linear infinite;
 }
 
-/* line 1040, ../scss/mediastorrent1.scss */
+/* line 1052, ../scss/mediastorrent1.scss */
 .loader-circles:before, .loader-circles:after {
     content: '';
     position: absolute;
@@ -11719,7 +11735,7 @@ ul.CMenu li ul li a.dis:hover {
     animation: spin 10s linear infinite;
 }
 
-/* line 1056, ../scss/mediastorrent1.scss */
+/* line 1068, ../scss/mediastorrent1.scss */
 .loader-circles:before {
     top: 12px;
     left: 12px;
@@ -11734,31 +11750,31 @@ ul.CMenu li ul li a.dis:hover {
 /* Animations */
 /* Animations */
 @-webkit-keyframes spin {
-    /* line 1070, ../scss/mediastorrent1.scss */
+    /* line 1082, ../scss/mediastorrent1.scss */
     from {
         -webkit-transform: rotate(0deg);
     }
 
-    /* line 1074, ../scss/mediastorrent1.scss */
+    /* line 1086, ../scss/mediastorrent1.scss */
     to {
         -webkit-transform: rotate(360deg);
     }
 }
 
 @-moz-keyframes spin {
-    /* line 1080, ../scss/mediastorrent1.scss */
+    /* line 1092, ../scss/mediastorrent1.scss */
     from {
         -moz-transform: rotate(0deg);
     }
 
-    /* line 1084, ../scss/mediastorrent1.scss */
+    /* line 1096, ../scss/mediastorrent1.scss */
     to {
         -moz-transform: rotate(360deg);
     }
 }
 
 @keyframes spin {
-    /* line 1090, ../scss/mediastorrent1.scss */
+    /* line 1102, ../scss/mediastorrent1.scss */
     from {
         -webkit-transform: rotate(0deg);
         -moz-transform: rotate(0deg);
@@ -11767,7 +11783,7 @@ ul.CMenu li ul li a.dis:hover {
         transform: rotate(0deg);
     }
 
-    /* line 1098, ../scss/mediastorrent1.scss */
+    /* line 1110, ../scss/mediastorrent1.scss */
     to {
         -webkit-transform: rotate(360deg);
         -moz-transform: rotate(360deg);
@@ -11778,31 +11794,31 @@ ul.CMenu li ul li a.dis:hover {
 }
 
 @-webkit-keyframes spinreverse {
-    /* line 1108, ../scss/mediastorrent1.scss */
+    /* line 1120, ../scss/mediastorrent1.scss */
     from {
         -webkit-transform: rotate(0deg);
     }
 
-    /* line 1112, ../scss/mediastorrent1.scss */
+    /* line 1124, ../scss/mediastorrent1.scss */
     to {
         -webkit-transform: rotate(-360deg);
     }
 }
 
 @-moz-keyframes spinreverse {
-    /* line 1118, ../scss/mediastorrent1.scss */
+    /* line 1130, ../scss/mediastorrent1.scss */
     from {
         -moz-transform: rotate(0deg);
     }
 
-    /* line 1122, ../scss/mediastorrent1.scss */
+    /* line 1134, ../scss/mediastorrent1.scss */
     to {
         -moz-transform: rotate(-360deg);
     }
 }
 
 @keyframes spinreverse {
-    /* line 1128, ../scss/mediastorrent1.scss */
+    /* line 1140, ../scss/mediastorrent1.scss */
     from {
         -webkit-transform: rotate(0deg);
         -moz-transform: rotate(0deg);
@@ -11811,7 +11827,7 @@ ul.CMenu li ul li a.dis:hover {
         transform: rotate(0deg);
     }
 
-    /* line 1136, ../scss/mediastorrent1.scss */
+    /* line 1148, ../scss/mediastorrent1.scss */
     to {
         -webkit-transform: rotate(-360deg);
         -moz-transform: rotate(-360deg);
@@ -11822,19 +11838,19 @@ ul.CMenu li ul li a.dis:hover {
 }
 
 @-webkit-keyframes grow {
-    /* line 1146, ../scss/mediastorrent1.scss */
+    /* line 1158, ../scss/mediastorrent1.scss */
     0% {
         -webkit-transform: scaleY(0);
         opacity: 0;
     }
 
-    /* line 1151, ../scss/mediastorrent1.scss */
+    /* line 1163, ../scss/mediastorrent1.scss */
     50% {
         -webkit-transform: scaleY(1);
         opacity: 1;
     }
 
-    /* line 1156, ../scss/mediastorrent1.scss */
+    /* line 1168, ../scss/mediastorrent1.scss */
     100% {
         -webkit-transform: scaleY(0);
         opacity: 0;
@@ -11842,19 +11858,19 @@ ul.CMenu li ul li a.dis:hover {
 }
 
 @-moz-keyframes grow {
-    /* line 1163, ../scss/mediastorrent1.scss */
+    /* line 1175, ../scss/mediastorrent1.scss */
     0% {
         -moz-transform: scaleY(0);
         opacity: 0;
     }
 
-    /* line 1168, ../scss/mediastorrent1.scss */
+    /* line 1180, ../scss/mediastorrent1.scss */
     50% {
         -moz-transform: scaleY(1);
         opacity: 1;
     }
 
-    /* line 1173, ../scss/mediastorrent1.scss */
+    /* line 1185, ../scss/mediastorrent1.scss */
     100% {
         -moz-transform: scaleY(0);
         opacity: 0;
@@ -11862,7 +11878,7 @@ ul.CMenu li ul li a.dis:hover {
 }
 
 @keyframes grow {
-    /* line 1180, ../scss/mediastorrent1.scss */
+    /* line 1192, ../scss/mediastorrent1.scss */
     0% {
         -webkit-transform: scaleY(0);
         -moz-transform: scaleY(0);
@@ -11872,7 +11888,7 @@ ul.CMenu li ul li a.dis:hover {
         opacity: 0;
     }
 
-    /* line 1189, ../scss/mediastorrent1.scss */
+    /* line 1201, ../scss/mediastorrent1.scss */
     50% {
         -webkit-transform: scaleY(1);
         -moz-transform: scaleY(1);
@@ -11882,7 +11898,7 @@ ul.CMenu li ul li a.dis:hover {
         opacity: 1;
     }
 
-    /* line 1198, ../scss/mediastorrent1.scss */
+    /* line 1210, ../scss/mediastorrent1.scss */
     100% {
         -webkit-transform: scaleY(0);
         -moz-transform: scaleY(0);
