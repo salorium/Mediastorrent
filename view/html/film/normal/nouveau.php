@@ -12,7 +12,7 @@
 <script>
     // Execution de cette fonction lorsque le DOM sera entièrement chargé
     $(document).ready(function () {
-        Film.init(<?=$film?>);
+        Film.init(<?=json_encode($film)?>);
     });
 </script>
 </div>
