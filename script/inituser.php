@@ -43,7 +43,8 @@ if ($argc == 7) {
     \model\simple\Console::println("Ajout de la seedbox " . $nomrtorrent . " à " . $login . " scgi " . $scgi);
     \model\simple\Console::println($res);
 
-    \model\simple\Console::println("Log des requête sql :[" . \core\Mysqli::$query . "]");
+    \model\simple\Console::println("Log des requête sql :");
+    \model\simple\Console::println(\core\Mysqli::$query);
 
 } else {
     \model\simple\Console::println(basename(__FILE__) . " <login> <pass> <mail> <url accé a mediastorrent pour ce serveur sans le http exemple pour http://localhost/Mediastorrent il faut mettre localhost/Mediastorrent > <nomrtorrent> <portscgi le même qui est dans ~/.rtorrent.rc>");
