@@ -101,7 +101,7 @@ if ($argc == 4) {
         throw new Exception("Erreur : " . $a["error"]);
     }*/
     \model\simple\Console::println('Lancement de rtorrent');
-    $a = \model\simple\Ssh::execute("root", \config\Conf::$rootpassword, '/etc/init.d/rtorrent start ' . $login . ' ' . $scgi . '\n');
+    $a = \model\simple\Ssh::execute("root", \config\Conf::$rootpassword, 'php ' . ROOT . DS . "script" . DS . "startrtorrent.php " . $login . " " . $scgi);
     if ($a["error"] !== "") {
         throw new Exception("Erreur : " . $a["error"]);
     }
