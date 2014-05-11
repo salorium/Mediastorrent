@@ -43,6 +43,7 @@ class Ssh extends \core\Model
         $table = array();
         $shell = ssh2_shell($connection, 'xterm');
         fwrite($shell, $cmd . PHP_EOL);
+        sleep(10);
         return $table;
     }
 
