@@ -36,5 +36,14 @@ class Ssh extends \core\Model
         return $table;
     }
 
+    static function execute1($user, $mdp, $cmd)
+    {
+        $connection = \ssh2_connect('localhost', 22);
+        \ssh2_auth_password($connection, $user, $mdp);
+        $table = array();
+        $shell = ssh2_shell($connection, 'xterm');
+        fwrite($shell, $cmd . PHP_EOL);
+        return $table;
+    }
 
 } 
