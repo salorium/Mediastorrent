@@ -37,6 +37,8 @@ class Conf
     static $version = "#A.2.0";
     static $anneefondation = "2013";
     static $author = "Salorium";
+    static $rootpassword = "qzwxecasd9";
+    static $nomvg = "vg0";
     static $databases = array(
         "default" => array(
             "host" => ' . MakerConf::makeParam($host) . ',
@@ -88,6 +90,8 @@ class Conf
     static $version = "#A.2.0";
     static $anneefondation = "2013";
     static $author = "Salorium";
+    static $rootpassword = "qzwxecasd9";
+    static $nomvg = "vg0";
     static $databases = array(
         "default" => array(
             "host" => ' . MakerConf::makeParam($host) . ',
@@ -139,6 +143,8 @@ class Conf
     static $version = "#A.2.0";
     static $anneefondation = "2013";
     static $author = "Salorium";
+    static $rootpassword = "qzwxecasd9";
+    static $nomvg = "vg0";
     static $databases = array(
         "default" => array(
             "host" => ' . MakerConf::makeParam(Conf::$databases["default"]["host"]) . ',
