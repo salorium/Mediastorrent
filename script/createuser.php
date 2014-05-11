@@ -101,10 +101,10 @@ if ($argc == 4) {
         throw new Exception("Erreur : " . $a["error"]);
     }*/
     \model\simple\Console::println('Lancement de rtorrent');
-    \model\simple\Ssh::execute1("root", \config\Conf::$rootpassword, '/etc/init.d/rtorrent start ' . $login . ' ' . $scgi);
-    /*if ($a["error"] !== "") {
+    \model\simple\Ssh::execute("root", \config\Conf::$rootpassword, '/etc/init.d/rtorrent start ' . $login . ' ' . $scgi . '\n');
+    if ($a["error"] !== "") {
         throw new Exception("Erreur : " . $a["error"]);
-    }*/
+    }
 } else {
     \model\simple\Console::println(basename(__FILE__) . " <hostmysql> <loginmysql> <passmysql>");
 }
