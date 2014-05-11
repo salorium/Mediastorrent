@@ -61,7 +61,7 @@ sudo apt-get install mysql-server
 
 ##Installation de Mediastorrent
 ```
-sudo apt-get install apache2 libapache2-mod-php5 php5-mysqlnd php5-json php5-imagick php5-memcached php5-curl
+sudo apt-get install apache2 libapache2-mod-php5 php5-mysqlnd php5-json php5-imagick php5-memcached php5-curl dtach libssh2-php
 sudo a2enmod rewrite
 sudo service apache2 restart
 git clone https://github.com/salorium/Mediastorrent.git => dans un dossier <utilisateur> pas sur le root.
