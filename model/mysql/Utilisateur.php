@@ -64,7 +64,6 @@ class Utilisateur extends \core\ModelMysql
         $u->motdepasse = sha1($mdp);
         $u->mail = $mail;
         $u->role = "Sysop";
-        \model\simple\Console::println("Utilisateur :[" . $u . "]");
         return $u->insert();
     }
 
