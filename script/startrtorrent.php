@@ -26,7 +26,7 @@ function __autoload($class_name)
 if ($argc == 3) {
     $login = $argv[1];
     $scgi = $argv[2];
-    exec("/etc/ini.t/rtorrent start " . $login . " " . $scgi);
+    exec("/etc/init.d/rtorrent start " . $login . " " . $scgi);
 } else {
     \model\simple\Console::println(basename(__FILE__) . " <login> <scgi>");
 }
