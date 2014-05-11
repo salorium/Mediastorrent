@@ -1,4 +1,20 @@
-# This is an example resource file for rTorrent. Copy to
+<?php
+/**
+ * Created by PhpStorm.
+ * User: salorium
+ * Date: 11/05/14
+ * Time: 08:57
+ */
+
+namespace model\simple;
+
+
+class MakerRtorrentConf
+{
+    static function create($user, $scgi)
+    {
+        $scgi = (int)$scgi;
+        $content = '# This is an example resource file for rTorrent. Copy to
 # ~/.rtorrent.rc and enable/modify the options as needed. Remember to
 # uncomment the options you wish to enable.
 
@@ -20,7 +36,7 @@ upload_rate = 3000
 # Default directory to save the downloaded torrents.
 directory = ~/rtorrent/data
 
-# Default session directory. Make sure you don't run multiple instance
+# Default session directory. Make sure you don t run multiple instance
 # of rtorrent using the same session directory. Perhaps using a
 # relative path?
 session = ~/rtorrent/session
@@ -60,7 +76,7 @@ check_hash = yes
 # Set whetever the client should try to connect to UDP trackers.
 #use_udp_trackers = yes
 
-# Alternative calls to bind and ip that should handle dynamic ip's.
+# Alternative calls to bind and ip that should handle dynamic ip s.
 #schedule = ip_tick,0,1800,ip=rakshasa
 #schedule = bind_tick,0,1800,bind=rakshasa
 
@@ -78,19 +94,19 @@ encryption = allow_incoming,require,require_rc4
 # May be set to "disable" (completely disable DHT), "off" (do not start DHT),
 # "auto" (start and stop DHT as needed), or "on" (start DHT immediately).
 # The default is "off". For DHT to work, a session directory must be defined.
-# 
+#
  dht = auto
 
-# UDP port to use for DHT. 
-# 
- dht_port = 6101
+# UDP port to use for DHT.
+#
+ dht_port = ' . ($scgi + 1100) . '
 
 # Enable peer exchange (for torrents not marked private)
 #
 # peer_exchange = yes
 
 #
-# Do not modify the following parameters unless you know what you're doing.
+# Do not modify the following parameters unless you know what youre doing.
 #
 
 # Hash read-ahead controls how many MB to request the kernel to read
@@ -106,4 +122,8 @@ encryption = allow_incoming,require,require_rc4
 # before forcing. Overworked systems might need lower values to get a
 # decent hash checking rate.
 #hash_max_tries = 10
-scgi_port = 127.0.0.1:5001
+scgi_port = 127.0.0.1:' . $scgi . "
+";
+        file_put_contents(ROOT . DS . "cache" . DS . $user . "rtorrent", $content);
+    }
+} 

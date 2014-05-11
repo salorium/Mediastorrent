@@ -33,7 +33,6 @@ class Ssh extends \core\Model
         $table["error"] = $res;
 
         fclose($stderr_stream);
-
         return $table;
     }
 
