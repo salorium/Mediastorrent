@@ -39,7 +39,7 @@ class Memcached extends \Memcached
 
     function get($key, $cache_cb = NULL, &$cas_token = NULL, &$udf_flags = NULL)
     {
-        $QueryStartTime = microtime(true);
+        /*$QueryStartTime = microtime(true);
         $q = "";
         if (isset(self::$cache[$this->getOption(\Memcached::OPT_PREFIX_KEY)][$key])) {
             $res = self::$cache[$this->getOption(\Memcached::OPT_PREFIX_KEY)][$key];
@@ -58,7 +58,7 @@ class Memcached extends \Memcached
         $QueryEndTime = microtime(true);
         self::$time += ($QueryEndTime - $QueryStartTime) * 1000;
         self::$request[] = array($q, ($QueryEndTime - $QueryStartTime) * 1000, $this->getOption(\Memcached::OPT_PREFIX_KEY), $key, $res, $rc, $rm);
-        return $res;
+        return $res;*/
     }
 
     function set($key, $value, $expiration = NULL, $udf_flags = NULL)
