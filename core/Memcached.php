@@ -63,10 +63,10 @@ class Memcached extends \Memcached
         return $res;
     }
 
-    function set($key, $value, $expiration = NULL, $udf_flags = NULL)
+    function set1($key, $value, $expiration = 0)
     {
         $QueryStartTime = microtime(true);
-        $res = parent::set($key, $value, $expiration, $udf_flags);
+        $res = $this->set($key, $value, $expiration);
         $rc = $this->getResultCode();
         $rm = $this->getResultMessage();
         //if ( $res){
@@ -113,7 +113,7 @@ class Memcached extends \Memcached
             //}
         } else {
             //set Value
-            $res = $m->set($clef, $valeur, $duree);
+            $res = $m->set1($clef, $valeur, $duree);
             /*if ($res)
                 self::$cache[$database][$clef] = $valeur;*/
         }
