@@ -18,10 +18,11 @@ class Utilisateur extends \core\Model
             if (is_null($u)) {
                 $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login, $keyconnexion);
                 if ($u)
-                    \core\Memcached::value($u->login, "user", $u, 60 * 5);
+                    \core\Memcached::value($u->login, "user", $u, 60 * 1);
             } else {
                 if (!is_object($u)) {
                     var_dump($u);
+                    var_dump(\core\Memcached::$request);
                     die();
                 }
 
@@ -29,7 +30,7 @@ class Utilisateur extends \core\Model
                 if (is_bool($u)) {
                     $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login, $keyconnexion);
                     if ($u)
-                        \core\Memcached::value($u->login, "user", $u, 60 * 5);
+                        \core\Memcached::value($u->login, "user", $u, 60 * 1);
                 }
                 $u = $u->keyconnexion === $keyconnexion ? $u : false;
             }
