@@ -47,7 +47,7 @@ class Memcached extends \Memcached
             $rm = "SUCCESS";
             $q = "GET_L";
         } else {
-            $res = parent::get($key, $cache_cb, &$cas_token, &$udf_flags);
+            $res = parent::get($key, $cache_cb, $cas_token, $udf_flags);
             $rc = $this->getResultCode();
             $rm = $this->getResultMessage();
             $q = "GET_S";
