@@ -37,7 +37,7 @@ class Memcached extends \Memcached
 
     }
 
-    function get1($key)
+    function get($key)
     {
         $QueryStartTime = microtime(true);
         $q = "";
@@ -53,8 +53,8 @@ class Memcached extends \Memcached
             $q = "GET_S";
             if ($rc !== \Memcached::RES_SUCCESS)
                 $res = null;
-            if (is_bool($res) && $res == false)
-                $res = null;
+            /*if (is_bool($res) && $res == false)
+                $res = null;*/
             self::$cache[$this->getOption(\Memcached::OPT_PREFIX_KEY)][$key] = $res;
         }
         $QueryEndTime = microtime(true);
@@ -104,7 +104,7 @@ class Memcached extends \Memcached
                 self::$time += ($QueryEndTime - $QueryStartTime) * 1000;
                 self::$request[] = array("GET_SANS_MEMCACHED", ($QueryEndTime - $QueryStartTime) * 1000,$database , $clef,$res,$rc,$rm);
             }else{*/
-            $res = $m->get($clef);
+            $res = $m->get1($clef);
             /*$rc = $m->getResultCode();
             $rm = $m->getResultMessage();
             if ( $m->getResultCode() !== \Memcached::RES_SUCCESS)
