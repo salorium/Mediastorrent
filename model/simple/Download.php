@@ -81,7 +81,6 @@ class Download extends Model
                 $read = ($length > 8192) ? 8192 : $length;
                 $length -= $read;
                 print(fread($fp, $read));
-                flush();
             }
             fclose($fp);
         } else {
