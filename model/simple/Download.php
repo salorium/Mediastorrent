@@ -34,7 +34,7 @@ class Download extends Model
         else $range = FALSE; // We can't get the header/there isn't one set
 
 // Get the data range requested (if any)
-        $filesize = filesize($file);
+        $length = $filesize = filesize($file);
         if ($range) {
             $partial = true;
             list($param, $range) = explode('=', $range);
