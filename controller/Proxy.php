@@ -28,6 +28,7 @@ class Proxy extends Controller
 
     function imageSetWidth($url, $size)
     {
+        $url = urldecode($url);
         $myimage = new \model\simple\MyImage($url);
 
         $this->set(array(
@@ -40,6 +41,7 @@ class Proxy extends Controller
 
     function imageSetHeight($url, $size)
     {
+        $url = urldecode($url);
         $myimage = new \model\simple\MyImage($url);
 
         $this->set(array(
