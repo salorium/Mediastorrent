@@ -30,7 +30,8 @@ class Download extends Model
             foreach ($apache as $header => $val) $headers[strtolower($header)] = $val;
             if (isset($headers['range'])) $range = $headers['range'];
             else $range = FALSE; // We can't get the header/there isn't one set
-        } else $range = FALSE; // We can't get the header/there isn't one set
+        }
+        // else $range = FALSE; // We can't get the header/there isn't one set
 
 // Get the data range requested (if any)
         $filesize = filesize($file);
