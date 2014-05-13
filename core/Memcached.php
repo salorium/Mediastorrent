@@ -61,10 +61,10 @@ class Memcached extends \Memcached
         return $res;
     }
 
-    function set($key, $value, $expiration = 0)
+    function set($key, $value, $expiration = NULL, $udf_flags = NULL)
     {
         $QueryStartTime = microtime(true);
-        $res = parent::set($key, $value, $expiration);
+        $res = parent::set($key, $value, $expiration, $udf_flags);
         $rc = $this->getResultCode();
         $rm = $this->getResultMessage();
         //if ( $res){
