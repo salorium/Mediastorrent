@@ -37,7 +37,7 @@ class Memcached extends \Memcached
 
     }
 
-    function get($key, $cache_cb = NULL, &$cas_token = NULL, &$udf_flags = NULL)
+    function get($key, $cache_cb = NULL, $cas_token = NULL, $udf_flags = NULL)
     {
         /*$QueryStartTime = microtime(true);
         $q = "";
