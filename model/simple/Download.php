@@ -19,7 +19,8 @@ class Download extends Model
             throw new \Exception("FILE NOT FOUND");
             exit;
         }
-
+        var_dump($_SERVER);
+        die();
 // Get the 'Range' header if one was sent
         if (isset($_SERVER['HTTP_RANGE'])) $range = $_SERVER['HTTP_RANGE']; // IIS/Some Apache versions
         else if ($apache = apache_request_headers()) { // Try Apache again
