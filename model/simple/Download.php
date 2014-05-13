@@ -83,7 +83,11 @@ class Download extends Model
                 print(fread($fp, $read));
             }
             fclose($fp);
-        } else readfile($file); // ...otherwise just send the whole file
+        } else {
+            echo "ddd";
+            die();
+            readfile($file); // ...otherwise just send the whole file
+        }
         exit;
     }
 
