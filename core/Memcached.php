@@ -37,7 +37,7 @@ class Memcached extends \Memcached
 
     }
 
-    function get($key)
+    function get1($key)
     {
         $QueryStartTime = microtime(true);
         $q = "";
