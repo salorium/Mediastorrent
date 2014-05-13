@@ -37,7 +37,7 @@ class Memcached extends \Memcached
 
     }
 
-    function get($key, $cache_cb = NULL, &$cas_token = NULL, &$udf_flags = NULL)
+    function get1($key)
     {
         $QueryStartTime = microtime(true);
         $q = "";
@@ -47,7 +47,7 @@ class Memcached extends \Memcached
             $rm = "SUCCESS";
             $q = "GET_L";
         } else {
-            $res = parent::get($key, $cache_cb, $cas_token, $udf_flags);
+            $res = parent::get($key);
             $rc = $this->getResultCode();
             $rm = $this->getResultMessage();
             $q = "GET_S";
