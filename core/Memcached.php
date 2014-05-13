@@ -53,6 +53,8 @@ class Memcached extends \Memcached
             $q = "GET_S";
             if ($rc !== \Memcached::RES_SUCCESS)
                 $res = null;
+            if (is_bool($res) && $res == false)
+                $res = null;
             self::$cache[$this->getOption(\Memcached::OPT_PREFIX_KEY)][$key] = $res;
         }
         $QueryEndTime = microtime(true);
