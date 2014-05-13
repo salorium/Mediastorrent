@@ -81,11 +81,12 @@ class Download extends Model
                 $read = ($length > 8192) ? 8192 : $length;
                 $length -= $read;
                 print(fread($fp, $read));
+                flush();
             }
             fclose($fp);
         } else {
-            echo "ddd";
-            die();
+            /*echo "ddd";
+            die();*/
             readfile($file); // ...otherwise just send the whole file
         }
         exit;
