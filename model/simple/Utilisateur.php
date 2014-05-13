@@ -20,6 +20,11 @@ class Utilisateur extends \core\Model
                 if ($u)
                     \core\Memcached::value($u->login, "user", $u, 60 * 5);
             } else {
+                if (!is_object($u)) {
+                    var_dump($u);
+                    die();
+                }
+
                 $u = $u->keyconnexion === $keyconnexion ? $u : false;
                 if (is_bool($u)) {
                     $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login, $keyconnexion);
