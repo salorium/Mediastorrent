@@ -20,11 +20,11 @@ class Utilisateur extends \core\Model
                 if ($u)
                     \core\Memcached::value($u->login, "user", $u, 60 * 1);
             } else {
-                if (!is_object($u)) {
+                /*if (!is_object($u)) {
                     var_dump($u);
                     var_dump(\core\Memcached::$request);
                     die();
-                }
+                }*/
 
                 $u = $u->keyconnexion === $keyconnexion ? $u : false;
                 if (is_bool($u)) {
