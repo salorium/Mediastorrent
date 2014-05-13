@@ -24,10 +24,10 @@ class Conf
     static $nomvg = "vg0";
     static $databases = array(
         "default" => array(
-            "host" => "mysql.salorium.com",
+            "host" => "mysql",
             "database" => "mediastorrent",
             "login" => "mediastorrent",
-            "password" => "aqwzsx"
+            "password" => "azerty"
         )
     );
     static $memcachedserver = array(
