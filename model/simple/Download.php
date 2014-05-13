@@ -72,22 +72,27 @@ class Download extends Model
         if ($partial) {
             header('HTTP/1.1 206 Partial Content');
             header("Content-Range: bytes $start-$end/$filesize");
-            if (!$fp = fopen($file, 'r')) { // Error out if we can't read the file
-                header("HTTP/1.1 403 Forbidden");
-                exit;
-            }
-            if ($start) fseek($fp, $start);
-            while ($length) { // Read in blocks of 8KB so we don't chew up memory on the server
-                $read = ($length > 8192) ? 8192 : $length;
-                $length -= $read;
-                print(fread($fp, $read));
-            }
-            fclose($fp);
         } else {
+            $start = 0;
+        }
+        if (!$fp = fopen($file, 'r')) { // Error out if we can't read the file
+            header("HTTP/1.1 403 Forbidden");
+            exit;
+        }
+        if ($start) fseek($fp, $start);
+        while ($length) { // Read in blocks of 8KB so we don't chew up memory on the server
+            $read = ($length > 8192) ? 8192 : $length;
+            $length -= $read;
+            print(fread($fp, $read));
+        }
+        fclose($fp);
+
+
+        /* else {
             echo "ddd";
             die();
             readfile($file); // ...otherwise just send the whole file
-        }
+        }*/
         exit;
     }
 
