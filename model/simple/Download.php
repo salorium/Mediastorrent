@@ -23,8 +23,8 @@ class Download extends Model
         //die();
 // Get the 'Range' header if one was sent
         if (isset($_SERVER['HTTP_RANGE'])) $range = $_SERVER['HTTP_RANGE']; // IIS/Some Apache versions
-        else if ($apache = \getallheaders()) { // Try Apache again
-            var_dump($apache);
+        else /*if ($apache = \getallheaders())*/ { // Try Apache again
+            var_dump($_SERVER);
             die();
             $headers = array();
             foreach ($apache as $header => $val) $headers[strtolower($header)] = $val;
