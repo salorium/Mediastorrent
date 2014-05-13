@@ -94,7 +94,6 @@ class Dispatcher
                 if ($u)
                     \core\Memcached::value($u->login, "user", $u, 60 * 5);
             } else {
-                var_dump($u);
                 $u = $u->keyconnexion === $_COOKIE["keyconnexion"] ? $u : false;
             }
 
