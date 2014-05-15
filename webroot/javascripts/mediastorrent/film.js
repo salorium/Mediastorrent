@@ -348,7 +348,7 @@ var Film = {
         //$fieldset.append('<div>'+film['Synopsis']+'</div>');
         heigh = $divv.height();
         console.log(heigh);
-        $divv.append('<div style="height: ' + (this.topControl - 180 - heigh - 100) + 'px; overflow:auto;"><p>' + film["Synopsis"] + '</p></div>');
+        $divv.append('<div style="height: ' + (this.topControl - 180 - heigh ) + 'px; overflow:auto;"><p>' + film["Synopsis"] + '</p></div>');
         $tbody = $('<tbody></tbody>');
         $divv.append($('<div style="height: 100px; overflow: auto;"></div> ').append($('<table style="width: 100%;"></table>').append($tbody)));
         if (this.time)this.time.abort();
