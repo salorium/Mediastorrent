@@ -350,7 +350,7 @@ var Film = {
         console.log(heigh);
         $divv.append('<div style="height: ' + (this.topControl - 180 - heigh ) + 'px; overflow:auto;"><p>' + film["Synopsis"] + '</p></div>');
         $tbody = $('<tbody></tbody>');
-        $divv.append($('<div style="height: 100px; overflow: auto;"></div> ').append($('<table style="width: 100%;"></table>').append($tbody)));
+        //$divv.append($('<div style="height: 100px; overflow: auto;"></div> ').append($('<table style="width: 100%;"></table>').append($tbody)));
         if (this.time)this.time.abort();
         this.time = $.ajax({
             url: Base.controller.makeUrlBase() + 'film/getFile/' + film.id + ".json",
