@@ -16,6 +16,12 @@ class Console extends Model
 {
     static function println($str)
     {
+        if (is_bool($str)) {
+            $str = ($str ? "Ok" : "No ok");
+        }
+        if (is_array($str)) {
+            $str = json_encode($str);
+        }
         if (Conf::$debuglocal)
             if (Conf::$debuglocalfile) {
                 file_put_contents(LOG, "[" . date("j/n/Y G:i:s") . "] " . $str . "\n", FILE_APPEND);

@@ -13,7 +13,7 @@ sudo apt-get update
 sudo apt-get install autoconf build-essential comerr-dev libcloog-ppl-dev libcppunit-dev libcurl3 libcurl4-openssl-dev libncurses5-dev ncurses-base ncurses-term libterm-readline-gnu-perl libsigc++-2.0-dev libssl-dev libtool libxml2-dev subversion curl
 mkdir source
 cd source
-svn co https://xmlrpc-c.svn.sourceforge.net/svnroot/xmlrpc-c/stable xmlrpc
+svn co https://svn.code.sf.net/p/xmlrpc-c/code/stable xmlrpc
 curl http://libtorrent.rakshasa.no/downloads/libtorrent-0.13.3.tar.gz | tar xz
 curl http://libtorrent.rakshasa.no/downloads/rtorrent-0.9.3.tar.gz | tar xz
 ```
@@ -61,7 +61,7 @@ sudo apt-get install mysql-server
 
 ##Installation de Mediastorrent
 ```
-sudo apt-get install apache2 libapache2-mod-php5 php5-mysqlnd php5-json php5-imagick php5-memcached php5-curl
+sudo apt-get install apache2 libapache2-mod-php5 php5-mysqlnd php5-json php5-imagick php5-memcached php5-curl dtach libssh2-php git
 sudo a2enmod rewrite
 sudo service apache2 restart
 git clone https://github.com/salorium/Mediastorrent.git => dans un dossier <utilisateur> pas sur le root.
@@ -70,7 +70,7 @@ sudo ln -s /home/<utilisateur>/Mediastorrent /var/www/Mediastorrent
 
 ##Configuration d'apache2
 
-Dans  /etc/apache2/sites-available/default-ssl.conf, il faut ajouter ce code dans le ```<VirtualHost *:80>``` :
+Dans  /etc/apache2/sites-available/000-default.conf, il faut ajouter ce code dans le ```<VirtualHost *:80>``` :
 ```
 <Directory /var/www>
 AllowOverride All
@@ -114,3 +114,6 @@ AllowOverride All
 	#Include conf-available/serve-cgi-bin.conf
 </VirtualHost>
 ```
+
+##Utilisation
+Je vous conseil d'utiliser Mediastorrent avec firefox.

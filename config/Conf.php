@@ -15,15 +15,17 @@ class Conf
     static $debug = true;
     static $debuglocal = true;
     static $debuglocalfile = true;
-    static $install = true;
+    static $install = false;
     static $nomdusite = "MediasTorrent";
     static $version = "#A.2.0";
     static $anneefondation = "2013";
     static $author = "Salorium";
+    static $rootpassword = "qzwxecasd9";
+    static $nomvg = "vg0";
     static $databases = array(
         "default" => array(
-            "host" => "localhost",
-            "database" => "test",
+            "host" => "mysql",
+            "database" => "mediastorrent",
             "login" => "mediastorrent",
             "password" => "azerty"
         )
@@ -33,7 +35,7 @@ class Conf
     );
     static $user = array("user" => null, "role" => 0, "roletxt" => "Install");
     static $api_key_themoviedb = "57b59be276081344c6073b1989f4d57e";
-    static $numerorole = array("Install", "Visiteur", "Normal", array("Torrent", "Uploadeur"), "Sysop");
+    static $numerorole = array("Install", "Visiteur", "Normal", "Torrent", "Sysop");
     static $rolenumero; // Ne pas modifier
     static $rolevue;
     static $videoExtensions = array("avi", "asf", "flv", "mkv", "mov", "mp4", "mpg", "mpeg", "ogm", "rm", "wmv", "rar");

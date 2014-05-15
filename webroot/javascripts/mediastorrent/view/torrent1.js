@@ -231,14 +231,15 @@ Torrent1.view = {
                 '<path style="fill: ' + state[1].color + ';" d="' + this.getIconDessin(state[1].name) + '"/></svg></td><td>' + (torrent[1] ? torrent[1] : "Test" ) + '</td></tr></table></legend>' +
                 '<table style="width: 100%"><tr><td width="100%"><progress class="' + state[1].colorname + '" id="p" value="' + (torrent[3] ? torrent[3] / 10 : "0" ) + '" max="100"></progress></td><td  width="70px" style="text-align:center;min-width:70px; "><span class="pcr">' + (torrent[3] ? torrent[3] / 10 : "0" ) + '</span>%</td></tr></table>' +
                 '<table style="width: 100%">' +
-                '<tr><td width="80px;" style="vertical-align: bottom;">Ajouté</td><td width="170px">: ' + ((torrent[25] > 3600 * 24 * 365) ? Base.model.converter.date(Base.model.converter.iv(torrent[25])) : "") + '</td><td width="60px;">Seedtime</td><td>: ' + ((torrent[24] > 3600 * 24 * 365) ? Base.model.converter.time(new Date().getTime() / 1000 - (Base.model.converter.iv(torrent[24])), true) : "") + '</td><td align="right">Ratio : ' + torrent[6] / 1000 + '</td></tr>' +
+                //'<tr><td width="80px;" style="vertical-align: bottom;">Ajouté</td><td width="170px">: ' + ((torrent[25] > 3600 * 24 * 365) ? Base.model.converter.date(Base.model.converter.iv(torrent[25])) : "") + '</td><td width="60px;">Seedtime</td><td>: ' + ((torrent[24] > 3600 * 24 * 365) ? Base.model.converter.time(new Date().getTime() / 1000 - (Base.model.converter.iv(torrent[24])), true) : "") + '</td><td align="right">Ratio : ' + torrent[6] / 1000 + '</td></tr>' +
+                '<tr><td style="vertical-align: bottom;">Ajouté</td><td>: ' + ((torrent[25] > 3600 * 24 * 365) ? Base.model.converter.date(Base.model.converter.iv(torrent[25])) : "") + '</td><td>Seedtime</td><td>: ' + ((torrent[24] > 3600 * 24 * 365) ? Base.model.converter.time(new Date().getTime() / 1000 - (Base.model.converter.iv(torrent[24])), true) : "") + '</td><td align="right">Ratio : ' + torrent[6] / 1000 + '</td></tr>' +
                 '<tr><td style="vertical-align: bottom;">Sources</td><td>: ' + (torrent[13] ? torrent[13] : "0" ) + '(' + (torrent[11] ? torrent[11] : "0" ) + ')</td><td>Clients</td><td>: ' + (torrent[12] ? torrent[12] : "0" ) + '(' + (torrent[10] ? torrent[10] : "0" ) + ')</td><td align="right">Upload : ' + (Base.model.converter.speed(torrent[7]) != "" ? Base.model.converter.speed(torrent[7]) : "-") + ' Download : ' + (Base.model.converter.speed(torrent[8]) != "" ? Base.model.converter.speed(torrent[8]) : "-") + '</td></tr>' +
                 '<tr><td style="vertical-align: bottom;">Téléchargé</td><td >: ' + (Base.model.converter.bytes(torrent[4], 2) != "" ? Base.model.converter.bytes(torrent[4], 2) : "-" ) + '/' + (Base.model.converter.bytes(torrent[2], 2) != "" ? Base.model.converter.bytes(torrent[2], 2) : "-" ) + '</td><td>Envoyé</td><td>: ' + (Base.model.converter.bytes(torrent[5], 2) != "" ? Base.model.converter.bytes(torrent[5], 2) : "-" ) + '</td><td align="right">Temps restant : ' + (torrent[9] != -1 ? Base.model.converter.time(torrent[9]) : "∞") + '</td></tr>' +
                 ( Base.model.utilisateur.role == "Sysop" ? '<tr><td style="vertical-align: bottom;">Clef unique</td><td>: ' + torrent[28] + '</td><td>Type</td><td>: ' + torrent[29] + '</td><td align="right"></td></tr>' : '') +
                 '</table></fieldset>';
         },
         stats: function (hdduse, hddtotal, statreso) {
-            $("#storage").attr({"value": hdduse, "max": hddtotal, "title": Base.model.converter.bytes(hdduse, 2) + " / " + Base.model.converter.bytes(hddtotal, 2)});
+            $("#storage").attr({"value": hdduse, "max": hddtotal, "title": Base.model.converter.bytes(hddtotal - hdduse, 2) + " | " + Base.model.converter.bytes(hddtotal, 2)});
             $("#vup").html((statreso[0] == 0 ? "" : Base.model.converter.speed(statreso[0])));
             $("#vupl").html((statreso[1] == 0 ? "∞" : Base.model.converter.speed(statreso[1])));
             $("#vupt").html(Base.model.converter.bytes(statreso[2], 2));
@@ -443,7 +444,7 @@ Torrent1.view = {
                                      if ( Base.model.path.ext(v[1]) == "avi" || Base.model.path.ext(v[1]) == "mp4" || Base.model.path.ext(v[1]) == "mkv"){
                                      button.push({nom:"Streaming",dest : function(){Torrent.controller.streamingFileTorrent($(e.currentTarget).attr("data-cpt"));}});
                                      }*/
-                                    Base.model.pannelClicDroit.make(button, e.clientX, e.clientY);
+                                    Base.model.pannelClicDroit.make(button, e.pageX, e.pageY);
                                 }
                                 break;
                         }
@@ -571,7 +572,8 @@ Torrent1.view = {
                                             Torrent1.controller.filesTorrent.streaming($(e.currentTarget).attr("data-id"));
                                         }});
                                     }
-                                    Base.model.pannelClicDroit.make(button, e.clientX, e.clientY);
+                                    console.log(e);
+                                    Base.model.pannelClicDroit.make(button, e.pageX, e.pageY);
                                 }
                                 break;
                         }
@@ -594,10 +596,10 @@ Torrent1.view = {
         },
         afficheTrackers: function () {
             $("#torrentdetailstrackers").empty();
-            $.each(Torrent1.model.trackerTorrent.liste, function (k, v) {
+            $.each(Torrent1.model.trackersTorrent.liste, function (k, v) {
                 //var $tr = $('<tr style="cursor: pointer;" class="' + ($.inArray(cpt + "", Torrent1.model.filesTorrent.selectionne) > -1 ? "active" : "") + '" id="file' + cpt + '" data-cpt="' + cpt + '" data-dossier="1" data-dossierk="' + k + '"><td><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dossier.svg">' + v[0] + '</td><td>' + Base.model.converter.bytes(v[4], 2) + '</td><td>' + Base.model.converter.bytes(v[4] * v[2] / v[3], 2) + '</td><td><progress class="' + (v[2] == v[3] ? "ul" : "dl") + '"  value="' + v[2] + '" max="' + v[3] + '" title="' + (v[2] != 0 ? v[2] / v[3] * 100 : 0) + '%"></progress></td><td>' + Torrent1.model.filesTorrent.getPriorite(v[5]) + '</td></tr>');
                 console.log(v[1]);
-                var $tr = $('<tr style="cursor: pointer;"><td>' + (v[1] != "dht://" ? Torrent1.model.trackerTorrent.nom(v[1])[2] : "dht://" ) + '</td><td>' + Torrent1.model.trackerTorrent.type[v[2]] + '</td><td>' + v[3] + '</td><td>' + v[4] + '</td><td>' + v[5] + '</td><td>' + v[6] + '</td><td>' + v[7] + '</td><td>' + (Base.model.converter.iv(v[9]) ? Base.model.converter.time((new Date().getTime() - v[9] * 1000) / 1000) : "") + '</td><td>' + Base.model.converter.time(v[8]) + '</td><td>' + Torrent1.model.trackerTorrent.estPrive(v[1]) + '</td></tr>');
+                var $tr = $('<tr style="cursor: pointer;"><td>' + (v[1] != "dht://" ? Torrent1.model.trackersTorrent.nom(v[1])[2] : "dht://" ) + '</td><td>' + Torrent1.model.trackersTorrent.type[v[2]] + '</td><td>' + v[3] + '</td><td>' + v[4] + '</td><td>' + v[5] + '</td><td>' + v[6] + '</td><td>' + v[7] + '</td><td>' + (Base.model.converter.iv(v[9]) ? Base.model.converter.time((new Date().getTime() - v[9] * 1000) / 1000) : "") + '</td><td>' + Base.model.converter.time(v[8]) + '</td><td>' + Torrent1.model.trackersTorrent.estPrive(v[1]) + '</td></tr>');
 
                 $("#torrentdetailstrackers").append(
                     $tr

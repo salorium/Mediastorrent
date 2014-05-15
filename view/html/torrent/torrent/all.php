@@ -115,9 +115,6 @@
     </section>
 </nav>
 <div id="contenu">
-    <div id="loader"
-         style="background-color: rgba(0,0,0,0.9); position: absolute; bottom: 0px; right: 0px;top: 45px;left: 0px; z-index: 10;display: none">
-        <h3 style="color: #ffffff;">Veuillez patienter</h3><span class="loader loader-circles"></span></div>
     <div id="souscontenu" class="heightfixed">
         <div id="moitiegauche" class="large-5 columns panel heightfixed">
 

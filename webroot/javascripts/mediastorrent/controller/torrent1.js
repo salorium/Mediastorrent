@@ -13,9 +13,9 @@ Torrent1.controller = {
         this.listTorrent.init();
         this.detailsTorrent.init();
         this.filesTorrent.init();
+        this.trackersTorrent.init();
         this.addTorrent.init();
         Torrent1.view.addTorrent.hide();
-
     },
     seedbox: {
         init: function (seedbox) {
@@ -69,7 +69,7 @@ Torrent1.controller = {
                                         var t = Torrent1.model.listTorrent.changed && response.torrentselectionnee.files != [] && response.torrentselectionnee.detail != [];
                                         Torrent1.controller.detailsTorrent.conversion(response.torrentselectionnee.detail, t);
                                         Torrent1.controller.filesTorrent.conversion(response.torrentselectionnee.files, t);
-                                        Torrent1.controller.trackerTorrent.conversion(response.torrentselectionnee.trackers, t);
+                                        Torrent1.controller.trackersTorrent.conversion(response.torrentselectionnee.trackers, t);
                                         Torrent1.model.listTorrent.changed = false;
                                     }
 
@@ -111,7 +111,7 @@ Torrent1.controller = {
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    Torrent1.view.loader.hide();
+                    Torrent1.view.loaders.hideListeTorrent();
                     Torrent1.controller.listTorrent.resetSelectionne();
                     Torrent1.controller.filesTorrent.reset();
                     Torrent1.controller.detailsTorrent.reset();
@@ -160,6 +160,7 @@ Torrent1.controller = {
         recherche: function () {
             var recher = new RegExp("(" + $("#recherche").val() + ")", "gi");
             Torrent1.model.listTorrent.listerecherche = [];
+            console.log(Torrent1.model.listTorrent.liste);
             var liste = Torrent1.model.listTorrent.liste.clone();
             $.each(liste, function (k, v) {
                 if (recher.test(v[1])) {
@@ -847,12 +848,12 @@ Torrent1.controller = {
             }
         }
     },
-    trackerTorrent: {
+    trackersTorrent: {
         init: function () {
-            Torrent1.view.trackerTorrent.init();
+            Torrent1.view.trackersTorrent.init();
         },
         conversion: function (liste, force) {
-            Torrent1.model.trackerTorrent.liste = liste;
+            Torrent1.model.trackersTorrent.liste = liste;
         }
     },
     addTorrent: {

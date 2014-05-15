@@ -48,7 +48,7 @@ Torrent1.model = {
             return this.priorite[noprio];
         }
     },
-    trackerTorrent: {
+    trackersTorrent: {
         original: [],
         type: [0, "http", "udp", "dht"],
         liste: [],

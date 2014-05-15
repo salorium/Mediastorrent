@@ -37,7 +37,7 @@ class Memcached extends \Memcached
 
     }
 
-    function get($key, $cache_cb = null, &$cas_token = null)
+    function get1($key)
     {
         $QueryStartTime = microtime(true);
         $q = "";
@@ -47,12 +47,14 @@ class Memcached extends \Memcached
             $rm = "SUCCESS";
             $q = "GET_L";
         } else {
-            $res = parent::get($key, $cache_cb, $cas_token);
+            $res = $this->get($key);
             $rc = $this->getResultCode();
             $rm = $this->getResultMessage();
             $q = "GET_S";
             if ($rc !== \Memcached::RES_SUCCESS)
                 $res = null;
+            /*if (is_bool($res) && $res == false)
+                $res = null;*/
             self::$cache[$this->getOption(\Memcached::OPT_PREFIX_KEY)][$key] = $res;
         }
         $QueryEndTime = microtime(true);
@@ -61,10 +63,10 @@ class Memcached extends \Memcached
         return $res;
     }
 
-    function set($key, $value, $expiration = 0)
+    function set1($key, $value, $expiration = 0)
     {
         $QueryStartTime = microtime(true);
-        $res = parent::set($key, $value, $expiration);
+        $res = $this->set($key, $value, $expiration);
         $rc = $this->getResultCode();
         $rm = $this->getResultMessage();
         //if ( $res){
@@ -102,7 +104,7 @@ class Memcached extends \Memcached
                 self::$time += ($QueryEndTime - $QueryStartTime) * 1000;
                 self::$request[] = array("GET_SANS_MEMCACHED", ($QueryEndTime - $QueryStartTime) * 1000,$database , $clef,$res,$rc,$rm);
             }else{*/
-            $res = $m->get($clef);
+            $res = $m->get1($clef);
             /*$rc = $m->getResultCode();
             $rm = $m->getResultMessage();
             if ( $m->getResultCode() !== \Memcached::RES_SUCCESS)
@@ -111,7 +113,7 @@ class Memcached extends \Memcached
             //}
         } else {
             //set Value
-            $res = $m->set($clef, $valeur, $duree);
+            $res = $m->set1($clef, $valeur, $duree);
             /*if ($res)
                 self::$cache[$database][$clef] = $valeur;*/
         }

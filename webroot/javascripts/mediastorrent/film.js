@@ -107,188 +107,7 @@ var Film = {
     topControl: 0,
     qualiteposter: "",
     qualitebackdrop: "",
-    tonObjet: {
-        "base_url": "http://d3gtl9l2a4fn1j.cloudfront.net/t/p/",
-        "secure_base_url": "https://d3gtl9l2a4fn1j.cloudfront.net/t/p/",
-        "poster_sizes": ["w92", "w154", "w185", "w342", "w500", "original"],
-        "backdrop_sizes": ["w300", "w780", "w1280", "original"],
-        "film": [
-            {
-                "poster": "/wnguALxboOSZC793k2YlMB8NbRB.jpg",
-                "titre": "Les Schtroumpfs",
-                "backdrop": "/ynCi6RF7by2QBvoT1HMRTQEg5KA.jpg"
-            },
-            {
-                "poster": "/9ZQh34mYYpshR0ft1dcMnLGvNQp.jpg",
-                "titre": "Les schtroumpfs - les chants de Noel",
-                "backdrop": "/mMOQuMFHgHk8Fk8OLAo6noc2eK9.jpg"
-            },
-            {
-                "poster": "/deeWuBjq2JxTMzyws6k7bJY26DS.jpg",
-                "titre": "L'Ã¢ge de glace 4 : La dÃ©rive des continents",
-                "backdrop": "/tZGKKeWGejt63jiSdi7MTAjCFE9.jpg"
-            },
-            {
-                "poster": "/nqkHXAA43PwDEkQuwWgoXX1qRV5.jpg",
-                "titre": "L'Ã¢ge de glace",
-                "backdrop": "/cTVhmoHolmeXQOdhMh38i7NnN54.jpg"
-            },
-            {
-                "poster": "/5bIcCP1MYgSIBfTDx9btd0FXx8i.jpg",
-                "titre": "L'Ã¢ge de glace 3 - Le temps des dinosaures",
-                "backdrop": "/2ZkYXWejAwpkFkNnOY6nQYcJSPn.jpg"
-            },
-            {
-                "poster": "/vFI6o8Xf8U2QdagrKZyEpmbPJf5.jpg",
-                "titre": "L'Ã¢ge de glace 2",
-                "backdrop": "/vPotRRx8kdDu7CkFovXovgnfiN4.jpg"
-            },
-            {
-                "poster": "/q3kH3gI71GCbWR2aklFOFKkA9Jy.jpg",
-                "titre": "L'Ã¢ge de glace fÃªte NoÃ«l",
-                "backdrop": "/29jDSAI2aAgmLlOeKTHjSfKyvr5.jpg"
-            },
-            {
-                "poster": "/c7Hw9srT8iaRfokFwwjdCmbj7Da.jpg",
-                "titre": "Iron Man",
-                "backdrop": "/ZQixhAZx6fH1VNafFXsqa1B8QI.jpg"
-            },
-            {
-                "poster": "/iRrpZZRn4nfFKtkkY8kkbRwH6qE.jpg",
-                "titre": "Iron Man 2",
-                "backdrop": "/jxdSxqAFrdioKgXwgTs5Qfbazjq.jpg"
-            },
-            {
-                "poster": "/2hH2s3keiXub9kSSKy9kf01YspR.jpg",
-                "titre": "L'Homme aux Poings de Fer",
-                "backdrop": "/uSZweG7S50fe8vqMHnJHl8H6S33.jpg"
-            },
-            {
-                "poster": "/oTjW5Z72XbNL7ows7sRQLKHPSgT.jpg",
-                "titre": "Les Schtroumpfs 2",
-                "backdrop": "/oTjW5Z72XbNL7ows7sRQLKHPSgT.jpg"
-            },
-            /*{
-             "poster": "/wCvfrk4wUqwg8py0jJLQkJ3Ta35.jpg",
-             "titre": "Bloody Fight in Iron-Rock Valley"
-             },*/
-            {
-                "poster": "/dyKHdcZnuNpyXoKe6bWpxQd3yDY.jpg",
-                "titre": "Iron Man 3",
-                "backdrop": "/n9X2DKItL3V0yq1q1jrk8z5UAki.jpg"
-            },
-            {
-                "poster": "/uQomOM1emV0uGM50EYg4R9HxlYH.jpg",
-                "titre": "Iron Maiden: Flight 666",
-                "backdrop": "/jlGF5ZZ1RrXLhQnFLMlFWCz38zB.jpg"
-            },
-            /*
-             {
-             "poster": "/ocH2z9XAEFj5e4aS6SqcUiUW2Fv.jpg",
-             "titre": "Aian GÃ¢ru"
-             },*/
-            {
-                "poster": "/qMVlimquAFAMkSFYCK4vRlvZdjI.jpg",
-                "titre": "Iron Sky",
-                "backdrop": "/mIOWtdsUg9VZXVMwVdO30TejAxn.jpg"
-            },
-            {
-                "poster": "/vkhvQR718AcxaJMMuADQki2Pm1I.jpg",
-                "titre": "Le sang des templiers",
-                "backdrop": "/hxGSxNREU4xbA1kfiJRvnPPoL29.jpg"
-            },
-            /*
-             {
-             "titre": "Iron and Beyond"
-             },*/
-            {
-                "poster": "/9NGEclCMLajEXEv6oxq9k2Da2c2.jpg",
-                "titre": "Sur la piste du Marsupilami",
-                "backdrop": "/pHZS0Gf9bqZcyJMYgU0Fc2y6qE4.jpg"
-            },
-            {
-                "poster": "/niNI2RxXDqrHGdM5sADHIyH09Y6.jpg",
-                "titre": "Taken",
-                "backdrop": "/d5vwBiuJI1a2hBcGjhsWhpmAkL7.jpg"
-            },
-            /*
-             {
-             "poster": "/oHYLVJ8ivmG05ENPhnU4kELy6Lj.jpg",
-             "titre": "Taken"
-             },*/
-            {
-                "poster": "/8bpWdsgC8YLzyJdPsAySGxBxkM7.jpg",
-                "titre": "Taken 2",
-                "backdrop": "/uLQjXZq6307jTgcACnhOeh5mCK2.jpg"
-            },
-            {
-                "poster": "/16o4fitcQafAWsTkXlu9ENdWd1Y.jpg",
-                "titre": "Stephen Grant: Taken for Granted",
-                "backdrop": "/aOcawrAyQz1tHf6jXzawlf3pIZs.jpg"
-            },
-            /*
-             {
-             "poster": "/5cAtn4HbDA117nHKWwzBF3HoZjk.jpg",
-             "titre": "NÃ´kÃ´ furin: torareta onna"
-             },*/
-            {
-                "poster": "/l054o7fLS49Z7febJ4WLpWoPOzh.jpg",
-                "titre": "Mon fils a disparu",
-                "backdrop": "/f2mj0tccSmSja6C8vt1HGpd1Wgm.jpg"
-            },
-            /*
-             {
-             "titre": "Seontaek"
-             },
-             {
-             "poster": "/pyGXYUEyNE6mYutjc5KMtJkexLj.jpg",
-             "titre": "Catch The Hold Not Taken"
-             },*/
-            {
-                "poster": "/Are4nyUaGNgOLVsGdn0BI4MwCge.jpg",
-                "titre": "Taken for a Ride",
-                "backdrop": "/fO6ZM7RssT22vGZkgqruQyUHR8V.jpg"
-            },
-            /*
-             {
-             "titre": "Over Taken"
-             },*/
-            {
-                "poster": "/1Bn8x8unTKnysriOkqHCzge5Cg3.jpg",
-                "titre": "Le Courage au coeur",
-                "backdrop": "/mHzAksI6qo7PVDZXTgbmRpLPujw.jpg"
-            },
-            /*
-             {
-             "poster": "/lNu4qDoQaOLp4nkA5oqrzu6yyQj.jpg",
-             "titre": "They've Taken Our Children: The Chowchilla Kidnapping"
-             },
-             {
-             "titre": "Military Camp at Tampa, Taken from Train"
-             },
-             {
-             "titre": "The Old Maid Having Her Picture Taken"
-             },
-             {
-             "titre": "President Coolidge, Taken on the White House Grounds"
-             },
-             {
-             "titre": "Taken Back: Finding Haley"
-             },*/
-            {
-                "poster": "/iwXm4Qq9qbvd59cqmqYJW2ZS8lB.jpg",
-                "titre": "Six Jours Sept Nuits",
-                "backdrop": "/yeK1MPP6wDAnf4wATPqRfMvXHSS.jpg"
-            },
-            {
-                "poster": "/pTqNNlU8QAW4iX8w14icBtp3bV4.jpg",
-                "titre": "40 jours et 40 nuits",
-                "backdrop": "/v8qppTQ6cK8rIInke51WDi1rRM9.jpg"
-            }
-
-
-        ]
-    },
+    tonObjet: [],
     compteur: 0,
     container: null,
     nombreControlDansLargeur: 0,
@@ -303,8 +122,10 @@ var Film = {
     containerDetailsFilm: null,
     CssModulable: "",
     zindex: 1,
+    time: null,
     init: function (all) {
-        this.tonObjet = all;
+        if (this.tonObjet.length == 0)
+            this.tonObjet = all;
         if (this.container) {
             $(this.container).remove();
         }
@@ -317,8 +138,12 @@ var Film = {
     initTopBar: function () {
         this.container = $('<div></div>').appendTo(".container");
         this.container.append('<div style="height: 1px;"></div>')
-        this.containerDetailsFilm = $('<div id="detailsFilm" class="detailsFilm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, accusamus aliquam autem enim error et eum id itaque molestias natus placeat, quod quos ratione reprehenderit repudiandae, sed sint sunt veritatis.</div>').appendTo(this.container);
-
+        this.containerDetailsFilm = $('<div id="detailsFilm" class="detailsFilm"></div>').appendTo(this.container);
+        $div = $('<div></div>');
+        this.cdetail = $('<div class="large-6 columns"></div> ');
+        $div.append(this.cdetail);
+        $div.append(this.cdetail);
+        this.containerDetailsFilm.append($div);
         this.containerControl = $('<div></div>').attr({
             "class": "control"
         }).appendTo(this.container);
@@ -343,7 +168,7 @@ var Film = {
         this.CssModulable = "";
         this.hauteurWindows = $(window).height();
         this.hauteurWindows = this.hauteurWindows - 75;
-        $(".container").css("height", this.hauteurWindows);
+        $(".container").css("height", this.hauteurWindows + 20);
         console.info(this.hauteurWindows);
         this.largeurWindows = $(".container").width();
         this.hauteurControl = Math.round(this.percentageHauteurControl * this.hauteurWindows / 100);
@@ -402,7 +227,7 @@ var Film = {
          });*/
         this.containerBtControl.css({
             "width": ((this.nombreControlDansLargeur - 1) * this.demiLargeurControl + this.largeurControl) + "px"
-        })
+        });
         Base.view.loader.make("detailsFilm");
         this.containerDetailsFilm.hide();
         this.genereControlTopBar(null, true);
@@ -480,7 +305,7 @@ var Film = {
                 $("#background").css("background", 'url("http://mediastorrent/images/fondEcran/black_hole_scene-1920x1080.jpg") no-repeat center center fixed');
             }
             this.zindex--;
-            this.afficheDetailsFilm(id - 1);
+            this.afficheDetailsFilm(control);
             this.addUniqueCssGaucheTopBar(id);
         } else {
             if (control.poster) {
@@ -495,7 +320,57 @@ var Film = {
         }
 
     },
-    afficheDetailsFilm: function (id) {
+    afficheDetailsFilm: function (film) {
         this.containerDetailsFilm.show();
+        $fieldset = $('<fieldset><legend>' + film.Titre + '</legend></fieldset>');
+        this.containerDetailsFilm.empty();
+        this.containerDetailsFilm.append($fieldset);
+        $divimg = $('<div class="float" style="margin-right: 10px;width: ' + this.containerDetailsFilm.width() * 0.20 + 'px;"> <img style="height:' + (this.topControl - 180) + 'px;" src="' + Base.controller.makeUrlBase() + "proxy/imageSetHeight/" + Base.model.converter.paramUrl(film.poster) + '/' + (this.topControl - 180) + '.jpg" alt="' + film.titre + '"></div>');
+        $fieldset.append($divimg);
+        console.log((this.containerDetailsFilm.width() - $divimg.width()));
+        $divv = $('<div class="float" style="width: 40%;"></div>');
+        //$div.append($divv);
+        $.each(film, function (k, v) {
+            if (/^[A-Z]/.test(k)) {
+                switch (k) {
+                    case "Titre original":
+                    case "Acteur(s)":
+                    case "Réalisateur(s)":
+                    case "Genre":
+                    case "Durée":
+                        $divv.append('<span>' + k + ' : ' + v + '</span><br><br>');
+                        break;
+                }
+
+            }
+        });
+        $fieldset.append($divv);
+        //$fieldset.append('<div>'+film['Synopsis']+'</div>');
+        heigh = $divv.height();
+        console.log(heigh);
+        $divv.append('<div style="height: ' + (this.topControl - 180 - heigh ) + 'px; overflow:auto;"><p>' + film["Synopsis"] + '</p></div>');
+        $tbody = $('<tbody></tbody>');
+        //$divv.append($('<div style="height: 100px; overflow: auto;"></div> ').append($('<table style="width: 100%;"></table>').append($tbody)));
+        if (this.time)this.time.abort();
+        this.time = $.ajax({
+            url: Base.controller.makeUrlBase() + 'film/getFile/' + film.id + ".json",
+            dataType: "json",
+            type: "GET",
+            //data: {hash: listafaire},
+            //contentType: "application/json",
+            success: function (response, textStatus, jqXHR) {
+                if (response.showdebugger == "ok") {
+
+                } else {
+
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (textStatus != "abort")
+                    Base.view.noty.generate("error", textStatus + " " + jqXHR + " " + errorThrown);
+
+            }
+        });
+
     }
 }

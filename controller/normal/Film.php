@@ -13,14 +13,35 @@ use core\Controller;
 
 class Film extends Controller
 {
-    public $layout = "connecter";
+    public $layout = "connectermediastheque";
 
     function nouveau()
     {
-        $a = \model\mysql\Torrentfilm::getAllFilmUserDateDesc();
+        $a = \model\mysql\Film::getAllFilmUserDateDesc();
         //var_dump(json_encode($a));
-        $this->set("film", json_encode($a));
+        $tmp = array();
+        foreach ($a as $v) {
+            $t = null;
+            $t = json_decode($v->infos);
+            $t->id = $v->id;
+            $t->poster = $v->poster;
+            $t->backdrop = $v->backdrop;
+            $tmp[] = $t;
+        }
+        $this->set("film", $tmp);
         // die();
+    }
+
+    function getFile($id)
+    {
+        //sleep(10);
+        $a = \model\mysql\Torrentfilm::getTorrentFilmParIdFilm($id);
+        $tmp = array();
+        foreach ($a as $v) {
+            $v->mediainfo = json_decode($v->mediainfo);
+            $tmp[] = $v;
+        }
+        $this->set("file", $tmp);
     }
 
 } 

@@ -14,6 +14,7 @@ SCRIPTNAME=/etc/init.d/$NAME
 
 if [ -n "$2" ]; then
 USER=$2
+SCGI=$3
 
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 # path du fichier temporaire
@@ -25,7 +26,7 @@ PHPDIR=/home/salorium/Mediastorrent/script
 start() {
         echo -n $"Starting $NAME: "
         su -l $USER -c "dtach -n $TMP rtorrent -n -o import=$CONF"
-        su -l $USER -c "php $PHPDIR/init.php $3"
+        su -l $USER -c "php $PHPDIR/init.php $SCGI"
         #chmod 666 /tmp/rtorrent$USER.dtach
         echo "started"  
 }

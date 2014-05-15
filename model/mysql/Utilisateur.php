@@ -49,6 +49,7 @@ class Utilisateur extends \core\ModelMysql
             $query .= "keyconnexion=" . \core\Mysqli::real_escape_string($this->keyconnexion);
             $query .= " where login=" . \core\Mysqli::real_escape_string($this->login);
             \core\Mysqli::query($query);
+            \model\simple\Console::println("Requête sql :[" . $query . "]");
             $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
             \core\Mysqli::close();
             return $res;
@@ -114,4 +115,18 @@ class Utilisateur extends \core\ModelMysql
         return \core\Mysqli::getObjectAndClose(false, __CLASS__);
     }
 
+    public static function getAllUtilisateur()
+    {
+        $query = "select * from utilisateur";
+        \core\Mysqli::query($query);
+        return \core\Mysqli::getObjectAndClose(true, __CLASS__);
+    }
+
+    public static function getUtilisteur($login)
+    {
+        $query = "select * from utilisateur";
+        $query .= " where login=" . \core\Mysqli::real_escape_string($login);
+        \core\Mysqli::query($query);
+        return \core\Mysqli::getObjectAndClose(false, __CLASS__);
+    }
 }

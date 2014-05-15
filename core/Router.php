@@ -26,6 +26,7 @@ class  Router
      */
     static function parse($url, $request)
     {
+        $url = urldecode($url);
         $ext = pathinfo($url, PATHINFO_EXTENSION);
         $url = trim(preg_replace("#\." . $ext . "$#i", "", $url), "/");
         if (empty($url)) {
