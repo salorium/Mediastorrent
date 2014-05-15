@@ -328,8 +328,17 @@ var Film = {
         $divimg = $('<div class="float" style="margin-right: 10px;width: ' + this.containerDetailsFilm.width() * 0.20 + 'px;"> <img style="height:' + (this.topControl - 180) + 'px;" src="' + Base.controller.makeUrlBase() + "proxy/imageSetHeight/" + Base.model.converter.paramUrl(film.poster) + '/' + (this.topControl - 180) + '.jpg" alt="' + film.titre + '"></div>');
         $fieldset.append($divimg);
         console.log((this.containerDetailsFilm.width() - $divimg.width()));
-        $divv = $('<div class="float" style="width: 40%;"></div>');
+        $divv = $('<div class="float" style="width: 78%;"></div>');
+        $row1 = $('<div style="width: 100%;display: table;"></div>');
+        $divv1 = $('<div class="float" style="width: 50%;"></div>');
+        $divv2 = $('<div class="float" style="width: 50%; overflow:auto;"></div>');
+
+        $divv.append($row1);
+        $row1.append($divv1);
+        $row1.append($divv2);
+
         //$div.append($divv);
+
         $.each(film, function (k, v) {
             if (/^[A-Z]/.test(k)) {
                 switch (k) {
@@ -338,7 +347,7 @@ var Film = {
                     case "Réalisateur(s)":
                     case "Genre":
                     case "Durée":
-                        $divv.append('<span>' + k + ' : ' + v + '</span><br><br>');
+                        $divv1.append('<span>' + k + ' : ' + v + '</span><br><br>');
                         break;
                 }
 
@@ -347,8 +356,9 @@ var Film = {
         $fieldset.append($divv);
         //$fieldset.append('<div>'+film['Synopsis']+'</div>');
         heigh = $divv.height();
+        $divv2.height(heigh);
         console.log(heigh);
-        $divv.append('<div style="height: ' + (this.topControl - 180 - heigh ) + 'px; overflow:auto;"><p>' + film["Synopsis"] + '</p></div>');
+        $divv.append('<div style="height: ' + (this.topControl - 180 - heigh ) + 'px; overflow:auto;">Synopsis : <p>' + film["Synopsis"] + '</p></div>');
         $tbody = $('<tbody></tbody>');
         //$divv.append($('<div style="height: 100px; overflow: auto;"></div> ').append($('<table style="width: 100%;"></table>').append($tbody)));
         if (this.time)this.time.abort();
