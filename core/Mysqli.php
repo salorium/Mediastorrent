@@ -150,6 +150,8 @@ class Mysqli
     public static function getObjectAndClose($forcearray = false, $className = null)
     {
         $tab = false;
+        if ($forcearray)
+            $tab = array();
         if (self::$res) {
             if ($className != null) {
 
