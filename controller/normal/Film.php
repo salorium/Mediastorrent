@@ -20,7 +20,8 @@ class Film extends Controller
         $a = \model\mysql\Film::getAllFilmUserDateDesc();
         //var_dump(json_encode($a));
         $tmp = array();
-        foreach ($a as $v) {
+        if (count($a) > 0)
+            foreach ($a as $v) {
             $t = null;
             $t = json_decode($v->infos);
             $t->id = $v->id;
