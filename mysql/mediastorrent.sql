@@ -158,6 +158,27 @@ CREATE TABLE IF NOT EXISTS `ticket` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `cronroot`
+--
+
+CREATE TABLE IF NOT EXISTS `cronroot` (
+  `id`       VARCHAR(40)
+             COLLATE utf8_unicode_ci NOT NULL,
+  `donnee`   LONGTEXT
+             COLLATE utf8_unicode_ci NOT NULL,
+  `resultat` LONGTEXT
+             COLLATE utf8_unicode_ci DEFAULT NULL,
+  `fini`     TINYINT(1)              NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  ENGINE =InnoDB
+  DEFAULT CHARSET =utf8
+  COLLATE =utf8_unicode_ci;
+
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `torrentfilm`
 --
 
