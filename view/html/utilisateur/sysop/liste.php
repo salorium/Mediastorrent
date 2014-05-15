@@ -111,7 +111,8 @@
                     </label>
                     <button type="submit" class="secondary tiny small-3">Ajouter</button>
                 </fieldset>
-            </form>
+                    <input type="hidden" value="addrtorrent" name="action">
+                </form>
             <? } ?>
         </div>
         <div id="moitiedroite" class="large-7 columns panel heightfixed">
