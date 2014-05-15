@@ -26,7 +26,7 @@ function __autoload($class_name)
 exec("chmod a+w " . ROOT . DS . "log");
 exec("chmod a+w " . ROOT . DS . "cache");
 exec("chmod a+w " . ROOT . DS . "config" . DS . "Conf.php");
-exec('echo "php ' . ROOT . DS . "script" . DS . 'cronroot.php &> ' . ROOT . DS . "log" . DS . 'cronroot.log"  >> ' . ROOT . DS . "script" . DS . "cronroot.sh");
+exec('echo "php ' . ROOT . DS . "script" . DS . 'cronroot.php &>> ' . ROOT . DS . "log" . DS . 'cronroot.log\n"  >> ' . ROOT . DS . "script" . DS . "cronroot.sh");
 exec("chmod a+x " . ROOT . DS . "script" . DS . "cronroot.sh");
 exec("crontab -l > mycron");
 exec('echo "*/1 * * * * ' . ROOT . DS . "script" . DS . 'cronroot.sh"  >> mycron');
