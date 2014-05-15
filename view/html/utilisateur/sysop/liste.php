@@ -85,8 +85,8 @@
                     <legend>Ajouter un serveur rtorrent</legend>
                     <label for="customDropdown1">Sélection du serveur rtorrent
                         <small>obligatoire</small>
-                        <select data-invalid="" id="customDropdown1" class="medium" required="">
-                            <option value="">Sélection du serveur rtorrent</option>
+                        <select name="nomrtorrent" data-invalid="" id="customDropdown1" class="medium" required="">
+                        <option value="">Sélection du serveur rtorrent</option>
                             <?
                             foreach ($rtorrents as $k => $rt) {
                                 ?>
@@ -102,10 +102,10 @@
 
                         </select>
                     </label>
-                    <small class="error">Broke.</small>
+                    <small class="error">Sélectionner un serveur rtorrent.</small>
                     <label>Port SCGI :
                         <small>obligatoire</small>
-                        <input type="text" required pattern="[0-9]{4}"/>
+                        <input type="text" required pattern="[0-9]{4}" name="scgi"/>
                         <small class="error">Le ports scgi est obligatoire, un nombre à 4 chiffres!
                         </small>
                     </label>
