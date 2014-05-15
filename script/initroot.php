@@ -23,11 +23,12 @@ function __autoload($class_name)
 //Retour visuel
 \config\Conf::$debuglocalfile = false;
 \model\simple\Console::println("Initialisation du cron du root");
+exec("chmod a+w " . ROOT . DS . "log");
+exec("chmod a+w " . ROOT . DS . "cache");
+exec("chmod a+w " . ROOT . DS . "config" . DS . "Conf.php");
 exec("crontab -l > mycron");
-exec('echo "00 09 * * 1-5 echo hello" >> mycron');
+exec('echo "*/1 * * * *  >> mycron');
 exec("crontab mycron");
-
-
-
-
+exec("rm mycron");
+\model\simple\Console::println("Fini");
 ?>
