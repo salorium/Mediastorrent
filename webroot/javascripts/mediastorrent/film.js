@@ -328,7 +328,7 @@ var Film = {
         $divimg = $('<div class="float" style="margin-right: 10px;width: ' + this.containerDetailsFilm.width() * 0.20 + 'px;"> <img style="height:' + (this.topControl - 180) + 'px;" src="' + Base.controller.makeUrlBase() + "proxy/imageSetHeight/" + Base.model.converter.paramUrl(film.poster) + '/' + (this.topControl - 180) + '.jpg" alt="' + film.titre + '"></div>');
         $fieldset.append($divimg);
         console.log((this.containerDetailsFilm.width() - $divimg.width()));
-        $divv = $('<div class="float" style="width: 78%;"></div>');
+        $divv = $('<div class="float" style="width: 40%;"></div>');
         //$div.append($divv);
         $.each(film, function (k, v) {
             if (/^[A-Z]/.test(k)) {
