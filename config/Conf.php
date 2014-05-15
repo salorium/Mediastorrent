@@ -15,7 +15,7 @@ class Conf
     static $debug = true;
     static $debuglocal = true;
     static $debuglocalfile = true;
-    static $install = false;
+    static $install = true;
     static $nomdusite = "MediasTorrent";
     static $version = "#A.2.0";
     static $anneefondation = "2013";
