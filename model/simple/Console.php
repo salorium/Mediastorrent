@@ -14,6 +14,8 @@ use core\Model;
 
 class Console extends Model
 {
+    public static $query = array();
+
     static function println($str)
     {
         if (is_bool($str)) {
@@ -29,5 +31,12 @@ class Console extends Model
                 echo "[" . date("j/n/Y G:i:s") . "] " . $str . "\n";
             }
 
+    }
+
+    static function execute($cmd)
+    {
+        exec(escapeshellcmd($cmd), $output, $error);
+        self::$query[] = array($cmd, $output, $error);
+        return array($error, implode("", $output));
     }
 } 
