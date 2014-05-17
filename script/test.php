@@ -21,6 +21,6 @@ function __autoload($class_name)
 
 }
 
-\model\mysql\Torrentfilm::getClefUnique();
+\model\bash\Utilisateur::addRtorrent("salorium", 5001);
 
 ?>
