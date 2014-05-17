@@ -9,7 +9,7 @@
 namespace model\mysql;
 
 
-class Cronroot
+class Cronroot extends \core\ModelMysql
 {
     public $id;
     public $donnee;
@@ -72,5 +72,13 @@ class Cronroot
         $query .= " where id=" . \core\Mysqli::real_escape_string($id);
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(false, __CLASS__);
+    }
+
+    public static function getAllNonFini()
+    {
+        $query = "select * from cronroot ";
+        $query .= " where fini=" . \core\Mysqli::real_escape_string(false);
+        \core\Mysqli::query($query);
+        return \core\Mysqli::getObjectAndClose(true, __CLASS__);
     }
 } 
