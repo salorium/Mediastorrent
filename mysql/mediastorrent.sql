@@ -168,8 +168,11 @@ CREATE TABLE IF NOT EXISTS `cronroot` (
              COLLATE utf8_unicode_ci NOT NULL,
   `resultat` LONGTEXT
              COLLATE utf8_unicode_ci DEFAULT NULL,
+  `nomrtorrent` VARCHAR(200)
+                COLLATE utf8_unicode_ci NOT NULL,
   `fini`     TINYINT(1)              NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `nomrtorrent` (`nomrtorrent`)
 )
   ENGINE =InnoDB
   DEFAULT CHARSET =utf8
@@ -269,6 +272,11 @@ ADD CONSTRAINT `rtorrents_ibfk_1` FOREIGN KEY (`nomrtorrent`) REFERENCES `rtorre
   ON DELETE CASCADE
   ON UPDATE CASCADE,
 ADD CONSTRAINT `rtorrents_ibfk_2` FOREIGN KEY (`login`) REFERENCES `utilisateur` (`login`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+ALTER TABLE `cronroot`
+ADD CONSTRAINT `cronroot_ibfk_1` FOREIGN KEY (`nomrtorrent`) REFERENCES `rtorrent` (`nom`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
