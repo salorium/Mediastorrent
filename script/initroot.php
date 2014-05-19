@@ -35,6 +35,6 @@ exec('echo "*/1 * * * * ' . ROOT . DS . "script" . DS . 'cronroot.sh"  >> mycron
 exec("crontab mycron");
 exec("rm mycron");
 $reponse = \model\simple\Console::saisieString("Entré host de mysql");
-\model\simple\Console::println($reponse);
+var_dump($reponse);
 \model\simple\Console::println("Fini");
 ?>
