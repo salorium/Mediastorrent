@@ -23,4 +23,5 @@ function __autoload($class_name)
 //Retour visuel
 \config\Conf::$debuglocalfile = false;
 \model\simple\Console::println("Bonjour");
+var_dump(\model\mysql\Cronroot::getAllNonFini());
 ?>

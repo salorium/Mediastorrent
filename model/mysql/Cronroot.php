@@ -14,6 +14,7 @@ class Cronroot extends \core\ModelMysql
     public $id;
     public $donnee;
     public $resultat;
+    public $nomrtorrent;
     public $fini;
 
     function __construct()
@@ -22,10 +23,11 @@ class Cronroot extends \core\ModelMysql
 
     public function insert()
     {
-        $query = "insert into cronroot (id,donnee,resultat,fini) values(";
+        $query = "insert into cronroot (id,donnee,resultat,nomrtorrent,fini) values(";
         $query .= \core\Mysqli::real_escape_string($this->id) . ", ";
         $query .= \core\Mysqli::real_escape_string($this->donnee) . ", ";
         $query .= \core\Mysqli::real_escape_string($this->resultat) . ", ";
+        $query .= \core\Mysqli::real_escape_string($this->nomrtorrent) . ", ";
         $query .= \core\Mysqli::real_escape_string($this->fini) . ")";
         \core\Mysqli::query($query);
         $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
@@ -47,7 +49,7 @@ class Cronroot extends \core\ModelMysql
         return false;
     }
 
-    public static function sav($classe, $fonction, $args)
+    public static function sav($nomrtorrent, $classe, $fonction, $args)
     {
         $data = array("classe" => $classe, "fonction" => $fonction, "args" => $args);
         $data = json_encode($data);
@@ -61,6 +63,7 @@ class Cronroot extends \core\ModelMysql
         } while ($u);
         $t = new Cronroot();
         $t->id = $id;
+        $t->nomrtorrent = $nomrtorrent;
         $t->donnee = $data;
         $t->fini = false;
         return ($t->insert() ? $id : false);
@@ -77,7 +80,7 @@ class Cronroot extends \core\ModelMysql
     public static function getAllNonFini()
     {
         $query = "select * from cronroot ";
-        $query .= " where fini=" . \core\Mysqli::real_escape_string(false);
+        $query .= " where fini=" . \core\Mysqli::real_escape_string(false) . " and nomrtorrent=" . \core\Mysqli::real_escape_string(\config\Conf::$nomrtorrent);
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(true, __CLASS__);
     }
