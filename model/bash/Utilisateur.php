@@ -20,15 +20,15 @@ class Utilisateur extends \core\Model
         //var_dump($sortie);
         if ($sortie[0] === 1) {
             //Création de l'utilisateur si ce dernier n'existe pas
-            $sortie = \model\simple\Console::execute("useradd -m -s /bin/bash ".escapeshellarg($login));
-            if ( $sortie[0] === 1){
-                throw new \Exception("Impossible de créer l'utilisateur ".$login);
+            $sortie = \model\simple\Console::execute("useradd -m -s /bin/bash " . escapeshellarg($login));
+            if ($sortie[0] === 1) {
+                throw new \Exception("Impossible de créer l'utilisateur " . $login);
             }
         }
         if (!is_null($taille) && !is_null(\config\Conf::$nomvg)) {
             //Traitement LVM
             $sortie = \model\simple\Console::execute('vgdisplay -c ' . \config\Conf::$nomvg . ' | awk -F ":" \'{print $16}\'');
-            if ( $sortie[0] === 1){
+            if ($sortie[0] === 1) {
                 throw new \Exception("Lvm ou le volume groupe " . \config\Conf::$nomvg . " est il bien disponible ?");
             }
             $extends = ((int)$sortie[1]);
@@ -58,10 +58,6 @@ class Utilisateur extends \core\Model
 
         }
         \model\simple\MakerRtorrentConf::create($login, $scgi);
-        /**$sortie = \model\simple\Console::execute('mv ' . ROOT . DS . "cache" . DS . $login . "rtorrent" . " /home/" . $login . "/.rtorrent.rc");
-        if ($sortie[0] === 1) {
-            throw new \Exception("Erreur création du .rtorrent.rc");
-        }*/
         $sortie = \model\simple\Console::execute('mkdir -p /home/' . $login . '/rtorrent/data');
         if ($sortie[0] === 1) {
             throw new \Exception("Erreur création du /home/" . $login . "/rtorrent/data");
