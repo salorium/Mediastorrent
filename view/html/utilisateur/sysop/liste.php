@@ -63,6 +63,7 @@
             <input type="hidden" id="login" value="<?= $user->login; ?>"/>
 
             <form data-abide method="post">
+                <input type="hidden" id="login" value="<?= $user->login; ?>"/>
                 <fieldset>
                     <legend>Changer le mot de passe</legend>
                     <div class="row">
@@ -81,7 +82,8 @@
             </form>
             <? if (count($rtorrents) > 0) { ?>
                 <form data-abide method="post">
-                <fieldset>
+                    <input type="hidden" id="login" value="<?= $user->login; ?>"/>
+                    <fieldset>
                     <legend>Ajouter un serveur rtorrent</legend>
                     <label for="customDropdown1">Sélection du serveur rtorrent
                         <small>obligatoire</small>
