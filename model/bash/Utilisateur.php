@@ -37,7 +37,7 @@ class Utilisateur extends \core\Model
                 throw new \Exception("Lvm ou le volume groupe " . \config\Conf::$nomvg . " est il bien disponible ?");
             }
             $tailleextends = ((int)$sortie[1]);
-            $free = ($extends * $tailleextends / 1024 / 1024);
+            $free = (int)($extends * $tailleextends / 1024 / 1024);
             \model\simple\Console::println("Quantité libre " . $free . "Go");
             if ($taille > $free) {
                 $taille = $free;
