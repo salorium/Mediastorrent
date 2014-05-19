@@ -32,5 +32,7 @@ exec("crontab -l > mycron");
 exec('echo "*/1 * * * * ' . ROOT . DS . "script" . DS . 'cronroot.sh"  >> mycron');
 exec("crontab mycron");
 exec("rm mycron");
+$reponse = fgets(STDIN);
+\model\simple\Console::println($reponse);
 \model\simple\Console::println("Fini");
 ?>

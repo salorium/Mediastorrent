@@ -26,7 +26,7 @@ class Utilisateur extends \core\Model
             }
         }
         if (  ! is_null($taille)){
-            //Ajout du lvm2
+            //Traitement LVM
             $sortie = \model\simple\Console::execute('vgdisplay -c ' . \config\Conf::$nomvg . ' | awk -F ":" \'{print $16}\'');
             if ( $sortie[0] === 1){
                 throw new \Exception("Lvm ou le volume groupe " . \config\Conf::$nomvg . " est il bien disponible ?");
