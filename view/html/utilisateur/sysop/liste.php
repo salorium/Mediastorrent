@@ -109,6 +109,19 @@
                         <small class="error">Le ports scgi est obligatoire, un nombre à 4 chiffres!
                         </small>
                     </label>
+                    <?php
+                    if (!is_null(\config\Conf::$nomvg)) {
+                        ?>
+                        <label>Taille du répertoire en Go:
+                            <small>obligatoire</small>
+                            <input type="text" required pattern="[0-9]+" name="taille"/>
+                            <small class="error">Merci d'entrer la taille du repertoire de l'utilisateur!
+                            </small>
+                        </label>
+
+                    <?
+                    }
+                    ?>
                     <button type="submit" class="secondary tiny small-3">Ajouter</button>
                 </fieldset>
                     <input type="hidden" value="addrtorrent" name="action">
