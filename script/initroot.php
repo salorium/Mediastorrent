@@ -36,5 +36,7 @@ exec("crontab mycron");
 exec("rm mycron");
 $reponse = \model\simple\Console::saisieString("Entré host de mysql");
 var_dump($reponse);
+$reponse = \model\simple\Console::saisieBoolean("Voulez vous réinitialisé la table ?");
+var_dump($reponse);
 \model\simple\Console::println("Fini");
 ?>
