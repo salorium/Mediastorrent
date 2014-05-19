@@ -13,6 +13,7 @@ class Utilisateur extends \core\Controller
 {
     function addRtorrent($login, $scgi, $taille = null)
     {
-        \model\simple\Console::println("Adj " . $login . " " . $scgi . (!is_null($taille) ? " " . $taille . "Go" : ""));
+        \model\simple\Console::println("Adj rtorrent " . $login . " " . $scgi . (!is_null($taille) ? " " . $taille . "Go" : ""));
+        \model\bash\Utilisateur::addRtorrent($login, $scgi, $taille);
     }
 } 
