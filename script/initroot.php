@@ -22,17 +22,19 @@ function __autoload($class_name)
 
 //Retour visuel
 \config\Conf::$debuglocalfile = false;
-\model\simple\Console::println("Initialisation du cron du root");
-exec("chmod a+w " . ROOT . DS . "log");
-exec("chmod a+w " . ROOT . DS . "cache");
-exec("chmod a+w " . ROOT . DS . "config" . DS . "Conf.php");
-exec('echo "php ' . ROOT . DS . "script" . DS . 'cronroot.php >> ' . ROOT . DS . "log" . DS . 'cronroot.log"  >> ' . ROOT . DS . "script" . DS . "cronroot.sh");
-exec("chmod a+x " . ROOT . DS . "script" . DS . "cronroot.sh");
+\model\simple\Console::println("Configuration de mediastorrent");
+//exec("chmod a+w " . ROOT . DS . "log");
+//exec("chmod a+w " . ROOT . DS . "cache");
+//exec("chmod a+w " . ROOT . DS . "config" . DS . "Conf.php");
+//exec('echo "php ' . ROOT . DS . "script" . DS . 'cronroot.php >> ' . ROOT . DS . "log" . DS . 'cronroot.log"  >> ' . ROOT . DS . "script" . DS . "cronroot.sh");
+//exec("chmod a+x " . ROOT . DS . "script" . DS . "cronroot.sh");
+\model\simple\Console::println("Configuration de mysql");
+
 exec("crontab -l > mycron");
 exec('echo "*/1 * * * * ' . ROOT . DS . "script" . DS . 'cronroot.sh"  >> mycron');
 exec("crontab mycron");
 exec("rm mycron");
-$reponse = fgets(STDIN);
+$reponse = \model\simple\Console::saisieString("Entré host de mysql");
 \model\simple\Console::println($reponse);
 \model\simple\Console::println("Fini");
 ?>
