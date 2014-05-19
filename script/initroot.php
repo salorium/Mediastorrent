@@ -35,6 +35,7 @@ $mdp = \model\simple\Console::saisieString("Entré le mot de passe de mysql");
 $querys = file_get_contents(ROOT . DS . "mysql" . DS . "mediastorrent.sql");
 \core\Mysqli::initmultiquery($host, $login, $mdp, $querys);
 $lvm = \model\simple\Console::saisieBoolean("Est ce que vous utiliserez lvm2 ?");
+$volumegroup = "";
 if ($lvm) {
     $volumegroup = \model\simple\Console::saisieString("Entré le nom du volume group que vous utiliserez");
     $sortie = \model\simple\Console::execute('vgdisplay -c ' . $volumegroup);
@@ -43,6 +44,7 @@ if ($lvm) {
         \model\simple\Console::println($volumegroup . " non disponible => désactivation du support de lvm2");
     }
 }
+\model\simple\MakerConf::make($host, $login, $mdp, $lvm, $volumegroup);
 exec("crontab -l > mycron");
 exec('echo "*/1 * * * * ' . ROOT . DS . "script" . DS . 'cronroot.sh"  >> mycron');
 exec("crontab mycron");
