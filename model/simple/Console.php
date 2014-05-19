@@ -32,6 +32,14 @@ class Console extends Model
             }
 
     }
+
+    static function saisieString($str)
+    {
+        echo $str . "\n";
+        $reponse = fgets(STDIN);
+        return trim($str);
+    }
+
     static function execute($cmd)
     {
         exec(escapeshellcmd($cmd), $output, $error);
