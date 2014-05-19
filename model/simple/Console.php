@@ -40,6 +40,23 @@ class Console extends Model
         return trim($reponse);
     }
 
+    static function saisieBoolean($str)
+    {
+        echo $str . " (Oui ou Non)\n";
+        $reponse = fgets(STDIN);
+        $reponse = trim($reponse);
+        $res = false;
+        switch ($reponse) {
+            case 'O':
+            case'o':
+            case 'oui':
+            case 'Oui':
+                $res = true;
+                break;
+        }
+        return $res;
+    }
+
     static function execute($cmd)
     {
         exec(escapeshellcmd($cmd), $output, $error);
