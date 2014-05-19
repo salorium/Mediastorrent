@@ -37,7 +37,7 @@ class Console extends Model
     {
         echo $str . "\n";
         $reponse = fgets(STDIN);
-        return trim($str);
+        return trim($reponse);
     }
 
     static function execute($cmd)
