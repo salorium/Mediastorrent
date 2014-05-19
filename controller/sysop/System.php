@@ -18,6 +18,7 @@ class System extends \core\Controller
         if (isset($_REQUEST["nomrtorrent"])) {
             //Traitement de l'ajout
             \model\mysql\Rtorrent::addRtorrentServeur($_REQUEST["nomrtorrent"]);
+            \model\simple\MakerConf::makeRtorrent($_REQUEST["nomrtorrent"]);
             $this->set("nonform", true);
         }
         //Affichage du formulaire
@@ -25,6 +26,7 @@ class System extends \core\Controller
 
     function delRtorrent()
     {
+        \model\simple\MakerConf::makeRtorrent("");
         $this->set("del", \model\mysql\Rtorrent::retirerServeur());
     }
 } 

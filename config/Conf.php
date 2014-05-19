@@ -20,7 +20,7 @@ class Conf
     static $version = "#A.2.0";
     static $anneefondation = "2013";
     static $author = "Salorium";
-    //static $rootpassword = "qzwxecasd9";
+    static $nomrtorrent = "";
     static $nomvg = null;
     static $databases = array(
         "default" => array(
