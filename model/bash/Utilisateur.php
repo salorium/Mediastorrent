@@ -25,7 +25,7 @@ class Utilisateur extends \core\Model
                 throw new \Exception("Impossible de créer l'utilisateur ".$login);
             }
         }
-        if (  ! is_null($taille)){
+        if (!is_null($taille) && !is_null(\config\Conf::$nomvg)) {
             //Traitement LVM
             $sortie = \model\simple\Console::execute('vgdisplay -c ' . \config\Conf::$nomvg . ' | awk -F ":" \'{print $16}\'');
             if ( $sortie[0] === 1){
