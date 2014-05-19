@@ -11,7 +11,7 @@ namespace controller\cronroot;
 
 class Utilisateur extends \core\Controller
 {
-    function addRtorrent($login, $nomrtorrent, $scgi)
+    function addRtorrent($login, $scgi, $taille = null)
     {
 
     }
