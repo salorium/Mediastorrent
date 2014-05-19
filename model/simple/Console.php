@@ -59,8 +59,8 @@ class Console extends Model
 
     static function execute($cmd)
     {
-        echo escapeshellcmd($cmd) . "\n";
-        exec(escapeshellcmd($cmd), $output, $error);
+        //echo escapeshellcmd($cmd) . "\n";
+        exec($cmd, $output, $error);
         self::$query[] = array($cmd, $output, $error);
         return array($error, implode("", $output));
     }
