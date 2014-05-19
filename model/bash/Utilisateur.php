@@ -74,5 +74,9 @@ class Utilisateur extends \core\Model
         if ($sortie[0] === 1) {
             throw new \Exception("Erreur changement de propriétaire /home/" . $login);
         }
+        $sortie = \model\simple\Console::execute('/etc/rtorrent start ' . $login . ' ' . $scgi);
+        if ($sortie[0] === 1) {
+            throw new \Exception("Impossible de lancer rtorrent");
+        }
     }
 } 
