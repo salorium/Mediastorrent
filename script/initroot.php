@@ -23,20 +23,29 @@ function __autoload($class_name)
 //Retour visuel
 \config\Conf::$debuglocalfile = false;
 \model\simple\Console::println("Configuration de mediastorrent");
-//exec("chmod a+w " . ROOT . DS . "log");
-//exec("chmod a+w " . ROOT . DS . "cache");
-//exec("chmod a+w " . ROOT . DS . "config" . DS . "Conf.php");
-//exec('echo "php ' . ROOT . DS . "script" . DS . 'cronroot.php >> ' . ROOT . DS . "log" . DS . 'cronroot.log"  >> ' . ROOT . DS . "script" . DS . "cronroot.sh");
-//exec("chmod a+x " . ROOT . DS . "script" . DS . "cronroot.sh");
+exec("chmod a+w " . ROOT . DS . "log");
+exec("chmod a+w " . ROOT . DS . "cache");
+exec("chmod a+w " . ROOT . DS . "config" . DS . "Conf.php");
+exec('echo "php ' . ROOT . DS . "script" . DS . 'cronroot.php >> ' . ROOT . DS . "log" . DS . 'cronroot.log"  >> ' . ROOT . DS . "script" . DS . "cronroot.sh");
+exec("chmod a+x " . ROOT . DS . "script" . DS . "cronroot.sh");
 \model\simple\Console::println("Configuration de mysql");
-
+$host = \model\simple\Console::saisieString("Entré host de mysql");
+$login = \model\simple\Console::saisieString("Entré le login de mysql");
+$mdp = \model\simple\Console::saisieString("Entré le mot de passe de mysql");
+$querys = file_get_contents(ROOT . DS . "mysql" . DS . "mediastorrent.sql");
+\core\Mysqli::initmultiquery($host, $login, $mdp, $querys);
+$lvm = \model\simple\Console::saisieBoolean("Est ce que vous utiliserez lvm2 ?");
+if ($lvm) {
+    $volumegroup = \model\simple\Console::saisieString("Entré le nom du volume group que vous utiliserez");
+    $sortie = \model\simple\Console::execute('vgdisplay -c ' . $volumegroup);
+    if ($sortie[0] === 1) {
+        $lvm = false;
+        \model\simple\Console::println($volumegroup . " non disponible => désactivation du support de lvm2");
+    }
+}
 exec("crontab -l > mycron");
 exec('echo "*/1 * * * * ' . ROOT . DS . "script" . DS . 'cronroot.sh"  >> mycron');
 exec("crontab mycron");
 exec("rm mycron");
-$reponse = \model\simple\Console::saisieString("Entré host de mysql");
-var_dump($reponse);
-$reponse = \model\simple\Console::saisieBoolean("Voulez vous réinitialisé la table ?");
-var_dump($reponse);
 \model\simple\Console::println("Fini");
 ?>
