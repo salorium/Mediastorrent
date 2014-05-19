@@ -22,5 +22,6 @@ function __autoload($class_name)
 }
 
 //\model\bash\Utilisateur::addRtorrent("salorium", 5001);
-exec("nano test.tester");
+//exec("nano test.tester");
+
 ?>
