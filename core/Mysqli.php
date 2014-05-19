@@ -105,6 +105,7 @@ class Mysqli
             $Error = self::$dblink->error;
 
         }
+        self::$dblink->commit();
 
         self::$query[] = array($query, ($QueryEndTime - $QueryStartTime) * 1000, self::$res, $Errno, $Error);
         self::$id++;
