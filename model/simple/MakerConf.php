@@ -74,8 +74,6 @@ class Conf
         \config\Conf::$databases["default"]["login"] = $login;
         \config\Conf::$databases["default"]["password"] = $password;
         $u = \model\mysql\Utilisateur::getAllUtilisateur();
-        var_dump(count($u));
-        var_dump(Mysqli::$query);
         $install = (count($u) === 0 ? true : false);
 
         $content = '<?php
