@@ -15,6 +15,13 @@ class Utilisateur extends \core\Controller
 
     function liste()
     {
+        if (isset($_REQUEST['action'])) {
+            switch ($_REQUEST['action']) {
+                case 'addrtorrent':
+                    \model\mysql\Cronroot::sav($_REQUEST["nomrtorrent"], "controller\\cronroot\\Utilisateur", "addRtorrent", array("login" => $_REQUEST["login"], "scgi" => $_REQUEST["scgi"], "taille" => (isset($_REQUEST["taille"]) ? $_REQUEST["taille"] : null)));
+                    break;
+            }
+        }
         $users = \model\mysql\Utilisateur::getAllUtilisateur();
         $user = $users[0];
         if (isset($_REQUEST["login"])) {
