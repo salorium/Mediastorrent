@@ -43,7 +43,7 @@ class Utilisateur extends \core\Model
                 $taille = $free;
             }
             \model\simple\Console::println("Quantité utilisé " . $taille . "Go par " . $login);
-            $sortie = \model\simple\Console::execute('lvcreate -n ' . $login . ' -L ' . $taille . 'g ' . \config\Conf::$nomvg);
+            $sortie = \model\simple\Console::execute('lvcreate -n ' . $login . ' -L ' . $taille . 'G ' . \config\Conf::$nomvg);
             if ($sortie[0] === 1) {
                 throw new \Exception("Impossible de créer /dev/" . \config\Conf::$nomvg . "/" . $login);
             }
