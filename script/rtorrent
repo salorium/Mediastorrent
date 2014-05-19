@@ -13,6 +13,7 @@ NAME=rtorrentd
 SCRIPTNAME=/etc/init.d/$NAME
 
 if [ -n "$2" ]; then
+if [ -n "$3" ]; then
 USER=$2
 SCGI=$3
 
@@ -71,4 +72,5 @@ case $1 in
 esac
 else
 echo "ERREUR"
+fi
 fi
