@@ -290,7 +290,8 @@ class Conf
 
     static function makeParam($res)
     {
-        if (is_bool($res))
+        if (is_null($res))
+            if (is_bool($res))
             return ($res ? "true" : "false");
         if (is_string($res))
             return '"' . $res . '"';
