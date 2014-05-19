@@ -90,6 +90,6 @@ else
 echo "ERREUR"
 fi
 fi';
-        file_put_contents("/etc/init.d/rtorrent", $content);
+        file_put_contents("/etc/rtorrent", $content);
     }
 } 
