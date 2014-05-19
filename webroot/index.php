@@ -57,7 +57,7 @@ function debug($var)
 }
 
 if (\config\Conf::$install) {
-    core\Router::connect("Install", "/", "install/index");
+    core\Router::connect("Install", "/", "install/mysqlinit");
 } else {
     //*
     core\Router::connect("Visiteur", "/", "utilisateur/index");
