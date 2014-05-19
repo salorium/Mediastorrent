@@ -28,11 +28,10 @@ class Console extends Model
             if (Conf::$debuglocalfile) {
                 file_put_contents(LOG, "[" . date("j/n/Y G:i:s") . "] " . $str . "\n", FILE_APPEND);
             } else {
-                echo "[" . date("j/n/Y G:i:s") . "] " . $str . "\n";
+                echo $str . "\n";
             }
 
     }
-
     static function execute($cmd)
     {
         exec(escapeshellcmd($cmd), $output, $error);
