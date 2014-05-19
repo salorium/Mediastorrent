@@ -72,8 +72,9 @@ class Conf
         \config\Conf::$databases["default"]["database"] = "mediastorrent";
         \config\Conf::$databases["default"]["login"] = $login;
         \config\Conf::$databases["default"]["password"] = $password;
-
-        $install = (count(\model\mysql\Utilisateur::getAllUtilisateur()) === 0 ? true : false);
+        $u = \model\mysql\Utilisateur::getAllUtilisateur();
+        var_dump(count($u));
+        $install = (count($u) === 0 ? true : false);
 
         $content = '<?php
 /**
