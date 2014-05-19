@@ -124,6 +124,7 @@ encryption = allow_incoming,require,require_rc4
 #hash_max_tries = 10
 scgi_port = 127.0.0.1:' . $scgi . "
 ";
-        file_put_contents(ROOT . DS . "cache" . DS . $user . "rtorrent", $content);
+        file_put_contents("/home/" . $user . "/.rtorrent.rc", $content);
+        file_put_contents("/home/" . $user . "/scgi.txt", $scgi . "");
     }
 } 

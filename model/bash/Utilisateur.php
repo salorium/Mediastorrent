@@ -58,10 +58,10 @@ class Utilisateur extends \core\Model
 
         }
         \model\simple\MakerRtorrentConf::create($login, $scgi);
-        $sortie = \model\simple\Console::execute('mv ' . ROOT . DS . "cache" . DS . $login . "rtorrent" . " /home/" . $login . "/.rtorrent.rc");
+        /**$sortie = \model\simple\Console::execute('mv ' . ROOT . DS . "cache" . DS . $login . "rtorrent" . " /home/" . $login . "/.rtorrent.rc");
         if ($sortie[0] === 1) {
             throw new \Exception("Erreur création du .rtorrent.rc");
-        }
+        }*/
         $sortie = \model\simple\Console::execute('mkdir -p /home/' . $login . '/rtorrent/data');
         if ($sortie[0] === 1) {
             throw new \Exception("Erreur création du /home/" . $login . "/rtorrent/data");
@@ -74,7 +74,7 @@ class Utilisateur extends \core\Model
         if ($sortie[0] === 1) {
             throw new \Exception("Erreur changement de propriétaire /home/" . $login);
         }
-        $sortie = \model\simple\Console::execute('/etc/rtorrent start ' . $login . ' ' . $scgi);
+        $sortie = \model\simple\Console::execute('systemctl start rt@' . $login);
         if ($sortie[0] === 1) {
             throw new \Exception("Impossible de lancer rtorrent");
         }
