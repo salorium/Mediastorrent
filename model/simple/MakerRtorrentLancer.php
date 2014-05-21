@@ -26,8 +26,7 @@ class MakerRtorrentLancer extends \core\Model
 
     static function createForDebian()
     {
-        $content = '
-        #!/bin/sh -e
+        $content = '#!/bin/sh -e
 #
 ### BEGIN INIT INFO
 # Provides: rtorrentd
@@ -99,8 +98,7 @@ case $1 in
 esac
 else
 echo "ERREUR"
-fi
-        ';
+fi';
         file_put_contents("/etc/init.d/rtorrent", $content);
         exec("chmod a+x /etc/init.d/rtorrent");
     }
