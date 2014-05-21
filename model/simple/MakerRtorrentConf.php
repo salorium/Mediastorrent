@@ -125,6 +125,6 @@ encryption = allow_incoming,require,require_rc4
 scgi_port = 127.0.0.1:' . $scgi . "
 ";
         file_put_contents("/home/" . $user . "/.rtorrent.rc", $content);
-        file_put_contents("/home/" . $user . "/scgi.txt", $scgi . "");
+        file_put_contents("/home/" . $user . "/.scgi.txt", $scgi . "");
     }
 } 

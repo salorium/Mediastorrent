@@ -21,6 +21,7 @@ class Conf
     static $anneefondation = "2013";
     static $author = "Salorium";
     static $nomrtorrent = "";
+    static $distribution = "";
     static $nomvg = null;
     static $databases = array(
         "default" => array(

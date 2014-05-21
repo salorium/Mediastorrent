@@ -29,9 +29,12 @@ exec("chmod a+w " . ROOT . DS . "config" . DS . "Conf.php");
 exec('echo "php ' . ROOT . DS . "script" . DS . 'cronroot.php >> ' . ROOT . DS . "log" . DS . 'cronroot.log"  >> ' . ROOT . DS . "script" . DS . "cronroot.sh");
 exec("chmod a+x " . ROOT . DS . "script" . DS . "cronroot.sh");
 $c = \model\simple\Console::execute("awk -F= '$1 ~ /^ID$/ {print $2}' /etc/os-release");
-var_dump($c);
-die();
-\model\simple\MakerRtorrent::create();
+if ($c[0] === 1) {
+    throw new Exception("Impossible de trouver la distribution");
+}
+\config\Conf::$distribution = $c[1];
+\model\simple\MakerRtorrentLancer::create();
+//\model\simple\MakerRtorrent::create();
 
 \model\simple\Console::println("Configuration de mysql");
 $host = \model\simple\Console::saisieString("Entré host de mysql");
