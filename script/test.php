@@ -21,6 +21,7 @@ function __autoload($class_name)
 
 }
 
+\config\Conf::$debuglocalfile = false;
 //\model\bash\Utilisateur::addRtorrent("salorium", 5001);
 //exec("nano test.tester");
 $taille = 100;
