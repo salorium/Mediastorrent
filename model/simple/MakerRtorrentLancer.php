@@ -13,7 +13,15 @@ class MakerRtorrentLancer extends \core\Model
 {
     static function create()
     {
-
+        switch (\config\Conf::$distribution) {
+            case 'arch':
+                return self::createForArchLinux();
+                break;
+            case 'ubuntu':
+            case 'debian':
+                return self::createForDebian();
+                break;
+        }
     }
 
     static function createForDebian()
