@@ -153,6 +153,7 @@ class Conf
     static $anneefondation = "2013";
     static $author = "Salorium";
     static $nomrtorrent = ' . MakerConf::makeParam($nomrtorrent) . ';
+    static $distribution=' . MakerConf::makeParam(\config\Conf::$distribution) . ';
     static $nomvg = ' . MakerConf::makeParam(\config\Conf::$nomvg) . ';
     static $databases = array(
         "default" => array(
