@@ -21,7 +21,8 @@ function __autoload($class_name)
 
 }
 
-$portscgi = $argv[1];
+$portscgi = trim(file_get_contents("/home/" . $argv[1] . "/.scgi.txt"));
+usleep(10000);
 define('LOG', ROOT . DS . "log" . DS . $portscgi . "_init.log");
 \model\simple\Console::println("Début");
 $theSettings = \model\xmlrpc\rTorrentSettings::get($portscgi, true);
@@ -44,9 +45,11 @@ $req = new \model\xmlrpc\rXMLRPCRequest($portscgi, array(
 ));
 if ($req->run()) {
     \model\simple\Console::println("ok");
+    exit(0);
 } else {
     \model\simple\Console::println("Non ok");
     \model\simple\Console::println($req->val);
+    exit(1);
 }
 
 

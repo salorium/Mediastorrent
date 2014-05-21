@@ -9,6 +9,8 @@
 namespace model\bash;
 
 
+use model\simple\MakerRtorrentLancer;
+
 class Utilisateur extends \core\Model
 {
     static function addRtorrent($login, $scgi, $taille = null)
@@ -55,7 +57,7 @@ class Utilisateur extends \core\Model
             if ($sortie[0] === 1) {
                 throw new \Exception("Montage /dev/" . \config\Conf::$nomvg . "/" . $login);
             }
-
+            file_put_contents("/etc/fstab", "/dev/" . \config\Conf::$nomvg . "/" . $login . " /home/" . $login . " ext4 defaults,nofail 0 0", FILE_APPEND);
         }
         \model\simple\MakerRtorrentConf::create($login, $scgi);
         $sortie = \model\simple\Console::execute('mkdir -p /home/' . $login . '/rtorrent/data');
@@ -70,7 +72,7 @@ class Utilisateur extends \core\Model
         if ($sortie[0] === 1) {
             throw new \Exception("Erreur changement de propriétaire /home/" . $login);
         }
-        $sortie = \model\simple\Console::execute('systemctl start rt@' . $login);
+        $sortie = MakerRtorrentLancer::start($login);
         if ($sortie[0] === 1) {
             throw new \Exception("Impossible de lancer rtorrent");
         }

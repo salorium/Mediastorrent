@@ -99,6 +99,7 @@ class Conf
     static $anneefondation = "2013";
     static $author = "Salorium";
     static $nomrtorrent = "";
+    static $distribution=' . MakerConf::makeParam(\config\Conf::$distribution) . ';
     static $nomvg = ' . ($vgok ? MakerConf::makeParam($vgname) : "null") . ';
     static $databases = array(
         "default" => array(
