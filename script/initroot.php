@@ -28,8 +28,10 @@ exec("chmod a+w " . ROOT . DS . "cache");
 exec("chmod a+w " . ROOT . DS . "config" . DS . "Conf.php");
 exec('echo "php ' . ROOT . DS . "script" . DS . 'cronroot.php >> ' . ROOT . DS . "log" . DS . 'cronroot.log"  >> ' . ROOT . DS . "script" . DS . "cronroot.sh");
 exec("chmod a+x " . ROOT . DS . "script" . DS . "cronroot.sh");
+$c = \model\simple\Console::execute("awk -F= '$1 ~ /^ID$/ {print $2}' /etc/os-release");
+var_dump($c);
+die();
 \model\simple\MakerRtorrent::create();
-exec("chmod a+x /etc/rtorrent");
 
 \model\simple\Console::println("Configuration de mysql");
 $host = \model\simple\Console::saisieString("Entré host de mysql");
