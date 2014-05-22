@@ -23,6 +23,7 @@ class Utilisateur extends \core\Model
         if ($sortie[0] !== 0) {
             //Création de l'utilisateur si ce dernier n'existe pas
             $sortie = \model\simple\Console::execute("useradd -m -s /bin/bash " . escapeshellarg($login));
+            var_dump($sortie);
             if ($sortie[0] !== 0) {
                 throw new \Exception("Impossible de créer l'utilisateur " . $login);
             }
