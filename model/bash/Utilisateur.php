@@ -18,29 +18,24 @@ class Utilisateur extends \core\Model
 
         \model\simple\Console::println("Ajout " . $login . " scgi : " . $scgi . (!is_null($taille) ? ' taille ' . $taille . 'Go' : ''));
         //Voir si l'utilisateur existe sur le system
-        echo exec('echo $PATH');
         $sortie = \model\simple\Console::execute("id " . escapeshellarg($login));
-        echo exec('echo $PATH');
 
         //var_dump($sortie);
         if ($sortie[0] !== 0) {
             //Création de l'utilisateur si ce dernier n'existe pas
-            echo exec('echo $PATH');
             $sortie = \model\simple\Console::executePath("useradd -m -s /bin/bash " . escapeshellarg($login));
-            echo exec('echo $PATH');
-            var_dump($sortie);
             if ($sortie[0] !== 0) {
                 throw new \Exception("Impossible de créer l'utilisateur " . $login);
             }
         }
         if (!is_null($taille) && !is_null(\config\Conf::$nomvg)) {
             //Traitement LVM
-            $sortie = \model\simple\Console::execute('vgdisplay -c ' . \config\Conf::$nomvg . ' | awk -F ":" \'{print $16}\'');
+            $sortie = \model\simple\Console::executePath('vgdisplay -c ' . \config\Conf::$nomvg . ' | awk -F ":" \'{print $16}\'');
             if ($sortie[0] !== 0) {
                 throw new \Exception("Lvm ou le volume groupe " . \config\Conf::$nomvg . " est il bien disponible ?");
             }
             $extends = ((int)$sortie[1]);
-            $sortie = \model\simple\Console::execute('vgdisplay -c ' . \config\Conf::$nomvg . ' | awk -F ":" \'{print $13}\'');
+            $sortie = \model\simple\Console::executePath('vgdisplay -c ' . \config\Conf::$nomvg . ' | awk -F ":" \'{print $13}\'');
             if ($sortie[0] !== 0) {
                 throw new \Exception("Lvm ou le volume groupe " . \config\Conf::$nomvg . " est il bien disponible ?");
             }
@@ -51,11 +46,11 @@ class Utilisateur extends \core\Model
                 $taille = $free;
             }
             \model\simple\Console::println("Quantité utilisé " . $taille . "Go par " . $login);
-            $sortie = \model\simple\Console::execute('lvcreate -n ' . $login . ' -L ' . $taille . 'G ' . \config\Conf::$nomvg);
+            $sortie = \model\simple\Console::executePath('lvcreate -n ' . $login . ' -L ' . $taille . 'G ' . \config\Conf::$nomvg);
             if ($sortie[0] !== 0) {
                 throw new \Exception("Impossible de créer /dev/" . \config\Conf::$nomvg . "/" . $login);
             }
-            $sortie = \model\simple\Console::execute('mkfs.ext4 /dev/' . \config\Conf::$nomvg . '/' . $login);
+            $sortie = \model\simple\Console::executePath('mkfs.ext4 /dev/' . \config\Conf::$nomvg . '/' . $login);
             if ($sortie[0] !== 0) {
                 throw new \Exception("Erreur lors du formatage /dev/" . \config\Conf::$nomvg . "/" . $login);
             }
