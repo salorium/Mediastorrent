@@ -99,7 +99,7 @@ class Conf
     static $anneefondation = "2013";
     static $author = "Salorium";
     static $nomrtorrent = "";
-    static $distribution=' . MakerConf::makeParam(\config\Conf::$distribution) . ';
+    static $distribution = ' . MakerConf::makeParam(\config\Conf::$distribution) . ';
     static $nomvg = ' . ($vgok ? MakerConf::makeParam($vgname) : "null") . ';
     static $databases = array(
         "default" => array(
@@ -153,7 +153,7 @@ class Conf
     static $anneefondation = "2013";
     static $author = "Salorium";
     static $nomrtorrent = ' . MakerConf::makeParam($nomrtorrent) . ';
-    static $distribution=' . MakerConf::makeParam(\config\Conf::$distribution) . ';
+    static $distribution = ' . MakerConf::makeParam(\config\Conf::$distribution) . ';
     static $nomvg = ' . MakerConf::makeParam(\config\Conf::$nomvg) . ';
     static $databases = array(
         "default" => array(
@@ -259,8 +259,9 @@ class Conf
     static $version = "#A.2.0";
     static $anneefondation = "2013";
     static $author = "Salorium";
-    static $rootpassword = "qzwxecasd9";
-    static $nomvg = "vg0";
+    static $nomrtorrent = ' . MakerConf::makeParam(\config\Conf::$nomrtorrent) . ';
+    static $distribution = ' . MakerConf::makeParam(\config\Conf::$distribution) . ';
+    static $nomvg = ' . MakerConf::makeParam(\config\Conf::$nomvg) . ';
     static $databases = array(
         "default" => array(
             "host" => ' . MakerConf::makeParam(Conf::$databases["default"]["host"]) . ',
