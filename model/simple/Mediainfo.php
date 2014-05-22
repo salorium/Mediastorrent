@@ -14,8 +14,8 @@ class Mediainfo extends \core\Model
     public $mediainfo;
     public $general;
     public $videos;
-    public $audios;
-    public $texts;
+    public $audios = array();
+    public $texts = array();
 
     function __construct($file)
     {
