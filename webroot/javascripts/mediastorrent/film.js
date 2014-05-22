@@ -370,6 +370,9 @@ var Film = {
             //contentType: "application/json",
             success: function (response, textStatus, jqXHR) {
                 if (response.showdebugger == "ok") {
+                    $.each(response.file, function (k, v) {
+                        $divv2.append('<a>' + v.mediainfo.typequalite + '</a>');
+                    })
 
                 } else {
 
