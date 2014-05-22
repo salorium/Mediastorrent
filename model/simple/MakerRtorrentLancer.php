@@ -44,43 +44,18 @@ if [ -n "$2" ]; then
 USER=$2
 
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-# path du fichier temporaire
-TMP=/tmp/rtorrent$USER.dtach
-# user qui lance le torrent
-# chemin vers fichier conf
-CONF=/home/$USER/.rtorrent.rc
 PHPDIR=' . ROOT . '/script
 start() {
         echo -n $"Starting $NAME: "
-        su -l $USER -c "dtach -n $TMP rtorrent -n -o import=$CONF"
+        su -l $USER -c "tmux new-session -s rt -n rtorrent -d rtorrent"
         su -l $USER -c "php $PHPDIR/init.php $USER"
-        #chmod 666 /tmp/rtorrent$USER.dtach
         echo "started"
 }
 
 stop() {
         echo -n $"Stopping $NAME: "
-	tmmp=`su -l $USER -c "ps aux | grep -e \'rtorrent\' -c"`
-        if [ $tmmp != 0  ]; then
-        su -l $USER -c "killall -s 9 -r \"rtorrent\""
-	echo "stopped"
-	else
-	echo "aucun processus trouve"
-	fi
+	    su -l $USER -c "tmux send-keys -t rt:rtorrent C-q"
 }
-
-restart() {
-tmmp=`su -l $USER -c "ps aux | grep -e \'rtorrent\' -c"`
- 	if [ $tmmp != 0  ]; then
-        {
-                stop
-                sleep 5
-        }
-        fi
-        start
-}
-
-
 case $1 in
         start)
                start
@@ -88,11 +63,8 @@ case $1 in
         stop)
                 stop
         ;;
-        restart)
-                restart
-        ;;
         *)
-                echo "Usage:  {start|stop|restart}" >&2
+                echo "Usage:  {start|stop}" >&2
                 exit 2
         ;;
 esac
