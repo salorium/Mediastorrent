@@ -63,6 +63,7 @@
             <input type="hidden" id="login" value="<?= $user->login; ?>"/>
 
             <form data-abide method="post">
+                <input type="hidden" name="login" value="<?= $user->login; ?>"/>
                 <fieldset>
                     <legend>Changer le mot de passe</legend>
                     <div class="row">
@@ -81,7 +82,8 @@
             </form>
             <? if (count($rtorrents) > 0) { ?>
                 <form data-abide method="post">
-                <fieldset>
+                    <input type="hidden" name="login" value="<?= $user->login; ?>"/>
+                    <fieldset>
                     <legend>Ajouter un serveur rtorrent</legend>
                     <label for="customDropdown1">Sélection du serveur rtorrent
                         <small>obligatoire</small>
@@ -109,9 +111,23 @@
                         <small class="error">Le ports scgi est obligatoire, un nombre à 4 chiffres!
                         </small>
                     </label>
+                    <?php
+                    if (!is_null(\config\Conf::$nomvg)) {
+                        ?>
+                        <label>Taille du répertoire en Go:
+                            <small>obligatoire</small>
+                            <input type="text" required pattern="[0-9]+" name="taille"/>
+                            <small class="error">Merci d'entrer la taille du repertoire de l'utilisateur!
+                            </small>
+                        </label>
+
+                    <?
+                    }
+                    ?>
                     <button type="submit" class="secondary tiny small-3">Ajouter</button>
                 </fieldset>
-            </form>
+                    <input type="hidden" value="addrtorrent" name="action">
+                </form>
             <? } ?>
         </div>
         <div id="moitiedroite" class="large-7 columns panel heightfixed">

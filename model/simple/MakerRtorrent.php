@@ -1,4 +1,20 @@
-#!/bin/sh -e
+<?php
+/**
+ * Created by PhpStorm.
+ * User: salorium
+ * Date: 19/05/14
+ * Time: 16:33
+ */
+
+namespace model\simple;
+
+
+class MakerRtorrent
+{
+    static function create()
+    {
+
+        $content = '#!/bin/sh -e
 #
 ### BEGIN INIT INFO
 # Provides: rtorrentd
@@ -23,18 +39,18 @@ TMP=/tmp/rtorrent$USER.dtach
 # user qui lance le torrent
 # chemin vers fichier conf
 CONF=/home/$USER/.rtorrent.rc
-PHPDIR=/home/salorium/Mediastorrent/script
+PHPDIR=' . ROOT . '/script
 start() {
         echo -n $"Starting $NAME: "
         su -l $USER -c "dtach -n $TMP rtorrent -n -o import=$CONF"
         su -l $USER -c "php $PHPDIR/init.php $SCGI"
         #chmod 666 /tmp/rtorrent$USER.dtach
-        echo "started"  
+        echo "started"
 }
 
 stop() {
         echo -n $"Stopping $NAME: "
-	tmmp=`su -l $USER -c "ps aux | grep -e 'rtorrent' -c"`
+	tmmp=`su -l $USER -c "ps aux | grep -e \'rtorrent\' -c"`
         if [ $tmmp != 0  ]; then
         su -l $USER -c "killall -s 9 -r \"rtorrent\""
 	echo "stopped"
@@ -44,7 +60,7 @@ stop() {
 }
 
 restart() {
-tmmp=`su -l $USER -c "ps aux | grep -e 'rtorrent' -c"` 
+tmmp=`su -l $USER -c "ps aux | grep -e \'rtorrent\' -c"`
  	if [ $tmmp != 0  ]; then
         {
                 stop
@@ -73,4 +89,7 @@ esac
 else
 echo "ERREUR"
 fi
-fi
+fi';
+        file_put_contents("/etc/rtorrent", $content);
+    }
+} 

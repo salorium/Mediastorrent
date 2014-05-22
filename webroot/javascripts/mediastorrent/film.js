@@ -369,7 +369,13 @@ var Film = {
             //data: {hash: listafaire},
             //contentType: "application/json",
             success: function (response, textStatus, jqXHR) {
+                $table = $("<tbody></tbody>");
+                $divv2.append($("<table></table>").append($table));
                 if (response.showdebugger == "ok") {
+                    $.each(response.file, function (k, v) {
+                        //console.log(v);
+                        $table.append('<tr><td>' + v.mediainfo.typequalite + '</td><td><a href="' + Base.controller.makeUrlBase(v.hostname) + '/film/download/' + v.id + '/' + Base.model.utilisateur.login + '/' + Base.model.utilisateur.keyconnexion + '">Dl</a></td></tr>');
+                    })
 
                 } else {
 

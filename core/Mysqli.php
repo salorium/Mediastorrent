@@ -105,8 +105,21 @@ class Mysqli
             $Error = self::$dblink->error;
 
         }
+        $res = array();
+        do {
+            /* Stockage du premier résultat */
+            if ($result = self::$dblink->store_result()) {
+                while ($row = $result->fetch_row()) {
+                    $res[] = $row[0];
+                }
+                $result->free();
+            }
+            /* Affichage d'une séparation */
+            if (self::$dblink->more_results()) {
+            }
+        } while (self::$dblink->next_result());
 
-        self::$query[] = array($query, ($QueryEndTime - $QueryStartTime) * 1000, self::$res, $Errno, $Error);
+        self::$query[] = array($query, ($QueryEndTime - $QueryStartTime) * 1000, $res, $Errno, $Error);
         self::$id++;
 
     }

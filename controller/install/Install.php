@@ -31,16 +31,16 @@ class Install extends \core\Controller
     function mysqlinit()
     {
         $this->layout = "install";
-        if (isset($_REQUEST["hostmysql"]) && isset($_REQUEST["loginmysql"]) && isset($_REQUEST["passmysql"])) {
+        /*if (isset($_REQUEST["hostmysql"]) && isset($_REQUEST["loginmysql"]) && isset($_REQUEST["passmysql"])) {
             $querys = file_get_contents(ROOT . DS . "mysql" . DS . "mediastorrent.sql");
             \core\Mysqli::initmultiquery($_REQUEST["hostmysql"], $_REQUEST["loginmysql"], $_REQUEST["passmysql"], $querys);
             \model\simple\MakerConf::makerConfSavBDD($_REQUEST["hostmysql"], $_REQUEST["loginmysql"], $_REQUEST["passmysql"]);
-            $this->set("res", true);
-        } else if (isset($_REQUEST["login"]) && isset($_REQUEST["pass"]) && isset($_REQUEST["mail"])) {
-            \model\mysql\Utilisateur::insertUtilisateurSysop($_REQUEST["login"], $_REQUEST["pass"], $_REQUEST["mail"]);
-            \model\simple\MakerConf::makerConfEnd();
-        } else {
 
+        } else*/
+        if (isset($_REQUEST["login"]) && isset($_REQUEST["pass"]) && isset($_REQUEST["mail"])) {
+            $res = \model\mysql\Utilisateur::insertUtilisateurSysop($_REQUEST["login"], $_REQUEST["pass"], $_REQUEST["mail"]);
+            \model\simple\MakerConf::makerConfEnd();
+            $this->set("res", $res);
         }
     }
 

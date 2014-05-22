@@ -158,6 +158,30 @@ CREATE TABLE IF NOT EXISTS `ticket` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `cronroot`
+--
+
+CREATE TABLE IF NOT EXISTS `cronroot` (
+  `id`       VARCHAR(40)
+             COLLATE utf8_unicode_ci NOT NULL,
+  `donnee`   LONGTEXT
+             COLLATE utf8_unicode_ci NOT NULL,
+  `resultat` LONGTEXT
+             COLLATE utf8_unicode_ci DEFAULT NULL,
+  `nomrtorrent` VARCHAR(200)
+                COLLATE utf8_unicode_ci NOT NULL,
+  `fini`     TINYINT(1)              NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `nomrtorrent` (`nomrtorrent`)
+)
+  ENGINE =InnoDB
+  DEFAULT CHARSET =utf8
+  COLLATE =utf8_unicode_ci;
+
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `torrentfilm`
 --
 
@@ -248,6 +272,11 @@ ADD CONSTRAINT `rtorrents_ibfk_1` FOREIGN KEY (`nomrtorrent`) REFERENCES `rtorre
   ON DELETE CASCADE
   ON UPDATE CASCADE,
 ADD CONSTRAINT `rtorrents_ibfk_2` FOREIGN KEY (`login`) REFERENCES `utilisateur` (`login`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+ALTER TABLE `cronroot`
+ADD CONSTRAINT `cronroot_ibfk_1` FOREIGN KEY (`nomrtorrent`) REFERENCES `rtorrent` (`nom`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
