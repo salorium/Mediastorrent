@@ -8,33 +8,6 @@
 if (!isset($res)) {
     ?>
 
-    <form method="post">
-        <table>
-            <caption>Identifiant de connexion à mysql</caption>
-            <tr>
-                <td>Host :</td>
-                <td>
-                    <input name="hostmysql" type="text"/>
-                </td>
-            </tr>
-            <tr>
-                <td>Login :</td>
-                <td>
-                    <input name="loginmysql" type="text"/>
-                </td>
-            </tr>
-            <tr>
-                <td>Mot de passe :</td>
-                <td>
-                    <input name="passmysql" type="password"/>
-
-                </td>
-            </tr>
-        </table>
-
-        <button class="secondary" type="submit">Initialiser la base de données</button>
-    </form>
-<? } else if (isset($res)) { ?>
     <form data-abide class="custom" method="post">
         <table>
             <caption>Création du compte Sysop</caption>
@@ -69,4 +42,27 @@ if (!isset($res)) {
         </table>
         <button class="secondary" type="submit">Ajouter ce compte Sysop</button>
     </form>
-<? } ?>
+<?
+} else {
+    if ($res) {
+        ?>
+        <div class="container">
+            <div data-alert class="alert-box success radius connexion">
+                Enregistrement du compte sysop fait !
+                <a href="#" class="close">&times;</a>
+            </div>
+        </div>
+    <?
+    } else {
+        ?>
+        <div class="container">
+            <div data-alert class="alert-box alert radius connexion">
+                Erreur lors du enregistrement du compte sysop !
+                <a href="#" class="close">&times;</a>
+            </div>
+        </div>
+    <?
+    }
+
+    \core\LoaderJavascript::add("base", "controller.redirection", \core\Router::url(""));
+} ?>
