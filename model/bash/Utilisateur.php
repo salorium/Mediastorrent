@@ -49,7 +49,7 @@ class Utilisateur extends \core\Model
             if ($sortie[0] !== 0) {
                 throw new \Exception("Impossible de créer /dev/" . \config\Conf::$nomvg . "/" . $login);
             }
-            $sortie = \model\simple\Console::execute('mkfs.ext4 /dev/' . \config\Conf::$nomvg . '/' . $login);
+            $sortie = \model\simple\Console::executePath('mkfs.ext4 /dev/' . \config\Conf::$nomvg . '/' . $login);
             if ($sortie[0] !== 0) {
                 throw new \Exception("Erreur lors du formatage /dev/" . \config\Conf::$nomvg . "/" . $login);
             }
