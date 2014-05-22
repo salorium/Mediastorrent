@@ -78,4 +78,12 @@ class Utilisateur extends \core\Model
             throw new \Exception("Impossible de lancer rtorrent");
         }
     }
+
+    static function rebootRtorrent($login)
+    {
+        $sortie = MakerRtorrentLancer::start($login);
+        if ($sortie[0] !== 0) {
+            throw new \Exception("Impossible de lancer rtorrent");
+        }
+    }
 } 

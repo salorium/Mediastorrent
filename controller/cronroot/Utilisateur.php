@@ -20,4 +20,13 @@ class Utilisateur extends \core\Controller
         $res["system"] = \model\simple\Console::$query;
         return $res;
     }
+
+    function rebootRtorrent($login)
+    {
+        $res = null;
+        \model\simple\Console::println("Reboot rtorrent " . $login);
+        \model\bash\Utilisateur::rebootRtorrent($login);
+        $res["system"] = \model\simple\Console::$query;
+        return $res;
+    }
 } 
