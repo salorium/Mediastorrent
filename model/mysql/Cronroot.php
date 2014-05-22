@@ -77,6 +77,22 @@ class Cronroot extends \core\ModelMysql
         return \core\Mysqli::getObjectAndClose(false, __CLASS__);
     }
 
+    public function setFini($resultat)
+    {
+        $resultat = json_encode($resultat);
+        $this->fini = true;
+        $this->resultat = $resultat;
+        $query = "update cronroot set ";
+        $query .= "fini=" . \core\Mysqli::real_escape_string($this->fini);
+        $query .= ", resultat=" . \core\Mysqli::real_escape_string($this->resultat);
+        $query .= " where id=" . \core\Mysqli::real_escape_string($this->id);
+        \core\Mysqli::query($query);
+        //echo $query;
+        $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
+        \core\Mysqli::close();
+        return $res;
+    }
+
     public static function getAllNonFini()
     {
         $query = "select * from cronroot ";

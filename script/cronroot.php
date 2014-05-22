@@ -34,8 +34,10 @@ foreach ($crontache as $tache) {
     }
     $cn = explode("\\", $cname);
     $cn = $cn[count($cn) - 1];
-    if (call_user_func_array(array($controller, $data["fonction"]), $data["args"])) {
+    if ($res = call_user_func_array(array($controller, $data["fonction"]), $data["args"])) {
         //$t->delete();
+        $tache->setFini($res);
+
     }
 }
 ?>

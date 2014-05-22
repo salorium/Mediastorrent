@@ -179,7 +179,7 @@ class Torrentfilm extends \core\ModelMysql
         $query .= ", mediainfo=" . \core\Mysqli::real_escape_string($this->mediainfo);
         $query .= " where id=" . \core\Mysqli::real_escape_string($this->id);
         \core\Mysqli::query($query);
-        echo $query;
+        //echo $query;
         $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
         \core\Mysqli::close();
         return $res;
