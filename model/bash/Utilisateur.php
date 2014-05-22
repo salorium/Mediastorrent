@@ -26,7 +26,7 @@ class Utilisateur extends \core\Model
         if ($sortie[0] !== 0) {
             //Création de l'utilisateur si ce dernier n'existe pas
             echo exec('echo $PATH');
-            $sortie = \model\simple\Console::execute("useradd -m -s /bin/bash " . escapeshellarg($login));
+            $sortie = \model\simple\Console::executePath("useradd -m -s /bin/bash " . escapeshellarg($login));
             echo exec('echo $PATH');
             var_dump($sortie);
             if ($sortie[0] !== 0) {
