@@ -18,11 +18,16 @@ class Utilisateur extends \core\Model
 
         \model\simple\Console::println("Ajout " . $login . " scgi : " . $scgi . (!is_null($taille) ? ' taille ' . $taille . 'Go' : ''));
         //Voir si l'utilisateur existe sur le system
+        echo exec('echo $PATH');
         $sortie = \model\simple\Console::execute("id " . escapeshellarg($login));
+        echo exec('echo $PATH');
+
         //var_dump($sortie);
         if ($sortie[0] !== 0) {
             //Création de l'utilisateur si ce dernier n'existe pas
+            echo exec('echo $PATH');
             $sortie = \model\simple\Console::execute("useradd -m -s /bin/bash " . escapeshellarg($login));
+            echo exec('echo $PATH');
             var_dump($sortie);
             if ($sortie[0] !== 0) {
                 throw new \Exception("Impossible de créer l'utilisateur " . $login);
