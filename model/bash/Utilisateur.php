@@ -58,7 +58,7 @@ class Utilisateur extends \core\Model
             if ($sortie[0] !== 0) {
                 throw new \Exception("Montage /dev/" . \config\Conf::$nomvg . "/" . $login);
             }
-            file_put_contents("/etc/fstab", "/dev/" . \config\Conf::$nomvg . "/" . $login . " /home/" . $login . " ext4 defaults,nofail 0 0", FILE_APPEND);
+            file_put_contents("/etc/fstab", "\n/dev/" . \config\Conf::$nomvg . "/" . $login . " /home/" . $login . " ext4 defaults,nofail 0 0\n", FILE_APPEND);
         }
         \model\simple\MakerRtorrentConf::create($login, $scgi);
         $sortie = \model\simple\Console::execute('mkdir -p /home/' . $login . '/rtorrent/data');
