@@ -148,7 +148,7 @@ class Download extends Model
 // Send standard headers
         header("Content-Type: " . mime_content_type($file));
         header("Content-Length: $filesize");
-        header('Content-Disposition: attachment; filename="' . basename($name) . '"');
+        header('Content-Disposition: attachment; filename="' . basename($name) . '.' . pathinfo($file, PATHINFO_EXTENSION) . '"');
         header('Accept-Ranges: bytes');
 
 // if requested, send extra headers and part of file...
