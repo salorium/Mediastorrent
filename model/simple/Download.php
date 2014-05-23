@@ -102,18 +102,22 @@ class Download extends Model
             throw new \Exception("FILE NOT FOUND");
             exit;
         }
-
+        //var_dump($_SERVER);
+        //die();
 // Get the 'Range' header if one was sent
         if (isset($_SERVER['HTTP_RANGE'])) $range = $_SERVER['HTTP_RANGE']; // IIS/Some Apache versions
-        /*else if ($apache = apache_request_headers()) { // Try Apache again
+        /*else if ($apache = \getallheaders()) { // Try Apache again
+            var_dump($_SERVER);
+            die();
             $headers = array();
             foreach ($apache as $header => $val) $headers[strtolower($header)] = $val;
             if (isset($headers['range'])) $range = $headers['range'];
             else $range = FALSE; // We can't get the header/there isn't one set
-        }*/ else $range = FALSE; // We can't get the header/there isn't one set
+        }*/
+        else $range = FALSE; // We can't get the header/there isn't one set
 
 // Get the data range requested (if any)
-        $filesize = filesize($file);
+        $length = $filesize = filesize($file);
         if ($range) {
             $partial = true;
             list($param, $range) = explode('=', $range);
@@ -144,8 +148,7 @@ class Download extends Model
 // Send standard headers
         header("Content-Type: " . mime_content_type($file));
         header("Content-Length: $filesize");
-
-        header('Content-Disposition: attachment; filename="' . $name . "." . pathinfo($file, PATHINFO_EXTENSION) . '"');
+        header('Content-Disposition: attachment; filename="' . basename($name) . '"');
         header('Accept-Ranges: bytes');
 
 // if requested, send extra headers and part of file...
@@ -161,29 +164,18 @@ class Download extends Model
         }
         if ($start) fseek($fp, $start);
         while ($length) { // Read in blocks of 8KB so we don't chew up memory on the server
-            $read = ($length > 8192000) ? 8192000 : $length;
+            $read = ($length > 8192) ? 8192 : $length;
             $length -= $read;
             print(fread($fp, $read));
-            flush();
         }
         fclose($fp);
-        /*
-        if ($partial) {
-            header('HTTP/1.1 206 Partial Content');
-            header("Content-Range: bytes $start-$end/$filesize");
-            if (!$fp = fopen($file, 'r')) { // Error out if we can't read the file
-                header("HTTP/1.1 403 Forbidden");
-                exit;
-            }
-            if ($start) fseek($fp, $start);
-            while ($length) { // Read in blocks of 8KB so we don't chew up memory on the server
-                $read = ($length > 8192) ? 8192 : $length;
-                $length -= $read;
-                print(fread($fp, $read));
-            }
-            fclose($fp);
-        } else readfile($file); // ...otherwise just send the whole file
-        */
+
+
+        /* else {
+            echo "ddd";
+            die();
+            readfile($file); // ...otherwise just send the whole file
+        }*/
         exit;
     }
 
