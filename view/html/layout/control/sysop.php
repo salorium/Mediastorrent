@@ -58,17 +58,28 @@ $genre = \model\mysql\Genre::getAllGenre();
                             ?>
                         </ul>
                     </li>
-                    <li class="divider"></li>
+                    <?php
+                    /*
+                     * Génération du menu genre :)
+                     */
+                    $res = "";
+                    foreach ($genre as $v) {
+                        $res .= '<li><a href="#">' . $v->label . '</a></li>';
+                    }
+                    if (count($genre) > 0) {
+                        ?>
+                        <li class="divider"></li>
                     <li class="has-dropdown"><a>Genre</a>
 
                         <ul class="dropdown">
-                            <li><a href="#">Annimation</a></li>
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Horreur</a></li>
-                            <li><a href="#">Thriller</a></li>
-                            <li><a href="#">Comédie</a></li>
+                            <?= $res; ?>
                         </ul>
                     </li>
+
+                    <?
+                    }
+
+                    ?>
                 </ul>
             </li>
 
