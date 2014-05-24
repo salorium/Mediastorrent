@@ -22,15 +22,14 @@ class Film extends Controller
         $tmp = array();
         if (count($a) > 0)
             foreach ($a as $v) {
-            $t = null;
-            $t = json_decode($v->infos);
-            $t->id = $v->id;
-            $t->poster = $v->poster;
-            $t->backdrop = $v->backdrop;
-            $tmp[] = $t;
-        }
+                $t = null;
+                $t = json_decode($v->infos);
+                $t->id = $v->id;
+                $t->poster = $v->poster;
+                $t->backdrop = $v->backdrop;
+                $tmp[] = $t;
+            }
         $this->set("film", $tmp);
-        $this->set("genre", \model\mysql\Genre::getAllGenre());
         // die();
     }
 
