@@ -321,7 +321,7 @@ var Film = {
 
     },
     streaming: function (k, host) {
-        window.open(Base.controller.makeUrlBase(host) + 'film/streaming/' + Base.model.converter.paramUrl(k) + ".html", "_blank", "menubar=no, status=no, scrollbars=no, toolbar=no,location=no,resizable=no, width=650, height=510");
+        window.open(Base.controller.makeUrlBase(host) + 'film/streaming/' + Base.model.converter.paramUrl(k) + ".html", "test", "menubar=no, status=no, scrollbars=no, toolbar=no,location=no,resizable=no, width=650, height=510");
     },
     afficheDetailsFilm: function (film) {
         this.containerDetailsFilm.show();
