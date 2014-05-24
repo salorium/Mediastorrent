@@ -15,9 +15,9 @@ class Film extends Controller
 {
     public $layout = "connectermediastheque";
 
-    function nouveau()
+    function nouveau($genre = null)
     {
-        $a = \model\mysql\Film::getAllFilmUserDateDesc();
+        $a = \model\mysql\Film::getAllFilmUserDateDesc($genre);
         //var_dump(json_encode($a));
         $tmp = array();
         if (count($a) > 0)
