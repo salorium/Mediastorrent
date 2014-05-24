@@ -29,7 +29,7 @@ class Genre extends \core\ModelMysql
 
     public static function getAllGenre()
     {
-        $query = "select distinct * from ( select g.label as label ";
+        $query = "select distinct g.label as label ";
         $query .= "from torrentfilm tf, film f, genre g ";
         $query .= "where ( ";
         $query .= "tf.idfilm = f.id ";
@@ -43,7 +43,7 @@ class Genre extends \core\ModelMysql
         $query .= "and g.id = f.id ";
         //$query .= "and rs.nomrtorrent = r.nom ";
         $query .= "and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
-        $query .= ") ORDER BY label ASC ) t";
+        $query .= ") ORDER BY label ASC";
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(true);
     }
