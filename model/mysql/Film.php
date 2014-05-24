@@ -166,7 +166,7 @@ class Film extends \core\ModelMysql
         //$query .= "and r.nom = tf.nomrtorrent ";
         //$query .= "and rs.nomrtorrent = r.nom ";
         $query .= " and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
-        $query .= ") ORDER BY tf.titre ASC ) t";
+        $query .= ") ORDER BY f.titre ASC ) t";
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(true);
     }
