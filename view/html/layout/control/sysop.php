@@ -6,7 +6,7 @@
  * Time: 15:53
  */
 $genre = \model\mysql\Genre::getAllGenre();
-var_dump($genre);
+//var_dump($genre);
 ?>
 
 <nav class="top-bar" data-topbar="">
@@ -41,13 +41,21 @@ var_dump($genre);
 
                         <ul class="dropdown">
                             <li><a href="<?= \core\Router::url("film/nouveau") ?>">Nouveauté</a></li>
-                            <li class="divider"></li>
-                            <li><label>Genre</label></li>
-                            <li><a href="#">Annimation</a></li>
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Horreur</a></li>
-                            <li><a href="#">Thriller</a></li>
-                            <li><a href="#">Comédie</a></li>
+                            <?php
+                            /*
+                             * Génération du menu genre :)
+                             */
+                            if (count($genre) > 0) {
+                                ?>
+                                <li class="divider"></li>
+                                <li><label>Genre</label></li>
+
+                            <?
+                            }
+                            foreach ($genre as $v) {
+                                echo '<li><a href="#">' . $v->label . '</a></li>';
+                            }
+                            ?>
                         </ul>
                     </li>
                     <li class="divider"></li>
