@@ -297,7 +297,7 @@ var Film = {
             if (control.backdrop && screenshot) {
                 console.log(Base.model.converter.paramUrl(control.backdrop));
                 $("#background").css({
-                    "background": 'url("' + Base.controller.makeUrlBase() + "proxy/imageSetWidth/" + Base.model.converter.paramUrl(control.backdrop) + '/1000.jpg") center center fixed',
+                    "background": 'url("' + Base.controller.makeUrlBase() + "proxy/imageSetWidth/" + Base.model.converter.paramUrl(control.backdrop) + '/1920.jpg") center center fixed',
                     "background-size": "cover"
                 });
                 console.log($('html'));
