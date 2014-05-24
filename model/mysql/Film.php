@@ -123,7 +123,7 @@ class Film extends \core\ModelMysql
         $query .= "from torrentfilm tf, film f , genre g ";
         $query .= "where ( ";
         $query .= "tf.idfilm = f.id ";
-        $query .= "and f.id = g.id";
+        $query .= "and f.id = g.id ";
         if (!is_null($genre))
             $query .= "and g.label = " . \core\Mysqli::real_escape_string($genre);
         //$query .= "and r.nom = tf.nomrtorrent ";
@@ -133,7 +133,7 @@ class Film extends \core\ModelMysql
         //$query .= "tf.fini = true ";
         $query .= "tf.partageamis = true ";
         $query .= "and tf.idfilm = f.id ";
-        $query .= "and f.id = g.id";
+        $query .= "and f.id = g.id ";
         if (!is_null($genre))
             $query .= "and g.label = " . \core\Mysqli::real_escape_string($genre);
         //$query .= "and r.nom = tf.nomrtorrent ";
