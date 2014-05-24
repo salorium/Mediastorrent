@@ -35,6 +35,7 @@ class Test extends Controller
         $anneeprod = $infos["Année de production"];
         $film = \model\mysql\Film::ajouteFilm($titre, $otitre, json_encode($infos), $urlposter, $urlbackdrop, $anneeprod, $acteurs, $realisateurs, $id);
         $film->addGenre($genre);
+        $film->addGenre("Comédiatation");
     }
 
     function isql()
