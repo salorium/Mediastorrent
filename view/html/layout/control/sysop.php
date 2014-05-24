@@ -5,6 +5,7 @@
  * Date: 20/03/14
  * Time: 15:53
  */
+$genre = \model\mysql\Genre::getAllGenre();
 var_dump($genre);
 ?>
 
