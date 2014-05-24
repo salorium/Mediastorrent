@@ -64,7 +64,7 @@ $genre = \model\mysql\Genre::getAllGenre();
                      */
                     $res = "";
                     foreach ($genre as $v) {
-                        $res .= '<li><a href="#">' . $v->label . '</a></li>';
+                        $res .= '<li><a href="' . \core\Router::url("film/genre/" . rawurlencode($v->label)) . '">' . $v->label . '</a></li>';
                     }
                     if (count($genre) > 0) {
                         ?>
