@@ -184,7 +184,7 @@ class Torrentfilm extends \core\ModelMysql
         $query .= " and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
         $query .= ")";
         \core\Mysqli::query($query);
-        return \core\Mysqli::getObjectAndClose(true);
+        return \core\Mysqli::getObjectAndClose();
     }
 
     static function getClefUnique()
