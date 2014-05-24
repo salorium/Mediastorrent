@@ -78,7 +78,7 @@ class Mysqli
 
         }
 
-        self::$query[] = array($query, ($QueryEndTime - $QueryStartTime) * 1000, self::$res, $Errno, $Error, self::$dblink->mysqli_character_set_name());
+        self::$query[] = array($query, ($QueryEndTime - $QueryStartTime) * 1000, self::$res, $Errno, $Error, self::$dblink->character_set_name());
         self::$id++;
 
     }
