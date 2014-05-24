@@ -5,6 +5,7 @@
  * Date: 20/03/14
  * Time: 15:53
  */
+var_dump($genre);
 ?>
 
 <nav class="top-bar" data-topbar="">
