@@ -35,7 +35,7 @@
             else {
                 plugin = document.getElementById('np_plugin');
             }
-            plugin.Open('<?=$src?>');
+            plugin.Open('<?=rawurlencode($src);?>');
         }, 1000);
 
     }
