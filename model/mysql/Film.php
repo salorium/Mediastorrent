@@ -116,6 +116,7 @@ class Film extends \core\ModelMysql
 
     }
 
+
     static function getAllFilmUserDateDesc()
     {
         $query = "select distinct * from ( select f.id as id, f.urlposter as poster, f.urlbackdrop as backdrop , f.infos as infos ";
