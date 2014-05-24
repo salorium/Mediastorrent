@@ -30,6 +30,7 @@ class Film extends Controller
             $tmp[] = $t;
         }
         $this->set("film", $tmp);
+        $this->set("genre", \model\mysql\Genre::getAllGenre());
         // die();
     }
 
