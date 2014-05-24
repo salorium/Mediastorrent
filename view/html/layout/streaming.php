@@ -12,7 +12,7 @@
 <!--[if gt IE 8]><!-->
 <html class="no-js" lang="fr"> <!--<![endif]-->
 <head>
-    <meta charset="UTF-8">
+    <meta charset="ISO-8859-1">
     <meta name="viewport" content="width=device-width">
     <title>MediasTorrent</title>
 
