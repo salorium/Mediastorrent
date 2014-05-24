@@ -40,7 +40,7 @@ class Mysqli
         }
         if (is_null($str))
             return "NULL";
-        return "'" . utf8_encode(self::$dblink->real_escape_string(\htmlentities($str, ENT_NOQUOTES, "UTF-8"))) . "'";
+        return "'" . self::$dblink->real_escape_string(\htmlspecialchars($str, ENT_NOQUOTES)) . "'";
     }
 
     public static function real_escape_stringlike($str)
