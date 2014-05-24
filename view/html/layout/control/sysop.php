@@ -53,7 +53,7 @@ $genre = \model\mysql\Genre::getAllGenre();
                             <?
                             }
                             foreach ($genre as $v) {
-                                echo '<li><a href="' . \core\Router::url("film/nouveauGenre/" . rawurlencode($v->label)) . '">' . $v->label . '</a></li>';
+                                echo '<li><a href="' . \core\Router::url("film/nouveau/" . rawurlencode($v->label)) . '">' . $v->label . '</a></li>';
                             }
                             ?>
                         </ul>
