@@ -120,7 +120,7 @@ class Film extends \core\ModelMysql
     static function getAllFilmUserDateDesc($genre)
     {
         $query = "select distinct * from ( select f.id as id, f.urlposter as poster, f.urlbackdrop as backdrop , f.infos as infos ";
-        $query .= "from torrentfilm tf, film f , genre g";
+        $query .= "from torrentfilm tf, film f , genre g ";
         $query .= "where ( ";
         $query .= "tf.idfilm = f.id ";
         $query .= " f.id = g.id";
