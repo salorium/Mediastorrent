@@ -17,6 +17,26 @@ use model\xmlrpc\rTorrentSettings;
 
 class Test extends Controller
 {
+    function addFilm($id)
+    {
+        $o["typesearch"] = "movie";
+        $allo = new \model\simple\Allocine($id, $o);
+        $infos = $allo->retourneResMovieFormatForBD();
+        $genre = $infos["Genre"];
+        $infos["Genre"] = implode(", ", $genre);
+        $titre = (isset($infos["Titre"]) ? $infos["Titre"] : $infos["Titre original"]);
+        $otitre = $infos["Titre original"];
+        $urlposter = "";
+        $urlbackdrop = "";
+        $realisateurs = $infos["Réalisateur(s)"];
+        $acteurs = "";
+        if (isset($infos["Acteur(s)"]))
+            $acteurs = $infos["Acteur(s)"];
+        $anneeprod = $infos["Année de production"];
+        $film = \model\mysql\Film::ajouteFilm($titre, $otitre, json_encode($infos), $urlposter, $urlbackdrop, $anneeprod, $acteurs, $realisateurs, $id);
+        $film->addGenre($genre);
+    }
+
     function isql()
     {
         $querys = file_get_contents(ROOT . DS . "mysql" . DS . "mediastorrent.sql");
