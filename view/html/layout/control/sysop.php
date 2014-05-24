@@ -6,7 +6,6 @@
  * Time: 15:53
  */
 $genre = \model\mysql\Genre::getAllGenre();
-//var_dump($genre);
 ?>
 
 <nav class="top-bar" data-topbar="">
@@ -34,7 +33,7 @@ $genre = \model\mysql\Genre::getAllGenre();
             <!-- Search | has-form wrapper -->
             <li class="has-dropdown not-click"><a><img width="30px"
                                                        title="Film"
-                                                                                                       src="<?= BASE_URL ?>images/film.svg?color=rgba(240,240,240,1)"/></a>
+                                                       src="<?= BASE_URL ?>images/film.svg?color=rgba(240,240,240,1)"/></a>
 
                 <ul class="dropdown">
                     <li class="has-dropdown"><a>Nouveauté</a>
@@ -69,12 +68,12 @@ $genre = \model\mysql\Genre::getAllGenre();
                     if (count($genre) > 0) {
                         ?>
                         <li class="divider"></li>
-                    <li class="has-dropdown"><a>Genre</a>
+                        <li class="has-dropdown"><a>Genre</a>
 
-                        <ul class="dropdown">
-                            <?= $res; ?>
-                        </ul>
-                    </li>
+                            <ul class="dropdown">
+                                <?= $res; ?>
+                            </ul>
+                        </li>
 
                     <?
                     }
@@ -177,7 +176,7 @@ $genre = \model\mysql\Genre::getAllGenre();
             </li>
             <li class="divider"></li>
             <li class="has-form hide-for-medium-down">
-            <? echo isset($debug_performance_for_layout) ? $debug_performance_for_layout : ""; ?>
+                <? echo isset($debug_performance_for_layout) ? $debug_performance_for_layout : ""; ?>
             </li>
             <li class="has-form">
 
