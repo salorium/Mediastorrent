@@ -146,9 +146,9 @@ class Download extends Model
         } else $partial = false; // No range requested
 
 // Send standard headers
-        header("Content-Type: " . mime_content_type($file));
+        header("Content-Type: " . mime_content_type($file) . "; charset=utf-8");
         header("Content-Length: $filesize");
-        header('Content-Disposition: attachment; filename="' . utf8_encode($name) . '.' . pathinfo($file, PATHINFO_EXTENSION) . '"');
+        header('Content-Disposition: attachment; filename="' . $name . '.' . pathinfo($file, PATHINFO_EXTENSION) . '"');
         header('Accept-Ranges: bytes');
 
 // if requested, send extra headers and part of file...
