@@ -320,6 +320,9 @@ var Film = {
         }
 
     },
+    streaming: function (k) {
+        window.open(Base.controller.makeUrlBase() + 'film/streaming/' + Base.model.converter.paramUrl(k) + ".html", "_blank", "menubar=no, status=no, scrollbars=no, toolbar=no,location=no,resizable=no, width=650, height=510");
+    },
     afficheDetailsFilm: function (film) {
         this.containerDetailsFilm.show();
         $fieldset = $('<fieldset><legend>' + film.Titre + '</legend></fieldset>');

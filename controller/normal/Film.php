@@ -33,6 +33,56 @@ class Film extends Controller
         // die();
     }
 
+    function streaming($id)
+    {
+        $this->layout = "streaming";
+        if ($torrentf = \model\mysql\Torrentfilm::getTorrentFilmParIdFilmForStreaming($id)) {
+            \config\Conf::$portscgi = $torrentf->portscgi;
+            $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
+                new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.get_frozen_path", array($torrentf->hash, intval($torrentf->numfile))));
+            if ($req->success()) {
+                $filename = $req->val[0];
+                if ($filename == '') {
+                    $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, array(
+                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.open", $torrentf->hash),
+                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.get_frozen_path", array($torrentf->hash, intval($torrentf->numfile))),
+                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.close", $torrentf->hash)));
+                    if ($req->success())
+                        $filename = $req->val[1];
+                }
+                $mediainfo = json_decode($torrentf->mediainfo, true);
+                $compfile = "";
+                switch ($mediainfo["typequalite"]) {
+                    case "SD":
+                        $compfile .= "[" . $mediainfo["codec"];
+                        break;
+                    case "HD":
+                        $compfile .= "[" . $mediainfo["qualite"] . "." . $mediainfo["codec"];
+                        break;
+                }
+                $audios = array();
+                foreach ($mediainfo["audios"] as $v) {
+                    $res = "";
+                    if ($v["type"] !== "MP3") {
+                        $res .= "." . $v["type"] . " " . $v["cannal"];
+                        if (isset($v["lang"]))
+                            $res .= " " . $v["lang"];
+
+                    }
+                    $audios[] = $res;
+                }
+                if (count($audios) > 1) {
+                    $compfile .= implode(" / " . $audios) . "]";
+                } else {
+                    $compfile .= $audios[0] . "]";
+                }
+                $this->set(array(
+                    "src" => "http://" . $torrentf->hostname . "/film/download/" . $id . "/" . $torrentf->titre . " " . $compfile . "." . pathinfo($filename, PATHINFO_EXTENSION)
+                ));
+            }
+        }
+    }
+
     function genre($genre = null)
     {
         $a = \model\mysql\Film::getAllFilmUserTitreAsc($genre);
