@@ -30,15 +30,15 @@
             </li>
             <li class="divider"></li>
             <!-- Search | has-form wrapper -->
-            <li class="has-dropdown not-click"><a href="<?= \core\Router::url("film/nouveau") ?>"><img width="30px"
-                                                                                                       title="Film"
+            <li class="has-dropdown not-click"><a><img width="30px"
+                                                       title="Film"
                                                                                                        src="<?= BASE_URL ?>images/film.svg?color=rgba(240,240,240,1)"/></a>
 
                 <ul class="dropdown">
                     <li class="has-dropdown"><a>Nouveauté</a>
 
                         <ul class="dropdown">
-                            <li><a href="?controller=Film&fonction=nouveau">Nouveauté</a></li>
+                            <li><a href="<?= \core\Router::url("film/nouveau") ?>">Nouveauté</a></li>
                             <li class="divider"></li>
                             <li><label>Genre</label></li>
                             <li><a href="#">Annimation</a></li>
