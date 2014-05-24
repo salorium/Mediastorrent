@@ -5,6 +5,7 @@
  * Date: 20/03/14
  * Time: 15:53
  */
+$genre = \model\mysql\Genre::getAllGenre();
 ?>
 
 <nav class="top-bar" data-topbar="">
@@ -30,35 +31,54 @@
             </li>
             <li class="divider"></li>
             <!-- Search | has-form wrapper -->
-            <li class="has-dropdown not-click"><a href="<?= \core\Router::url("film/nouveau") ?>"><img width="30px"
-                                                                                                       title="Film"
-                                                                                                       src="<?= BASE_URL ?>images/film.svg?color=rgba(240,240,240,1)"/></a>
+            <li class="has-dropdown not-click"><a><img width="30px"
+                                                       title="Film"
+                                                       src="<?= BASE_URL ?>images/film.svg?color=rgba(240,240,240,1)"/></a>
 
                 <ul class="dropdown">
                     <li class="has-dropdown"><a>Nouveauté</a>
 
                         <ul class="dropdown">
-                            <li><a href="?controller=Film&fonction=nouveau">Nouveauté</a></li>
-                            <li class="divider"></li>
-                            <li><label>Genre</label></li>
-                            <li><a href="#">Annimation</a></li>
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Horreur</a></li>
-                            <li><a href="#">Thriller</a></li>
-                            <li><a href="#">Comédie</a></li>
-                        </ul>
-                    </li>
-                    <li class="divider"></li>
-                    <li class="has-dropdown"><a>Genre</a>
+                            <li><a href="<?= \core\Router::url("film/nouveau") ?>">Nouveauté</a></li>
+                            <?php
+                            /*
+                             * Génération du menu genre :)
+                             */
+                            if (count($genre) > 0) {
+                                ?>
+                                <li class="divider"></li>
+                                <li><label>Genre</label></li>
 
-                        <ul class="dropdown">
-                            <li><a href="#">Annimation</a></li>
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Horreur</a></li>
-                            <li><a href="#">Thriller</a></li>
-                            <li><a href="#">Comédie</a></li>
+                            <?
+                            }
+                            foreach ($genre as $v) {
+                                echo '<li><a href="' . \core\Router::url("film/nouveau/" . rawurlencode($v->label)) . '">' . $v->label . '</a></li>';
+                            }
+                            ?>
                         </ul>
                     </li>
+                    <?php
+                    /*
+                     * Génération du menu genre :)
+                     */
+                    $res = "";
+                    foreach ($genre as $v) {
+                        $res .= '<li><a href="' . \core\Router::url("film/genre/" . rawurlencode($v->label)) . '">' . $v->label . '</a></li>';
+                    }
+                    if (count($genre) > 0) {
+                        ?>
+                        <li class="divider"></li>
+                        <li class="has-dropdown"><a>Genre</a>
+
+                            <ul class="dropdown">
+                                <?= $res; ?>
+                            </ul>
+                        </li>
+
+                    <?
+                    }
+
+                    ?>
                 </ul>
             </li>
 
@@ -139,8 +159,8 @@
         <!-- Top Bar Right Nav Elements -->
         <ul class="right">
             <li class="divider hide-for-small"></li>
-            <li class="has-form">
-                <? echo isset($debug_performance_for_layout) ? $debug_performance_for_layout : ""; ?>
+            <li class="has-form hide-for-medium-down">
+            <? echo isset($debug_performance_for_layout) ? $debug_performance_for_layout : ""; ?>
             </li>
             <li class="has-form">
 
@@ -157,8 +177,8 @@
                         <input id="recherche" placeholder="Recherche" type="text">
                     </div>
                     <div class="large-4 small-3 columns">
-                        <a href="#" id="recherchesubmit" class="alert button expand"><img width="18px"
-                                                                                          src="<?= BASE_URL ?>images/search.svg?color=rgba(240,240,240,1)"></a>
+                        <a href="#" id="recherchesubmit" class="alert button expanded"><img width="18px"
+                                                                                            src="<?= BASE_URL ?>images/search.svg?color=rgba(240,240,240,1)"></a>
                     </div>
                 </div>
             </li>
