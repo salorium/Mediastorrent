@@ -76,7 +76,9 @@ class Film extends Controller
                 } else {
                     $compfile .= $audios[0] . "]";
                 }
-                $str = htmlentities(($torrentf->titre . " " . $compfile . "." . pathinfo($filename, PATHINFO_EXTENSION)), ENT_NOQUOTES, "UTF-8");
+                $str = str_replace("'", "\'", str_replace("&lt;", "<", ($torrentf->titre . " " . $compfile . "." . pathinfo($filename, PATHINFO_EXTENSION))));
+
+                $str = htmlentities($str, ENT_NOQUOTES, "UTF-8");
 
                 // remplacer les entités HTML pour avoir juste le premier caractères non accentués
 // Exemple : "&ecute;" => "e", "&Ecute;" => "E", "Ã " => "a" ...
@@ -87,7 +89,6 @@ class Film extends Controller
                 $str = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $str);
 // Supprimer tout le reste
                 $str = preg_replace('#&[^;]+;#', '', $str);
-
 
                 $this->set(array(
                     "src" => "http://" . $torrentf->hostname . "/film/download/" . $id . "/" . \config\Conf::$user["user"]->login . "/" . \config\Conf::$user["user"]->keyconnexion . "/" . ($str)
