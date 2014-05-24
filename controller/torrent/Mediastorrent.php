@@ -6,7 +6,7 @@
  * Time: 19:47
  */
 
-namespace controller\normal;
+namespace controller\torrent;
 
 
 use core\Controller;
