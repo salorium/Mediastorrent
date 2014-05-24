@@ -33,6 +33,11 @@ class Film extends Controller
         // die();
     }
 
+    function nouveauGenre($genre)
+    {
+        $this->set("genre", $genre);
+    }
+
     function getFile($id)
     {
         //sleep(10);
