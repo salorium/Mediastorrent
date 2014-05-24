@@ -43,7 +43,7 @@ class Genre extends \core\ModelMysql
         $query .= "and g.id = f.id ";
         //$query .= "and rs.nomrtorrent = r.nom ";
         $query .= "and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
-        $query .= ") ORDER BY g.label ASC ) t";
+        $query .= ") ORDER BY label ASC ) t";
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(true);
     }
