@@ -119,7 +119,7 @@ class Film extends \core\ModelMysql
 
     static function getAllFilmUserDateDesc($genre)
     {
-        $query = "select distinct * from ( select f.id as id, f.urlposter as poster, f.urlbackdrop as backdrop , f.infos as infos ";
+        $query = "select distinct * from ( select tf.date as date, f.id as id, f.urlposter as poster, f.urlbackdrop as backdrop , f.infos as infos ";
         $query .= "from torrentfilm tf, film f , genre g ";
         $query .= "where ( ";
         $query .= "tf.idfilm = f.id ";
@@ -139,7 +139,7 @@ class Film extends \core\ModelMysql
         //$query .= "and r.nom = tf.nomrtorrent ";
         //$query .= "and rs.nomrtorrent = r.nom ";
         $query .= " and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
-        $query .= ") ORDER BY tf.date DESC ) t";
+        $query .= ")  ) t ORDER BY date DESC";
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(true);
     }
