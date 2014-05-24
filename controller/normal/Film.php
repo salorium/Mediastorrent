@@ -77,7 +77,7 @@ class Film extends Controller
                     $compfile .= $audios[0] . "]";
                 }
                 $this->set(array(
-                    "src" => "http://" . $torrentf->hostname . "/film/download/" . $id . "/" . $torrentf->titre . " " . $compfile . "." . pathinfo($filename, PATHINFO_EXTENSION)
+                    "src" => "http://" . $torrentf->hostname . "/film/download/" . $id . "/" . rawurlencode($torrentf->titre . " " . $compfile . "." . pathinfo($filename, PATHINFO_EXTENSION))
                 ));
             }
         }
