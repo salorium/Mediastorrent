@@ -143,4 +143,31 @@ class Film extends \core\ModelMysql
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(true);
     }
+
+    static function getAllFilmUserTitreAsc($genre)
+    {
+        $query = "select distinct * from ( select f.id as id, f.urlposter as poster, f.urlbackdrop as backdrop , f.infos as infos ";
+        $query .= "from torrentfilm tf, film f , genre g ";
+        $query .= "where ( ";
+        $query .= "tf.idfilm = f.id ";
+        $query .= "and f.id = g.id ";
+        if (!is_null($genre))
+            $query .= "and g.label = " . \core\Mysqli::real_escape_string($genre);
+        //$query .= "and r.nom = tf.nomrtorrent ";
+        $query .= " and tf.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login);
+        //$query .= " and rs.nomrtorrent = r.nom ";
+        $query .= " ) or ( ";
+        //$query .= "tf.fini = true ";
+        $query .= "tf.partageamis = true ";
+        $query .= "and tf.idfilm = f.id ";
+        $query .= "and f.id = g.id ";
+        if (!is_null($genre))
+            $query .= "and g.label = " . \core\Mysqli::real_escape_string($genre);
+        //$query .= "and r.nom = tf.nomrtorrent ";
+        //$query .= "and rs.nomrtorrent = r.nom ";
+        $query .= " and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
+        $query .= ") ORDER BY tf.titre ASC ) t";
+        \core\Mysqli::query($query);
+        return \core\Mysqli::getObjectAndClose(true);
+    }
 } 

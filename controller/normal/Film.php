@@ -33,9 +33,21 @@ class Film extends Controller
         // die();
     }
 
-    function nouveauGenre($genre)
+    function genre($genre = null)
     {
-        $this->set("genre", $genre);
+        $a = \model\mysql\Film::getAllFilmUserTitreAsc($genre);
+        //var_dump(json_encode($a));
+        $tmp = array();
+        if (count($a) > 0)
+            foreach ($a as $v) {
+                $t = null;
+                $t = json_decode($v->infos);
+                $t->id = $v->id;
+                $t->poster = $v->poster;
+                $t->backdrop = $v->backdrop;
+                $tmp[] = $t;
+            }
+        $this->set("film", $tmp);
     }
 
     function getFile($id)
