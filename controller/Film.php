@@ -13,7 +13,7 @@ class Film extends \core\Controller
 {
     function recherche($login = null, $keyconnexion = null, $re = null)
     {
-        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationDistante($login, $keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         if (is_null($re))
             $re = $_REQUEST["recherche"];
@@ -26,9 +26,10 @@ class Film extends \core\Controller
 
     function download($id, $login = null, $keyconnexion = null)
     {
-        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationDistante($login, $keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         if ($torrentf = \model\mysql\Torrentfilm::getFilmUserDuServeur($id)) {
+            \config\Conf::$portscgi = $torrentf->portscgi;
             $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
                 new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.get_frozen_path", array($torrentf->hash, intval($torrentf->numfile))));
             if ($req->success()) {

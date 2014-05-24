@@ -11,6 +11,27 @@ namespace model\simple;
 
 class Utilisateur extends \core\Model
 {
+    static function authentificationDistante($login, $keyconnexion)
+    {
+        if (!is_null($login) && !is_null($keyconnexion)) {
+            $u = \core\Memcached::value($login, "user");
+            if (is_null($u)) {
+                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login, $keyconnexion);
+                if ($u)
+                    \core\Memcached::value($u->login, "user", $u, 60 * 1);
+            } else {
+                $u = $u->keyconnexion === $keyconnexion ? $u : false;
+                if (is_bool($u)) {
+                    $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login, $keyconnexion);
+                    if ($u)
+                        \core\Memcached::value($u->login, "user", $u, 60 * 1);
+                }
+                $u = $u->keyconnexion === $keyconnexion ? $u : false;
+            }
+            \config\Conf::$user["user"] = $u;
+        }
+    }
+
     static function authentificationPourRtorrent($login, $keyconnexion)
     {
         if (!is_null($login) && !is_null($keyconnexion)) {
@@ -20,12 +41,6 @@ class Utilisateur extends \core\Model
                 if ($u)
                     \core\Memcached::value($u->login, "user", $u, 60 * 1);
             } else {
-                /*if (!is_object($u)) {
-                    var_dump($u);
-                    var_dump(\core\Memcached::$request);
-                    die();
-                }*/
-
                 $u = $u->keyconnexion === $keyconnexion ? $u : false;
                 if (is_bool($u)) {
                     $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login, $keyconnexion);
