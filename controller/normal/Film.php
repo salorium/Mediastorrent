@@ -76,7 +76,7 @@ class Film extends Controller
                 } else {
                     $compfile .= $audios[0] . "]";
                 }
-                $chaine = iconv('UTF-8', 'ASCII//TRANSLIT', ($torrentf->titre . " " . $compfile . "." . pathinfo($filename, PATHINFO_EXTENSION)));
+                $chaine = \iconv('UTF-8', 'ASCII//TRANSLIT', ($torrentf->titre . " " . $compfile . "." . pathinfo($filename, PATHINFO_EXTENSION)));
                 $this->set(array(
                     "src" => "http://" . $torrentf->hostname . "/film/download/" . $id . "/" . \config\Conf::$user["user"]->login . "/" . \config\Conf::$user["user"]->keyconnexion . "/" . ($chaine)
                 ));
