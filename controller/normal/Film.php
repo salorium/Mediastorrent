@@ -76,11 +76,7 @@ class Film extends Controller
                 } else {
                     $compfile .= $audios[0] . "]";
                 }
-
-                $patterns = array('/[àáâãä]/i', '/[éèëê]/i', '/[ç]/i', '/[ìíîï]/i', '/[ñ]/i', '/[òóôõö]/i', '/[ùúûü]/i', '/[ýÿ]/i');
-                $replacements = array('a', 'e', 'c', 'i', 'n', 'o', 'u', 'y');
-
-                $chaine = preg_replace($patterns, $replacements, ($torrentf->titre . " " . $compfile . "." . pathinfo($filename, PATHINFO_EXTENSION)));
+                $chaine = iconv('UTF-8', 'ASCII//TRANSLIT', ($torrentf->titre . " " . $compfile . "." . pathinfo($filename, PATHINFO_EXTENSION)));
                 $this->set(array(
                     "src" => "http://" . $torrentf->hostname . "/film/download/" . $id . "/" . \config\Conf::$user["user"]->login . "/" . \config\Conf::$user["user"]->keyconnexion . "/" . ($chaine)
                 ));
