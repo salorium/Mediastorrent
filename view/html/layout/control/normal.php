@@ -25,10 +25,6 @@ $genre = \model\mysql\Genre::getAllGenre();
         <!-- Top Bar Left Nav Elements -->
         <ul class="left">
             <li class="divider"></li>
-            <li class=""><a href="<?= \core\Router::url("torrent/all") ?>"><img width="30px" title="Torrent"
-                                                                                src="<?= BASE_URL ?>images/torrent.svg?color=rgba(240,240,240,1)"/></a>
-            </li>
-            <li class="divider"></li>
             <!-- Search | has-form wrapper -->
             <li class="has-dropdown not-click"><a><img width="30px"
                                                        title="Film"
@@ -158,21 +154,6 @@ $genre = \model\mysql\Genre::getAllGenre();
         <!-- Top Bar Right Nav Elements -->
         <ul class="right">
             <li class="divider hide-for-small"></li>
-            <li class="has-dropdown"><a>Administration</a>
-
-                <ul class="dropdown">
-                    <?php if (\model\mysql\Rtorrent::isRtorrentServeur()) { ?>
-                        <li>
-                            <a onclick="Base.view.noty.generateConfirm('Être vous sur de vouloir supprimer ce serveur des serveurs de rtorrent ?<br>Attention, toutes les seedbox et fichiers torrent de la médiathèque qui sont associés a cette seedbox seront également supprimés',function(){window.location = '<?= \core\Router::url("system/delRtorrent") ?>'})">Supprimer
-                                ce serveur des serveur de rtorrent</a></li>
-                    <? } else { ?>
-                        <li><a href="<?= \core\Router::url("system/addRtorrent") ?>">Ajouter ce serveur en tant que
-                                serveur de rtorrent</a></li>
-                    <? } ?>
-                    <li class="divider"></li>
-                    <li><a href="<?= \core\Router::url("utilisateur/liste") ?>">Utilisateurs</a></li>
-                </ul>
-            </li>
             <li class="divider"></li>
             <li class="has-form hide-for-medium-down">
                 <? echo isset($debug_performance_for_layout) ? $debug_performance_for_layout : ""; ?>
