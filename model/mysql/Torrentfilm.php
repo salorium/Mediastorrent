@@ -137,7 +137,7 @@ class Torrentfilm extends \core\ModelMysql
 
     static function getTorrentFilmParIdFilm($id)
     {
-        $query = "select tf.id as id,r.hostname as hostname,tf.mediainfo as mediainfo ";
+        $query = "select tf.id as id,r.hostname as hostname,tf.mediainfo as mediainfo, tf.qualite as qualite ";
         $query .= "from torrentfilm tf,film f,rtorrent r,rtorrents rs ";
         $query .= "where( tf.fini = true ";
         $query .= "and tf.idfilm = f.id ";
@@ -157,7 +157,7 @@ class Torrentfilm extends \core\ModelMysql
         $query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
         $query .= " and f.id = " . \core\Mysqli::real_escape_string($id);
         $query .= " and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
-        $query .= ")";
+        $query .= ") order by qualite";
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(true);
     }
