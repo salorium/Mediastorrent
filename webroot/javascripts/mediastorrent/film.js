@@ -89,7 +89,7 @@ $(document).ready(function () {
     });
 
     $(window).resize(function () {
-        Film.init();
+        // Film.init();
     });
 
 });
