@@ -21,6 +21,7 @@ class Torrentfilm extends \core\ModelMysql
     public $hashtorrent;
     public $clefunique;
     public $fini;
+    public $qualite;
     public $mediainfo;
     public $partageamis;
 
@@ -46,7 +47,7 @@ class Torrentfilm extends \core\ModelMysql
     {
         if (is_null($this->id) || is_null($this->numfile) || is_null($this->idfilm) || is_null($this->login) || is_null($this->nomrtorrent) || is_null($this->hashtorrent) || is_null($this->fini) || is_null($this->partageamis) || is_null($this->clefunique))
             return false;
-        $query = "insert into torrentfilm (id,date,numfile,complementfichier,idfilm,login,nomrtorrent,hashtorrent,clefunique,fini,mediainfo,partageamis) values(";
+        $query = "insert into torrentfilm (id,date,numfile,complementfichier,idfilm,login,nomrtorrent,hashtorrent,clefunique,fini,qualite,mediainfo,partageamis) values(";
         $query .= \core\Mysqli::real_escape_string($this->id) . ",";
         $query .= \core\Mysqli::real_escape_string($this->date) . ",";
         $query .= \core\Mysqli::real_escape_string($this->numfile) . ",";
@@ -57,6 +58,7 @@ class Torrentfilm extends \core\ModelMysql
         $query .= \core\Mysqli::real_escape_string($this->hashtorrent) . ",";
         $query .= \core\Mysqli::real_escape_string($this->clefunique) . ",";
         $query .= \core\Mysqli::real_escape_string($this->fini) . ",";
+        $query .= \core\Mysqli::real_escape_string($this->qualite) . ",";
         $query .= \core\Mysqli::real_escape_string($this->mediainfo) . ",";
         $query .= \core\Mysqli::real_escape_string($this->partageamis) . ")";
         \core\Mysqli::query($query);
@@ -160,7 +162,7 @@ class Torrentfilm extends \core\ModelMysql
         return \core\Mysqli::getObjectAndClose(true);
     }
 
-    static function getTorrentFilmParIdFilmForStreaming($id)
+    static function getTorrentFilmParIdForStreaming($id)
     {
         $query = "select tf.numfile as numfile, tf.complementfichier as complement,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre, r.hostname as hostname,tf.mediainfo as mediainfo ";
         $query .= "from torrentfilm tf,film f,rtorrent r,rtorrents rs ";
@@ -198,12 +200,25 @@ class Torrentfilm extends \core\ModelMysql
         return $clefunique;
     }
 
-    public function fini()
+    public function fini($mediainfo)
     {
+        switch ($mediainfo["typequalite"]) {
+            case "HD":
+                if ($mediainfo["qualite"] == "1080p" || $mediainfo["qualite"] == "1080i")
+                    $this->qualite = 2;
+                else
+                    $this->qualite = 1;
+                break;
+            default:
+                $this->qualite = 0;
+                break;
+        }
+        $this->mediainfo = json_encode($mediainfo);
         $this->fini = true;
         $query = "update torrentfilm set ";
         $query .= "fini=" . \core\Mysqli::real_escape_string($this->fini);
         $query .= ", mediainfo=" . \core\Mysqli::real_escape_string($this->mediainfo);
+        $query .= ", qualite=" . \core\Mysqli::real_escape_string($this->qualite);
         $query .= " where id=" . \core\Mysqli::real_escape_string($this->id);
         \core\Mysqli::query($query);
         //echo $query;
