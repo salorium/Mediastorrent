@@ -42,7 +42,7 @@ require ROOT . DS . "view" . DS . "html" . DS . "layout" . DS . "control" . strt
 			text-align: center;
 			color: #ffffff;
 
-			"><span style="background-color: rgba(0,0,0,0.5);">~<?php
+			"><span style="background-color: rgba(0,0,0,0.5); padding-right: 10px; padding-left: 10px;">~<?php
             $titre = preg_replace("#([A-Z]+)#", '<span class="secondary">$1</span>', \config\Conf::$nomdusite) . " " . \config\Conf::$version . "~ Powered by " . preg_replace("#([A-Z]+)#", '<span class="secondary">$1</span>', \config\Conf::$author) . " © " . \config\Conf::$anneefondation . (date("Y") == \config\Conf::$anneefondation ? "" : "-" . date("Y"));
 
             echo $titre;
