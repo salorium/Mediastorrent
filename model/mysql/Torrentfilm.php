@@ -83,7 +83,7 @@ class Torrentfilm extends \core\ModelMysql
      */
     static function getFilmUserDuServeur($id)
     {
-        $query = "select tf.numfile as numfile, tf.complementfichier as complement,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre, tf.mediainfo as mediainfo ";
+        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre, tf.mediainfo as mediainfo ";
         $query .= "from torrentfilm tf, film f,rtorrent r,rtorrents rs ";
         $query .= "where( tf.fini = true ";
         $query .= "and tf.idfilm = f.id ";
@@ -164,7 +164,7 @@ class Torrentfilm extends \core\ModelMysql
 
     static function getTorrentFilmParIdForStreaming($id)
     {
-        $query = "select tf.numfile as numfile, tf.complementfichier as complement,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre, r.hostname as hostname,tf.mediainfo as mediainfo ";
+        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre, r.hostname as hostname,tf.mediainfo as mediainfo ";
         $query .= "from torrentfilm tf,film f,rtorrent r,rtorrents rs ";
         $query .= "where( tf.fini = true ";
         $query .= "and tf.idfilm = f.id ";
