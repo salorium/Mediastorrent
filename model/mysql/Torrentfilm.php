@@ -137,7 +137,7 @@ class Torrentfilm extends \core\ModelMysql
 
     static function getTorrentFilmParIdFilm($id)
     {
-        $query = "select tf.id as id,r.hostname as hostname,tf.mediainfo as mediainfo, tf.qualite as qualite ";
+        $query = "select tf.id as id,r.hostname as hostname,tf.mediainfo as mediainfo, tf.qualite as qualite, tf.complementfichier as complementfichier";
         $query .= "from torrentfilm tf,film f,rtorrent r,rtorrents rs ";
         $query .= "where( tf.fini = true ";
         $query .= "and tf.idfilm = f.id ";
