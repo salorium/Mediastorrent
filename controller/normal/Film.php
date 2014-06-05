@@ -52,7 +52,7 @@ class Film extends Controller
                 }
                 $mediainfo = json_decode($torrentf->mediainfo, true);
                 $compfile = "[";
-                $compfile .= $torrentf->complementfichier;
+                $compfile .= (strlen($torrentf->complementfichier) > 0 ? $torrentf->complementfichier . "." : "");
                 switch ($mediainfo["typequalite"]) {
                     case "SD":
                         $compfile .= $mediainfo["codec"];
