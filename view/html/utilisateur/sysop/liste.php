@@ -84,48 +84,48 @@
                 <form data-abide method="post">
                     <input type="hidden" name="login" value="<?= $user->login; ?>"/>
                     <fieldset>
-                    <legend>Ajouter un serveur rtorrent</legend>
-                    <label for="customDropdown1">Sélection du serveur rtorrent
-                        <small>obligatoire</small>
-                        <select name="nomrtorrent" data-invalid="" id="customDropdown1" class="medium" required="">
-                        <option value="">Sélection du serveur rtorrent</option>
-                            <?
-                            foreach ($rtorrents as $k => $rt) {
-                                ?>
-                                <option value="<?= $k; ?>"><?= $k; ?> (<?= $rt["host"]; ?>)
-                                    <?
-                                    if (count($rt["scgi"]) > 0)
-                                        echo " [" . implode(", ", $rt["scgi"]) . "]";
-                                    ?>
-                                </option>
-                            <?
-                            }
-                            ?>
-
-                        </select>
-                    </label>
-                    <small class="error">Sélectionner un serveur rtorrent.</small>
-                    <label>Port SCGI :
-                        <small>obligatoire</small>
-                        <input type="text" required pattern="[0-9]{4}" name="scgi"/>
-                        <small class="error">Le ports scgi est obligatoire, un nombre à 4 chiffres!
-                        </small>
-                    </label>
-                    <?php
-                    if (!is_null(\config\Conf::$nomvg)) {
-                        ?>
-                        <label>Taille du répertoire en Go:
+                        <legend>Ajouter un serveur rtorrent</legend>
+                        <label for="customDropdown1">Sélection du serveur rtorrent
                             <small>obligatoire</small>
-                            <input type="text" required pattern="[0-9]+" name="taille"/>
-                            <small class="error">Merci d'entrer la taille du repertoire de l'utilisateur!
+                            <select name="nomrtorrent" data-invalid="" id="customDropdown1" class="medium" required="">
+                                <option value="">Sélection du serveur rtorrent</option>
+                                <?
+                                foreach ($rtorrents as $k => $rt) {
+                                    ?>
+                                    <option value="<?= $k; ?>"><?= $k; ?> (<?= $rt["host"]; ?>)
+                                        <?
+                                        if (count($rt["scgi"]) > 0)
+                                            echo " [" . implode(", ", $rt["scgi"]) . "]";
+                                        ?>
+                                    </option>
+                                <?
+                                }
+                                ?>
+
+                            </select>
+                        </label>
+                        <small class="error">Sélectionner un serveur rtorrent.</small>
+                        <label>Port SCGI :
+                            <small>obligatoire</small>
+                            <input type="text" required pattern="[0-9]{4}" name="scgi"/>
+                            <small class="error">Le ports scgi est obligatoire, un nombre à 4 chiffres!
                             </small>
                         </label>
+                        <?php
+                        if (!is_null(\config\Conf::$nomvg)) {
+                            ?>
+                            <label>Taille du répertoire en Go:
+                                <small>obligatoire</small>
+                                <input type="text" required pattern="[0-9]+" name="taille"/>
+                                <small class="error">Merci d'entrer la taille du repertoire de l'utilisateur!
+                                </small>
+                            </label>
 
-                    <?
-                    }
-                    ?>
-                    <button type="submit" class="secondary tiny small-3">Ajouter</button>
-                </fieldset>
+                        <?
+                        }
+                        ?>
+                        <button type="submit" class="secondary tiny small-3">Ajouter</button>
+                    </fieldset>
                     <input type="hidden" value="addrtorrent" name="action">
                 </form>
             <? } ?>
