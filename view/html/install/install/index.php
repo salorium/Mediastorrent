@@ -87,7 +87,7 @@
             </td>
         </tr>
         <tr>
-        <td>Ecriture dans le fichier Conf</td>
+            <td>Ecriture dans le fichier Conf</td>
             <td><?= ($ecriturefileconfig ? \model\simple\String::styleSuccess("Ok") : \model\simple\String::styleError("Non ok : pour rendre l'écriture possible veuillez faire : sudo chmod -R a+w " . ROOT . DS . "config" . DS . "Conf.php")); ?>
             </td>
         </tr>
