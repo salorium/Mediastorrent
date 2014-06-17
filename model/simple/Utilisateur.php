@@ -18,15 +18,16 @@ class Utilisateur extends \core\Model
             if (is_null($u)) {
                 $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login, $keyconnexion);
                 if ($u)
-                    \core\Memcached::value($u->login, "user", $u, 60 * 1);
+                    \core\Memcached::value($u->login, "user", $u, 60 * 2);
             } else {
                 $u = $u->keyconnexion === $keyconnexion ? $u : false;
                 if (is_bool($u)) {
                     $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login, $keyconnexion);
                     if ($u)
-                        \core\Memcached::value($u->login, "user", $u, 60 * 1);
+                        \core\Memcached::value($u->login, "user", $u, 60 * 2);
+                } else {
+                    \core\Memcached::value($u->login, "user", $u, 60 * 2);
                 }
-                $u = $u->keyconnexion === $keyconnexion ? $u : false;
             }
             \config\Conf::$user["user"] = $u;
         }
@@ -39,15 +40,16 @@ class Utilisateur extends \core\Model
             if (is_null($u)) {
                 $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login, $keyconnexion);
                 if ($u)
-                    \core\Memcached::value($u->login, "user", $u, 60 * 1);
+                    \core\Memcached::value($u->login, "user", $u, 60 * 2);
             } else {
                 $u = $u->keyconnexion === $keyconnexion ? $u : false;
                 if (is_bool($u)) {
                     $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login, $keyconnexion);
                     if ($u)
-                        \core\Memcached::value($u->login, "user", $u, 60 * 1);
+                        \core\Memcached::value($u->login, "user", $u, 60 * 2);
+                } else {
+                    \core\Memcached::value($u->login, "user", $u, 60 * 2);
                 }
-                $u = $u->keyconnexion === $keyconnexion ? $u : false;
             }
             \config\Conf::$user["user"] = $u;
             if (!is_bool($u)) {
