@@ -103,6 +103,7 @@ class Dispatcher
         if ($u && !is_null($u)) {
             $role = Conf::$rolenumero[$u->role];
             $roletext = $u->role;
+            \core\Memcached::value($u->login, "user", $u, 60 * 5);
         }
 
         Conf::$user["user"] = $u;
