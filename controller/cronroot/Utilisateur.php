@@ -25,7 +25,6 @@ class Utilisateur extends \core\Controller
             \model\simple\Console::println($e->getMessage());
             $err = true;
         }
-
         $res["system"] = \model\simple\Console::$query;
         if ($err) {
             $us = \model\mysql\Utilisateur::getAllUtilisateurSysop();

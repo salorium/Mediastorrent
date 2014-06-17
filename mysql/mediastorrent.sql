@@ -339,6 +339,18 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   DEFAULT CHARSET = utf8
   COLLATE = utf8_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS `savpass` (
+  `login`      VARCHAR(200)
+               COLLATE utf8_unicode_ci NOT NULL,
+  `motdepasse` TEXT
+               COLLATE utf8_unicode_ci
+
+)
+  ENGINE =InnoDB
+  DEFAULT CHARSET =utf8
+  COLLATE =utf8_unicode_ci;
+
+
 --
 -- Index pour les tables exportées
 --

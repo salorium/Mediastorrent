@@ -29,6 +29,7 @@ class Utilisateur extends \core\Model
                 $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($keyconnexion);
                 if ($u)
                     \core\Memcached::value($u->keyconnexion, "user", $u, 60 * 2);
+
             } else {
                 $u = $u->keyconnexion === $keyconnexion ? $u : false;
                 if (is_bool($u)) {
@@ -66,7 +67,7 @@ class Utilisateur extends \core\Model
                 $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($keyconnexion);
                 if ($u)
                     \core\Memcached::value($u->keyconnexion, "user", $u, 60 * 2);
-            } else {
+                } else {
                 $u = $u->keyconnexion === $keyconnexion ? $u : false;
                 if (is_bool($u)) {
                     $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($keyconnexion);
