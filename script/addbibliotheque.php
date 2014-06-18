@@ -67,8 +67,8 @@ if (file_exists($filetorrent)) {
                     \model\simple\Console::println((is_bool($torrentf) ? "Non Présent" : "Présent"));
                     if (!is_bool($torrentf)) {
                         $mediainfo = new \model\simple\Mediainfo($file);
-                        $torrentf->mediainfo = json_encode($mediainfo->getFormatFilm());
-                        \model\simple\Console::println($torrentf->fini() ? "Sav ok" : "Sav Non ok");
+                        $mediainfo = $mediainfo->getFormatFilm();
+                        \model\simple\Console::println($torrentf->fini($mediainfo) ? "Sav ok" : "Sav Non ok");
                     }
                     break;
             }
