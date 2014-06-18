@@ -32,7 +32,7 @@ define('LOG', ROOT . DS . "log" . DS . $portscgi . "_addbibli.log");
 \model\simple\Console::println("Début");
 \model\simple\Console::println($hash);
 \model\simple\Console::println($typemedias);
-file_put_contents(ROOT . DS . "log" . DS . "start.log", $portscgi . " " . $hash . ' "' . $base_path . '" "' . $base_name . '" ' . $is_multi . " " . $clefunique . " " . $typemedias . "\n", FILE_APPEND);
+file_put_contents(ROOT . DS . "log" . DS . $portscgi . "start_addblibli.log", $portscgi . " " . $hash . ' "' . $base_path . '" "' . $base_name . '" ' . $is_multi . " " . $clefunique . " " . $typemedias . "\n", FILE_APPEND);
 $filetorrent = \model\xmlrpc\rTorrentSettings::get($portscgi)->session . DS . $hash . ".torrent";
 if (file_exists($filetorrent)) {
     $torrent = new \model\simple\Torrent($filetorrent);
