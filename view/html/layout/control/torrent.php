@@ -160,7 +160,7 @@ $genre = \model\mysql\Genre::getAllGenre();
         <ul class="right">
             <li class="divider hide-for-small"></li>
             <li class="has-form hide-for-medium-down">
-            <? echo isset($debug_performance_for_layout) ? $debug_performance_for_layout : ""; ?>
+                <? echo isset($debug_performance_for_layout) ? $debug_performance_for_layout : ""; ?>
             </li>
             <li class="has-form">
 

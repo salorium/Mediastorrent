@@ -15,7 +15,11 @@ class Utilisateur extends \core\Controller
     {
         $res = null;
         \model\simple\Console::println("Adj rtorrent " . $login . " " . $scgi . (!is_null($taille) ? " " . $taille . "Go" : ""));
-        \model\bash\Utilisateur::addRtorrent($login, $scgi, $taille);
+        try {
+            \model\bash\Utilisateur::addRtorrent($login, $scgi, $taille);
+        } catch (\Exception $e) {
+            \model\simple\Console::println($e->getMessage());
+        }
         $res["rtorrentsadj"] = \model\mysql\Rtorrents::addRtorrentUtilisateurScgi($login, \config\Conf::$nomrtorrent, $scgi);
         $res["system"] = \model\simple\Console::$query;
         return $res;

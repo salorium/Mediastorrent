@@ -68,7 +68,7 @@ class Console extends Model
     static function executePath($cmd)
     {
         //echo escapeshellcmd($cmd) . "\n";
-        exec('export PATH=$PATH:/sbin:/usr/sbin;' . $cmd, $output, $error);
+        exec('export PATH=$PATH:/sbin:/usr/sbin;' . $cmd . " 2>&1", $output, $error);
         self::$query[] = array($cmd, $output, $error);
         return array($error, implode("", $output));
     }
