@@ -66,6 +66,8 @@ if (\config\Conf::$install) {
 core\Router::connect("Normal", "/", "mediastorrent/accueil");
 core\Router::connect("Torrent", "/", "mediastorrent/accueil");
 core\Router::connect("Sysop", "/", "mediastorrent/accueil");
+var_dump(get_browser(null, true));
+die();
 $Dispa = new core\Dispatcher();
 
 $Dispa->load();
