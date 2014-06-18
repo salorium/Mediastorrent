@@ -508,10 +508,10 @@ class Allocine extends Model
             }
             if (isset($v->media))
                 foreach ($v->media AS $k => $vv) {
-                if ($vv->class === "video" && $vv->type->_ === "Bande-annonce" && strpos($vv->title, 'VF') !== false) {
-                    $tmp["ba"] = $vv->code;
+                    if ($vv->class === "video" && $vv->type->_ === "Bande-annonce" && strpos($vv->title, 'VF') !== false) {
+                        $tmp["ba"] = $vv->code;
+                    }
                 }
-            }
             if (isset($v->release->distributor->name))
                 $tmp["Distributeur"] = $v->release->distributor->name;
             if (isset($v->movieType->_))

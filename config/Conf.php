@@ -34,6 +34,7 @@ class Conf
     static $memcachedserver = array(
         array("localhost", 11211)
     );
+    static $clefdecryptage = "vfAsfdFdd44dfvcwHGdd545ddDfdsf7adCxJtMprkrsxwqZZaseecqcsfggrghyuuptotydfc";
     static $user = array("user" => null, "role" => 0, "roletxt" => "Install");
     static $api_key_themoviedb = "57b59be276081344c6073b1989f4d57e";
     static $numerorole = array("Install", "Visiteur", "Normal", "Torrent", "Sysop");

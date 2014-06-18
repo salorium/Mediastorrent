@@ -9,10 +9,10 @@
 ?>
 <div class="container">
     <script src="<?= BASE_URL; ?>javascripts/mediastorrent/film.js"></script>
-<script>
-    // Execution de cette fonction lorsque le DOM sera entièrement chargé
-    $(document).ready(function () {
-        Film.init(<?=json_encode($film)?>);
-    });
-</script>
+    <script>
+        // Execution de cette fonction lorsque le DOM sera entièrement chargé
+        $(document).ready(function () {
+            Film.init(<?=json_encode($film)?>);
+        });
+    </script>
 </div>
