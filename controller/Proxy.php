@@ -63,8 +63,7 @@ class Proxy extends Controller
         $draw->setFontSize(10);
         $draw->setGravity(\Imagick::GRAVITY_CENTER);
         /* Create text */
-        $im->annotateImage($draw, 10, 45, 0, $titre);
-
+        $im->annotateImage($draw, 10, 45, 0, "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea eaque earum eligendi labore mollitia voluptas. Aspernatur consectetur deleniti doloremque labore non, nulla placeat, quas quasi quisquam sequi totam veniam. Fuga.");
         //$im = \model\simple\MyImage::makeTextBlockCenter($titre, ROOT . DS . "font" . DS . "comic.ttf", 10, $im);
         $this->set(array(
             "image" => $im->getImageBlob()
