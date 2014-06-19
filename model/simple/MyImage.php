@@ -128,7 +128,17 @@ class MyImage extends \core\Model
         $im = new \Imagick ($image);
         $widthmax = $im->getImageGeometry()["width"];
         $draw = new \ImagickDraw();
-        $draw->setFillColor('white');
+        /* On commence un nouveau masque nommé "gradient" */
+        $draw->pushPattern('gradient', 0, 0, 50, 110);
+
+        /* Ajout du dégradé sur le masque */
+        $draw->composite(\Imagick::COMPOSITE_OVER, 0, 0, 50, 110, $im);
+
+        /* Fermeture du masque */
+        $draw->popPattern();
+
+        /* Utilisation du masque nommé "gradient" comme remplissage */
+        $draw->setFillPatternURL('#gradient');
 
         /* Font properties */
         $draw->setFont($fontfile);
