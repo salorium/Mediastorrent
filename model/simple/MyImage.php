@@ -159,8 +159,8 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 </svg>
 ';
         $im = new \Imagick ();
+        $im->setBackgroundColor(new \ImagickPixel('transparent'));
         $im->readimageblob($svg);
-
         $im->setImageFormat("png");
         $im->adaptiveResizeImage(600, 600); /*Optional, if you need to resize*/
         return $im->getimageblob();
