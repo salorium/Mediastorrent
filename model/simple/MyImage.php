@@ -150,19 +150,13 @@ class MyImage extends \core\Model
         $res = $words[0];
         for ($i = 1; $i < count($words); $i++) {
             $lineSize = $im->queryfontmetrics($draw, $res . " " . $words[$i]);
-            var_dump($lineSize);
-            var_dump($widthmax);
             if ($lineSize["textWidth"] < $widthmax) {
                 $res .= " " . $words[$i];
-                echo "ESSPACE<br>";
             } else {
-                $res .= "\nAAA" . $words[$i];
-                echo "ENTER<br>";
+                $res .= "\n" . $words[$i];
             }
         }
         /* Create text */
-        var_dump($res . "\n");
-        die();
         $im->annotateImage($draw, 0, 0, 0, $res);
         return $im->getimageblob();
 
