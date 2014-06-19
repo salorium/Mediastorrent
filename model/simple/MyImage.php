@@ -127,12 +127,16 @@ class MyImage extends \core\Model
     {
         $im = new \Imagick ($image);
         $widthmax = $im->getImageGeometry()["width"];
+        $im1 = new \Imagick();
+
+        /* Création d'une nouvelle image. Elle sera utilisée comme masque de remplissage */
+        $im1->newPseudoImage(50, 100, "gradient:gray-black");
         $draw = new \ImagickDraw();
         /* On commence un nouveau masque nommé "gradient" */
         $draw->pushPattern('gradient', 0, 0, 50, 110);
 
         /* Ajout du dégradé sur le masque */
-        $draw->composite(\Imagick::COMPOSITE_OVER, 0, 0, 50, 110, $im);
+        $draw->composite(\Imagick::COMPOSITE_OVER, 0, 0, 50, 110, $im1);
 
         /* Fermeture du masque */
         $draw->popPattern();
