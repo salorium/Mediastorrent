@@ -126,7 +126,7 @@ class MyImage extends \core\Model
     static function addTexte($image, $text, $fontfile, $fontsize)
     {
         $im = new \Imagick ($image);
-        $widthmax = $im->getImageGeometry();
+        $widthmax = $im->getImageGeometry()["width"];
         $draw = new \ImagickDraw();
         $draw->setFillColor('white');
 
