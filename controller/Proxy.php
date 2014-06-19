@@ -60,7 +60,7 @@ class Proxy extends Controller
 
         /* Font properties */
         $draw->setFont(ROOT . DS . "font" . DS . "comic.ttf");
-        $draw->setFontSize(30);
+        $draw->setFontSize(10);
 
         /* Create text */
         $im->annotateImage($draw, 10, 45, 0, 'The quick brown fox jumps over the lazy dog');
