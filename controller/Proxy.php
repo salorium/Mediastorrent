@@ -61,7 +61,7 @@ class Proxy extends Controller
         /* Font properties */
         $draw->setFont(ROOT . DS . "font" . DS . "comic.ttf");
         $draw->setFontSize(10);
-
+        $draw->setGravity(\Imagick::GRAVITY_CENTER);
         /* Create text */
         $im->annotateImage($draw, 10, 45, 0, $titre);
 
