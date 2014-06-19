@@ -159,6 +159,7 @@ path, ellipse{ fill:url(#degrade); stroke:url(#degrade1); stroke-width:5px; }
 </svg>';
         $im = new \Imagick ();
         $im->readimageblob($svg);
+        $im->setresolution(300, 600);
         $widthmax = $im->getImageGeometry()["width"];
         $im1 = new \Imagick();
 
