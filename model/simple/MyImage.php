@@ -153,11 +153,11 @@ class MyImage extends \core\Model
             if ($lineSize < $widthmax) {
                 $res .= " " . $words[$i];
             } else {
-                $res .= "\n" . $words[$i];
+                $res .= "\nAAA" . $words[$i];
             }
         }
         /* Create text */
-        var_dump($res . "\nfff");
+        var_dump($res . "\n");
         die();
         $im->annotateImage($draw, 0, 0, 0, $res);
         return $im->getimageblob();
