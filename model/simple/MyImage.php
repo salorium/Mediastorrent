@@ -123,5 +123,50 @@ class MyImage extends \core\Model
         return false;
     }
 
+    static function makeTextBlockCenter($text, $fontfile, $fontsize, $img)
+    {
+        $black = imagecolorallocate($img, 0x00, 0x00, 0x00);
+        $width = imagesx($img);
+        $words = explode(' ', $text);
+        //Teste si la fontsize n'est pas trop grosse pour un mot
 
+        $i = 0;
+        while ($i < count($words)) {
+            $lineSize = imagettfbbox($fontsize, 0, $fontfile, $words[$i]);
+            if ($lineSize[2] - $lineSize[0] < $width) {
+                $i++;
+            } else {
+                $fontsize--;
+            }
+        }
+        $lines = array($words[0]);
+        $currentLine = 0;
+        $lineSize = imagettfbbox($fontsize, 0, $fontfile, $words[0]);
+        $currentwidth = $lineSize[2] - $lineSize[0];
+        $currentY = 20;
+        for ($i = 1; $i < count($words); $i++) {
+            $lineSize = imagettfbbox($fontsize, 0, $fontfile, $lines[$currentLine] . ' ' . $words[$i]);
+            if ($lineSize[2] - $lineSize[0] < $width) {
+
+                $lines[$currentLine] .= ' ' . $words[$i];
+                $currentwidth = $lineSize[2] - $lineSize[0];
+            } else {
+                if ($width - $currentwidth != 0) {
+
+                    $px = ($width - $currentwidth) / 2;
+                } else {
+                    $px = 0;
+                }
+                imagefttext($img, $fontsize, 0, $px, $currentY, $black, $fontfile, $lines[$currentLine]);
+                $currentY += $fontsize + 5;
+                $currentLine++;
+                $lines[$currentLine] = $words[$i];
+            }
+        }
+        $lineSize = imagettfbbox($fontsize, 0, $fontfile, $lines[$currentLine]);
+        $currentwidth = $lineSize[2] - $lineSize[0];
+        $px = ($width - $currentwidth) / 2;
+        imagefttext($img, $fontsize, 0, $px, $currentY, $black, $fontfile, $lines[$currentLine]);
+        return $img;
+    }
 } 
