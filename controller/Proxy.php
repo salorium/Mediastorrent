@@ -54,21 +54,21 @@ class Proxy extends Controller
 
     function noimage($titre)
     {
-        $im = new \Imagick (ROOT . DS . "webroot/images/no-poster-w92.jpg");
+        /*$im = new \Imagick (ROOT . DS . "webroot/images/no-poster-w92.jpg");
         $draw = new \ImagickDraw();
         $draw->setFillColor('white');
 
         /* Font properties */
-        $draw->setFont(ROOT . DS . "font" . DS . "comic.ttf");
+        /*$draw->setFont(ROOT . DS . "font" . DS . "comic.ttf");
         $draw->setFontSize(10);
         $draw->setGravity(\Imagick::GRAVITY_CENTER);
         $draw->setViewbox(0, 10, 0, 10);
 
         /* Create text */
-        $im->annotateImage($draw, 0, 0, 0, "Lorem ipsum\n dolor\n sit amet,\n consectetur adipisicing elit.\n Ea eaque earum eligendi labore mollitia voluptas. Aspernatur consectetur deleniti doloremque labore non, nulla placeat, quas quasi quisquam sequi totam veniam. Fuga.");
+        //$im->annotateImage($draw, 0, 0, 0, "Lorem ipsum\n dolor\n sit amet,\n consectetur adipisicing elit.\n Ea eaque earum eligendi labore mollitia voluptas. Aspernatur consectetur deleniti doloremque labore non, nulla placeat, quas quasi quisquam sequi totam veniam. Fuga.");
         //$im = \model\simple\MyImage::makeTextBlockCenter($titre, ROOT . DS . "font" . DS . "comic.ttf", 10, $im);
         $this->set(array(
-            "image" => $im->getImageBlob()
+            "image" => \model\simple\MyImage::addTexte(ROOT . DS . "webroot/images/no-poster-w92.jpg", $titre, ROOT . DS . "font" . DS . "comic.ttf", 10)
         ));
         $this->render("index");
     }
