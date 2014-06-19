@@ -133,10 +133,10 @@ class MyImage extends \core\Model
         $im1->newPseudoImage(50, 100, "gradient:gray-black");
         $draw = new \ImagickDraw();
         /* On commence un nouveau masque nommé "gradient" */
-        $draw->pushPattern('gradient', 0, 0, 50, 110);
+        $draw->pushPattern('gradient', 0, 0, 50, 10);
 
         /* Ajout du dégradé sur le masque */
-        $draw->composite(\Imagick::COMPOSITE_OVER, 0, 0, 50, 110, $im1);
+        $draw->composite(\Imagick::COMPOSITE_OVER, 0, 0, 50, 10, $im1);
 
         /* Fermeture du masque */
         $draw->popPattern();
