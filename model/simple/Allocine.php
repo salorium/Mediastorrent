@@ -421,21 +421,20 @@ class Allocine extends Model
             $tmdb = new TheMovieDb();
             $tmp1 = $tmdb->searchFilm($v->originalTitle, "en");
             if (isset($tmp1->results)) {
-                var_dump($tmp1->results);
                 if (count($tmp1->results) > 0) {
                     $tmp1 = $tmdb->getMovieImage($tmp1->results[0]->id);
-                foreach ($tmp1->backdrops as $k => $vv) {
-                    //var_dump($vv);
-                    //die();
-                    if ($maxratiobackdrop < $vv->height / $vv->width)
-                        $maxratiobackdrop = $vv->height / $vv->width;
-                    $tmp["imagebackdrop"]["url"][] = array("http://image.tmdb.org/t/p/original" . $vv->file_path, $vv->width, $vv->height);
-                }
-                foreach ($tmp1->posters as $k => $vv) {
-                    if ($maxratioposter < $vv->height / $vv->width)
-                        $maxratioposter = $vv->height / $vv->width;
-                    $tmp["imageposter"]["url"][] = array("http://image.tmdb.org/t/p/original" . $vv->file_path, $vv->width, $vv->height);
-                }
+                    foreach ($tmp1->backdrops as $k => $vv) {
+                        //var_dump($vv);
+                        //die();
+                        if ($maxratiobackdrop < $vv->height / $vv->width)
+                            $maxratiobackdrop = $vv->height / $vv->width;
+                        $tmp["imagebackdrop"]["url"][] = array("http://image.tmdb.org/t/p/original" . $vv->file_path, $vv->width, $vv->height);
+                    }
+                    foreach ($tmp1->posters as $k => $vv) {
+                        if ($maxratioposter < $vv->height / $vv->width)
+                            $maxratioposter = $vv->height / $vv->width;
+                        $tmp["imageposter"]["url"][] = array("http://image.tmdb.org/t/p/original" . $vv->file_path, $vv->width, $vv->height);
+                    }
                 }
             }
             if ($maxratiobackdrop > -1) {
