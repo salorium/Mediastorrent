@@ -140,7 +140,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 <stop offset="100%" style="stop-color:chartreuse; stop-opacity:0.7;"/>
 </linearGradient>
 <linearGradient id="degrade1" x1="100%" y1="0" x2="100%" y2="100%">
-<stop offset="0%" style="stop-color:chartreuse; stop-opacity:0.7;"/>
+<stop offset="0%" style="stop-color:#FFFF00; stop-opacity:0.7;"/>
 <stop offset="40%" style="stop-color:cornflowerblue; stop-opacity:1;"/>
 <stop offset="100%" style="stop-color:chartreuse; stop-opacity:0.2;"/>
 </linearGradient>
