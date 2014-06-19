@@ -55,7 +55,17 @@ class Proxy extends Controller
     function noimage($titre)
     {
         $im = new \Imagick (ROOT . DS . "webroot/images/no-poster-w92.jpg");
-        $im = \model\simple\MyImage::makeTextBlockCenter($titre, ROOT . DS . "font" . DS . "comic.ttf", 10, $im);
+        $draw = new ImagickDraw();
+        $draw->setFillColor('black');
+
+        /* Font properties */
+        $draw->setFont('Bookman-DemiItalic');
+        $draw->setFontSize(30);
+
+        /* Create text */
+        $im->annotateImage($draw, 10, 45, 0, 'The quick brown fox jumps over the lazy dog');
+
+        //$im = \model\simple\MyImage::makeTextBlockCenter($titre, ROOT . DS . "font" . DS . "comic.ttf", 10, $im);
         header('Content-Type: image/jpg');
 
         imagejpeg($im);
