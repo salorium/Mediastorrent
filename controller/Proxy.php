@@ -56,7 +56,7 @@ class Proxy extends Controller
     {
         $im = new \Imagick (ROOT . DS . "webroot/images/no-poster-w92.jpg");
         $draw = new \ImagickDraw();
-        $draw->setFillColor('black');
+        $draw->setFillColor('white');
 
         /* Font properties */
         $draw->setFont(ROOT . DS . "font" . DS . "comic.ttf");
