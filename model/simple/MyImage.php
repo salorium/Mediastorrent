@@ -125,9 +125,7 @@ class MyImage extends \core\Model
 
     static function addTexte($image, $text, $fontfile, $fontsize)
     {
-        $svg = '<?xml version="1.0" encoding="utf-8"?>
-
-<!-- The icon can be used freely in both personal and commercial projects with no attribution required, but always appreciated.
+        $svg = '<!-- The icon can be used freely in both personal and commercial projects with no attribution required, but always appreciated.
 You may NOT sub-license, resell, rent, redistribute or otherwise transfer the icon without express written permission from iconmonstr.com -->
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
