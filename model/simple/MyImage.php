@@ -123,6 +123,45 @@ class MyImage extends \core\Model
         return false;
     }
 
+    static function addTexte($image, $text, $fontfile, $fontsize)
+    {
+        $im = new \Imagick ($image);
+        $widthmax = $im->getImageGeometry();
+        $draw = new \ImagickDraw();
+        $draw->setFillColor('white');
+
+        /* Font properties */
+        $draw->setFont($fontfile);
+        $draw->setFontSize($fontsize);
+        $draw->setGravity(\Imagick::GRAVITY_CENTER);
+        $words = explode(' ', $text);
+
+        //Test si la fontsize n'est pas trop grosse pour un mot
+        $i = 0;
+        while ($i < count($words)) {
+            $lineSize = $im->queryfontmetrics($draw, $words[$i])["textWidth"];
+            if ($lineSize < $widthmax) {
+                $i++;
+            } else {
+                $fontsize--;
+                $draw->setFontSize($fontsize);
+            }
+        }
+        $res = $words[0];
+        for ($i = 1; $i < count($words); $i++) {
+            $lineSize = $im->queryfontmetrics($draw, $res . " " . $words[$i])["textWidth"];
+            if ($lineSize < $widthmax) {
+                $res .= " " . $words[$i];
+            } else {
+                $res .= "\n" . $words[$i];
+            }
+        }
+        /* Create text */
+        $im->annotateImage($draw, 0, 0, 0, $res);
+        return $im->getimageblob();
+
+    }
+
     static function makeTextBlockCenter($text, $fontfile, $fontsize, $img)
     {
         $black = imagecolorallocate($img, 0x00, 0x00, 0x00);
