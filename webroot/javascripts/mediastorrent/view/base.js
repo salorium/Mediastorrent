@@ -88,7 +88,7 @@ Base.view = {
     image: {
         input: function (container, name, id, url, input, height) {
             $("#" + container).append('<label for="' + id + '">' + name + ' :</label>');
-            var $poster = $('<input class="large-2" type="text" name="' + id + '" id="' + id + '">');
+            var $poster = $('<input class="large-2" type="text" name="' + id + '" id="' + id + '" value="' + url + '">');
             if (input)
                 $("#" + container).append($('<div class="row"></div>').append($('<div class="large-12"></div>').append($poster)));
             var $img = $('<img height="' + height + 'px" src="' + Base.controller.makeUrlBase() + "proxy/imageSetHeight/" + Base.model.converter.paramUrl(url) + "/" + height + ".jpg" + '">');
