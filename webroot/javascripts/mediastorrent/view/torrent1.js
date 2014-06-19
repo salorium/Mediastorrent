@@ -694,8 +694,8 @@ Torrent1.view = {
                             /*Base.view.image.input("Poster","torrent'+id+'detailsposter","torrent"+id+"details",300);
                              Base.view.image.input("Backdrop","torrent'+id+'detailsbackdrop","torrent"+id+"details",400);*/
 
-                            Base.view.image.input("torrent" + id + "details", "Poster", "torrent" + id + "detailsposter", "non", true, 300);
-                            Base.view.image.input("torrent" + id + "details", "Backdrop", "torrent" + id + "detailsbackdrop", "non", true, 400);
+                            Base.view.image.input("torrent" + id + "details", "Poster", "torrent" + id + "detailsposter", "", true, 300);
+                            Base.view.image.input("torrent" + id + "details", "Backdrop", "torrent" + id + "detailsbackdrop", "", true, 400);
                             /*$back = $('<input class="large-2" type="text" name="torrent'+id+'detailsbackdrop" id="torrent'+id+'detailsbackdrop">');
                              $("#torrent"+id+"details").append($('<div class="row"></div>').append($('<div class="large-12"></div>').append($poster)));
                              $img1 = $('<img height="500px" src="'+Base.controller.makeUrlBase()+"proxy/imageSetHeight/non/500.jpg"+'">');
