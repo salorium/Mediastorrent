@@ -59,7 +59,7 @@ class Proxy extends Controller
         $draw->setFillColor('black');
 
         /* Font properties */
-        $draw->setFont('Bookman-DemiItalic');
+        $draw->setFont(ROOT . DS . "font" . DS . "comic.ttf");
         $draw->setFontSize(30);
 
         /* Create text */
