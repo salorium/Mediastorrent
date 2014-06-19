@@ -159,6 +159,7 @@ path, ellipse{ fill:url(#degrade); stroke:url(#degrade1); stroke-width:5px; }
 </svg>';
         $im = new \Imagick ();
         $im->readimageblob($svg);
+        die();
         $im->setImageFormat("jpeg");
         $im->adaptiveResizeImage(720, 445); /*Optional, if you need to resize*/
         return $im->getimageblob();
