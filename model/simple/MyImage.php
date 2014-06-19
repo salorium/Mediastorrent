@@ -168,23 +168,10 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
         $im->newimage(130, 150, new \ImagickPixel('#999999'), "jpeg");
         $im->compositeimage($im2, \Imagick::COMPOSITE_DEFAULT, 30, 40);
         $widthmax = $im->getImageGeometry()["width"];
-        $im1 = new \Imagick();
-
-        /* Création d'une nouvelle image. Elle sera utilisée comme masque de remplissage */
-        $im1->newPseudoImage(50, 10, "gradient:gray-black");
         $draw = new \ImagickDraw();
         /* On commence un nouveau masque nommé "gradient" */
-        $draw->pushPattern('gradient', 0, 0, 50, 10);
 
-        /* Ajout du dégradé sur le masque */
-        $draw->composite(\Imagick::COMPOSITE_OVER, 0, 0, 50, 10, $im1);
-
-        /* Fermeture du masque */
-        $draw->popPattern();
-
-        /* Utilisation du masque nommé "gradient" comme remplissage */
-        $draw->setFillPatternURL('#gradient');
-
+        $draw->setFillColor('#FFFFFF');
         /* Font properties */
         $draw->setFont($fontfile);
         $draw->setFontSize($fontsize);
