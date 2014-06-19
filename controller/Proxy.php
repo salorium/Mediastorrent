@@ -54,7 +54,7 @@ class Proxy extends Controller
 
     function noimage($titre)
     {
-        $im = \imagecreatefromjpeg(ROOT . "webroot/images/no-poster-w92.jpg");
+        $im = new \Imagick (ROOT . "webroot/images/no-poster-w92.jpg");
         $im = \model\simple\MyImage::makeTextBlockCenter($titre, ROOT . DS . "font" . DS . "comic.ttf", 10, $im);
         header('Content-Type: image/jpg');
 
