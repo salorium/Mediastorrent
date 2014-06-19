@@ -158,12 +158,15 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 	v-38.747h45.054V140.526z"/>
 </svg>
 ';
+        $im2 = new \Imagick ();
+        $im2->setBackgroundColor(new \ImagickPixel('transparent'));
+        $im2->readimageblob($svg);
+        $im2->setImageFormat("png");
+        $im2->adaptiveResizeImage(400, 400); /*Optional, if you need to resize*/
+        //return $im2->getimageblob();
         $im = new \Imagick ();
-        $im->setBackgroundColor(new \ImagickPixel('transparent'));
-        $im->readimageblob($svg);
-        $im->setImageFormat("png");
+        $im->setBackgroundColor(new \ImagickPixel('#444444'));
         $im->adaptiveResizeImage(600, 600); /*Optional, if you need to resize*/
-        return $im->getimageblob();
         $widthmax = $im->getImageGeometry()["width"];
         $im1 = new \Imagick();
 
