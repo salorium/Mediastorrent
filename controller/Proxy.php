@@ -66,10 +66,9 @@ class Proxy extends Controller
         $im->annotateImage($draw, 10, 45, 0, 'The quick brown fox jumps over the lazy dog');
 
         //$im = \model\simple\MyImage::makeTextBlockCenter($titre, ROOT . DS . "font" . DS . "comic.ttf", 10, $im);
-        header('Content-Type: image/jpg');
-
-        imagejpeg($im);
-        imagedestroy($im);
-        exit;
+        $this->set(array(
+            "image" => $im->getImageBlob()
+        ));
+        $this->render("index");
     }
 } 
