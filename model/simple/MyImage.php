@@ -162,7 +162,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
         $im->readimageblob($svg);
 
         $im->setImageFormat("jpeg");
-        $im->adaptiveResizeImage(720, 445); /*Optional, if you need to resize*/
+        $im->adaptiveResizeImage(1920, 1080); /*Optional, if you need to resize*/
         return $im->getimageblob();
         $widthmax = $im->getImageGeometry()["width"];
         $im1 = new \Imagick();
