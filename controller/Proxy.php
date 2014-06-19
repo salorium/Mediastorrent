@@ -63,7 +63,7 @@ class Proxy extends Controller
         $draw->setFontSize(10);
 
         /* Create text */
-        $im->annotateImage($draw, 10, 45, 0, 'The quick brown fox jumps over the lazy dog');
+        $im->annotateImage($draw, 10, 45, 0, $titre);
 
         //$im = \model\simple\MyImage::makeTextBlockCenter($titre, ROOT . DS . "font" . DS . "comic.ttf", 10, $im);
         $this->set(array(
