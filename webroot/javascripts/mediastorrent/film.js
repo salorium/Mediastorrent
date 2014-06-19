@@ -329,7 +329,7 @@ var Film = {
         $fieldset = $('<fieldset><legend>' + film.Titre + '</legend></fieldset>');
         this.containerDetailsFilm.empty();
         this.containerDetailsFilm.append($fieldset);
-        urlimg = Base.controller.makeUrlBase() + "proxy/noimage/" + Base.model.converter.paramUrl(film.titre) + "/" + (this.topControl - 180) + '.jpg';
+        urlimg = Base.controller.makeUrlBase() + "proxy/noimage/" + Base.model.converter.paramUrl(film.Titre) + "/" + (this.topControl - 180) + '.jpg';
         if (film.poster) {
             urlimg = Base.controller.makeUrlBase() + "proxy/imageSetHeight/" + Base.model.converter.paramUrl(film.poster) + '/' + (this.topControl - 180) + '.jpg';
         }
