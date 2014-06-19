@@ -152,8 +152,10 @@ class MyImage extends \core\Model
             $lineSize = $im->queryfontmetrics($draw, $res . " " . $words[$i])["textWidth"];
             if ($lineSize < $widthmax) {
                 $res .= " " . $words[$i];
+                echo "ESSPACE<br>";
             } else {
                 $res .= "\nAAA" . $words[$i];
+                echo "ENTER<br>";
             }
         }
         /* Create text */
