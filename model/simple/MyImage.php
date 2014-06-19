@@ -157,7 +157,7 @@ class MyImage extends \core\Model
             }
         }
         /* Create text */
-        var_dump($res);
+        var_dump($res . "\nfff");
         die();
         $im->annotateImage($draw, 0, 0, 0, $res);
         return $im->getimageblob();
