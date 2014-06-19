@@ -166,8 +166,8 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
         //return $im2->getimageblob();
         $im = new \Imagick ();
         $im->setBackgroundColor(new \ImagickPixel('#444444'));
-        $im2->setImageFormat("jpg");
-        $im->adaptiveResizeImage(600, 600); /*Optional, if you need to resize*/
+        $im->setImageFormat("jpg");
+        $im->setsize(600, 600);
         $widthmax = $im->getImageGeometry()["width"];
         $im1 = new \Imagick();
 
