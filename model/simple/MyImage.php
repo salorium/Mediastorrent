@@ -125,7 +125,40 @@ class MyImage extends \core\Model
 
     static function addTexte($image, $text, $fontfile, $fontsize)
     {
-        $im = new \Imagick ($image);
+        $svg = '<?xml version="1.0" encoding="utf-8"?>
+
+<!-- The icon can be used freely in both personal and commercial projects with no attribution required, but always appreciated.
+You may NOT sub-license, resell, rent, redistribute or otherwise transfer the icon without express written permission from iconmonstr.com -->
+
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+<defs>
+<linearGradient id="degrade" x1="100%" y1="0" x2="100%" y2="100%">
+<stop offset="0%" id="stop1"/>
+<stop offset="40%" id="stop2"/>
+<stop offset="100%" id="stop3"/>
+</linearGradient>
+<linearGradient id="degrade1" x1="100%" y1="0" x2="100%" y2="100%">
+<stop offset="0%" id="stop3"/>
+<stop offset="40%" id="stop2"/>
+<stop offset="100%" id="stop1"/>
+</linearGradient>
+<style type="text/css">
+#stop1{ stop-color:chartreuse; stop-opacity:0.2; } #stop2{ stop-color:cornflowerblue; stop-opacity:1; } #stop3{ stop-color:chartreuse; stop-opacity:0.7; }
+path, ellipse{ fill:url(#degrade); stroke:url(#degrade1); stroke-width:5px; }
+
+</style>
+</defs>
+<path id="video-icon" d="M50,60.345v391.311h412V60.345H50z M137.408,410.862H92.354v-38.747h45.055V410.862z M137.408,343.278
+	H92.354v-38.747h45.055V343.278z M137.408,275.372H92.354v-38.747h45.055V275.372z M137.408,208.111H92.354v-38.748h45.055V208.111z
+	 M137.408,140.526H92.354v-38.747h45.055V140.526z M337.646,410.862H177.961V275.694h159.685V410.862z M337.646,236.947H177.961
+	V101.779h159.685V236.947z M423.253,410.862h-45.054v-38.747h45.054V410.862z M423.253,343.278h-45.054v-38.747h45.054V343.278z
+	 M423.253,275.372h-45.054v-38.747h45.054V275.372z M423.253,208.111h-45.054v-38.748h45.054V208.111z M423.253,140.526h-45.054
+	v-38.747h45.054V140.526z"/>
+</svg>';
+        $im = new \Imagick ();
+        $im->readimageblob($svg);
         $widthmax = $im->getImageGeometry()["width"];
         $im1 = new \Imagick();
 
