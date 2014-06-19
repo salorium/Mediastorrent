@@ -150,7 +150,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 
 </style>
 </defs>
-<path style="fill:url(#degrade); stroke:url(#degrade1); stroke-width:5px;" id="video-icon" d="M50,60.345v391.311h412V60.345H50z M137.408,410.862H92.354v-38.747h45.055V410.862z M137.408,343.278
+<path style="fill:url(#degrade); stroke:url(#degrade1); stroke-width:5px; stroke-width:1px;" id="video-icon" d="M50,60.345v391.311h412V60.345H50z M137.408,410.862H92.354v-38.747h45.055V410.862z M137.408,343.278
 	H92.354v-38.747h45.055V343.278z M137.408,275.372H92.354v-38.747h45.055V275.372z M137.408,208.111H92.354v-38.748h45.055V208.111z
 	 M137.408,140.526H92.354v-38.747h45.055V140.526z M337.646,410.862H177.961V275.694h159.685V410.862z M337.646,236.947H177.961
 	V101.779h159.685V236.947z M423.253,410.862h-45.054v-38.747h45.054V410.862z M423.253,343.278h-45.054v-38.747h45.054V343.278z
