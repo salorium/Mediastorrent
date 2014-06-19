@@ -133,7 +133,7 @@ class MyImage extends \core\Model
         /* Font properties */
         $draw->setFont($fontfile);
         $draw->setFontSize($fontsize);
-        $draw->setGravity(\Imagick::GRAVITY_CENTER);
+        $draw->setGravity(\Imagick::GRAVITY_NORTH);
         $words = explode(' ', $text);
 
         //Test si la fontsize n'est pas trop grosse pour un mot
