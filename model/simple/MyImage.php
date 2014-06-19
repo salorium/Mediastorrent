@@ -151,7 +151,7 @@ class MyImage extends \core\Model
         for ($i = 1; $i < count($words); $i++) {
             $lineSize = $im->queryfontmetrics($draw, $res . " " . $words[$i]);
             var_dump($lineSize);
-            if ($lineSize < $widthmax) {
+            if ($lineSize["textWidth"] < $widthmax) {
                 $res .= " " . $words[$i];
                 echo "ESSPACE<br>";
             } else {
