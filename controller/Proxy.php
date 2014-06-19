@@ -55,7 +55,7 @@ class Proxy extends Controller
     function noimage($titre)
     {
         $im = new \Imagick (ROOT . DS . "webroot/images/no-poster-w92.jpg");
-        $draw = new ImagickDraw();
+        $draw = new \ImagickDraw();
         $draw->setFillColor('black');
 
         /* Font properties */
