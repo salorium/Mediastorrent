@@ -43,13 +43,14 @@ class Film extends \core\Controller
                         $filename = $req->val[1];
                 }
                 $mediainfo = json_decode($torrentf->mediainfo, true);
-                $compfile = "";
+                $compfile = "[";
+                $compfile .= (strlen($torrentf->complementfichier) > 0 ? $torrentf->complementfichier . "." : "");
                 switch ($mediainfo["typequalite"]) {
                     case "SD":
-                        $compfile .= "[" . $mediainfo["codec"];
+                        $compfile .= $mediainfo["codec"];
                         break;
                     case "HD":
-                        $compfile .= "[" . $mediainfo["qualite"] . "." . $mediainfo["codec"];
+                        $compfile .= $mediainfo["qualite"] . "." . $mediainfo["codec"];
                         break;
                 }
                 $audios = array();
