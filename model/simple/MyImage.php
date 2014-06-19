@@ -166,6 +166,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
         //return $im2->getimageblob();
         $im = new \Imagick ();
         $im->newimage(600, 600, new \ImagickPixel('#444444'), "jpeg");
+        $im->compositeimage($im2, \Imagick::COMPOSITE_DEFAULT, 100, 100);
         $widthmax = $im->getImageGeometry()["width"];
         $im1 = new \Imagick();
 
