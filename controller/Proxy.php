@@ -51,4 +51,15 @@ class Proxy extends Controller
         ));
         $this->render("index");
     }
+
+    function noimage($titre)
+    {
+        $im = @imagecreatefromjpeg('images/no-poster-w92.jpg');
+        $im = \model\simple\MyImage::makeTextBlockCenter($titre, ROOT . DS . "font" . DS . "comic.ttf", 10, $im);
+        header('Content-Type: image/jpg');
+
+        imagejpeg($im);
+        imagedestroy($im);
+        exit;
+    }
 } 
