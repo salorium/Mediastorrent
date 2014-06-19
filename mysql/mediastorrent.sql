@@ -82,9 +82,9 @@ CREATE TABLE IF NOT EXISTS `film` (
   `anneeprod`     VARCHAR(4)
                   COLLATE utf8_unicode_ci NOT NULL,
   `urlposter`     VARCHAR(1000)
-                  COLLATE utf8_unicode_ci NOT NULL,
+                  COLLATE utf8_unicode_ci DEFAULT NULL,
   `urlbackdrop`   VARCHAR(1000)
-                  COLLATE utf8_unicode_ci NOT NULL,
+                  COLLATE utf8_unicode_ci DEFAULT NULL,
   `infos`         TEXT
                   COLLATE utf8_unicode_ci NOT NULL,
   `idallocine`    VARCHAR(50)
