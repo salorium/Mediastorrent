@@ -149,7 +149,8 @@ class MyImage extends \core\Model
         }
         $res = $words[0];
         for ($i = 1; $i < count($words); $i++) {
-            $lineSize = $im->queryfontmetrics($draw, $res . " " . $words[$i])["textWidth"];
+            $lineSize = $im->queryfontmetrics($draw, $res . " " . $words[$i]);
+            var_dump($lineSize);
             if ($lineSize < $widthmax) {
                 $res .= " " . $words[$i];
                 echo "ESSPACE<br>";
