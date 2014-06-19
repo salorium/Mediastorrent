@@ -146,7 +146,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 </linearGradient>
 <style type="text/css">
 #stop1{ stop-color:chartreuse; stop-opacity:0.2; } #stop2{ stop-color:cornflowerblue; stop-opacity:1; } #stop3{ stop-color:chartreuse; stop-opacity:0.7; }
-#video-icon{ fill:#degrade; }
+#video-icon{ fill:url("#degrade"); }
 
 </style>
 </defs>
