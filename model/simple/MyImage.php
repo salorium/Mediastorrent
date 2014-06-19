@@ -162,11 +162,11 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
         $im2->setBackgroundColor(new \ImagickPixel('transparent'));
         $im2->readimageblob($svg);
         $im2->setImageFormat("png");
-        $im2->adaptiveResizeImage(50, 50); /*Optional, if you need to resize*/
+        $im2->adaptiveResizeImage(70, 70); /*Optional, if you need to resize*/
         //return $im2->getimageblob();
         $im = new \Imagick ();
-        $im->newimage(100, 150, new \ImagickPixel('#999999'), "jpeg");
-        $im->compositeimage($im2, \Imagick::COMPOSITE_DEFAULT, 25, 50);
+        $im->newimage(130, 150, new \ImagickPixel('#999999'), "jpeg");
+        $im->compositeimage($im2, \Imagick::COMPOSITE_DEFAULT, 30, 40);
         $widthmax = $im->getImageGeometry()["width"];
         $im1 = new \Imagick();
 
