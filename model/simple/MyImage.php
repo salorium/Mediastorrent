@@ -130,7 +130,7 @@ class MyImage extends \core\Model
         $im1 = new \Imagick();
 
         /* Création d'une nouvelle image. Elle sera utilisée comme masque de remplissage */
-        $im1->newPseudoImage(50, 100, "gradient:gray-black");
+        $im1->newPseudoImage(50, 10, "gradient:gray-black");
         $draw = new \ImagickDraw();
         /* On commence un nouveau masque nommé "gradient" */
         $draw->pushPattern('gradient', 0, 0, 50, 10);
