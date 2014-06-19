@@ -126,7 +126,7 @@ class MyImage extends \core\Model
     static function addTexte($image, $text, $fontfile, $fontsize)
     {
         $svg = '<?xml version="1.0" encoding="utf-8"?>
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<svg version="1.1" x="0px" y="0px"
 	 width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
 <defs>
 <linearGradient id="degrade" x1="100%" y1="0" x2="100%" y2="100%">
