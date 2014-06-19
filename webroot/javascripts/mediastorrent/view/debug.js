@@ -50,7 +50,7 @@ Debug.view = {
         }
     },
     changeIcon: function (name) {
-        $("#debuggericon").attr("src", "http://mediastorrent/images/debugger" + name + ".svg");
+        $("#debuggericon").attr("src", Base.controller.makeUrlBase() + "images/debugger" + name + ".svg");
     },
     addErreurJs: function (msg, url, line) {
         var that = Debug;
