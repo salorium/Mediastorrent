@@ -793,9 +793,9 @@ Torrent1.view = {
                                     Base.view.image.chooser("torrent" + id + "details", "Poster", "torrent" + id + "detailsposter", film.imageposter, 300, 150);
 
                                 } else {
-                                    Base.view.image.input("torrent" + id + "details", "Poster", "torrent" + id + "detailsposter", film.imageposter, true, 300);
+                                    Base.view.image.input("torrent" + id + "details", "Poster", "torrent" + id + "detailsposter", "", true, 300);
                                 }
-                                Base.view.image.chooser("torrent" + id + "details", "Backdrop", "torrent" + id + "detailsbackdrop", film.imagebackdrop, 400, 200);
+                                //Base.view.image.chooser("torrent" + id + "details", "Backdrop", "torrent" + id + "detailsbackdrop", film.imagebackdrop, 400, 200);
                             }
                             $table = $('<table></table>');
                             $tbody = $('<tbody></tbody>');
