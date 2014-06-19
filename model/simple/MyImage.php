@@ -134,6 +134,10 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
 <defs>
+<style type="text/css">
+#stop1{ stop-color:chartreuse; stop-opacity:0.2; } #stop2{ stop-color:cornflowerblue; stop-opacity:1; } #stop3{ stop-color:chartreuse; stop-opacity:0.7; }
+
+</style>
 <linearGradient id="degrade" x1="100%" y1="0" x2="100%" y2="100%">
 <stop offset="0%" id="stop1"/>
 <stop offset="40%" id="stop2"/>
@@ -144,10 +148,7 @@ You may NOT sub-license, resell, rent, redistribute or otherwise transfer the ic
 <stop offset="40%" style="stop-color:red; stop-opacity:0.2;"/>
 <stop offset="100%" style="stop-color:chartreuse; stop-opacity:0.2;"/>
 </linearGradient>
-<style type="text/css">
-#stop1{ stop-color:chartreuse; stop-opacity:0.2; } #stop2{ stop-color:cornflowerblue; stop-opacity:1; } #stop3{ stop-color:chartreuse; stop-opacity:0.7; }
 
-</style>
 </defs>
 <path fill="url(#degrade)" id="video-icon" d="M50,60.345v391.311h412V60.345H50z M137.408,410.862H92.354v-38.747h45.055V410.862z M137.408,343.278
 	H92.354v-38.747h45.055V343.278z M137.408,275.372H92.354v-38.747h45.055V275.372z M137.408,208.111H92.354v-38.748h45.055V208.111z
