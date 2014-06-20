@@ -73,7 +73,7 @@ class Film extends Controller
                     $audios[] = $res;
                 }
                 if (count($audios) > 1) {
-                    $compfile .= implode(" / " . $audios) . "]";
+                    $compfile .= implode(" " . $audios) . "]";
                 } else {
                     $compfile .= $audios[0] . "]";
                 }
