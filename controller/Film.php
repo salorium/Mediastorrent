@@ -71,8 +71,6 @@ class Film extends \core\Controller
                 } else {
                     $compfile .= "." . $audios[0] . "]";
                 }
-                var_dump($compfile);
-                die();
                 $tmp = \model\simple\Download::sendFileName($filename, $torrentf->titre . " " . $compfile);
             }
 
