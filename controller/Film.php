@@ -66,7 +66,7 @@ class Film extends \core\Controller
                 }
 
                 if (count($audios) > 1) {
-                    $au = implode("-", $audios);
+                    $au = implode(".", $audios);
                     $compfile .= "." . $au . "]";
                 } else {
                     $compfile .= "." . $audios[0] . "]";
