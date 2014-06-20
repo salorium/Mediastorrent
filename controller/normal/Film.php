@@ -73,9 +73,10 @@ class Film extends Controller
                     $audios[] = $res;
                 }
                 if (count($audios) > 1) {
-                    $compfile .= implode(" " . $audios) . "]";
+                    $au = implode(".", $audios);
+                    $compfile .= "." . $au . "]";
                 } else {
-                    $compfile .= $audios[0] . "]";
+                    $compfile .= "." . $audios[0] . "]";
                 }
                 $str = str_replace("'", "\'", str_replace("&lt;", "<", ($torrentf->titre . " " . $compfile . "." . pathinfo($filename, PATHINFO_EXTENSION))));
 
