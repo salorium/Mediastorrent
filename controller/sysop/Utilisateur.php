@@ -20,8 +20,6 @@ class Utilisateur extends \core\Controller
                 case 'addrtorrent':
                     \model\mysql\Cronroot::sav($_REQUEST["nomrtorrent"], "controller\\cronroot\\Utilisateur", "addRtorrent", array("login" => $_REQUEST["login"], "scgi" => $_REQUEST["scgi"], "taille" => (isset($_REQUEST["taille"]) ? $_REQUEST["taille"] : null)));
                     break;
-                case ""
-
             }
         }
         $users = \model\mysql\Utilisateur::getAllUtilisateur();
