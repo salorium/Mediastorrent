@@ -65,7 +65,7 @@ class Film extends Controller
                 foreach ($mediainfo["audios"] as $v) {
                     $res = "";
                     if ($v["type"] !== "MP3") {
-                        $res .= "." . $v["type"] . " " . $v["cannal"];
+                        $res .= $v["type"] . " " . $v["cannal"];
                         if (isset($v["lang"]))
                             $res .= " " . $v["lang"];
 
