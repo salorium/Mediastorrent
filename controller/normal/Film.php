@@ -38,15 +38,16 @@ class Film extends Controller
         $backdrop = ROOT . DS . "cache" . DS . "film" . DS . "backdrop";
         if (!is_dir($backdrop))
             mkdir($backdrop, 0777, true);
+        \model\simple\Film::getBackdrop($id);
 
         //$url = urldecode($url);
-        $myimage = new \model\simple\MyImage(WEBROOT . DS . "images" . DS .);
+        //$myimage = new \model\simple\MyImage(WEBROOT . DS . "images" . DS .);
 
-        $this->set(array(
-            "url" => $url,
+        /*$this->set(array(
+            "id" => $id,
             "size" => $size,
             "image" => $myimage->getImageWidthFixed($size)
-        ));
+        ));*/
         $this->render("index");
     }
 
