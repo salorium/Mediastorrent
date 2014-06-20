@@ -44,6 +44,9 @@ class Controller
             case "jpg":
                 $this->renderJpeg($view);
                 break;
+            case "png":
+                $this->renderPng($view);
+                break;
             default:
                 $this->renderHtml($view);
                 break;
@@ -198,6 +201,14 @@ class Controller
     {
         if (isset($this->vars["image"])) {
             header('Content-Type: image/jpeg');
+            echo $this->vars["image"];
+        }
+    }
+
+    private function renderPng($view)
+    {
+        if (isset($this->vars["image"])) {
+            header('Content-Type: image/png');
             echo $this->vars["image"];
         }
     }

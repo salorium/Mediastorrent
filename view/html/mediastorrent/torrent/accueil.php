@@ -9,6 +9,9 @@
 ?>
 <ul class="carrousel show-for-medium-up">
 
+    <li><a href="<?= \core\Router::url("torrent/all") ?>"><img title="Torrent" src="images/torrent.svg"/>
+        </a></li>
+
     <li><a href="<?= \core\Router::url("film/nouveau") ?>"> <img title="Film" src="images/film.svg"/>
         </a></li>
     <li><a href="#DDD"> <img title="Série" src="images/serie.svg"/>

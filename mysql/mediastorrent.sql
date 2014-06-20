@@ -1,14 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.5
+-- version 4.2.2
 -- http://www.phpmyadmin.net
 --
--- Client: localhost
--- Généré le: Lun 05 Mai 2014 à 00:21
--- Version du serveur: 5.5.32-0ubuntu0.13.04.1
--- Version de PHP: 5.4.9-4ubuntu2.3
+-- Client :  localhost
+-- Généré le :  Jeu 05 Juin 2014 à 01:07
+-- Version du serveur :  5.5.37-MariaDB-log
+-- Version de PHP :  5.5.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+01:00";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT = @@CHARACTER_SET_CLIENT */;
@@ -17,7 +17,7 @@ SET time_zone = "+01:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données: `mediastorrent`
+-- Base de données :  `mediastorrent`
 --
 CREATE DATABASE IF NOT EXISTS `mediastorrent`
   DEFAULT CHARACTER SET utf8
@@ -35,10 +35,28 @@ CREATE TABLE IF NOT EXISTS `amis` (
               COLLATE utf8_unicode_ci NOT NULL,
   `login`     VARCHAR(200)
               COLLATE utf8_unicode_ci NOT NULL,
-  `ok`        TINYINT(1)              NOT NULL,
-  PRIMARY KEY (`demandeur`, `login`),
-  KEY `demandeur` (`demandeur`),
-  KEY `login` (`login`)
+  `ok`        TINYINT(1)              NOT NULL
+)
+  ENGINE =InnoDB
+  DEFAULT CHARSET =utf8
+  COLLATE =utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `cronroot`
+--
+
+CREATE TABLE IF NOT EXISTS `cronroot` (
+  `id`          VARCHAR(40)
+                COLLATE utf8_unicode_ci NOT NULL,
+  `donnee`      LONGTEXT
+                COLLATE utf8_unicode_ci NOT NULL,
+  `resultat`    LONGTEXT
+                COLLATE utf8_unicode_ci,
+  `nomrtorrent` VARCHAR(200)
+                COLLATE utf8_unicode_ci NOT NULL,
+  `fini`        TINYINT(1)              NOT NULL
 )
   ENGINE =InnoDB
   DEFAULT CHARSET =utf8
@@ -64,18 +82,15 @@ CREATE TABLE IF NOT EXISTS `film` (
   `anneeprod`     VARCHAR(4)
                   COLLATE utf8_unicode_ci NOT NULL,
   `urlposter`     VARCHAR(1000)
-                  COLLATE utf8_unicode_ci NOT NULL,
+                  COLLATE utf8_unicode_ci DEFAULT NULL,
   `urlbackdrop`   VARCHAR(1000)
-                  COLLATE utf8_unicode_ci NOT NULL,
+                  COLLATE utf8_unicode_ci DEFAULT NULL,
   `infos`         TEXT
                   COLLATE utf8_unicode_ci NOT NULL,
   `idallocine`    VARCHAR(50)
                   COLLATE utf8_unicode_ci DEFAULT NULL,
   `idthemoviedb`  VARCHAR(50)
-                  COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `titre` (`titre`),
-  KEY `idallocine` (`idallocine`)
+                  COLLATE utf8_unicode_ci DEFAULT NULL
 )
   ENGINE =InnoDB
   DEFAULT CHARSET =utf8
@@ -91,10 +106,7 @@ CREATE TABLE IF NOT EXISTS `genre` (
   `id`    VARCHAR(10)
           COLLATE utf8_unicode_ci NOT NULL,
   `label` VARCHAR(200)
-          COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`, `label`),
-  KEY `id` (`id`),
-  KEY `label` (`label`)
+          COLLATE utf8_unicode_ci NOT NULL
 )
   ENGINE =InnoDB
   DEFAULT CHARSET =utf8
@@ -110,8 +122,7 @@ CREATE TABLE IF NOT EXISTS `rtorrent` (
   `hostname` VARCHAR(300)
              COLLATE utf8_unicode_ci NOT NULL,
   `nom`      VARCHAR(200)
-             COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`nom`)
+             COLLATE utf8_unicode_ci NOT NULL
 )
   ENGINE =InnoDB
   DEFAULT CHARSET =utf8
@@ -129,10 +140,7 @@ CREATE TABLE IF NOT EXISTS `rtorrents` (
   `login`       VARCHAR(200)
                 COLLATE utf8_unicode_ci NOT NULL,
   `portscgi`    VARCHAR(10)
-                COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`nomrtorrent`, `login`),
-  KEY `nomrtorrent` (`nomrtorrent`),
-  KEY `login` (`login`)
+                COLLATE utf8_unicode_ci NOT NULL
 )
   ENGINE =InnoDB
   DEFAULT CHARSET =utf8
@@ -148,36 +156,11 @@ CREATE TABLE IF NOT EXISTS `ticket` (
   `id`     VARCHAR(40)
            COLLATE utf8_unicode_ci NOT NULL,
   `donnee` LONGTEXT
-           COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
+           COLLATE utf8_unicode_ci NOT NULL
 )
   ENGINE =InnoDB
   DEFAULT CHARSET =utf8
   COLLATE =utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `cronroot`
---
-
-CREATE TABLE IF NOT EXISTS `cronroot` (
-  `id`       VARCHAR(40)
-             COLLATE utf8_unicode_ci NOT NULL,
-  `donnee`   LONGTEXT
-             COLLATE utf8_unicode_ci NOT NULL,
-  `resultat` LONGTEXT
-             COLLATE utf8_unicode_ci DEFAULT NULL,
-  `nomrtorrent` VARCHAR(200)
-                COLLATE utf8_unicode_ci NOT NULL,
-  `fini`     TINYINT(1)              NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `nomrtorrent` (`nomrtorrent`)
-)
-  ENGINE =InnoDB
-  DEFAULT CHARSET =utf8
-  COLLATE =utf8_unicode_ci;
-
 
 -- --------------------------------------------------------
 
@@ -206,12 +189,8 @@ CREATE TABLE IF NOT EXISTS `torrentfilm` (
   `fini`              TINYINT(1)              NOT NULL,
   `mediainfo`         TEXT
                       COLLATE utf8_unicode_ci,
-  `partageamis`       TINYINT(1)              NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idfilm` (`idfilm`),
-  KEY `login` (`login`),
-  KEY `hashtorrent` (`hashtorrent`),
-  KEY `nomrtorrent` (`nomrtorrent`)
+  `qualite`           INT(1) DEFAULT NULL,
+  `partageamis`       TINYINT(1)              NOT NULL
 )
   ENGINE =InnoDB
   DEFAULT CHARSET =utf8
@@ -233,13 +212,81 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `role`         VARCHAR(250)
                  COLLATE utf8_unicode_ci NOT NULL,
   `keyconnexion` VARCHAR(40)
-                 COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`login`),
-  UNIQUE KEY `mail` (`mail`)
+                 COLLATE utf8_unicode_ci DEFAULT NULL
 )
   ENGINE =InnoDB
   DEFAULT CHARSET =utf8
   COLLATE =utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `savpass` (
+  `login`      VARCHAR(200)
+               COLLATE utf8_unicode_ci NOT NULL,
+  `motdepasse` TEXT
+               COLLATE utf8_unicode_ci
+
+)
+  ENGINE =InnoDB
+  DEFAULT CHARSET =utf8
+  COLLATE =utf8_unicode_ci;
+
+
+--
+-- Index pour les tables exportées
+--
+
+--
+-- Index pour la table `amis`
+--
+ALTER TABLE `amis`
+ADD PRIMARY KEY (`demandeur`, `login`), ADD KEY `demandeur` (`demandeur`), ADD KEY `login` (`login`);
+
+--
+-- Index pour la table `cronroot`
+--
+ALTER TABLE `cronroot`
+ADD PRIMARY KEY (`id`), ADD KEY `nomrtorrent` (`nomrtorrent`);
+
+--
+-- Index pour la table `film`
+--
+ALTER TABLE `film`
+ADD PRIMARY KEY (`id`), ADD KEY `titre` (`titre`), ADD KEY `idallocine` (`idallocine`);
+
+--
+-- Index pour la table `genre`
+--
+ALTER TABLE `genre`
+ADD PRIMARY KEY (`id`, `label`), ADD KEY `id` (`id`), ADD KEY `label` (`label`);
+
+--
+-- Index pour la table `rtorrent`
+--
+ALTER TABLE `rtorrent`
+ADD PRIMARY KEY (`nom`);
+
+--
+-- Index pour la table `rtorrents`
+--
+ALTER TABLE `rtorrents`
+ADD PRIMARY KEY (`nomrtorrent`, `login`), ADD KEY `nomrtorrent` (`nomrtorrent`), ADD KEY `login` (`login`);
+
+--
+-- Index pour la table `ticket`
+--
+ALTER TABLE `ticket`
+ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `torrentfilm`
+--
+ALTER TABLE `torrentfilm`
+ADD PRIMARY KEY (`id`), ADD KEY `idfilm` (`idfilm`), ADD KEY `login` (`login`), ADD KEY `hashtorrent` (`hashtorrent`), ADD KEY `nomrtorrent` (`nomrtorrent`), ADD KEY `qualite` (`qualite`);
+
+--
+-- Index pour la table `utilisateur`
+--
+ALTER TABLE `utilisateur`
+ADD PRIMARY KEY (`login`), ADD UNIQUE KEY `mail` (`mail`);
 
 --
 -- Contraintes pour les tables exportées
@@ -253,6 +300,14 @@ ADD CONSTRAINT `amis_ibfk_1` FOREIGN KEY (`demandeur`) REFERENCES `utilisateur` 
   ON DELETE CASCADE
   ON UPDATE CASCADE,
 ADD CONSTRAINT `amis_ibfk_2` FOREIGN KEY (`login`) REFERENCES `utilisateur` (`login`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `cronroot`
+--
+ALTER TABLE `cronroot`
+ADD CONSTRAINT `cronroot_ibfk_1` FOREIGN KEY (`nomrtorrent`) REFERENCES `rtorrent` (`nom`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
@@ -272,11 +327,6 @@ ADD CONSTRAINT `rtorrents_ibfk_1` FOREIGN KEY (`nomrtorrent`) REFERENCES `rtorre
   ON DELETE CASCADE
   ON UPDATE CASCADE,
 ADD CONSTRAINT `rtorrents_ibfk_2` FOREIGN KEY (`login`) REFERENCES `utilisateur` (`login`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `cronroot`
-ADD CONSTRAINT `cronroot_ibfk_1` FOREIGN KEY (`nomrtorrent`) REFERENCES `rtorrent` (`nom`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 

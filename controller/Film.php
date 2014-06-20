@@ -13,7 +13,7 @@ class Film extends \core\Controller
 {
     function recherche($login = null, $keyconnexion = null, $re = null)
     {
-        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationDistante($login, $keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         if (is_null($re))
             $re = $_REQUEST["recherche"];
@@ -26,9 +26,10 @@ class Film extends \core\Controller
 
     function download($id, $login = null, $keyconnexion = null)
     {
-        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationDistante($login, $keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         if ($torrentf = \model\mysql\Torrentfilm::getFilmUserDuServeur($id)) {
+            \config\Conf::$portscgi = $torrentf->portscgi;
             $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
                 new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.get_frozen_path", array($torrentf->hash, intval($torrentf->numfile))));
             if ($req->success()) {
@@ -42,32 +43,34 @@ class Film extends \core\Controller
                         $filename = $req->val[1];
                 }
                 $mediainfo = json_decode($torrentf->mediainfo, true);
-                $compfile = "";
+                $compfile = "[";
+                $compfile .= (strlen($torrentf->complementfichier) > 0 ? $torrentf->complementfichier . "." : "");
                 switch ($mediainfo["typequalite"]) {
                     case "SD":
-                        $compfile .= "[" . $mediainfo["codec"];
+                        $compfile .= $mediainfo["codec"];
                         break;
                     case "HD":
-                        $compfile .= "[" . $mediainfo["qualite"] . "." . $mediainfo["codec"];
+                        $compfile .= $mediainfo["qualite"] . "." . $mediainfo["codec"];
                         break;
                 }
                 $audios = array();
                 foreach ($mediainfo["audios"] as $v) {
                     $res = "";
                     if ($v["type"] !== "MP3") {
-                        $res .= "." . $v["type"] . " " . $v["cannal"];
+                        $res .= $v["type"] . " " . $v["cannal"];
                         if (isset($v["lang"]))
                             $res .= " " . $v["lang"];
 
                     }
                     $audios[] = $res;
                 }
-                if (count($audios) > 1) {
-                    $compfile .= implode(" / " . $audios) . "]";
-                } else {
-                    $compfile .= $audios[0] . "]";
-                }
 
+                if (count($audios) > 1) {
+                    $au = implode(".", $audios);
+                    $compfile .= "." . $au . "]";
+                } else {
+                    $compfile .= "." . $audios[0] . "]";
+                }
                 $tmp = \model\simple\Download::sendFileName($filename, $torrentf->titre . " " . $compfile);
             }
 

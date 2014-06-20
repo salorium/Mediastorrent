@@ -40,7 +40,9 @@ class Mysqli
         }
         if (is_null($str))
             return "NULL";
-        return "'" . self::$dblink->real_escape_string(\htmlentities($str, ENT_NOQUOTES)) . "'";
+        if ($str === "")
+            return "NULL";
+        return "'" . self::$dblink->real_escape_string(str_replace("<", "&lt;", $str)) . "'";
     }
 
     public static function real_escape_stringlike($str)
@@ -78,7 +80,7 @@ class Mysqli
 
         }
 
-        self::$query[] = array($query, ($QueryEndTime - $QueryStartTime) * 1000, self::$res, $Errno, $Error);
+        self::$query[] = array($query, ($QueryEndTime - $QueryStartTime) * 1000, self::$res, $Errno, $Error, self::$dblink->character_set_name());
         self::$id++;
 
     }

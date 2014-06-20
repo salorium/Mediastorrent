@@ -89,7 +89,7 @@ $(document).ready(function () {
     });
 
     $(window).resize(function () {
-        Film.init();
+        // Film.init();
     });
 
 });
@@ -124,6 +124,7 @@ var Film = {
     zindex: 1,
     time: null,
     init: function (all) {
+        console.log("INIT");
         if (this.tonObjet.length == 0)
             this.tonObjet = all;
         if (this.container) {
@@ -281,23 +282,23 @@ var Film = {
         console.log(control);
         if (id <= centre - 1) {
             if (control.poster) {
-                this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.demiLargeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="' + Base.controller.makeUrlBase() + "proxy/imageSetWidth/" + Base.model.converter.paramUrl(control.poster) + '/200.jpg" alt="' + control.titre + '"></a></div> </div></div>');
+                this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.demiLargeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="' + Base.controller.makeUrlBase() + "proxy/imageSetWidth/" + Base.model.converter.paramUrl(control.poster) + '/200.jpg" alt="' + control.Titre + '"></a></div> </div></div>');
             } else {
-                this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.demiLargeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="proxy-image.php?titre=' + encodeURIComponent(control.titre) + '" alt="' + control.titre + '"></a></div> </div></div>');
+                this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.demiLargeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="' + Base.controller.makeUrlBase() + "proxy/noimage/" + Base.model.converter.paramUrl(control.Titre) + '.jpg"' + '" alt="' + control.Titre + '"></a></div> </div></div>');
             }
             this.zindex++;
             this.addUniqueCssGaucheTopBar(id);
         } else if (id <= centre) {
             if (control.poster) {
-                this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.largeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot2"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="' + Base.controller.makeUrlBase() + "proxy/imageSetWidth/" + Base.model.converter.paramUrl(control.poster) + '/200.jpg" alt="' + control.titre + '"></a></div> </div></div>');
+                this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.largeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot2"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="' + Base.controller.makeUrlBase() + "proxy/imageSetWidth/" + Base.model.converter.paramUrl(control.poster) + '/200.jpg" alt="' + control.Titre + '"></a></div> </div></div>');
             } else {
-                this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.largeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot2"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="proxy-image.php?titre=' + encodeURIComponent(control.titre) + '" alt="' + control.titre + '"></a></div> </div></div>');
+                this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.largeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot2"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="' + Base.controller.makeUrlBase() + "proxy/noimage/" + Base.model.converter.paramUrl(control.Titre) + '.jpg" alt="' + control.Titre + '"></a></div> </div></div>');
             }
 
             if (control.backdrop && screenshot) {
                 console.log(Base.model.converter.paramUrl(control.backdrop));
                 $("#background").css({
-                    "background": 'url("' + Base.controller.makeUrlBase() + "proxy/imageSetWidth/" + Base.model.converter.paramUrl(control.backdrop) + '/1000.jpg") center center fixed',
+                    "background": 'url("' + Base.controller.makeUrlBase() + "proxy/imageSetWidth/" + Base.model.converter.paramUrl(control.backdrop) + '/1920.jpg") center center fixed',
                     "background-size": "cover"
                 });
                 console.log($('html'));
@@ -309,9 +310,9 @@ var Film = {
             this.addUniqueCssGaucheTopBar(id);
         } else {
             if (control.poster) {
-                this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.demiLargeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot1"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="' + Base.controller.makeUrlBase() + "proxy/imageSetWidth/" + Base.model.converter.paramUrl(control.poster) + '/200.jpg" alt="' + control.titre + '"></a></div> </div></div>');
+                this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.demiLargeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot1"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="' + Base.controller.makeUrlBase() + "proxy/imageSetWidth/" + Base.model.converter.paramUrl(control.poster) + '/200.jpg" alt="' + control.Titre + '"></a></div> </div></div>');
             } else {
-                this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.demiLargeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot1"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="proxy-image.php?titre=' + encodeURIComponent(control.titre) + '" alt="' + control.titre + '"></a></div> </div></div>');
+                this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.demiLargeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot1"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="' + Base.controller.makeUrlBase() + "proxy/noimage/" + Base.model.converter.paramUrl(control.Titre) + '.jpg" alt="' + control.Titre + '"></a></div> </div></div>');
 
             }
             this.zindex--;
@@ -320,12 +321,19 @@ var Film = {
         }
 
     },
+    streaming: function (k, host) {
+        window.open(Base.controller.makeUrlBase(host) + 'film/streaming/' + Base.model.converter.paramUrl(k) + ".html", "_blank", "menubar=no, status=no, scrollbars=no, toolbar=no,location=no,resizable=no, width=650, height=510");
+    },
     afficheDetailsFilm: function (film) {
         this.containerDetailsFilm.show();
         $fieldset = $('<fieldset><legend>' + film.Titre + '</legend></fieldset>');
         this.containerDetailsFilm.empty();
         this.containerDetailsFilm.append($fieldset);
-        $divimg = $('<div class="float" style="margin-right: 10px;width: ' + this.containerDetailsFilm.width() * 0.20 + 'px;"> <img style="height:' + (this.topControl - 180) + 'px;" src="' + Base.controller.makeUrlBase() + "proxy/imageSetHeight/" + Base.model.converter.paramUrl(film.poster) + '/' + (this.topControl - 180) + '.jpg" alt="' + film.titre + '"></div>');
+        urlimg = Base.controller.makeUrlBase() + "proxy/noimage/" + Base.model.converter.paramUrl(film.Titre) + "/" + (this.topControl - 180) + '.jpg';
+        if (film.poster) {
+            urlimg = Base.controller.makeUrlBase() + "proxy/imageSetHeight/" + Base.model.converter.paramUrl(film.poster) + '/' + (this.topControl - 180) + '.jpg';
+        }
+        $divimg = $('<div class="float" style="margin-right: 10px;width: ' + this.containerDetailsFilm.width() * 0.20 + 'px;"> <img style="height:' + (this.topControl - 180) + 'px;" src="' + urlimg + '" alt="' + film.Titre + '"></div>');
         $fieldset.append($divimg);
         console.log((this.containerDetailsFilm.width() - $divimg.width()));
         $divv = $('<div class="float" style="width: 78%;"></div>');
@@ -374,7 +382,7 @@ var Film = {
                 if (response.showdebugger == "ok") {
                     $.each(response.file, function (k, v) {
                         //console.log(v);
-                        $table.append('<tr><td>' + v.mediainfo.typequalite + '</td><td><a href="' + Base.controller.makeUrlBase(v.hostname) + '/film/download/' + v.id + '/' + Base.model.utilisateur.login + '/' + Base.model.utilisateur.keyconnexion + '">Dl</a></td></tr>');
+                        $table.append('<tr><td>' + v.mediainfo.typequalite + (v.mediainfo.qualite ? " " + v.mediainfo.qualite : "" ) + '</td><td>' + (v.mediainfo.codec ? v.mediainfo.codec : "" ) + '</td><td>' + (v.mediainfo.audios[0].type ? v.mediainfo.audios[0].type : "" ) + '</td><td>' + (v.complementfichier ? v.complementfichier : "" ) + '</td><td><a href="' + Base.controller.makeUrlBase(v.hostname) + 'film/download/' + v.id + '/' + Base.model.utilisateur.login + '/' + Base.model.utilisateur.keyconnexion + '"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dl.svg"></a></td><td><a onclick="Film.streaming(\'' + v.id + '\',\'' + v.hostname + '\')"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/streaming.svg"></a></td></tr>');
                     })
 
                 } else {
