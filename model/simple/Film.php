@@ -17,7 +17,12 @@ class Film extends \core\Model
         if (!is_dir($backdrop))
             mkdir($backdrop, 0777, true);
         if (!file_exists($backdrop . DS . $id . ".jpg")) {
-            var_dump(\model\mysql\Film::getBackdrop($id));
+            $film = \model\mysql\Film::getBackdrop($id);
+            if (is_null($film->urlbackdrop)) {
+                //No poster
+            } else {
+                copy($film->urlbackdrop, $backdrop . DS . $id . ".jpg");
+            }
         }
         die();
         return $backdrop . DS . $id . ".jpg";
