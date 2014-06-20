@@ -57,21 +57,21 @@ class Film extends \core\Controller
                 foreach ($mediainfo["audios"] as $v) {
                     $res = "";
                     if ($v["type"] !== "MP3") {
-                        $res .= "." . $v["type"] . " " . $v["cannal"];
+                        $res .= $v["type"] . " " . $v["cannal"];
                         if (isset($v["lang"]))
                             $res .= " " . $v["lang"];
 
                     }
                     $audios[] = $res;
                 }
-                var_dump($audios);
-                die();
-                if (count($audios) > 1) {
-                    $compfile .= implode(" " . $audios) . "]";
-                } else {
-                    $compfile .= $audios[0] . "]";
-                }
 
+                if (count($audios) > 1) {
+                    $compfile .= "." . implode(" " . $audios) . "]";
+                } else {
+                    $compfile .= "." . $audios[0] . "]";
+                }
+                var_dump($compfile);
+                die();
                 $tmp = \model\simple\Download::sendFileName($filename, $torrentf->titre . " " . $compfile);
             }
 
