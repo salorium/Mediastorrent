@@ -419,9 +419,9 @@ class Allocine extends Model
 
                 }
             $tmdb = new TheMovieDb();
-            $tmp1 = $tmdb->searchFilm($v->title, "fr");
-            var_dump($tmp1);
-            die();
+            $tmp1 = $tmdb->searchFilm($v->title, "en");
+            //var_dump($tmp1);
+            //die();
             if (isset($tmp1->results)) {
                 if (count($tmp1->results) > 0) {
                     $tmp1 = $tmdb->getMovieImage($tmp1->results[0]->id);
