@@ -425,8 +425,8 @@ class Allocine extends Model
             if (isset($films->results)) {
                 if (count($films->results) > 0) {
                     foreach ($films->results as $v) {
-
-                        $tmp1 = $tmdb->getMovieImage($v->id);
+                        if ($v->original_title == $v->originalTitle) {
+                            $tmp1 = $tmdb->getMovieImage($v->id);
                         foreach ($tmp1->backdrops as $k => $vv) {
                             //var_dump($vv);
                             //die();
@@ -438,6 +438,7 @@ class Allocine extends Model
                             if ($maxratioposter < $vv->height / $vv->width)
                                 $maxratioposter = $vv->height / $vv->width;
                             $tmp["imageposter"]["url"][] = array("http://image.tmdb.org/t/p/original" . $vv->file_path, $vv->width, $vv->height);
+                        }
                         }
                     }
 
