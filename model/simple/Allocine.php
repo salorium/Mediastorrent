@@ -426,7 +426,7 @@ class Allocine extends Model
                 if (count($films->results) > 0) {
                     foreach ($films->results as $vvv) {
                         //var_dump(stripos($vvv->original_title, $v->originalTitle));
-                        if (stripos($vvv->original_title, $v->originalTitle) === 0) {
+                        if (stripos(String::remplaceAccent($vvv->original_title), String::remplaceAccent($v->originalTitle)) === 0) {
                             $tmp1 = $tmdb->getMovieImage($vvv->id);
                             foreach ($tmp1->backdrops as $k => $vv) {
                             //var_dump($vv);
