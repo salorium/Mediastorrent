@@ -47,7 +47,7 @@ class TheMovieDb extends Model
         $this->param = array(
             'query' => $search,
             'language' => $lang,
-            'search_type' => 'ngram',
+            //'search_type' => 'ngram',
             'api_key' => $this->api_key
         );
         return $this->lookUrl($this->url . "search/movie?");
