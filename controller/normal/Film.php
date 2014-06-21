@@ -36,7 +36,7 @@ class Film extends Controller
     function getBackdropSetWidth($id, $size)
     {
         $this->set(array(
-            "url" => $id,
+            "id" => $id,
             "size" => $size,
             "image" => \model\simple\Film::getBackdropSetWidth($id, $size)
         ));
