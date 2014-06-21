@@ -48,7 +48,7 @@ PHPDIR=' . ROOT . '/script
 start() {
         echo -n $"Starting $NAME: "
         su -l $USER -c "tmux new-session -s rt -n rtorrent -d rtorrent"
-        su -l $USER -c "php $PHPDIR/init.php $USER"
+#        su -l $USER -c "php $PHPDIR/init.php $USER"
         echo "started"
 }
 
@@ -88,7 +88,7 @@ RemainAfterExit=yes
 KillMode=none
 User=%I
 ExecStart=/usr/bin/tmux new-session -s rt -n rtorrent -d rtorrent
-ExecStartPost=/usr/bin/php ' . ROOT . '/script/init.php %I
+#ExecStartPost=/usr/bin/php ' . ROOT . '/script/init.php %I
 ExecStop=/usr/bin/tmux send-keys -t rt:rtorrent C-q
 WorkingDirectory=/home/%I/
 
