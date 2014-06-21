@@ -424,11 +424,11 @@ class Allocine extends Model
             //die();
             if (isset($films->results)) {
                 if (count($films->results) > 0) {
-                    foreach ($films->results as $v) {
-                        var_dump(stripos($v->original_title, $v->originalTitle));
-                        if (stripos($v->original_title, $v->originalTitle) !== false) {
-                            $tmp1 = $tmdb->getMovieImage($v->id);
-                        foreach ($tmp1->backdrops as $k => $vv) {
+                    foreach ($films->results as $vvv) {
+                        var_dump(stripos($vvv->original_title, $v->originalTitle));
+                        if (stripos($vvv->original_title, $v->originalTitle) !== false) {
+                            $tmp1 = $tmdb->getMovieImage($vvv->id);
+                            foreach ($tmp1->backdrops as $k => $vv) {
                             //var_dump($vv);
                             //die();
                             if ($maxratiobackdrop < $vv->height / $vv->width)
