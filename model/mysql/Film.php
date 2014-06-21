@@ -124,6 +124,14 @@ class Film extends \core\ModelMysql
         return \core\Mysqli::getObjectAndClose(false);
     }
 
+    static function getPoster($id)
+    {
+        $query = "select urlposter, titre from film ";
+        $query .= "where id=" . \core\Mysqli::real_escape_string($id);
+        \core\Mysqli::query($query);
+        return \core\Mysqli::getObjectAndClose(false);
+    }
+
     static function getAllFilmUserDateDesc($genre)
     {
         $query = "select distinct * from ( select tf.date as date, f.id as id, f.urlposter as poster, f.urlbackdrop as backdrop , f.infos as infos ";
