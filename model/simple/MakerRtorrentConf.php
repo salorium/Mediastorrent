@@ -122,8 +122,20 @@ encryption = allow_incoming,require,require_rc4
 # before forcing. Overworked systems might need lower values to get a
 # decent hash checking rate.
 #hash_max_tries = 10
-scgi_port = 127.0.0.1:' . $scgi . "
-";
+scgi_port = 127.0.0.1:' . $scgi . '
+
+#Capture de la date d\'ajout et du temps de seed :P
+system.method.set_key=event.download.inserted_new,addtime,"d.set_custom=addtime,\"$execute_capture={date,+%s}\""
+system.method.set_key = event.download.finished,seedingtime,"d.set_custom=seedingtime,\"\$execute_capture={date,+%s}\""
+system.method.set_key=event.download.hash_done,seedingtimecheck,"branch=$not=$d.get_complete=,,d.get_custom=seedingtime,,\"d.set_custom=seedingtime,$d.get_custom=addtime\""
+
+#Efface des donnée
+system.method.set_key = event.download.erased,erasedata,"branch=d.get_custom1=,\"execute={rm,-r,$d.get_base_path=}\""
+
+#Prise en charge de mediastorrent
+system.method.set_key = event.download.finished,addbibliotheque,"execute={php,' . ROOT . DS . 'script' . DS . 'addbibliotheque.php,' . $scgi . ',$d.get_hash=,$d.get_base_path=,$d.get_base_filename=,$d.is_multi_file=,$d.get_custom=clefunique,$d.get_custom=typemedias}"
+
+';
         file_put_contents("/home/" . $user . "/.rtorrent.rc", $content);
         file_put_contents("/home/" . $user . "/.scgi.txt", $scgi . "");
     }
