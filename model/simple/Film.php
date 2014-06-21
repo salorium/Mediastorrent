@@ -41,6 +41,7 @@ class Film extends \core\Model
                 $content = MyImage::nonImageAddTexte($film->titre, ROOT . DS . "font" . DS . "comic.ttf", 30);
                 file_put_contents($poster . DS . $id . ".jpg", $content);
             } else {
+                sleep(10);
                 copy($film->urlposter, $poster . DS . $id . ".jpg");
             }
         }
