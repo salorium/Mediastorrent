@@ -142,7 +142,7 @@ class Torrentfilm extends \core\ModelMysql
         $query .= "where( tf.fini = true ";
         $query .= "and tf.idfilm = f.id ";
         $query .= "and r.nom = tf.nomrtorrent ";
-        //$query .= "and tf.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login);
+        $query .= "and tf.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login);
         $query .= " and rs.nomrtorrent = r.nom ";
         $query .= " and rs.login = tf.login ";
         //$query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
