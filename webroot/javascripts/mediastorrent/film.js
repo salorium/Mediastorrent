@@ -298,12 +298,12 @@ var Film = {
             if (control.backdrop && screenshot) {
                 console.log(Base.model.converter.paramUrl(control.backdrop));
                 $("#background").css({
-                    "background": 'url("' + Base.controller.makeUrlBase() + "proxy/imageSetWidth/" + Base.model.converter.paramUrl(control.backdrop) + '/1920.jpg") center center fixed',
+                    "background": 'url("' + Base.controller.makeUrlBase() + "film/getBackdropSetWidth/" + Base.model.converter.paramUrl(control.id) + '/1920.jpg") center center fixed',
                     "background-size": "cover"
                 });
                 console.log($('html'));
             } else {
-                $("#background").css("background", 'url("http://mediastorrent/images/fondEcran/black_hole_scene-1920x1080.jpg") no-repeat center center fixed');
+                $("#background").css("background-image", 'none');
             }
             this.zindex--;
             this.afficheDetailsFilm(control);
@@ -329,10 +329,10 @@ var Film = {
         $fieldset = $('<fieldset><legend>' + film.Titre + '</legend></fieldset>');
         this.containerDetailsFilm.empty();
         this.containerDetailsFilm.append($fieldset);
-        urlimg = Base.controller.makeUrlBase() + "proxy/noimage/" + Base.model.converter.paramUrl(film.Titre) + "/" + (this.topControl - 180) + '.jpg';
-        if (film.poster) {
-            urlimg = Base.controller.makeUrlBase() + "proxy/imageSetHeight/" + Base.model.converter.paramUrl(film.poster) + '/' + (this.topControl - 180) + '.jpg';
-        }
+        urlimg = Base.controller.makeUrlBase() + "film/getPosterSetHeight/" + Base.model.converter.paramUrl(film.id) + "/" + (this.topControl - 180) + '.jpg';
+        /*if (film.poster) {
+         urlimg = Base.controller.makeUrlBase() + "proxy/imageSetHeight/" + Base.model.converter.paramUrl(film.poster) + '/' + (this.topControl - 180) + '.jpg';
+         }*/
         $divimg = $('<div class="float" style="margin-right: 10px;width: ' + this.containerDetailsFilm.width() * 0.20 + 'px;"> <img style="height:' + (this.topControl - 180) + 'px;" src="' + urlimg + '" alt="' + film.Titre + '"></div>');
         $fieldset.append($divimg);
         console.log((this.containerDetailsFilm.width() - $divimg.width()));
