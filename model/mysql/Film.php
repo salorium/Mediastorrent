@@ -118,7 +118,7 @@ class Film extends \core\ModelMysql
 
     static function getBackdrop($id)
     {
-        $query = "select urlbackdrop from film ";
+        $query = "select urlbackdrop, titre from film ";
         $query .= "where id=" . \core\Mysqli::real_escape_string($id);
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(false);
