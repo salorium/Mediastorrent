@@ -26,12 +26,12 @@ class Film extends \core\Model
                 copy($film->urlbackdrop, $backdrop . DS . $id . ".jpg");
             }
         }
-        die();
         return $backdrop . DS . $id . ".jpg";
     }
 
     static function getBackdropSetWidth($id, $width)
     {
-
+        $myimage = new \model\simple\MyImage(Film::getBackdrop($id));
+        return $myimage->getImageWidthFixed($width);
     }
 } 
