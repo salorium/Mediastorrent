@@ -9,7 +9,7 @@
 
 ?>
 <div>
-    <h1><?php echo $url; ?></h1>
+    <h1><?php echo $id; ?></h1>
 
     <h1><?php echo $size; ?></h1>
 
