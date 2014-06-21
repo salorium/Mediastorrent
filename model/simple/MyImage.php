@@ -123,7 +123,7 @@ class MyImage extends \core\Model
         return false;
     }
 
-    static function addTexte($image, $text, $fontfile, $fontsize)
+    static function nonImageAddTexte($text, $fontfile, $fontsize)
     {
         $svg = '<?xml version="1.0" encoding="utf-8"?>
 

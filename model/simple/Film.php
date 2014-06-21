@@ -20,6 +20,8 @@ class Film extends \core\Model
             $film = \model\mysql\Film::getBackdrop($id);
             if (is_null($film->urlbackdrop)) {
                 //No poster
+                $content = MyImage::nonImageAddTexte($film->titre, ROOT . DS . "font" . DS . "comic.ttf", 30);
+                file_put_contents($backdrop . DS . $id . ".jpg", $content);
             } else {
                 copy($film->urlbackdrop, $backdrop . DS . $id . ".jpg");
             }
