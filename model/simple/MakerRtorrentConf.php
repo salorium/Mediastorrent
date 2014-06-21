@@ -136,7 +136,7 @@ system.method.set_key = event.download.erased,erasedata,"branch=d.get_custom1=,\
 system.method.set_key = event.download.finished,addbibliotheque,"execute={php,' . ROOT . DS . 'script' . DS . 'addbibliotheque.php,' . $scgi . ',$d.get_hash=,$d.get_base_path=,$d.get_base_filename=,$d.is_multi_file=,$d.get_custom=clefunique,$d.get_custom=typemedias}"
 
 #Deprecated resolution bug Scr3d
-system.method.set_key = event.download.finished,addbibliotheque,"\"execute={php,' . ROOT . DS . 'script' . DS . 'addbibliotheque.php,' . $scgi . ',$d.get_hash=,$d.get_base_path=,$d.get_base_filename=,$d.is_multi_file=,$d.get_custom=clefunique,$d.get_custom=typemedias}\""
+#system.method.set_key = event.download.finished,addbibliotheque,"\"execute={php,' . ROOT . DS . 'script' . DS . 'addbibliotheque.php,' . $scgi . ',$d.get_hash=,$d.get_base_path=,$d.get_base_filename=,$d.is_multi_file=,$d.get_custom=clefunique,$d.get_custom=typemedias}\""
 
 ';
         file_put_contents("/home/" . $user . "/.rtorrent.rc", $content);
