@@ -35,11 +35,12 @@ class Film extends Controller
 
     function getBackdropSetWidth($id, $size)
     {
-        $backdrop = ROOT . DS . "cache" . DS . "film" . DS . "backdrop";
-        if (!is_dir($backdrop))
-            mkdir($backdrop, 0777, true);
-        \model\simple\Film::getBackdrop($id);
-
+        $this->set(array(
+            "url" => $id,
+            "size" => $size,
+            "image" => \model\simple\Film::getBackdropSetWidth($id, $size)
+        ));
+        //$this->render("index");
         //$url = urldecode($url);
         //$myimage = new \model\simple\MyImage(WEBROOT . DS . "images" . DS .);
 
