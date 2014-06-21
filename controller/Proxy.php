@@ -68,7 +68,7 @@ class Proxy extends Controller
         //$im->annotateImage($draw, 0, 0, 0, "Lorem ipsum\n dolor\n sit amet,\n consectetur adipisicing elit.\n Ea eaque earum eligendi labore mollitia voluptas. Aspernatur consectetur deleniti doloremque labore non, nulla placeat, quas quasi quisquam sequi totam veniam. Fuga.");
         //$im = \model\simple\MyImage::makeTextBlockCenter($titre, ROOT . DS . "font" . DS . "comic.ttf", 10, $im);
         $this->set(array(
-            "image" => \model\simple\MyImage::nonImageAddTexte(ROOT . DS . "webroot/images/no-poster-w92.jpg", $titre, ROOT . DS . "font" . DS . "comic.ttf", 30)
+            "image" => \model\simple\MyImage::nonImageAddTexte($titre, ROOT . DS . "font" . DS . "comic.ttf", 30)
         ));
         $this->render("index");
     }
