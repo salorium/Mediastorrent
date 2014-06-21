@@ -137,6 +137,6 @@ system.method.set_key = event.download.finished,addbibliotheque,"execute={php,' 
 
 ';
         file_put_contents("/home/" . $user . "/.rtorrent.rc", $content);
-        file_put_contents("/home/" . $user . "/.scgi.txt", $scgi . "");
+        //file_put_contents("/home/" . $user . "/.scgi.txt", $scgi . "");
     }
 } 
