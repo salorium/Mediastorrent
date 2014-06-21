@@ -419,7 +419,7 @@ class Allocine extends Model
 
                 }
             $tmdb = new TheMovieDb();
-            $films = $tmdb->searchFilm($v->originalTitle, "en");
+            $films = $tmdb->searchFilm($v->originalTitle, "fr");
             //var_dump($tmp1);
             //die();
             if (isset($films->results)) {
