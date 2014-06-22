@@ -33,6 +33,59 @@ class Film extends Controller
         // die();
     }
 
+    function getBackdropSetWidth($id, $size)
+    {
+        $this->set(array(
+            "id" => $id,
+            "size" => $size,
+            "image" => \model\simple\Film::getBackdropSetWidth($id, $size)
+        ));
+        $this->render("index");
+    }
+
+    function getBackdropSetHeight($id, $size)
+    {
+        $this->set(array(
+            "id" => $id,
+            "size" => $size,
+            "image" => \model\simple\Film::getBackdropSetHeight($id, $size)
+        ));
+        $this->render("index");
+    }
+
+    function getPosterSetWidth($id, $size)
+    {
+        $this->set(array(
+            "id" => $id,
+            "size" => $size,
+            "image" => \model\simple\Film::getPosterSetWidth($id, $size)
+        ));
+        $this->render("index");
+    }
+
+    function getPosterSetHeight($id, $size)
+    {
+        $this->set(array(
+            "id" => $id,
+            "size" => $size,
+            "image" => \model\simple\Film::getPosterSetHeight($id, $size)
+        ));
+        $this->render("index");
+    }
+
+    function imageSetHeight($url, $size)
+    {
+        //$url = urldecode($url);
+        $myimage = new \model\simple\MyImage($url);
+
+        $this->set(array(
+            "url" => $url,
+            "size" => $size,
+            "image" => $myimage->getImageHeightFixed($size)
+        ));
+        $this->render("index");
+    }
+
     function streaming($id)
     {
         $this->layout = "streaming";

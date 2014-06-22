@@ -21,8 +21,8 @@ class Torrentfilm extends \core\ModelMysql
     public $hashtorrent;
     public $clefunique;
     public $fini;
-    public $qualite;
     public $mediainfo;
+    public $qualite;
     public $partageamis;
 
     static function addTorrentFilm($idfilm, $numfile, $complementfichier, $login, $nomrtorrent, $hashtorrent, $clefunique, $partageamis)
@@ -47,7 +47,7 @@ class Torrentfilm extends \core\ModelMysql
     {
         if (is_null($this->id) || is_null($this->numfile) || is_null($this->idfilm) || is_null($this->login) || is_null($this->nomrtorrent) || is_null($this->hashtorrent) || is_null($this->fini) || is_null($this->partageamis) || is_null($this->clefunique))
             return false;
-        $query = "insert into torrentfilm (id,date,numfile,complementfichier,idfilm,login,nomrtorrent,hashtorrent,clefunique,fini,qualite,mediainfo,partageamis) values(";
+        $query = "insert into torrentfilm (id,date,numfile,complementfichier,idfilm,login,nomrtorrent,hashtorrent,clefunique,fini,mediainfo,qualite,partageamis) values(";
         $query .= \core\Mysqli::real_escape_string($this->id) . ",";
         $query .= \core\Mysqli::real_escape_string($this->date) . ",";
         $query .= \core\Mysqli::real_escape_string($this->numfile) . ",";
@@ -58,8 +58,8 @@ class Torrentfilm extends \core\ModelMysql
         $query .= \core\Mysqli::real_escape_string($this->hashtorrent) . ",";
         $query .= \core\Mysqli::real_escape_string($this->clefunique) . ",";
         $query .= \core\Mysqli::real_escape_string($this->fini) . ",";
-        $query .= \core\Mysqli::real_escape_string($this->qualite) . ",";
         $query .= \core\Mysqli::real_escape_string($this->mediainfo) . ",";
+        $query .= \core\Mysqli::real_escape_string($this->qualite) . ",";
         $query .= \core\Mysqli::real_escape_string($this->partageamis) . ")";
         \core\Mysqli::query($query);
         $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
@@ -73,6 +73,7 @@ class Torrentfilm extends \core\ModelMysql
         $query .= "where clefunique=" . \core\Mysqli::real_escape_string($clefunique);
         $query .= " and hashtorrent=" . \core\Mysqli::real_escape_string($hash);
         $query .= " and numfile=" . \core\Mysqli::real_escape_string($numfile);
+        $query .= " and fini= false";
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(false, __CLASS__);
     }
@@ -142,7 +143,7 @@ class Torrentfilm extends \core\ModelMysql
         $query .= "where( tf.fini = true ";
         $query .= "and tf.idfilm = f.id ";
         $query .= "and r.nom = tf.nomrtorrent ";
-        //$query .= "and tf.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login);
+        $query .= "and tf.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login);
         $query .= " and rs.nomrtorrent = r.nom ";
         $query .= " and rs.login = tf.login ";
         //$query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
@@ -154,7 +155,7 @@ class Torrentfilm extends \core\ModelMysql
         $query .= "and r.nom = tf.nomrtorrent ";
         $query .= "and rs.login = tf.login ";
         $query .= "and rs.nomrtorrent = r.nom ";
-        $query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
+        //$query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
         $query .= " and f.id = " . \core\Mysqli::real_escape_string($id);
         $query .= " and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
         $query .= ") order by qualite DESC";
@@ -169,7 +170,7 @@ class Torrentfilm extends \core\ModelMysql
         $query .= "where( tf.fini = true ";
         $query .= "and tf.idfilm = f.id ";
         $query .= "and r.nom = tf.nomrtorrent ";
-        //$query .= "and tf.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login);
+        $query .= "and tf.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login);
         $query .= " and rs.nomrtorrent = r.nom ";
         $query .= " and rs.login = tf.login ";
         //$query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
@@ -181,7 +182,7 @@ class Torrentfilm extends \core\ModelMysql
         $query .= "and r.nom = tf.nomrtorrent ";
         $query .= "and rs.login = tf.login ";
         $query .= "and rs.nomrtorrent = r.nom ";
-        $query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
+        //$query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
         $query .= " and tf.id = " . \core\Mysqli::real_escape_string($id);
         $query .= " and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
         $query .= ")";

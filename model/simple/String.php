@@ -36,4 +36,20 @@ class String extends \core\Model
     {
         return preg_replace("#(.+)#", '<span style="color:green;">$1</span>', $str);
     }
+
+    static function remplaceAccent($str)
+    {
+        $str = htmlentities($str, ENT_NOQUOTES, "UTF-8");
+
+        // remplacer les entités HTML pour avoir juste le premier caractères non accentués
+// Exemple : "&ecute;" => "e", "&Ecute;" => "E", "Ã " => "a" ...
+        $str = preg_replace('#&([A-za-z])(?:acute|grave|cedil|circ|orn|ring|slash|th|tilde|uml);#', '\1', $str);
+
+// Remplacer les ligatures tel que : Œ, Æ ...
+// Exemple "Å“" => "oe"
+        $str = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $str);
+// Supprimer tout le reste
+        $str = preg_replace('#&[^;]+;#', '', $str);
+        return $str;
+    }
 } 

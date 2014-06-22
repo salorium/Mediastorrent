@@ -419,24 +419,33 @@ class Allocine extends Model
 
                 }
             $tmdb = new TheMovieDb();
-            $tmp1 = $tmdb->searchFilm($v->originalTitle, "en");
-            if (isset($tmp1->results)) {
-                if (count($tmp1->results) > 0) {
-                    $tmp1 = $tmdb->getMovieImage($tmp1->results[0]->id);
-                    foreach ($tmp1->backdrops as $k => $vv) {
-                        //var_dump($vv);
-                        //die();
-                        if ($maxratiobackdrop < $vv->height / $vv->width)
-                            $maxratiobackdrop = $vv->height / $vv->width;
-                        $tmp["imagebackdrop"]["url"][] = array("http://image.tmdb.org/t/p/original" . $vv->file_path, $vv->width, $vv->height);
+            $films = $tmdb->searchFilm($v->originalTitle, "en");
+            //var_dump($tmp1);
+            //die();
+            if (isset($films->results)) {
+                if (count($films->results) > 0) {
+                    foreach ($films->results as $vvv) {
+                        //var_dump(stripos($vvv->original_title, $v->originalTitle));
+                        if (stripos(String::remplaceAccent($vvv->original_title), String::remplaceAccent($v->originalTitle)) === 0) {
+                            $tmp1 = $tmdb->getMovieImage($vvv->id);
+                            foreach ($tmp1->backdrops as $k => $vv) {
+                            //var_dump($vv);
+                            //die();
+                            if ($maxratiobackdrop < $vv->height / $vv->width)
+                                $maxratiobackdrop = $vv->height / $vv->width;
+                            $tmp["imagebackdrop"]["url"][] = array("http://image.tmdb.org/t/p/original" . $vv->file_path, $vv->width, $vv->height);
+                        }
+                        foreach ($tmp1->posters as $k => $vv) {
+                            if ($maxratioposter < $vv->height / $vv->width)
+                                $maxratioposter = $vv->height / $vv->width;
+                            $tmp["imageposter"]["url"][] = array("http://image.tmdb.org/t/p/original" . $vv->file_path, $vv->width, $vv->height);
+                        }
+                        }
                     }
-                    foreach ($tmp1->posters as $k => $vv) {
-                        if ($maxratioposter < $vv->height / $vv->width)
-                            $maxratioposter = $vv->height / $vv->width;
-                        $tmp["imageposter"]["url"][] = array("http://image.tmdb.org/t/p/original" . $vv->file_path, $vv->width, $vv->height);
-                    }
+
                 }
             }
+            //die();
             if ($maxratiobackdrop > -1) {
                 $tmp["imagebackdrop"]["ratio"] = $maxratiobackdrop;
             }
