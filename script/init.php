@@ -5,6 +5,10 @@
  * Date: 30/04/14
  * Time: 00:37
  */
+/**
+ * Todo: A supprimer dans la version final plus nécessaire
+ *
+ */
 define('WEBROOT', __DIR__);
 define('ROOT', dirname(WEBROOT));
 define('DS', DIRECTORY_SEPARATOR);
