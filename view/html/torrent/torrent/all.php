@@ -63,7 +63,7 @@
 
                 <ul class="dropdown">
                     <li><a onclick="Torrent1.controller.listTorrent.delete();">Supprimer</a></li>
-                    <li><a onclick="Torrent1.controller.listTorrent.deleteAll();">Supprimer tout</a></li>
+                    <li><a onclick="Torrent1.controller.listTorrent.deleteAll();">Supprimer les données</a></li>
                 </ul>
             </li>
             <li class="divider"></li>
