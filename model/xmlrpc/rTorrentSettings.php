@@ -237,7 +237,8 @@ class rTorrentSettings extends \core\Model
     public function getRemoveScheduleCommand($name)
     {
         return(	new rXMLRPCCommand("schedule_remove", $name.getUser()) );
-    }
+    }*/
+    /*
     public function correctDirectory(&$dir,$resolve_links = false)
     {
         global $topDirectory;

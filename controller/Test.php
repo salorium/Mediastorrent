@@ -17,6 +17,12 @@ use model\xmlrpc\rTorrentSettings;
 
 class Test extends Controller
 {
+    function rt($ports)
+    {
+        \config\Conf::$portscgi = $ports;
+        var_dump(\model\xmlrpc\rTorrentSettings::get(\config\Conf::$portscgi));
+    }
+
     function addFilm($id)
     {
         $o["typesearch"] = "movie";
