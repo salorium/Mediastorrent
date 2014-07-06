@@ -16,6 +16,7 @@ Torrent1.controller = {
         this.trackersTorrent.init();
         this.addTorrent.init();
         Torrent1.view.addTorrent.hide();
+        Torrent1.view.createTorrent.hide();
     },
     seedbox: {
         init: function (seedbox) {
@@ -970,6 +971,9 @@ Torrent1.controller = {
         }
     },
     createTorrent: {
+        init: function () {
+            Torrent1.view.createTorrent.init();
+        },
         show: function () {
             Torrent1.view.createTorrent.show()
         },
