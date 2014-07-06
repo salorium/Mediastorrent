@@ -138,9 +138,9 @@ class rTorrentSettings extends \core\Model
                                 $this->started = 0;
                         }
                         $id = "";//getExternal('id');
-                        $req = new rXMLRPCRequest(
-                            new rXMLRPCCommand("execute_capture",array("sh","-c",$id." -u ; ".$id." -G ; echo ~ ")));
-                        if($req->run() && !$req->fault && (($line=explode("\n",$req->val[0]))!==false) && (count($line)>2))
+                    $req = new rXMLRPCRequest($this->portscgi,
+                        new rXMLRPCCommand($this->portscgi, "execute_capture", array("sh", "-c", $id . " -u ; " . $id . " -G ; echo ~ ")));
+                    if($req->run() && !$req->fault && (($line=explode("\n",$req->val[0]))!==false) && (count($line)>2))
                         {
                             $this->uid = intval(trim($line[0]));
                             $this->gid = explode(' ',trim($line[1]));
