@@ -20,6 +20,6 @@ class Repertoire extends \core\Model
         }
         $liste = "[" . implode(",", $recmd[1]) . "]";
         echo($liste);
-        return json_decode($liste, true);
+        return json_decode($liste);
     }
 } 
