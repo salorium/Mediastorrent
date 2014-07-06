@@ -20,7 +20,7 @@ class Test extends Controller
 {
     function tfind()
     {
-        Repertoire::getFindAll();
+        $this->set("rep", Repertoire::getFindAll());
     }
 
     function ct()
