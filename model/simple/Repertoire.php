@@ -21,6 +21,6 @@ class Repertoire extends \core\Model
         $liste = "[" . implode(",", $recmd[1]) . "]";
         var_dump($recmd[1][0]);
         var_dump(json_decode($recmd[1][0]));
-        return json_decode($recmd[1][0]);
+        return json_decode('{name:"Alaska.La.ruee.vers.l.or.S04E03.avi",taille:460697888,type:"f"}');
     }
 } 
