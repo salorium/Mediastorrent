@@ -311,5 +311,5 @@
     </div>
 </div>
 
-<div id="cliquedroit" style="background-color: darkslategray;width: 150px;display: none;"></div>
-</div>
+<!--<div id="cliquedroit" style="background-color: darkslategray;width: 150px;display: none;"></div>
+</div>-->
