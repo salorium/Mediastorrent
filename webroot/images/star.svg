@@ -1,0 +1,28 @@
+<?php
+header('Content-type: image/svg+xml');
+echo '<?xml version="1.0" encoding="utf-8"?>';
+?>
+
+
+<!-- The icon can be used freely in both personal and commercial projects with no attribution required, but always appreciated.
+You may NOT sub-license, resell, rent, redistribute or otherwise transfer the icon without express written permission from iconmonstr.com -->
+
+
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+
+	 width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+
+<path fill="white" id="star-2-circle-outline-icon" d="M256,90c91.741,0,166,74.245,166,166c0,91.743-74.245,166-166,166
+
+	c-91.741,0-166-74.245-166-166C90,164.257,164.245,90,256,90z M256,50C142.229,50,50,142.229,50,256s92.229,206,206,206
+
+	s206-92.229,206-206S369.771,50,256,50z M221.817,210.198l-82.17,11.346l59.808,57.478l-14.602,81.655L258,321.557l73.146,39.12
+
+	l-14.602-81.655l59.808-57.478l-82.17-11.346L258,135.556L221.817,210.198z"/>
+
+</svg>
+
+</svg>
+

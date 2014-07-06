@@ -40,6 +40,10 @@
                 </ul>
             </li>
             <li class="divider"></li>
+            <li><a onclick="Torrent1.controller.addTorrent.show();" title="Créer un Torrent"><img width="40px"
+                                                                                                  src="<?= BASE_URL ?>images/star.svg"/></a>
+            </li>
+            <li class="divider"></li>
             <li><a onclick="Torrent1.controller.addTorrent.show();" title="Ajouter un Torrent"><img width="40px"
                                                                                                     src="<?= BASE_URL ?>images/world.svg"/></a>
             </li>
