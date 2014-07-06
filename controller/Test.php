@@ -25,7 +25,7 @@ class Test extends Controller
         $callback_err = create_function('$msg', 'echo $msg;');
 
 
-        $torrent = new Torrent($path_edit, "http://www.salorium.com", $piece_size, $callback_log, $callback_err);
+        $torrent = new Torrent($path_edit, array(), $piece_size, $callback_log, $callback_err);
         var_dump($torrent);
     }
 
