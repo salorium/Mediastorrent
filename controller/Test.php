@@ -26,6 +26,7 @@ class Test extends Controller
 
 
         $torrent = new Torrent($path_edit, array(), $piece_size, $callback_log, $callback_err);
+        var_dump($torrent->info['name']);
         var_dump($torrent);
     }
 
