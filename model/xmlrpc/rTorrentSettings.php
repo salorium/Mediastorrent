@@ -130,8 +130,8 @@ class rTorrentSettings extends \core\Model
                     }
 
                     /*if(isLocalMode())
-                    {
-                        if(!empty($this->session))
+                    {*/
+                    if(!empty($this->session))
                         {
                             $this->started = @filemtime($this->session.'/rtorrent.lock');
                             if($this->started===false)
@@ -151,7 +151,7 @@ class rTorrentSettings extends \core\Model
                         }
                         else
                             $this->idNotFound = true;
-                    }*/
+                    /*}*/
                     $this->store();
                 }
             }
