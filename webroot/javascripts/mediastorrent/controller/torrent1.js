@@ -969,6 +969,14 @@ Torrent1.controller = {
             }
         }
     },
+    createTorrent: {
+        show: function () {
+            Torrent1.view.createTorrent.show()
+        },
+        hide: function () {
+            Torrent1.view.createTorrent.hide();
+        }
+    },
     loader: {
         init: function () {
             Torrent1.view.loaders.init();

@@ -828,5 +828,13 @@ Torrent1.view = {
                 }
             }
         }
+    },
+    createTorrent: {
+        show: function () {
+            $("#createTorrent").show();
+        },
+        hide: function () {
+            $("#createTorrent").hide();
+        }
     }
 };
