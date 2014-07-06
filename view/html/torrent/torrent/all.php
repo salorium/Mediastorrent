@@ -40,8 +40,8 @@
                 </ul>
             </li>
             <li class="divider"></li>
-            <li><a onclick="Torrent1.controller.addTorrent.show();" title="Créer un Torrent"><img width="40px"
-                                                                                                  src="<?= BASE_URL ?>images/star.svg"/></a>
+            <li><a onclick="Torrent1.controller.createTorrent.show();" title="Créer un Torrent"><img width="40px"
+                                                                                                     src="<?= BASE_URL ?>images/star.svg"/></a>
             </li>
             <li class="divider"></li>
             <li><a onclick="Torrent1.controller.addTorrent.show();" title="Ajouter un Torrent"><img width="40px"
@@ -310,9 +310,9 @@
         </form>
     </div>
 </div>
-<div id="newTorrent" class="addTorrent">
+<div id="createTorrent" class="addTorrent">
 
-    <div id="addTorrentTitle" class="addTorrentTitle">
+<div id="addTorrentTitle" class="addTorrentTitle">
         <a><?= preg_replace("#([A-Z]+)#", '<span class="secondary">$1</span>', "Créer un torrent"); ?></a><a
             class="close" onclick="Torrent1.controller.addTorrent.hide();">&times;</a></div>
     <div id="addTorrentContenu" class="addTorrentContenu">
