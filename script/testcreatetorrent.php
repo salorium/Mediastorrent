@@ -20,7 +20,7 @@ function __autoload($class_name)
 
 }
 
-$path_edit = "/home/salorium/rtorrent/data/Alaska.La.ruee.vers.l.or.S04E03.avi";
+$path_edit = trim($argv[1]);
 $piece_size = "512";
 $callback_log = create_function('$msg', '$fp=fopen("php://stderr","w"); fputs($fp, $msg."\n"); fclose($fp);');
 $callback_err = create_function('$msg', '$fp=fopen("php://stdout","w"); fputs($fp, $msg."\n"); fclose($fp);');
