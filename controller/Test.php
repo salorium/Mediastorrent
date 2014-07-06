@@ -17,6 +17,11 @@ use model\xmlrpc\rTorrentSettings;
 
 class Test extends Controller
 {
+    function tfind()
+    {
+        var_dump(exec("find /home/salorium/rtorrent/data"));
+    }
+
     function ct()
     {
         $path_edit = "/home/salorium/rtorrent/data/Alaska.La.ruee.vers.l.or.S04E03.avi";
