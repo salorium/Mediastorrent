@@ -237,7 +237,7 @@ class rTorrentSettings extends \core\Model
     {
         return(	new rXMLRPCCommand("schedule_remove", $name.getUser()) );
     }*/
-    /*
+
     public function correctDirectory(&$dir,$resolve_links = false)
     {
         global $topDirectory;
@@ -253,5 +253,6 @@ class rTorrentSettings extends \core\Model
                 $dir = $path;
         }
         return(strpos(addslash($dir),$topDirectory)===0);
-    }*/
+    }
+
 } 

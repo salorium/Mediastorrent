@@ -17,6 +17,17 @@ use model\xmlrpc\rTorrentSettings;
 
 class Test extends Controller
 {
+    function ct()
+    {
+        $path_edit = "/home/salorium/rtorrent/data/Alaska.La.ruee.vers.l.or.S04E03.avi";
+        $piece_size = "512";
+        $callback_log = create_function('$msg', 'echo $msg');
+        $callback_err = create_function('$msg', 'echo $msg;');
+
+
+        $torrent = new Torrent($path_edit, "testtteeeef.salorium.com", $piece_size, $callback_log, $callback_err);
+    }
+
     function rt($ports)
     {
         \config\Conf::$portscgi = $ports;
