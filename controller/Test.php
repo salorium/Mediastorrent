@@ -19,7 +19,7 @@ class Test extends Controller
 {
     function tfind()
     {
-        exec("find /home/salorium/rtorrent/data", $out, $code);
+        exec('find /home/salorium/rtorrent/data | awk \'{gsub(/\/home\/salorium\/rtorrent\/data\//,"",$0); print $0 }\'', $out, $code);
         var_dump($out);
     }
 
