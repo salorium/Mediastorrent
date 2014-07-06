@@ -21,8 +21,6 @@ class Test extends Controller
     function tfind()
     {
         $vv = Repertoire::getFindAll();
-        var_dump($vv);
-        //die();
         $this->set("rep", $vv);
     }
 
