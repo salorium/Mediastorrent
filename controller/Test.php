@@ -23,7 +23,7 @@ class Test extends Controller
         $vv = Repertoire::getFindAll();
         var_dump($vv);
         //die();
-        $this->set("rep", Repertoire::getFindAll());
+        $this->set("rep", $vv);
     }
 
     function ct()
