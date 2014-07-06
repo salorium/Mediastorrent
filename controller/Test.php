@@ -19,7 +19,8 @@ class Test extends Controller
 {
     function tfind()
     {
-        var_dump(exec("find /home/salorium/rtorrent/data"));
+        exec("find /home/salorium/rtorrent/data", $out, $code);
+        var_dump($out);
     }
 
     function ct()
