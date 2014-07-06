@@ -12,6 +12,7 @@ namespace controller;
 use core\Controller;
 use model\mysql\Film;
 use model\simple\Mail;
+use model\simple\Repertoire;
 use model\xmlrpc\rTorrentSettings;
 
 
@@ -19,8 +20,7 @@ class Test extends Controller
 {
     function tfind()
     {
-        exec('find /home/salorium/rtorrent/data | awk \'{gsub(/\/home\/salorium\/rtorrent\/data\//,"",$0); print $0 }\'', $out, $code);
-        var_dump($out);
+        Repertoire::getFindAll();
     }
 
     function ct()
