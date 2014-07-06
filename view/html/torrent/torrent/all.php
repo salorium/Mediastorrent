@@ -310,6 +310,54 @@
         </form>
     </div>
 </div>
+<div id="newTorrent" class="addTorrent">
 
+    <div id="addTorrentTitle" class="addTorrentTitle">
+        <a><?= preg_replace("#([A-Z]+)#", '<span class="secondary">$1</span>', "Créer un torrent"); ?></a><a
+            class="close" onclick="Torrent1.controller.addTorrent.hide();">&times;</a></div>
+    <div id="addTorrentContenu" class="addTorrentContenu">
+        <form id="addtorrent" method="post" enctype="multipart/form-data"
+              onsubmit="Torrent1.controller.addTorrent.upload(event);">
+            <div id="baseaddTorrent">
+                <div class="row expansion">
+                    <div class="small-6 columns">
+                        <label for="torrentfile" class="right inline">Torrent</label>
+                    </div>
+                    <div class="small-6 columns">
+                        <input type="file" name="torrentfile[]" multiple
+                               onchange="Torrent1.controller.addTorrent.files.check($('#mediastorrent').is(':checked'));">
+                    </div>
+                </div>
+                <div class="row expansion">
+                    <div class="small-6 columns">
+                        <input class="right" name="autostart" id="autostart" type="checkbox">
+                    </div>
+                    <div class="small-6 columns">
+                        <label for="autostart">Ne pas démarrer le téléchargement</label>
+                    </div>
+                </div>
+                <div class="row expansion">
+                    <div class="small-6 columns">
+                        <input class="right" name="mediastorrent" id="mediastorrent" type="checkbox"
+                               onchange="Torrent1.controller.addTorrent.files.check($('#mediastorrent').is(':checked'));">
+                    </div>
+                    <div class="small-6 columns">
+                        <label for="mediastorrent">Ajouter à la bibliothèque</label>
+                    </div>
+                </div>
+            </div>
+            <center>
+                <div id="addTorrentDetails" class="addTorrentDetails">
+
+                </div>
+            </center>
+            <div id="divbouttonaddtorrent" class="row">
+                <div class="small-2 small-centered columns">
+                    <button class="button small secondary expand" value="ajouter" type="submit">Ajouter</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 <!--<div id="cliquedroit" style="background-color: darkslategray;width: 150px;display: none;"></div>
 </div>-->
