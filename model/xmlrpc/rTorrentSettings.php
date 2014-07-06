@@ -143,7 +143,11 @@ class rTorrentSettings extends \core\Model
 
                     $t = $req->run();
                     var_dump($req->fault);
+                    echo "<br>";
+                    echo "<br>";
                     var_dump($req->val);
+                    echo "<br>";
+                    echo "<br>";
                     if ($t && !$req->fault && (($line = explode("\n", $req->val[0])) !== false) && (count($line) > 2)) {
                             $this->uid = intval(trim($line[0]));
                             $this->gid = explode(' ',trim($line[1]));
