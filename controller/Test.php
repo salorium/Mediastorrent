@@ -21,7 +21,6 @@ class Test extends Controller
     {
         \config\Conf::$portscgi = $ports;
         var_dump(\model\xmlrpc\rTorrentSettings::get(\config\Conf::$portscgi, true));
-        var_dump(\model\xmlrpc\rXMLRPCRequest::$query);
     }
 
     function addFilm($id)
