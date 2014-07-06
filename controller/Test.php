@@ -25,7 +25,7 @@ class Test extends Controller
         $callback_err = create_function('$msg', 'echo $msg;');
 
 
-        $torrent = new Torrent($path_edit, array(), $piece_size, $callback_log, $callback_err);
+        $torrent = new \model\simple\Torrent($path_edit, array(), $piece_size, $callback_log, $callback_err);
         $torrent->is_private(true);
         var_dump($torrent->info['name']);
         var_dump($torrent);
