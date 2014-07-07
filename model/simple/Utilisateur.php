@@ -13,6 +13,16 @@ class Utilisateur extends \core\Model
 {
     static function authentificationDistante($login, $keyconnexion)
     {
+        foreach (\config\Conf::$numerorole as $k => $v) {
+            if (is_array($v)) {
+                foreach ($v as $kk => $vv) {
+                    \config\Conf::$rolenumero [$vv] = $k;
+                }
+            } else {
+                \config\Conf::$rolenumero [$v] = $k;
+            }
+
+        }
         if (!is_null($login) && !is_null($keyconnexion)) {
             $u = \core\Memcached::value($login, "user");
             if (is_null($u)) {
@@ -30,6 +40,20 @@ class Utilisateur extends \core\Model
                 }
             }
             \config\Conf::$user["user"] = $u;
+        }
+        $role = 1;
+        $roletext = "Visiteur";
+        if ($u && !is_null($u)) {
+            $role = Conf::$rolenumero[$u->role];
+            $roletext = $u->role;
+            \core\Memcached::value($u->login, "user", $u, 60 * 5);
+        }
+
+        Conf::$user["user"] = $u;
+        Conf::$user["role"] = $role;
+        Conf::$user["roletxt"] = $roletext;
+        if ($u) {
+            LoaderJavascript::add("base", "controller.setUtilisateur", array(Conf::$user["user"]->login, Conf::$user["user"]->keyconnexion, Conf::$user["user"]->role));
         }
     }
 
