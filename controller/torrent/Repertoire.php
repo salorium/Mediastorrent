@@ -9,7 +9,7 @@
 namespace controller\torrent;
 
 
-class Repertoire extends Controller
+class Repertoire extends \core\Controller
 {
 
 } 
