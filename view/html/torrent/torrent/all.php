@@ -321,7 +321,7 @@
             <div id="baseaddTorrent">
                 <div class="row expansion">
                     <div class="small-6 columns">
-                        <label for="torrentfile" class="right inline">Répertoire</label>
+                        <label for="repertoire" class="right inline">Répertoire</label>
                     </div>
                     <div class="small-6 columns">
                         <input type="text" name="repertoire">
