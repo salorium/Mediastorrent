@@ -319,15 +319,16 @@
         <form id="addtorrent" method="post" enctype="multipart/form-data"
               onsubmit="Torrent1.controller.addTorrent.upload(event);">
             <div id="baseaddTorrent">
-                <fieldset>
-                    <legend>Répertoire</legend>
-                    <div class="row expansion">
+
+                <div class="row expansion">
+                    <fieldset>
+                        <legend>Répertoire</legend>
                         <div class="small-6 columns large-centered">
                             <input type="text" name="repertoire">
                         </div>
-                    </div>
+                    </fieldset>
+                </div>
 
-                </fieldset>
                 <div class="row expansion">
                     <div class="small-6 columns">
                         <input class="right" name="autostart" id="autostart" type="checkbox">
