@@ -312,18 +312,15 @@
 </div>
 <div id="createTorrent" class="addTorrent">
 
-<div id="addTorrentTitle" class="addTorrentTitle">
+    <div id="addTorrentTitle" class="addTorrentTitle">
         <a><?= preg_replace("#([A-Z]+)#", '<span class="secondary">$1</span>', "Créer un torrent"); ?></a><a
-        class="close" onclick="Torrent1.controller.createTorrent.hide();">&times;</a></div>
+            class="close" onclick="Torrent1.controller.createTorrent.hide();">&times;</a></div>
     <div id="addTorrentContenu" class="addTorrentContenu">
         <form id="addtorrent" method="post" enctype="multipart/form-data"
               onsubmit="Torrent1.controller.addTorrent.upload(event);">
             <div id="baseaddTorrent">
                 <div class="row expansion">
-                    <div class="small-6 columns">
-                        <label for="repertoire" class="right inline">Répertoire</label>
-                    </div>
-                    <div class="small-6 columns">
+                    <div class="small-6 columns large-centered">
                         <input type="text" name="repertoire">
                     </div>
                 </div>
