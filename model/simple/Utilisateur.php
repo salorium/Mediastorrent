@@ -44,16 +44,16 @@ class Utilisateur extends \core\Model
         $role = 1;
         $roletext = "Visiteur";
         if ($u && !is_null($u)) {
-            $role = Conf::$rolenumero[$u->role];
+            $role = \config\Conf::$rolenumero[$u->role];
             $roletext = $u->role;
             \core\Memcached::value($u->login, "user", $u, 60 * 5);
         }
 
-        Conf::$user["user"] = $u;
-        Conf::$user["role"] = $role;
-        Conf::$user["roletxt"] = $roletext;
+        \config\Conf::$user["user"] = $u;
+        \config\Conf::$user["role"] = $role;
+        \config\Conf::$user["roletxt"] = $roletext;
         if ($u) {
-            LoaderJavascript::add("base", "controller.setUtilisateur", array(Conf::$user["user"]->login, Conf::$user["user"]->keyconnexion, Conf::$user["user"]->role));
+            \core\LoaderJavascript::add("base", "controller.setUtilisateur", array(\config\Conf::$user["user"]->login, \config\Conf::$user["user"]->keyconnexion, \config\Conf::$user["user"]->role));
         }
     }
 
