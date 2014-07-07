@@ -323,8 +323,8 @@
                 <div class="row expansion">
                     <fieldset>
                         <legend>Répertoire</legend>
-                        <div class="small-6 columns large-centered">
-                            <input type="text" name="repertoire">
+                        <div class="large-10 columns large-centered">
+                        <input type="text" name="repertoire">
                         </div>
                     </fieldset>
                 </div>
