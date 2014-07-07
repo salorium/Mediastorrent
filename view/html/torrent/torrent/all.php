@@ -321,11 +321,10 @@
             <div id="baseaddTorrent">
                 <div class="row expansion">
                     <div class="small-6 columns">
-                        <label for="torrentfile" class="right inline">Torrent</label>
+                        <label for="torrentfile" class="right inline">Répertoire</label>
                     </div>
                     <div class="small-6 columns">
-                        <input type="file" name="torrentfile[]" multiple
-                               onchange="Torrent1.controller.addTorrent.files.check($('#mediastorrent').is(':checked'));">
+                        <input type="text" name="repertoire">
                     </div>
                 </div>
                 <div class="row expansion">
