@@ -320,8 +320,8 @@
               onsubmit="Torrent1.controller.addTorrent.upload(event);">
             <div id="baseaddTorrent">
 
-                <div class="row expansion">
-                    <fieldset>
+                <div class="row">
+                <fieldset>
                         <legend>Répertoire</legend>
                         <div class="large-10 columns large-centered">
                         <input type="text" name="repertoire">
