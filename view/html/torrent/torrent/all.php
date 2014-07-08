@@ -312,10 +312,10 @@
 </div>
 <div id="createTorrent" class="addTorrent">
 
-    <div id="addTorrentTitle" class="addTorrentTitle">
-        <a><?= preg_replace("#([A-Z]+)#", '<span class="secondary">$1</span>', "Créer un torrent"); ?></a><a
+    <div id="createTorrentTitle" class="addTorrentTitle">
+    <a><?= preg_replace("#([A-Z]+)#", '<span class="secondary">$1</span>', "Créer un torrent"); ?></a><a
             class="close" onclick="Torrent1.controller.createTorrent.hide();">&times;</a></div>
-    <div id="addTorrentContenu" class="addTorrentContenu">
+    <div id="createTorrentContenu" class="addTorrentContenu">
         <form id="addtorrent" method="post" enctype="multipart/form-data"
               onsubmit="Torrent1.controller.addTorrent.upload(event);">
             <div id="baseaddTorrent">
@@ -323,7 +323,7 @@
                 <div class="row">
                 <fieldset>
                         <legend>Répertoire</legend>
-                    <div class="row expansion">
+                    <div id="divrepcreatetorrent" class="row expansion">
                     <div class="large-10 columns large-centered">
                         <input type="text" name="repertoire">
                         </div>
@@ -334,8 +334,8 @@
                 </fieldset>
                 </div>
 
-                <div class="row">
-                    <fieldset>
+                <div id="divpropcreatetorrent" class="row">
+                <fieldset>
                         <legend>Propriétés du torrent</legend>
                         <div class="row expansion">
                             <div class="large-6 columns">
