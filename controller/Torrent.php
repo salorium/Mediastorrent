@@ -16,6 +16,15 @@ use model\xmlrpc\rXMLRPCCommand;
 
 class Torrent extends Controller
 {
+    function getcreate($login, $keyconnexion, $taskNo)
+    {
+        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
+        $to = \core\Memcached::value($login, "torrentfile" . $taskNo);
+        $tott = new \model\simple\Torrent($to);
+        $tott->send();
+    }
+
     function checkcreate($login, $keyconnexion, $taskNo)
     {
         $ret = null;
