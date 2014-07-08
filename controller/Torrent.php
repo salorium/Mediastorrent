@@ -20,7 +20,7 @@ class Torrent extends Controller
     {
         \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
-        if (isset($_REQUEST['path_edit'])) {
+        /*if (isset($_REQUEST['path_edit'])) {
             $path_edit = trim($_REQUEST['path_edit']);
             if (is_dir($path_edit))
                 $path_edit = addslash($path_edit);
@@ -52,8 +52,8 @@ class Torrent extends Controller
                         escapeshellarg(getTempDirectory()) . " &")));
                 if ($req->success())
                     $ret = array("no" => intval($taskNo), "errors" => array(), "status" => -1, "out" => "");
-            }
-        }
+            }*/
+    }
         function liste($login = null, $keyconnexion = null, $cid = null, $hashtorrentselectionne = null)
     {
         \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
