@@ -1052,9 +1052,9 @@ Torrent1.controller = {
                                     if (i == paths.length - 1) {
                                         console.info(!dossier[(dire + paths[i])]);
                                         console.info(v[0]);
-                                    }
                                 }
-                            if (i > 0) {
+                                }
+                                if (i > 0) {
                                 ancdire += paths[i - 1] + "/";
                             }
                                 dire += paths[i] + "/";
