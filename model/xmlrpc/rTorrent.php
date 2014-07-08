@@ -14,7 +14,7 @@ class rTorrent extends \core\Model
 {
     const RTORRENT_PACKET_LIMIT = 1572864;
 
-    static public function sendTorrent($fname, $isStart)
+    static public function sendTorrent($fname, $isStart, $directory = null)
     {
         $hash = false;
         $torrent = is_object($fname) ? $fname : new \model\simple\Torrent($fname);
@@ -34,6 +34,8 @@ class rTorrent extends \core\Model
                 $cmd->addParameter(rTorrentSettings::getCmd(\config\Conf::$portscgi, "d.set_custom") . "=x-filename," . rawurlencode(basename($filename)));
             $req = new rXMLRPCRequest(\config\Conf::$portscgi);
             $req->addCommand($cmd);
+            if (!is_null($directory))
+                $cmd->addParameter(rTorrentSettings::getCmd(\config\Conf::$portscgi, "d.set_directory=") . "\"" . $directory . "\"");
             if ($req->run() && !$req->fault)
                 $hash = $req->val;
         }
