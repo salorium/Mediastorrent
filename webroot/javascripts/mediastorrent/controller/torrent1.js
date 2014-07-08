@@ -1022,11 +1022,22 @@ Torrent1.controller = {
                 success: function (response, textStatus, jqXHR) {
                     //afficheResultat(container,response);
                     if (response.res != null) {
-
+                        if (response.res.status >= 0) {
+                            Base.view.noty.generate("success", "Le torrent a bien été créer :) ");
+                        } else {
+                            setTimeout(function () {
+                                Torrent1.controller.createTorrent.check(taskNo);
+                            }, 1000);
+                        }
+                    } else {
+                        Base.view.noty.generate("error", "Impossible de recheckcreate ");
                     }
+
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     // afficheErreur(jqXHR.responseText,container);
+
+                    Base.view.noty.generate("error", "Impossible de recheckcreate ");
                 }
 
             });
