@@ -392,16 +392,16 @@
         <div class="row">
         <fieldset>
                 <legend>Log</legend>
-                <div id="logcreate" class="large-6 columns" style="overflow-y: auto;overflow-x: hidden;">
-                </div>
+            <div id="logcreate" class="large-12 columns" style="overflow-y: auto;overflow-x: hidden;">
+            </div>
             </fieldset>
 
         </div>
         <div class="row">
         <fieldset>
                 <legend>Erreur</legend>
-                <div id="erreurcreate" class="large-6 columns" style="overflow-y: auto;overflow-x: hidden;">
-                </div>
+            <div id="erreurcreate" class="large-12 columns" style="overflow-y: auto;overflow-x: hidden;">
+            </div>
             </fieldset>
         </div>
         <div class="row">
