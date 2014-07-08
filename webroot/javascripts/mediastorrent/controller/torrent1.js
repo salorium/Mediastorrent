@@ -1015,6 +1015,7 @@ Torrent1.controller = {
                             } else {
                                 //Dossier
                                     if (i == paths.length - 1) {
+                                        console.info(dire);
                                         console.info(v[0]);
                                     }
                                     var where
