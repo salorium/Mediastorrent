@@ -317,9 +317,9 @@
             class="close" onclick="Torrent1.controller.createTorrent.hide();">&times;</a></div>
     <div id="createTorrentContenu" class="addTorrentContenu">
         <form id="createtorrent" method="post" enctype="multipart/form-data"
-              onsubmit="Torrent1.controller.addTorrent.upload(event);">
+              onsubmit="Torrent1.controller.createTorrent.create(event);">
 
-            <div id="divrepcreatetorrent" class="row">
+        <div id="divrepcreatetorrent" class="row">
                 <fieldset>
                     <legend>Répertoire</legend>
                     <div class="row expansion">

@@ -985,7 +985,7 @@ Torrent1.controller = {
         hide: function () {
             Torrent1.view.createTorrent.hide();
         },
-        create: function () {
+        create: function (e) {
             e.preventDefault();
             var formData = new FormData($("#createtorrent")[0]);
 
