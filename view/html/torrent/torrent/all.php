@@ -356,6 +356,12 @@
 
                         </select>
                     </div>
+                        <div class="small-1 columns">
+                            <input class="right" name="seed" id="seed" type="checkbox">
+                        </div>
+                        <div class="small-3 columns">
+                            <label for="seed">Mettre en seed</label>
+                        </div>
                     </fieldset>
                 </div>
                 <div class="row expansion">
