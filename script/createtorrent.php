@@ -33,7 +33,7 @@ $req = \core\Memcached::value($utilisateur, "task" . $taskNo);
 if (!is_null($req)) {
     $request = unserialize($req);
     var_dump($request);
-    die();
+    exit(1);
     $comment = '';
     $announce_list = array();
     $trackers = array();
