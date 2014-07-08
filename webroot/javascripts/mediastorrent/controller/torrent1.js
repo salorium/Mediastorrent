@@ -979,12 +979,17 @@ Torrent1.controller = {
         },
         show: function () {
             $("#createTorrentContenu").html(Torrent1.model.createTorrent.backup);
-            Torrent1.view.createTorrent.show()
+            Torrent1.view.createTorrent.show();
+
         },
         hide: function () {
             Torrent1.view.createTorrent.hide();
         },
         folder: {
+            loader: function () {
+                this.showLoader();
+
+            },
             showLoader: function () {
                 Torrent1.model.createTorrent.folderLoader.show();
             },
