@@ -329,12 +329,12 @@
                     </fieldset>
                 </div>
 
-                <div class="row expansion">
+                <div class="row">
                     <div class="small-6 columns">
-                        <input class="right" name="autostart" id="autostart" type="checkbox">
+                        <label for="trackers" class="right inline">Trackers : </label>
                     </div>
                     <div class="small-6 columns">
-                        <label for="autostart">Ne pas démarrer le téléchargement</label>
+                        <textarea name="trackers" id="trackers"></textarea>
                     </div>
                 </div>
                 <div class="row expansion">
