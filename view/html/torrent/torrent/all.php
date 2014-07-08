@@ -388,9 +388,27 @@
             </div>
         </form>
     </div>
-    <div id="createToto" style="display: none;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab animi cum
-        dolor earum eligendi facilis illum incidunt laudantium non numquam odio omnis perspiciatis, porro praesentium,
-        quisquam repellat repudiandae sunt voluptatem!
+    <div id="createToto" style="display: none;">
+        <div class="row expansion">
+            <fieldset>
+                <legend>Log</legend>
+                <div id="logcreate" class="large-6 columns" style="overflow-y: auto;overflow-x: hidden;">
+                </div>
+            </fieldset>
+
+        </div>
+        <div class="row expansion">
+            <fieldset>
+                <legend>Erreur</legend>
+                <div id="erreurcreate" class="large-6 columns" style="overflow-y: auto;overflow-x: hidden;">
+                </div>
+            </fieldset>
+        </div>
+        <div class="row">
+            <div class="small-2 small-centered columns">
+                <button class="button small secondary expand" type="button">Enregistrer</button>
+            </div>
+        </div>
     </div>
 </div>
 <!--<div id="cliquedroit" style="background-color: darkslategray;width: 150px;display: none;"></div>
