@@ -861,7 +861,6 @@ Torrent1.view = {
                         e.preventDefault();
                         Torrent1.model.createTorrent.folder.hauteurArbre = list.back;
                         Torrent1.view.createTorrent.afficheArbre();
-                        value = $("#repertoire").val();
                     });
                 }
                 var cpt = 0;
