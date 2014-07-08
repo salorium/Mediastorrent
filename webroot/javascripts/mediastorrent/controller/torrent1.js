@@ -1014,7 +1014,10 @@ Torrent1.controller = {
                                 }
                             } else {
                                 //Dossier
-                                var where
+                                    if (i == paths.length - 1) {
+                                        console.info(v[0]);
+                                    }
+                                    var where
 
                                 if (i == 0) {
                                     parent = 0;
