@@ -37,7 +37,10 @@ Torrent1.model = {
         folder: {
             loader: null,
             liste: [],
-            hauteurArbre: 0
+            hauteurArbre: 0,
+            makerDirectory: function (rep) {
+                return "/home/" + Base.model.utilisateur.login + "/rtorrent/data" + rep;
+            }
         }
     },
     filesTorrent: {
