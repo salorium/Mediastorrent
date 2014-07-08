@@ -13,11 +13,19 @@ use core\Controller;
 use model\mysql\Film;
 use model\simple\Mail;
 use model\simple\Repertoire;
+use model\simple\Torrent;
 use model\xmlrpc\rTorrentSettings;
 
 
 class Test extends Controller
 {
+    function getT()
+    {
+        $to = \core\Memcached::value("salorium", "torrentfile512");
+        $tott = new Torrent($to);
+        $tott->send();
+    }
+
     function tfind()
     {
         $vv = Repertoire::getFindAll();
