@@ -1054,6 +1054,10 @@ Torrent1.controller = {
 
             });
         },
+        get: function () {
+            var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/getcreate/' + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion + "/" + Torrent1.model.createTorrent.noTask;
+            $("#getdata").attr("action", url).submit();
+        },
         folder: {
             conversion: function (liste) {
                 if (liste != null) {
