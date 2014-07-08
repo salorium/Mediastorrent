@@ -333,42 +333,45 @@
                     <fieldset>
                         <legend>Propriétés du torrent</legend>
                         <div class="row expansion">
-                        <div class="large-6 columns">
-                        <label for="trackers" class="text-center inline">Trackers : </label>
-                    </div>
-                        <div class="large-6 columns">
-                        <textarea name="trackers" id="trackers"></textarea>
-                    </div>
+                            <div class="large-6 columns">
+                                <label for="trackers" class="text-center inline">Trackers : </label>
+                            </div>
+                            <div class="large-6 columns">
+                                <textarea name="trackers" id="trackers"></textarea>
+                            </div>
                         </div>
-                        <div class="large-6 columns">
-                        <label for="piece" class="text-center inline">Pièces : </label>
-                    </div>
-                        <div class="large-6 columns">
-                        <select name="piece" id="piece">
-                            <option value="32">32 Ko</option>
-                            <option value="64">64 Ko</option>
-                            <option value="128">128 Ko</option>
-                            <option value="256" selected="selected">256 Ko</option>
-                            <option value="512">512 Ko</option>
-                            <option value="1024">1 Mo</option>
-                            <option value="2048">2 Mo</option>
-                            <option value="4096">4 Mo</option>
-                            <option value="8192">8 Mo</option>
-                            <option value="16384">16 Mo</option>
-
-                        </select>
-                    </div>
-                        <div class="large-6 columns">
-                        <input class="right" name="seed" id="seed" type="checkbox">
+                        <div class="row expansion">
+                            <div class="large-6 columns">
+                                <label for="piece" class="text-center inline">Pièces : </label>
+                            </div>
+                            <div class="large-6 columns">
+                                <select name="piece" id="piece">
+                                    <option value="32">32 Ko</option>
+                                    <option value="64">64 Ko</option>
+                                    <option value="128">128 Ko</option>
+                                    <option value="256" selected="selected">256 Ko</option>
+                                    <option value="512">512 Ko</option>
+                                    <option value="1024">1 Mo</option>
+                                    <option value="2048">2 Mo</option>
+                                    <option value="4096">4 Mo</option>
+                                    <option value="8192">8 Mo</option>
+                                    <option value="16384">16 Mo</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="large-6 columns">
-                        <label for="seed">Mettre en seed</label>
-                        </div>
-                        <div class="large-6 columns">
-                        <input class="" name="private" id="private" type="checkbox">
-                        </div>
-                        <div class="large-6 columns">
-                        <label for="private">Tracker privé</label>
+                        <div class="row expansion">
+                            <div class="large-1 columns">
+                                <input name="seed" id="seed" type="checkbox">
+                            </div>
+                            <div class="large-5 columns">
+                                <label for="seed">Mettre en seed</label>
+                            </div>
+                            <div class="large-1 columns">
+                                <input name="private" id="private" type="checkbox">
+                            </div>
+                            <div class="large-5 columns">
+                                <label for="private">Tracker privé</label>
+                            </div>
                         </div>
                     </fieldset>
                 </div>
