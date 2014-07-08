@@ -336,6 +336,12 @@
                     <div class="small-6 columns">
                         <textarea name="trackers" id="trackers"></textarea>
                     </div>
+                    <div class="small-6 columns">
+                        <label for="trackers" class="text-center inline">Trackers : </label>
+                    </div>
+                    <div class="small-6 columns">
+                        <textarea name="trackers" id="trackers"></textarea>
+                    </div>
                 </div>
                 <div class="row expansion">
                     <div class="small-6 columns">
