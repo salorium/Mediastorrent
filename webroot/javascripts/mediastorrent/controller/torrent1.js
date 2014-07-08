@@ -974,12 +974,21 @@ Torrent1.controller = {
     createTorrent: {
         init: function () {
             Torrent1.view.createTorrent.init();
+            Torrent1.model.createTorrent.folderLoader = Base.view.loader.make("folder");
         },
         show: function () {
             Torrent1.view.createTorrent.show()
         },
         hide: function () {
             Torrent1.view.createTorrent.hide();
+        },
+        folder: {
+            showLoader: function () {
+                Torrent1.model.createTorrent.folderLoader.show();
+            },
+            hideLoader: function () {
+                Torrent1.model.createTorrent.folderLoader.hide();
+            }
         }
     },
     loader: {
