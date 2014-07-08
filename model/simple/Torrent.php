@@ -377,6 +377,8 @@ class Torrent extends \core\Model
         if (isset($_SERVER['HTTP_USER_AGENT']) && strstr($_SERVER['HTTP_USER_AGENT'], 'MSIE'))
             $filename = rawurlencode($filename);
         header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header("Content-Type: application/x-bittorrent; charset=UTF-8");
+        exit($this->__toString());
         //cachedEcho( $this->__toString(), 'application/x-bittorrent', true );
     }
 
