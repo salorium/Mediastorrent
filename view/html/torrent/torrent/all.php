@@ -389,16 +389,16 @@
         </form>
     </div>
     <div id="createToto" style="display: none;">
-        <div class="row expansion">
-            <fieldset>
+        <div class="row">
+        <fieldset>
                 <legend>Log</legend>
                 <div id="logcreate" class="large-6 columns" style="overflow-y: auto;overflow-x: hidden;">
                 </div>
             </fieldset>
 
         </div>
-        <div class="row expansion">
-            <fieldset>
+        <div class="row">
+        <fieldset>
                 <legend>Erreur</legend>
                 <div id="erreurcreate" class="large-6 columns" style="overflow-y: auto;overflow-x: hidden;">
                 </div>
