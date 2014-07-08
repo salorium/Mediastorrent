@@ -1000,6 +1000,30 @@ Torrent1.controller = {
                 data: formData,
                 success: function (response, textStatus, jqXHR) {
                     //afficheResultat(container,response);
+                    if (response.res != null) {
+                        Torrent1.controller.createTorrent.check(response.res.no);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // afficheErreur(jqXHR.responseText,container);
+                }
+
+            });
+        },
+        check: function (taskNo) {
+            $.ajax({
+                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/checkcreate/' + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion + "/" + taskNo + ".json",
+                async: false,
+                //dataType :"json",
+                type: "get",
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response, textStatus, jqXHR) {
+                    //afficheResultat(container,response);
+                    if (response.res != null) {
+                        Torrent1.controller.createTorrent.check(response.res.no);
+                    }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     // afficheErreur(jqXHR.responseText,container);
