@@ -830,6 +830,11 @@ Torrent1.view = {
         }
     },
     createTorrent: {
+        init: function () {
+            Base.view.fixedHeight("#createTorrentContenu", $("#createTorrent").height() - Base.model.html.hauteur("#createTorrentTitle"));
+            console.log($("#divbouttonaddtorrent").height());
+            Base.view.fixedHeight("#folder", $("#createTorrentContenu").height() - $("#divrepcreatetorrent").height() - $("#divpropcreatetorrent").height()  /*- $("#divrepcreatetorrent").height()  - $("#divrepcreatetorrent").height() */ - $("#divbouttonaddtorrent").height());
+        },
         show: function () {
             $("#createTorrent").show();
         },
