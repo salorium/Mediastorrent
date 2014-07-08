@@ -313,76 +313,75 @@
 <div id="createTorrent" class="addTorrent">
 
     <div id="createTorrentTitle" class="addTorrentTitle">
-    <a><?= preg_replace("#([A-Z]+)#", '<span class="secondary">$1</span>', "Créer un torrent"); ?></a><a
+        <a><?= preg_replace("#([A-Z]+)#", '<span class="secondary">$1</span>', "Créer un torrent"); ?></a><a
             class="close" onclick="Torrent1.controller.createTorrent.hide();">&times;</a></div>
     <div id="createTorrentContenu" class="addTorrentContenu">
         <form id="addtorrent" method="post" enctype="multipart/form-data"
               onsubmit="Torrent1.controller.addTorrent.upload(event);">
-            <div id="baseaddTorrent">
 
-                <div id="divrepcreatetorrent" class="row">
-                    <fieldset>
-                        <legend>Répertoire</legend>
-                        <div class="row expansion">
+            <div id="divrepcreatetorrent" class="row">
+                <fieldset>
+                    <legend>Répertoire</legend>
+                    <div class="row expansion">
                         <div class="large-10 columns large-centered">
                             <input type="text" id="repertoire" name="repertoire" value="/home/salorium/rtorrent/data"
                                    readonly>
                         </div>
                     </div>
-                        <div id="folder" style="overflow-y: auto;overflow-x: hidden;" class="row expansion">
+                    <div id="folder" style="overflow-y: auto;overflow-x: hidden;" class="row expansion">
 
-                        </div>
+                    </div>
                 </fieldset>
-                </div>
+            </div>
 
-                <div id="divpropcreatetorrent" class="row">
+            <div id="divpropcreatetorrent" class="row">
                 <fieldset>
-                        <legend>Propriétés du torrent</legend>
-                        <div class="row expansion">
-                            <div class="large-6 columns">
-                                <label for="trackers" class="text-center inline">Trackers : </label>
-                            </div>
-                            <div class="large-6 columns">
-                                <textarea name="trackers" id="trackers"></textarea>
-                            </div>
+                    <legend>Propriétés du torrent</legend>
+                    <div class="row expansion">
+                        <div class="large-6 columns">
+                            <label for="trackers" class="text-center inline">Trackers : </label>
                         </div>
-                        <div class="row expansion">
-                            <div class="large-6 columns">
-                                <label for="piece" class="text-center inline">Pièces : </label>
-                            </div>
-                            <div class="large-6 columns">
-                                <select name="piece" id="piece">
-                                    <option value="32">32 Ko</option>
-                                    <option value="64">64 Ko</option>
-                                    <option value="128">128 Ko</option>
-                                    <option value="256" selected="selected">256 Ko</option>
-                                    <option value="512">512 Ko</option>
-                                    <option value="1024">1 Mo</option>
-                                    <option value="2048">2 Mo</option>
-                                    <option value="4096">4 Mo</option>
-                                    <option value="8192">8 Mo</option>
-                                    <option value="16384">16 Mo</option>
-                                </select>
-                            </div>
+                        <div class="large-6 columns">
+                            <textarea name="trackers" id="trackers"></textarea>
                         </div>
-                        <div class="row expansion">
-                            <div class="large-1 columns">
-                                <input name="seed" id="seed" type="checkbox">
-                            </div>
-                            <div class="large-5 columns">
-                                <label for="seed">Mettre en seed</label>
-                            </div>
-                            <div class="large-1 columns">
-                                <input name="private" id="private" type="checkbox">
-                            </div>
-                            <div class="large-5 columns">
-                                <label for="private">Tracker privé</label>
-                            </div>
+                    </div>
+                    <div class="row expansion">
+                        <div class="large-6 columns">
+                            <label for="piece" class="text-center inline">Pièces : </label>
                         </div>
-                    </fieldset>
-                </div>
+                        <div class="large-6 columns">
+                            <select name="piece" id="piece">
+                                <option value="32">32 Ko</option>
+                                <option value="64">64 Ko</option>
+                                <option value="128">128 Ko</option>
+                                <option value="256" selected="selected">256 Ko</option>
+                                <option value="512">512 Ko</option>
+                                <option value="1024">1 Mo</option>
+                                <option value="2048">2 Mo</option>
+                                <option value="4096">4 Mo</option>
+                                <option value="8192">8 Mo</option>
+                                <option value="16384">16 Mo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row expansion">
+                        <div class="large-1 columns">
+                            <input name="seed" id="seed" type="checkbox">
+                        </div>
+                        <div class="large-5 columns">
+                            <label for="seed">Mettre en seed</label>
+                        </div>
+                        <div class="large-1 columns">
+                            <input name="private" id="private" type="checkbox">
+                        </div>
+                        <div class="large-5 columns">
+                            <label for="private">Tracker privé</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
 
-                <div id="divbouttoncreatetorrent" class="row">
+            <div id="divbouttoncreatetorrent" class="row">
                 <div class="small-2 small-centered columns">
                     <button class="button small secondary expand" value="create" type="submit">Créer</button>
                 </div>
