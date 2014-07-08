@@ -1050,7 +1050,7 @@ Torrent1.controller = {
                                 if (!dossier[(dire + paths[i])])
                                     dossier[(dire + paths[i])] = {id: Torrent1.model.createTorrent.folder.liste.length, ou: where, parent: (i < 1 ? 0 : dossier[(ancdire + paths[i - 1])].id)};
                                     if (i == paths.length - 1) {
-                                        console.info(dossier[(dire + paths[i])]);
+                                        console.info(!dossier[(dire + paths[i])]);
                                         console.info(v[0]);
                                     }
                                 }
