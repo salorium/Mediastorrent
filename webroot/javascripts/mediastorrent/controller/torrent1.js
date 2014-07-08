@@ -1028,14 +1028,15 @@ Torrent1.controller = {
                 success: function (response, textStatus, jqXHR) {
                     //afficheResultat(container,response);
                     if (response.res != null) {
+                        $("#logcreate").empty();
+                        $.each(response.res.log, function (k, v) {
+                            $("#logcreate").append(v + "<br>");
+                        });
                         if (response.res.status >= 0) {
                             Base.view.noty.generate("success", "Le torrent a bien été créer :) ");
 
                         } else {
-                            $("#logcreate").empty();
-                            $.each(response.res.log, function (k, v) {
-                                $("#logcreate").append(v + "<br>");
-                            });
+
                             setTimeout(function () {
                                 Torrent1.controller.createTorrent.check(taskNo);
                             }, 1000);
