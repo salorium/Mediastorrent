@@ -1032,7 +1032,7 @@ Torrent1.controller = {
                                 } else {
                                     //parent = dossier[(ancdire+paths[i-1])].parent;
                                     if (!Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id])
-                                        Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id] = {dossier: [], file: [], back: dossier[(ancdire + paths[i - 1])].parent};
+                                        Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id] = {dossier: [], file: [], back: dossier[(ancdire + paths[i - 1])].parent, path: dire};
                                     where = Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id].dossier.length;
 
                                     if (!dossier[(dire + paths[i])]) {
