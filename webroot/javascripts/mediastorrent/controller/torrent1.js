@@ -985,6 +985,28 @@ Torrent1.controller = {
         hide: function () {
             Torrent1.view.createTorrent.hide();
         },
+        create: function () {
+            e.preventDefault();
+            var formData = new FormData($("#createtorrent")[0]);
+
+            $.ajax({
+                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/create/' + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion + ".json",
+                async: false,
+                //dataType :"json",
+                type: "post",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: function (response, textStatus, jqXHR) {
+                    //afficheResultat(container,response);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // afficheErreur(jqXHR.responseText,container);
+                }
+
+            });
+        },
         folder: {
             conversion: function (liste) {
                 if (liste != null) {

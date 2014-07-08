@@ -316,7 +316,7 @@
         <a><?= preg_replace("#([A-Z]+)#", '<span class="secondary">$1</span>', "Créer un torrent"); ?></a><a
             class="close" onclick="Torrent1.controller.createTorrent.hide();">&times;</a></div>
     <div id="createTorrentContenu" class="addTorrentContenu">
-        <form id="addtorrent" method="post" enctype="multipart/form-data"
+        <form id="createtorrent" method="post" enctype="multipart/form-data"
               onsubmit="Torrent1.controller.addTorrent.upload(event);">
 
             <div id="divrepcreatetorrent" class="row">
