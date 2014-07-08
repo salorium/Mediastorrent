@@ -330,7 +330,9 @@
                 </div>
 
                 <div class="row">
-                    <div class="small-6 columns">
+                    <fieldset>
+                        <legend>Propriétés du torrent</legend>
+                        <div class="small-6 columns">
                         <label for="trackers" class="text-center inline">Trackers : </label>
                     </div>
                     <div class="small-6 columns">
@@ -354,6 +356,7 @@
 
                         </select>
                     </div>
+                    </fieldset>
                 </div>
                 <div class="row expansion">
                     <div class="small-6 columns">
