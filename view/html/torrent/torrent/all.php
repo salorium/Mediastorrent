@@ -406,8 +406,9 @@
         </div>
         <div class="row">
             <div class="small-2 small-centered columns">
-                <button class="button small secondary expand" onclick="Torrent1.createTorrent.get();" type="button">
-                    Enregistrer
+                <button class="button small secondary expand" onclick="Torrent1.controller.createTorrent.get();"
+                        type="button">
+                Enregistrer
                 </button>
             </div>
         </div>
