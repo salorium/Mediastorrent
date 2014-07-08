@@ -833,7 +833,7 @@ Torrent1.view = {
         init: function () {
             Base.view.fixedHeight("#createTorrentContenu", $("#createTorrent").height() - Base.model.html.hauteur("#createTorrentTitle"));
             console.log($("#divbouttonaddtorrent").height());
-            Base.view.fixedHeight("#folder", $("#createTorrentContenu").height() - $("#divrepcreatetorrent").height() - $("#divpropcreatetorrent").height()  /*- $("#divrepcreatetorrent").height()  - $("#divrepcreatetorrent").height() */ - $("#divbouttonaddtorrent").height());
+            Base.view.fixedHeight("#folder", $("#createTorrentContenu").height() - $("#divrepcreatetorrent").height() - $("#divpropcreatetorrent").height()  /*- $("#divrepcreatetorrent").height()  - $("#divrepcreatetorrent").height() */ - $("#divbouttoncreatetorrent").height());
         },
         show: function () {
             $("#createTorrent").show();
