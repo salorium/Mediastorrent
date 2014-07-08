@@ -16,7 +16,45 @@ use model\xmlrpc\rXMLRPCCommand;
 
 class Torrent extends Controller
 {
-    function liste($login = null, $keyconnexion = null, $cid = null, $hashtorrentselectionne = null)
+    function create($login, $keyconnexion)
+    {
+        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
+        if (isset($_REQUEST['path_edit'])) {
+            $path_edit = trim($_REQUEST['path_edit']);
+            if (is_dir($path_edit))
+                $path_edit = addslash($path_edit);
+            if (rTorrentSettings::get()->correctDirectory($path_edit)) {
+                $taskNo = time();
+                $randName = getTempDirectory() . "rutorrent-" . getUser() . $taskNo . ".prm";
+                file_put_contents($randName, serialize($_REQUEST));
+                chmod($randName, 0644);
+                $piece_size = 262144;
+                if (isset($_REQUEST['piece_size']))
+                    $piece_size = $_REQUEST['piece_size'] * 1024;
+                if (!$pathToCreatetorrent || ($pathToCreatetorrent == ""))
+                    $pathToCreatetorrent = $useExternal;
+                if ($useExternal == "mktorrent")
+                    $piece_size = log($piece_size, 2);
+                else
+                    if ($useExternal === false)
+                        $useExternal = "inner";
+                $req = new rXMLRPCRequest(
+                    new rXMLRPCCommand("execute", array(
+                        "sh", "-c",
+                        escapeshellarg($rootPath . '/plugins/create/' . $useExternal . '.sh') . " " .
+                        $taskNo . " " .
+                        escapeshellarg(getPHP()) . " " .
+                        escapeshellarg($pathToCreatetorrent) . " " .
+                        escapeshellarg($path_edit) . " " .
+                        $piece_size . " " .
+                        escapeshellarg(getUser()) . " " .
+                        escapeshellarg(getTempDirectory()) . " &")));
+                if ($req->success())
+                    $ret = array("no" => intval($taskNo), "errors" => array(), "status" => -1, "out" => "");
+            }
+        }
+        function liste($login = null, $keyconnexion = null, $cid = null, $hashtorrentselectionne = null)
     {
         \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
         $tor = null;
