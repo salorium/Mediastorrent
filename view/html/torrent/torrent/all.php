@@ -389,6 +389,10 @@
             </div>
         </form>
     </div>
+    <div id="createToto" style="display: none;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab animi cum
+        dolor earum eligendi facilis illum incidunt laudantium non numquam odio omnis perspiciatis, porro praesentium,
+        quisquam repellat repudiandae sunt voluptatem!
+    </div>
 </div>
 <!--<div id="cliquedroit" style="background-color: darkslategray;width: 150px;display: none;"></div>
 </div>-->
