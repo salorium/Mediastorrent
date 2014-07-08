@@ -34,8 +34,7 @@ class Torrent extends Controller
                 escapeshellarg(\config\Conf::$portscgi) . " " .
                 escapeshellarg(ROOT . DS . "cache" . DS) . " &")));
         if ($req->success())
-                    $ret = array("no" => intval($taskNo), "errors" => array(), "status" => -1, "out" => "");
-
+            $ret = array("no" => intval($taskNo), "errors" => array(), "status" => -1, "out" => "");
         $this->set("res", $ret);
     }
 
