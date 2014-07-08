@@ -1047,12 +1047,13 @@ Torrent1.controller = {
                                             Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where][3][Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where][3].length] = v[0];
                                         }
                                     }
-                                    if (!dossier[(dire + paths[i])])
-                                        dossier[(dire + paths[i])] = {id: Torrent1.model.createTorrent.folder.liste.length, ou: where, parent: (i < 1 ? 0 : dossier[(ancdire + paths[i - 1])].id)};
                                     if (i == paths.length - 1) {
                                         console.info(!dossier[(dire + paths[i])]);
                                         console.info(v[0]);
                                     }
+                                    if (!dossier[(dire + paths[i])])
+                                        dossier[(dire + paths[i])] = {id: Torrent1.model.createTorrent.folder.liste.length, ou: where, parent: (i < 1 ? 0 : dossier[(ancdire + paths[i - 1])].id)};
+
                                 }
                                 if (i > 0) {
                                     ancdire += paths[i - 1] + "/";
