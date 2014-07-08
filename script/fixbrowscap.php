@@ -6,6 +6,7 @@
  * Time: 01:18
  */
 $content = file_get_contents('http://browscap.org/stream?q=Full_PHP_BrowsCapINI');
+var_dump($content);
 foreach ($content as &$row)
     if ($row[0] == '[')
         $row = str_replace(';', '\;', $row);
