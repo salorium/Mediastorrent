@@ -851,6 +851,7 @@ Torrent1.view = {
             if (Torrent1.model.createTorrent.folder.liste.length > 0) {
                 //Parcour dossier
                 list = Torrent1.model.createTorrent.folder.liste[Torrent1.model.createTorrent.folder.hauteurArbre];
+                $("#repertoire").val(list.path);
                 if (!isNaN(list.back)) {
                     var $tr = $('<tr style="cursor: pointer;" ><td><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dossier.svg">..</td><td></td></tr>');
 
