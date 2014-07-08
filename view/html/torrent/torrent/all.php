@@ -331,7 +331,7 @@
 
                 <div class="row">
                     <div class="small-6 columns">
-                        <label for="trackers" class="right inline">Trackers : </label>
+                        <label for="trackers" class="center inline">Trackers : </label>
                     </div>
                     <div class="small-6 columns">
                         <textarea name="trackers" id="trackers"></textarea>
