@@ -13,6 +13,7 @@ class Repertoire extends \core\Controller
 {
     function liste($login, $keyconnexion)
     {
+        set_time_limit(0);
         sleep(60);
         \model\simple\Utilisateur::authentificationDistante($login, $keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
