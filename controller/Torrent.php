@@ -61,7 +61,7 @@ class Torrent extends Controller
             if (is_file($dir . '/out') && is_readable($dir . '/out'))
                 $out = trim(file_get_contents($dir . '/out'));
             if ($status >= 0) {
-                $req = \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
+                $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
                     new rXMLRPCCommand(\config\Conf::$portscgi, "execute", array("rm", "-fr", $dir)));
                 $req->run();
             }
