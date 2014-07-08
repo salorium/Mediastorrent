@@ -34,7 +34,10 @@ Torrent1.model = {
         liste: []
     },
     createTorrent: {
-        folderLoader: null
+        folder: {
+            loader: null,
+            liste: []
+        }
     },
     filesTorrent: {
         original: [],

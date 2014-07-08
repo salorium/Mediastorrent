@@ -974,7 +974,7 @@ Torrent1.controller = {
     createTorrent: {
         init: function () {
             Torrent1.view.createTorrent.init();
-            Torrent1.model.createTorrent.folderLoader = Base.view.loader.make("folder");
+            Torrent1.model.createTorrent.folder.loader = Base.view.loader.make("folder");
             //Torrent1.model.createTorrent.backup = $("#createTorrentContenu").html();
         },
         show: function () {
@@ -995,21 +995,21 @@ Torrent1.controller = {
                     for (var j = 0; j < liste.length; j++) {
                         var v = liste[j];
                         //Torrent1.model.filesTorrent.liste[Torrent1.model.filesTorrent.liste.length]= v;
-                        var paths = v[1].split("/");
+                        var paths = v[0].split("/");
                         var dire = "/";
                         var ancdire = "/";
                         for (var i = 0; i < paths.length; i++) {
                             var parent = 0;
-                            if (i == paths.length - 1) {
+                            if (i == paths.length - 1 && v[2] === "f") {
                                 //File
                                 if (i == 0) {
-                                    if (!Torrent1.model.filesTorrent.liste[0])
-                                        Torrent1.model.filesTorrent.liste[0] = {dossier: [], file: []};
-                                    Torrent1.model.filesTorrent.liste[0].file[Torrent1.model.filesTorrent.liste[0].file.length] = [paths[i], v[0], v[2], v[3], v[4], v[5]];
+                                    if (!Torrent1.model.createTorrent.folder.liste[0])
+                                        Torrent1.model.createTorrent.folder.liste[0] = {dossier: [], file: []};
+                                    Torrent1.model.createTorrent.folder.liste[0].file[Torrent1.model.createTorrent.folder.liste[0].file.length] = [paths[i], v[0], v[2], v[3], v[4], v[5]];
                                 } else {
-                                    if (!Torrent1.model.filesTorrent.liste[dossier[(ancdire + paths[i - 1])].id])
-                                        Torrent1.model.filesTorrent.liste[dossier[(ancdire + paths[i - 1])].id] = {dossier: [], file: [], back: dossier[(ancdire + paths[i - 1])].parent};
-                                    Torrent1.model.filesTorrent.liste[dossier[(ancdire + paths[i - 1])].id].file[Torrent1.model.filesTorrent.liste[dossier[(ancdire + paths[i - 1])].id].file.length] = [paths[i], v[0], v[2], v[3], v[4], v[5]];
+                                    if (!Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id])
+                                        Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id] = {dossier: [], file: [], back: dossier[(ancdire + paths[i - 1])].parent};
+                                    Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id].file[Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id].file.length] = [paths[i], v[0], v[2], v[3], v[4], v[5]];
                                 }
                             } else {
                                 //Dossier
@@ -1017,42 +1017,42 @@ Torrent1.controller = {
 
                                 if (i == 0) {
                                     parent = 0;
-                                    if (!Torrent1.model.filesTorrent.liste[parent])
-                                        Torrent1.model.filesTorrent.liste[parent] = {dossier: [], file: []};
-                                    where = Torrent1.model.filesTorrent.liste[parent].dossier.length;
+                                    if (!Torrent1.model.createTorrent.folder.liste[parent])
+                                        Torrent1.model.createTorrent.folder.liste[parent] = {dossier: [], file: []};
+                                    where = Torrent1.model.createTorrent.folder.liste[parent].dossier.length;
                                     if (!dossier[(dire + paths[i])]) {
-//                                Torrent1.model.filesTorrent.liste[parent].dossier[where] = {nom :paths[i], parent:parent,childs:Torrent1.model.filesTorrent.liste.length,chunkscomplete : v[2],chunkstotal :v[3], size: v[4]};
-                                        Torrent1.model.filesTorrent.liste[parent].dossier[where] = [paths[i], Torrent1.model.filesTorrent.liste.length, Base.model.converter.iv(v[2]), Base.model.converter.iv(v[3]), Base.model.converter.iv(v[4]), Base.model.converter.iv(v[5]), [v[0]]];
+//                                Torrent1.model.createTorrent.folder.liste[parent].dossier[where] = {nom :paths[i], parent:parent,childs:Torrent1.model.createTorrent.folder.liste.length,chunkscomplete : v[2],chunkstotal :v[3], size: v[4]};
+                                        Torrent1.model.createTorrent.folder.liste[parent].dossier[where] = [paths[i], Torrent1.model.createTorrent.folder.liste.length, Base.model.converter.iv(v[2]), Base.model.converter.iv(v[3]), Base.model.converter.iv(v[4]), Base.model.converter.iv(v[5]), [v[0]]];
                                     } else {
                                         where = dossier[(dire + paths[i])].ou;
-                                        Torrent1.model.filesTorrent.liste[parent].dossier[where][2] += Base.model.converter.iv(v[2]);
-                                        Torrent1.model.filesTorrent.liste[parent].dossier[where][3] += Base.model.converter.iv(v[3]);
-                                        Torrent1.model.filesTorrent.liste[parent].dossier[where][4] += Base.model.converter.iv(v[4]);
-                                        Torrent1.model.filesTorrent.liste[parent].dossier[where][5] = (Torrent1.model.filesTorrent.liste[parent].dossier[where][5] == Base.model.converter.iv(v[5]) ? Base.model.converter.iv(v[5]) : -1);
-                                        Torrent1.model.filesTorrent.liste[parent].dossier[where][6][Torrent1.model.filesTorrent.liste[parent].dossier[where][6].length] = v[0];
+                                        Torrent1.model.createTorrent.folder.liste[parent].dossier[where][2] += Base.model.converter.iv(v[2]);
+                                        Torrent1.model.createTorrent.folder.liste[parent].dossier[where][3] += Base.model.converter.iv(v[3]);
+                                        Torrent1.model.createTorrent.folder.liste[parent].dossier[where][4] += Base.model.converter.iv(v[4]);
+                                        Torrent1.model.createTorrent.folder.liste[parent].dossier[where][5] = (Torrent1.model.createTorrent.folder.liste[parent].dossier[where][5] == Base.model.converter.iv(v[5]) ? Base.model.converter.iv(v[5]) : -1);
+                                        Torrent1.model.createTorrent.folder.liste[parent].dossier[where][6][Torrent1.model.createTorrent.folder.liste[parent].dossier[where][6].length] = v[0];
                                     }
                                 } else {
                                     //parent = dossier[(ancdire+paths[i-1])].parent;
-                                    if (!Torrent1.model.filesTorrent.liste[dossier[(ancdire + paths[i - 1])].id])
-                                        Torrent1.model.filesTorrent.liste[dossier[(ancdire + paths[i - 1])].id] = {dossier: [], file: [], back: dossier[(ancdire + paths[i - 1])].parent};
-                                    where = Torrent1.model.filesTorrent.liste[dossier[(ancdire + paths[i - 1])].id].dossier.length;
+                                    if (!Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id])
+                                        Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id] = {dossier: [], file: [], back: dossier[(ancdire + paths[i - 1])].parent};
+                                    where = Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id].dossier.length;
 
                                     if (!dossier[(dire + paths[i])]) {
-                                        Torrent1.model.filesTorrent.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where] = [paths[i], Torrent1.model.filesTorrent.liste.length, Base.model.converter.iv(v[2]), Base.model.converter.iv(v[3]), Base.model.converter.iv(v[4]), Base.model.converter.iv(v[5]), [v[0]]];
+                                        Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where] = [paths[i], Torrent1.model.createTorrent.folder.liste.length, Base.model.converter.iv(v[2]), Base.model.converter.iv(v[3]), Base.model.converter.iv(v[4]), Base.model.converter.iv(v[5]), [v[0]]];
                                     } else {
                                         where = dossier[(dire + paths[i])].ou;
                                         // console.log((dire+paths[i]));
                                         // console.log(where);
-                                        //  console.log(Torrent1.model.filesTorrent.liste[dossier[(ancdire+paths[i-1])].id].dossier[where]);
-                                        Torrent1.model.filesTorrent.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where][2] += Base.model.converter.iv(v[2]);
-                                        Torrent1.model.filesTorrent.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where][3] += Base.model.converter.iv(v[3]);
-                                        Torrent1.model.filesTorrent.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where][4] += Base.model.converter.iv(v[4]);
-                                        Torrent1.model.filesTorrent.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where][5] = (Torrent1.model.filesTorrent.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where][5] == Base.model.converter.iv(v[5]) ? Base.model.converter.iv(v[5]) : -1);
-                                        Torrent1.model.filesTorrent.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where][6][Torrent1.model.filesTorrent.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where][6].length] = v[0];
+                                        //  console.log(Torrent1.model.createTorrent.folder.liste[dossier[(ancdire+paths[i-1])].id].dossier[where]);
+                                        Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where][2] += Base.model.converter.iv(v[2]);
+                                        Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where][3] += Base.model.converter.iv(v[3]);
+                                        Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where][4] += Base.model.converter.iv(v[4]);
+                                        Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where][5] = (Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where][5] == Base.model.converter.iv(v[5]) ? Base.model.converter.iv(v[5]) : -1);
+                                        Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where][6][Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where][6].length] = v[0];
                                     }
                                 }
                                 if (!dossier[(dire + paths[i])])
-                                    dossier[(dire + paths[i])] = {id: Torrent1.model.filesTorrent.liste.length, ou: where, parent: (i < 1 ? 0 : dossier[(ancdire + paths[i - 1])].id)};
+                                    dossier[(dire + paths[i])] = {id: Torrent1.model.createTorrent.folder.liste.length, ou: where, parent: (i < 1 ? 0 : dossier[(ancdire + paths[i - 1])].id)};
                             }
                             if (i > 0) {
                                 ancdire += "/" + paths[i - 1];
@@ -1082,6 +1082,7 @@ Torrent1.controller = {
                     //contentType: "application/json",
                     success: function (response, textStatus, jqXHR) {
                         Torrent1.controller.createTorrent.folder.hideLoader();
+                        Torrent1.controller.createTorrent.folder.conversion(response.rep);
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         Base.view.noty.generate("error", "Impossible de récupéré le répertoire de " + Torrent1.model.nomseedbox);
@@ -1089,10 +1090,10 @@ Torrent1.controller = {
                 });
             },
             showLoader: function () {
-                Torrent1.model.createTorrent.folderLoader.show();
+                Torrent1.model.createTorrent.folder.loader.show();
             },
             hideLoader: function () {
-                Torrent1.model.createTorrent.folderLoader.hide();
+                Torrent1.model.createTorrent.folder.loader.hide();
             }
         }
     },
