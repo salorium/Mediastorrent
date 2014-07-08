@@ -21,7 +21,7 @@ class Test extends Controller
 {
     function getT()
     {
-        $to = \core\Memcached::value("salorium", "torrentfile512");
+        $to = \core\Memcached::value("salorium", "torrentfile1404851775");
         $tott = new Torrent($to);
         $tott->send();
     }
