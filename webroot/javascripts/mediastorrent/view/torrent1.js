@@ -886,7 +886,7 @@ Torrent1.view = {
                         $tr
                     );
 
-                    $tr.dblclick(function (e) {
+                    $tr.click(function (e) {
                         e.preventDefault();
                         $("#repertoire").val(v[1]);
                     });
