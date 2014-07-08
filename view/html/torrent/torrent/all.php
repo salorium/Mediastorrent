@@ -332,12 +332,14 @@
                 <div class="row">
                     <fieldset>
                         <legend>Propriétés du torrent</legend>
+                        <div class="row expansion">
                         <div class="large-6 columns">
                         <label for="trackers" class="text-center inline">Trackers : </label>
                     </div>
                         <div class="large-6 columns">
                         <textarea name="trackers" id="trackers"></textarea>
                     </div>
+                        </div>
                         <div class="large-6 columns">
                         <label for="piece" class="text-center inline">Pièces : </label>
                     </div>
