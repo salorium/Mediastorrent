@@ -980,14 +980,14 @@ Torrent1.controller = {
         show: function () {
             $("#createTorrentContenu").html(Torrent1.model.createTorrent.backup);
             Torrent1.view.createTorrent.show();
-            this.folder.loader();
+            Torrent1.controller.createTorrent.folder.loader();
         },
         hide: function () {
             Torrent1.view.createTorrent.hide();
         },
         folder: {
             loader: function () {
-                this.showLoader();
+                Torrent1.controller.createTorrent.folder.showLoader();
                 var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'repertoire/liste/' + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion;
                 $.ajax({
                     url: url + ".json",
