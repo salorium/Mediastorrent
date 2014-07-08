@@ -323,10 +323,15 @@
                 <div class="row">
                 <fieldset>
                         <legend>Répertoire</legend>
-                        <div class="large-10 columns large-centered">
+                    <div class="row expansion">
+                    <div class="large-10 columns large-centered">
                         <input type="text" name="repertoire">
                         </div>
-                    </fieldset>
+                    </div>
+                    <div id="folder" class="row expansion">
+
+                    </div>
+                </fieldset>
                 </div>
 
                 <div class="row">
@@ -375,24 +380,10 @@
                         </div>
                     </fieldset>
                 </div>
-                <div class="row expansion">
-                    <div class="small-6 columns">
-                        <input class="right" name="mediastorrent" id="mediastorrent" type="checkbox"
-                               onchange="Torrent1.controller.addTorrent.files.check($('#mediastorrent').is(':checked'));">
-                    </div>
-                    <div class="small-6 columns">
-                        <label for="mediastorrent">Ajouter à la bibliothèque</label>
-                    </div>
-                </div>
-            </div>
-            <center>
-                <div id="addTorrentDetails" class="addTorrentDetails">
 
-                </div>
-            </center>
             <div id="divbouttonaddtorrent" class="row">
                 <div class="small-2 small-centered columns">
-                    <button class="button small secondary expand" value="ajouter" type="submit">Ajouter</button>
+                    <button class="button small secondary expand" value="create" type="submit">Créer</button>
                 </div>
             </div>
         </form>
