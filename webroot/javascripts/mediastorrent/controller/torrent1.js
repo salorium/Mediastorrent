@@ -1016,7 +1016,7 @@ Torrent1.controller = {
                 async: false,
                 //dataType :"json",
                 type: "get",
-                cache: false,
+
                 contentType: false,
                 processData: false,
                 success: function (response, textStatus, jqXHR) {
