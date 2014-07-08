@@ -66,10 +66,10 @@ if (!is_null($req)) {
     if (isset($request['private']))
         $torrent->is_private(true);
     if (isset($request["seed"])) {
-        //$path_edit = dirname($path_edit);
+        $path_edit = dirname($path_edit);
         //$torrent->save($fname);
         \core\Memcached::value($utilisateur, "torrentfile" . $taskNo, $torrent->__toString(), 60 * 60);
-        \model\xmlrpc\rTorrent::sendTorrent($torrent, true);
+        \model\xmlrpc\rTorrent::sendTorrent($torrent, true, $path_edit);
     } else
         \core\Memcached::value($utilisateur, "torrentfile".$taskNo, $torrent->__toString(), 60 * 60);
     exit(0);
