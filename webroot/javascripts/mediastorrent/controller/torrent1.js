@@ -1009,7 +1009,7 @@ Torrent1.controller = {
                                     Torrent1.model.createTorrent.folder.liste[0].file[Torrent1.model.createTorrent.folder.liste[0].file.length] = [paths[i], v[0], v[1], v[2]];
                                 } else {
                                     if (!Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id])
-                                        Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id] = {dossier: [], file: [], back: dossier[(ancdire + paths[i - 1])].parent};
+                                        Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id] = {dossier: [], file: [], back: dossier[(ancdire + paths[i - 1])].parent, path: dire};
                                     Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id].file[Torrent1.model.createTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id].file.length] = [paths[i], v[0], v[1], v[2]];
                                 }
                             } else {
