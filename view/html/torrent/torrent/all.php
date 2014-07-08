@@ -356,17 +356,17 @@
 
                         </select>
                     </div>
-                        <div class="small-1 columns">
-                            <input class="" name="seed" id="seed" type="checkbox">
+                        <div class="small-2 columns">
+                        <input class="" name="seed" id="seed" type="checkbox">
                         </div>
-                        <div class="small-5 columns">
+                        <div class="small-4 columns">
                         <label for="seed">Mettre en seed</label>
                         </div>
-                        <div class="small-1 columns">
-                            <input class="" name="private" id="private" type="checkbox">
+                        <div class="small-2 columns">
+                        <input class="" name="private" id="private" type="checkbox">
                         </div>
-                        <div class="small-5 columns">
-                            <label for="private">Tracker privé</label>
+                        <div class="small-4 columns">
+                        <label for="private">Tracker privé</label>
                         </div>
                     </fieldset>
                 </div>
