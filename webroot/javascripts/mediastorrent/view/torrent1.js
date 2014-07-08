@@ -857,7 +857,7 @@ Torrent1.view = {
                     $tbody.append(
                         $tr
                     );
-                    $tr.dblclick(function (e) {
+                    $tr.click(function (e) {
                         e.preventDefault();
                         Torrent1.model.createTorrent.folder.hauteurArbre = list.back;
                         Torrent1.view.createTorrent.afficheArbre();
@@ -870,7 +870,7 @@ Torrent1.view = {
                     $tbody.append(
                         $tr
                     );
-                    $tr.dblclick(function (e) {
+                    $tr.click(function (e) {
                         e.preventDefault();
 
                         Torrent1.model.createTorrent.folder.hauteurArbre = v[1];
