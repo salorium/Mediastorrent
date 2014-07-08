@@ -1078,6 +1078,7 @@ Torrent1.controller = {
                     success: function (response, textStatus, jqXHR) {
                         Torrent1.controller.createTorrent.folder.hideLoader();
                         Torrent1.controller.createTorrent.folder.conversion(response.rep);
+                        Torrent1.view.createTorrent.afficheArbre();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         Base.view.noty.generate("error", "Impossible de récupéré le répertoire de " + Torrent1.model.nomseedbox);
