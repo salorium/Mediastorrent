@@ -328,9 +328,9 @@
                         <input type="text" name="repertoire">
                         </div>
                     </div>
-                    <div id="folder" class="row expansion">
+                        <div id="folder" style="overflow-y: auto;overflow-x: hidden;" class="row expansion">
 
-                    </div>
+                        </div>
                 </fieldset>
                 </div>
 
