@@ -33,6 +33,9 @@ Torrent1.model = {
         original: [],
         liste: []
     },
+    createTorrent: {
+        folderLoader: null
+    },
     filesTorrent: {
         original: [],
         priorite: ["Ne pas télécharger", "Normal", "Haute"],
