@@ -357,7 +357,22 @@
                         </select>
                     </div>
                         <div class="small-6 columns">
-                            <input class="right" name="seed" id="seed" type="checkbox">
+                            <select name="piece" id="piece">
+                                <option value="32">32 Ko</option>
+                                <option value="64">64 Ko</option>
+                                <option value="128">128 Ko</option>
+                                <option value="256" selected="selected">256 Ko</option>
+                                <option value="512">512 Ko</option>
+                                <option value="1024">1 Mo</option>
+                                <option value="2048">2 Mo</option>
+                                <option value="4096">4 Mo</option>
+                                <option value="8192">8 Mo</option>
+                                <option value="16384">16 Mo</option>
+
+                            </select>
+                        </div>
+                        <div class="small-6 columns">
+                        <input class="right" name="seed" id="seed" type="checkbox">
                         </div>
                         <div class="small-6 columns">
                         <label for="seed">Mettre en seed</label>
