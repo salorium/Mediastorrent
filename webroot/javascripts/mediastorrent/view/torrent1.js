@@ -886,10 +886,10 @@ Torrent1.view = {
                         $tr
                     );
 
-                    /*$tr.dblclick(function (e) {
-                     e.preventDefault();
-                     Torrent1.controller.filesTorrent.download($(e.currentTarget).attr("data-id"));
-                     });*/
+                    $tr.dblclick(function (e) {
+                        e.preventDefault();
+                        $("#repertoire").val(v[1]);
+                    });
                     cpt++
 
 
