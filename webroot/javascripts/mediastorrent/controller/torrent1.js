@@ -1048,7 +1048,9 @@ Torrent1.controller = {
                                         }
                                     }
                                     if (i == paths.length - 1) {
-                                        console.info(!dossier[(dire + paths[i])]);
+                                        if (!dossier[(dire + paths[i])]) {
+                                            Torrent1.model.createTorrent.folder.liste[Torrent1.model.createTorrent.folder.liste.length] = {dossier: [], file: [], path: dire + "/" + paths[i]};
+                                        }
                                         console.info(v[0]);
                                     }
                                     if (!dossier[(dire + paths[i])])
