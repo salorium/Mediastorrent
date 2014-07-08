@@ -73,6 +73,7 @@ class Torrent extends Controller
                 "log" => $log,
                 "errors" => $errors);
         }
+        $this->set("res", $ret);
     }
 
     function create($login, $keyconnexion)

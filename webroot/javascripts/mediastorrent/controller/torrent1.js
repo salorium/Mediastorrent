@@ -1022,7 +1022,7 @@ Torrent1.controller = {
                 success: function (response, textStatus, jqXHR) {
                     //afficheResultat(container,response);
                     if (response.res != null) {
-                        Torrent1.controller.createTorrent.check(response.res.no);
+
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
