@@ -839,9 +839,9 @@ Torrent1.view = {
             //Base.view.fixedHeight("#createToto", $("#createTorrent").height() - Base.model.html.hauteur("#createTorrentTitle"));
             var h = $("#createToto").height();
             Base.view.fixedHeight("#createToto", $("#createTorrent").height() - Base.model.html.hauteur("#createTorrentTitle"));
-            var hh = h - $("#createToto").height();
-            Base.view.fixedHeight("#erreurcreate", h / 2);
-            Base.view.fixedHeight("#logcreate", h / 2);
+            var hh = $("#createToto").height() - h;
+            Base.view.fixedHeight("#erreurcreate", hh / 2);
+            Base.view.fixedHeight("#logcreate", hh / 2);
             $("#createTorrentContenu").show();
             $("#createToto").hide();
         },
