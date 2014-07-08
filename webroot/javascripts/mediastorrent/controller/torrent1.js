@@ -1001,6 +1001,7 @@ Torrent1.controller = {
                 success: function (response, textStatus, jqXHR) {
                     //afficheResultat(container,response);
                     if (response.res != null) {
+                        Torrent1.model.createTorrent.noTask = response.res.no;
                         Torrent1.controller.createTorrent.check(response.res.no);
                     }
                 },
@@ -1024,7 +1025,12 @@ Torrent1.controller = {
                     if (response.res != null) {
                         if (response.res.status >= 0) {
                             Base.view.noty.generate("success", "Le torrent a bien été créer :) ");
+
                         } else {
+                            $("#logcreate").empty();
+                            $.each(response.res.log, function (k, v) {
+                                $("#logcreate").append(v + "<br>");
+                            });
                             setTimeout(function () {
                                 Torrent1.controller.createTorrent.check(taskNo);
                             }, 1000);

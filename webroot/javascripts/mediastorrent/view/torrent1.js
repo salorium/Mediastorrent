@@ -844,8 +844,6 @@ Torrent1.view = {
             Base.view.fixedHeight("#logcreate", h / 2);
             $("#createTorrentContenu").show();
             $("#createToto").hide();
-
-
         },
         show: function () {
             $("#createTorrent").show();
