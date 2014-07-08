@@ -325,7 +325,7 @@
                         <legend>Répertoire</legend>
                         <div class="row expansion">
                         <div class="large-10 columns large-centered">
-                            <input type="text" name="repertoire" value="/home/salorium/rtorrent/data">
+                            <input type="text" name="repertoire" value="/home/salorium/rtorrent/data" readonly>
                         </div>
                     </div>
                         <div id="folder" style="overflow-y: auto;overflow-x: hidden;" class="row expansion">
