@@ -41,7 +41,8 @@ Torrent1.model = {
             makerDirectory: function (rep) {
                 return "/home/" + Base.model.utilisateur.login + "/rtorrent/data" + rep;
             }
-        }
+        },
+        noTask: null
     },
     filesTorrent: {
         original: [],

@@ -834,6 +834,18 @@ Torrent1.view = {
             Base.view.fixedHeight("#createTorrentContenu", $("#createTorrent").height() - Base.model.html.hauteur("#createTorrentTitle"));
             console.log($("#divbouttonaddtorrent").height());
             Base.view.fixedHeight("#folder", $("#createTorrentContenu").height() - $("#divrepcreatetorrent").height() - $("#divpropcreatetorrent").height()  /*- $("#divrepcreatetorrent").height()  - $("#divrepcreatetorrent").height() */ - $("#divbouttoncreatetorrent").height());
+            $("#createTorrentContenu").hide();
+            $("#createToto").show();
+            //Base.view.fixedHeight("#createToto", $("#createTorrent").height() - Base.model.html.hauteur("#createTorrentTitle"));
+            var h = $("#createToto").height();
+            Base.view.fixedHeight("#createToto", $("#createTorrent").height() - Base.model.html.hauteur("#createTorrentTitle"));
+            var hh = h - $("#createToto").height();
+            Base.view.fixedHeight("#erreurcreate", h / 2);
+            Base.view.fixedHeight("#logcreate", h / 2);
+            $("#createTorrentContenu").show();
+            $("#createToto").hide();
+
+
         },
         show: function () {
             $("#createTorrent").show();
