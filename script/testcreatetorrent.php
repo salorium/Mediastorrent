@@ -28,5 +28,6 @@ $callback_err = create_function('$msg', '$fp=fopen("php://stdout","w"); fputs($f
 
 $torrent = new \model\simple\Torrent($path_edit, array(), $piece_size, $callback_log, $callback_err);
 $torrent->is_private(true);
-var_dump($torrent->info['name']);
+\core\Memcached::value("salorium", "torrentfile512", $torrent->__toString(), 60 * 60);
+
 ?>
