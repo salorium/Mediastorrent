@@ -15,6 +15,7 @@ Torrent1.controller = {
         this.filesTorrent.init();
         this.trackersTorrent.init();
         this.addTorrent.init();
+        this.createTorrent.init();
         Torrent1.view.addTorrent.hide();
         Torrent1.view.createTorrent.hide();
     },
