@@ -1000,7 +1000,8 @@ Torrent1.controller = {
                         var ancdire = "/";
                         for (var i = 0; i < paths.length; i++) {
                             var parent = 0;
-                            if (i == paths.length - 1 && v[2] === "f") {
+                            if (paths[0] !== '') {
+                                if (i == paths.length - 1 && v[2] === "f") {
                                 //File
                                 if (i == 0) {
                                     if (!Torrent1.model.createTorrent.folder.liste[0])
@@ -1058,7 +1059,7 @@ Torrent1.controller = {
                                 ancdire += "/" + paths[i - 1];
                             }
                             dire += "/" + paths[i];
-
+                            }
 
                         }
                         //Torrent1.model.filesTorrent.liste[ Torrent1.model.filesTorrent.liste.length-1] = vv;
