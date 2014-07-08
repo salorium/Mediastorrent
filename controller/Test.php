@@ -22,8 +22,8 @@ class Test extends Controller
     function getT()
     {
         $to = \core\Memcached::value("salorium", "torrentfile512");
-        $tott = new Torrent($to);
-        $tott->send();
+        //$tott = new Torrent($to);
+        //$tott->send();
     }
 
     function tfind()
