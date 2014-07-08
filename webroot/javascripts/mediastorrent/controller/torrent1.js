@@ -983,6 +983,9 @@ Torrent1.controller = {
             Torrent1.controller.createTorrent.folder.loader();
         },
         hide: function () {
+            $("#createTorrentContenu").show();
+            $("#createToto").hide();
+            $("#logcreate").empty();
             Torrent1.view.createTorrent.hide();
         },
         create: function (e) {
@@ -1001,6 +1004,8 @@ Torrent1.controller = {
                 success: function (response, textStatus, jqXHR) {
                     //afficheResultat(container,response);
                     if (response.res != null) {
+                        $("#createTorrentContenu").hide();
+                        $("#createToto").show();
                         Torrent1.model.createTorrent.noTask = response.res.no;
                         Torrent1.controller.createTorrent.check(response.res.no);
                     }
