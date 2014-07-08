@@ -16,9 +16,67 @@ use model\xmlrpc\rXMLRPCCommand;
 
 class Torrent extends Controller
 {
+    function checkcreate($login, $keyconnexion, $taskNo)
+    {
+        $ret = null;
+        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
+        $dir = ROOT . DS . "cache" . DS . $login . $taskNo;
+        if (is_file($dir . '/pid') && is_readable($dir . '/pid')) {
+            $pid = trim(file_get_contents($dir . '/pid'));
+            $status = -1;
+            if (is_file($dir . '/status') && is_readable($dir . '/status'))
+                $status = trim(file_get_contents($dir . '/status'));
+            $log = array();
+            if (is_file($dir . '/log') && is_readable($dir . '/log')) {
+                $lines = file($dir . '/log');
+                foreach ($lines as $line) {
+                    $pos = strrpos($line, "\r");
+                    if ($pos !== false) {
+                        $line = rtrim(substr($line, $pos + 1));
+                        if (strlen($line) == 0)
+                            continue;
+                    }
+                    if (strrpos($line, chr(8)) !== false) {
+                        $len = strlen($line);
+                        $res = array();
+                        for ($i = 0; $i < $len; $i++) {
+                            if ($line[$i] == chr(8))
+                                array_pop($res);
+                            else
+                                $res[] = $line[$i];
+                        }
+                        $line = implode('', $res);
+                    }
+                    $log[] = rtrim($line);
+                }
+            }
+            /*if(count($log)>MAX_CONSOLE_SIZE)
+                array_splice($log,0,count($log)-MAX_CONSOLE_SIZE);
+*/
+            $errors = array();
+            if (is_file($dir . '/errors') && is_readable($dir . '/errors'))
+                $errors = array_map('trim', file($dir . '/errors'));
+            $out = '';
+            if (is_file($dir . '/out') && is_readable($dir . '/out'))
+                $out = trim(file_get_contents($dir . '/out'));
+            if ($status >= 0) {
+                $req = \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
+                    new rXMLRPCCommand(\config\Conf::$portscgi, "execute", array("rm", "-fr", $dir)));
+                $req->run();
+            }
+            $ret = array(
+                "no" => intval($taskNo),
+                "status" => $status,
+                "pid" => intval($pid),
+                "out" => $out,
+                "log" => $log,
+                "errors" => $errors);
+        }
+    }
+
     function create($login, $keyconnexion)
     {
-
         $ret = null;
         \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
