@@ -980,7 +980,7 @@ Torrent1.controller = {
         show: function () {
             $("#createTorrentContenu").html(Torrent1.model.createTorrent.backup);
             Torrent1.view.createTorrent.show();
-
+            this.folder.loader();
         },
         hide: function () {
             Torrent1.view.createTorrent.hide();
