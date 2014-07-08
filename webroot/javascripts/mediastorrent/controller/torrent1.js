@@ -975,10 +975,10 @@ Torrent1.controller = {
         init: function () {
             Torrent1.view.createTorrent.init();
             Torrent1.model.createTorrent.folderLoader = Base.view.loader.make("folder");
-            Torrent1.model.createTorrent.backup = $("#createTorrentContenu").html();
+            //Torrent1.model.createTorrent.backup = $("#createTorrentContenu").html();
         },
         show: function () {
-            $("#createTorrentContenu").html(Torrent1.model.createTorrent.backup);
+            //$("#createTorrentContenu").html(Torrent1.model.createTorrent.backup);
             Torrent1.view.createTorrent.show();
             Torrent1.controller.createTorrent.folder.loader();
         },
