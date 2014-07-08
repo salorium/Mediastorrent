@@ -381,7 +381,7 @@
                     </fieldset>
                 </div>
 
-            <div id="divbouttonaddtorrent" class="row">
+                <div id="divbouttoncreatetorrent" class="row">
                 <div class="small-2 small-centered columns">
                     <button class="button small secondary expand" value="create" type="submit">Créer</button>
                 </div>
