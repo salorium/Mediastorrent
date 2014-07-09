@@ -365,7 +365,15 @@ Torrent1.controller = {
                             Torrent1.model.listTorrent.changed = true;
                             $(".torrent").removeClass("torrentselect");
                             $(e.currentTarget).addClass("torrentselect");
-
+                            /*
+                             Menu clique droit
+                             */
+                            var button = [];
+                            button.push({nom: "Editer la liste des trackers...", dest: function () {
+                                alert("Plop");
+                            }});
+                            console.log(e);
+                            Base.model.pannelClicDroit.make(button, e.pageX, e.pageY);
                         }
                         break;
                 }
