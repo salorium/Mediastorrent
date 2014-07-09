@@ -1033,7 +1033,7 @@ Torrent1.controller = {
                             $("#logcreate").append(v + "<br>");
                         });
                         $("#errorcreate").empty();
-                        $.each(response.res.error, function (k, v) {
+                        $.each(response.res.errors, function (k, v) {
                             $("#errorcreate").append(v + "<br>");
                         });
                         if (response.res.status >= 0) {
