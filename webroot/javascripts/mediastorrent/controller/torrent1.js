@@ -357,6 +357,15 @@ Torrent1.controller = {
                         break;
                     case 3:
                         e.stopPropagation();
+                        /*
+                         Menu clique droit
+                         */
+                        var button = [];
+                        button.push({nom: "Editer les trackers...", dest: function () {
+                            alert("Plop");
+                        }});
+                        console.log(e);
+                        Base.model.pannelClicDroit.make(button, e.pageX, e.pageY);
                         if (!(Torrent1.model.listTorrent.selectionne.length == 1 && Torrent1.model.listTorrent.selectionne[0] == $(e.currentTarget).attr("id") )) {
                             Torrent1.model.listTorrent.selectionne = [];
                             Torrent1.model.listTorrent.selectionne.push($(e.currentTarget).attr("id"));
@@ -369,15 +378,7 @@ Torrent1.controller = {
                             Torrent1.model.listTorrent.changed = true;
                             $(".torrent").removeClass("torrentselect");
                             $(e.currentTarget).addClass("torrentselect");
-                            /*
-                             Menu clique droit
-                             */
-                            var button = [];
-                            button.push({nom: "Editer les trackers...", dest: function () {
-                                alert("Plop");
-                            }});
-                            console.log(e);
-                            Base.model.pannelClicDroit.make(button, e.pageX, e.pageY);
+
                         }
                         break;
                 }
@@ -865,6 +866,9 @@ Torrent1.controller = {
     trackersTorrent: {
         init: function () {
             Torrent1.view.trackersTorrent.init();
+        },
+        edition: {
+
         },
         conversion: function (liste, force) {
             Torrent1.model.trackersTorrent.liste = liste;
