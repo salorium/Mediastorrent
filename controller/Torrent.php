@@ -718,7 +718,7 @@ class Torrent extends Controller
                 $j++;
             }
 
-            $torrent["trackers"] = $trackers;
+            $to["trackers"] = $trackers;
         }
         $this->set(array(
             "torrentselectionnee" => $to,
