@@ -20,7 +20,6 @@ class MyImage extends \core\Model
         if (filter_var($chemin, FILTER_VALIDATE_URL)) {
             //URL
             $headers = @get_headers($chemin);
-            die();
             if (strpos($headers[0], '404') != false) {
                 //NOT FOUND
                 //throw new \Exception("Not Found Image");
@@ -94,7 +93,8 @@ class MyImage extends \core\Model
 
             case "png":
                 $this->image = new \Imagick($chemin);
-                break;
+            die("ICI");
+            break;
         }
         $imageprops = $this->image->getImageGeometry();
         $this->width = $imageprops['width'];
