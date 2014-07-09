@@ -15,6 +15,12 @@ Base.view = {
     fixedHeight: function (container, hauteur) {
         $(container).css("height", hauteur);
     },
+    boxmodal: {
+        make: function (titre, contenu) {
+            $loader = $('<div style="background-color: rgba(0,0,0,0.9); position: absolute; top: 0px;left: 0px; bottom: 0px;right: 0px;display: none"><h3 style="color: #ffffff;">Veuillez patienter</h3><span class="loader loader-circles"></span></div>');
+            $("body").append($loader);
+        }
+    },
     loader: {
         recursiveHauteurParent: function (container, $breaks, h) {
             console.log(container);
