@@ -871,13 +871,13 @@ Torrent1.controller = {
         },
         edition: {
             okforgenerate: function () {
-                if (Torrent1.model.listTorrent.selectionne.length == 1 && Torrent1.model.listTorrent.selectionne[0] === Torrent1.model.trackersTorrent.hash) {
-                    Torrent1.view.trackersTorrent.edition.generate();
+                /*if (Torrent1.model.listTorrent.selectionne.length == 1 && Torrent1.model.listTorrent.selectionne[0] === Torrent1.model.trackersTorrent.hash) {
+                 Torrent1.view.trackersTorrent.edition.generate();
                 } else {
                     setTimeout(function () {
                         Torrent1.controller.trackersTorrent.edition.okforgenerate();
                     }, 1000)
-                }
+                 }*/
             }
         },
         conversion: function (liste, force) {
