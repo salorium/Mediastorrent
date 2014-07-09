@@ -607,6 +607,11 @@ Torrent1.view = {
                     '<div class="large-9 columns">' +
                     '    <textarea rows="10" name="trackers" id="trackers">' + trackerlist + '</textarea>' +
                     '</div>' +
+                    '<div class="row">' +
+                    '<div class="small-2 small-centered columns">' +
+                    '<button class="button small secondary expand" value="create" type="submit">Modifier</button>' +
+                    '</div>' +
+                    </div>'
                     '</div>';
                 Base.view.boxmodal.make("Edition des Trackers du Torrent", res);
             }
