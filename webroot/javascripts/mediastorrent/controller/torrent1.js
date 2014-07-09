@@ -1032,6 +1032,10 @@ Torrent1.controller = {
                         $.each(response.res.log, function (k, v) {
                             $("#logcreate").append(v + "<br>");
                         });
+                        $("#errorcreate").empty();
+                        $.each(response.res.error, function (k, v) {
+                            $("#errorcreate").append(v + "<br>");
+                        });
                         if (response.res.status >= 0) {
                             Base.view.noty.generate("success", "Le torrent a bien été créer :) ");
 
