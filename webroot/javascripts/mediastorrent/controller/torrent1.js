@@ -68,6 +68,7 @@ Torrent1.controller = {
                             if (response.hashtorrent == Torrent1.model.listTorrent.selectionne[0]) {
                                 if (response.torrentselectionnee) {
                                     if (response.torrentselectionnee.files) {
+                                        Torrent1.model.trackersTorrent.hash = response.hashtorrent;
                                         var t = Torrent1.model.listTorrent.changed && response.torrentselectionnee.files != [] && response.torrentselectionnee.detail != [];
                                         Torrent1.controller.detailsTorrent.conversion(response.torrentselectionnee.detail, t);
                                         Torrent1.controller.filesTorrent.conversion(response.torrentselectionnee.files, t);
@@ -184,6 +185,7 @@ Torrent1.controller = {
                                 if (response.torrentselectionnee) {
                                     //Torrent.model.torrentselectionneedetail = {};
                                     if (response.torrentselectionnee.files) {
+                                        Torrent1.model.trackersTorrent.hash = response.hashtorrent;
                                         var t = true;
                                         Torrent1.controller.filesTorrent.conversion(response.torrentselectionnee.files, t);
                                         Torrent1.controller.detailsTorrent.conversion(response.torrentselectionnee.detail, t);
