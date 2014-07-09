@@ -694,7 +694,32 @@ class Torrent extends Controller
             }
             $to["files"] = $files;
         }
+        $cmds = array(
+            "t.get_url=", "t.get_type=", "t.is_enabled=", "t.get_group=", "t.get_scrape_complete=",
+            "t.get_scrape_incomplete=", "t.get_scrape_downloaded=",
+            "t.get_normal_interval=", "t.get_scrape_time_last="
+        );
+        $cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "t.multicall", array($hashtorrentselectionne, ""));
 
+        foreach ($cmds as $prm) {
+            $cmd->addParameter(\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi, $prm));
+        }
+        $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, $cmd);
+        $trackers = null;
+        if (!$req->success()) {
+            trigger_error("Impossible de récupéré la liste des trakers de " . $hashtorrentselectionne);
+            $traker = $req->val;
+        } else {
+
+            $taille = count($req->val);
+            $j = 0;
+            for ($i = 0; $i < $taille; $i += 9) {
+                $trackers[] = array($j, $req->val[$i], $req->val[$i + 1], $req->val[$i + 2], $req->val[$i + 3], $req->val[$i + 4], $req->val[$i + 5], $req->val[$i + 6], $req->val[$i + 7], $req->val[$i + 8]);
+                $j++;
+            }
+
+            $torrent["trackers"] = $trackers;
+        }
         $this->set(array(
             "torrentselectionnee" => $to,
             "host" => HOST,
