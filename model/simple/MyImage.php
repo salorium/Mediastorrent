@@ -92,8 +92,10 @@ class MyImage extends \core\Model
             case "jpg":
 
             case "png":
-                $this->image = new \Imagick($chemin);
-            die("ICI");
+            $handle = fopen($chemin, 'rb');
+            $this->image = new \Imagick();
+            $this->image->readimagefile($handle);
+            //die("ICI");
             break;
         }
         $imageprops = $this->image->getImageGeometry();
