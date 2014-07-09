@@ -215,6 +215,10 @@ Base.model = {
 
         }
     },
+    boxmodal: {
+        cpt: 0,
+        allmodal: []
+    },
     tableau: {
         compareObjet: function (o1, o2, sortColumn, sortOrder) {
             return sortOrder > 0 ? (typeof o1[sortColumn] == "string" ? o1[sortColumn].toLowerCase() : o1[sortColumn]) < (typeof o2[sortColumn] == "string" ? o2[sortColumn].toLowerCase() : o2[sortColumn]) : (typeof o1[sortColumn] == "string" ? o1[sortColumn].toLowerCase() : o1[sortColumn]) > (typeof o2[sortColumn] == "string" ? o2[sortColumn].toLowerCase() : o2[sortColumn]);

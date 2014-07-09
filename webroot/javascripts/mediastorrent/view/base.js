@@ -16,19 +16,20 @@ Base.view = {
         $(container).css("height", hauteur);
     },
     boxmodal: {
-        del: function (ele) {
-            ele.remove();
+        del: function (id) {
+            Base.model.boxmodal.allmodal[Base.model.boxmodal.cpt].remove();
         },
         make: function (titre, contenu) {
             $loader = $('<div style="background-color: rgba(0,0,0,0.2); position: absolute; top: 0px;left: 0px; bottom: 0px;right: 0px;">' +
                 '<div class="addTorrent">' +
                 '<div class="addTorrentTitle">' +
-                '<a></a><a class="close" onclick="Base.view.boxmodal.del(' + $loader + ');">&times;</a></div>' +
+                '<a></a><a class="close" onclick="Base.view.boxmodal.del(' + Base.model.boxmodal.cpt + ');">&times;</a></div>' +
                 '<div class="addTorrentContenu">' +
                 '</div>' +
                 '</div>');
             $("body").append($loader);
-            return $loader;
+            Base.model.boxmodal.allmodal[Base.model.boxmodal.cpt] = $loader;
+            Base.model.boxmodal.cpt++;
         }
     },
     loader: {
