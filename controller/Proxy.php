@@ -32,7 +32,6 @@ class Proxy extends Controller
         //echo $url;
 
         $myimage = new \model\simple\MyImage($url);
-        die();
         $this->set(array(
             "url" => $url,
             "size" => $size,
