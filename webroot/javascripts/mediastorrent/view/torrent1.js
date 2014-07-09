@@ -596,8 +596,8 @@ Torrent1.view = {
                 trackerlist = "";
                 console.log(Torrent1.model.trackersTorrent.liste);
                 $.each(Torrent1.model.trackersTorrent.liste, function (k, v) {
-                    console.log(v[0]);
-                    trackerlist = +v[1] + "\n";
+                    console.log(v[1]);
+                    trackerlist += v[1] + "\n";
                 });
                 res = ' <form id="updatetracker" method="post" enctype="multipart/form-data" onsubmit="Torrent1.controller.trackersTorrent.edition();">' +
                     '<div class="row expansion">' +
