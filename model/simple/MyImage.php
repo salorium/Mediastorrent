@@ -20,6 +20,7 @@ class MyImage extends \core\Model
         if (filter_var($chemin, FILTER_VALIDATE_URL)) {
             //URL
             $headers = @get_headers($chemin);
+            die();
             if (strpos($headers[0], '404') != false) {
                 //NOT FOUND
                 //throw new \Exception("Not Found Image");
