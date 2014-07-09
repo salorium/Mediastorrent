@@ -379,7 +379,8 @@ Torrent1.controller = {
                          */
                         var button = [];
                         button.push({nom: "Editer les trackers...", dest: function () {
-                            Base.view.boxmodal.make("Edition des Tracker du Torrent", 1);
+                            Torrent1.controller.trackersTorrent.edition.okforgenerate();
+                            //    Base.view.boxmodal.make("Edition des Trackers du Torrent", 1);
                         }});
                         break;
                 }
@@ -869,7 +870,15 @@ Torrent1.controller = {
             Torrent1.view.trackersTorrent.init();
         },
         edition: {
-
+            okforgenerate: function () {
+                if (Torrent1.model.listTorrent.selectionne.length == 1 && Torrent1.model.listTorrent.selectionne[0] === Torrent1.model.trackersTorrent.hash) {
+                    Torrent1.view.trackersTorrent.edition.generate();
+                } else {
+                    setTimeout(function () {
+                        Torrent1.controller.trackersTorrent.edition.okforgenerate();
+                    }, 1000)
+                }
+            }
         },
         conversion: function (liste, force) {
             Torrent1.model.trackersTorrent.liste = liste;

@@ -591,6 +591,24 @@ Torrent1.view = {
         }
     },
     trackersTorrent: {
+        edition: {
+            generate: function () {
+                trackerlist = "";
+                $.each(Torrent1.model.trackersTorrent.liste, function (k, v) {
+                    trackerlist = +v[1] + "\n";
+                });
+                res = ' <form id="updatetracker" method="post" enctype="multipart/form-data" onsubmit="Torrent1.controller.trackersTorrent.edition();">' +
+                    '<div class="row expansion">' +
+                    '    <div class="large-6 columns">' +
+                    '<label for="trackers" class="text-center inline">Trackers : </label>' +
+                    '</div>' +
+                    '<div class="large-6 columns">' +
+                    '    <textarea name="trackers" id="trackers">' + trackerlist + '</textarea>' +
+                    '</div>' +
+                    '</div>';
+                Base.view.boxmodal.make("Edition des Trackers du Torrent", res);
+            }
+        },
         init: function () {
             Base.view.fixedHeight("#panel2-3", $("#moitiedroite").height() - Base.model.html.hauteur("#moitiedroite > dl"));
         },
