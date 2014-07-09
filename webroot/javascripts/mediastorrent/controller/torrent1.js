@@ -187,6 +187,7 @@ Torrent1.controller = {
                                         var t = true;
                                         Torrent1.controller.filesTorrent.conversion(response.torrentselectionnee.files, t);
                                         Torrent1.controller.detailsTorrent.conversion(response.torrentselectionnee.detail, t);
+                                        Torrent1.controller.trackersTorrent.conversion(response.torrentselectionnee.trackers, t);
                                     }
 
                                 } else {
@@ -198,6 +199,7 @@ Torrent1.controller = {
                             }
                             Torrent1.view.detailsTorrent.affiche();
                             Torrent1.view.filesTorrent.afficheArbre();
+                            Torrent1.view.trackersTorrent.afficheTrackers();
                             //Torrent.view.filesTorrent();
                         } else {
                             Base.view.noty.generate("error", "Impossible de se connecter à rtorrent");
