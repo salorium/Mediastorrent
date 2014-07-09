@@ -60,6 +60,7 @@ Torrent1.model = {
         }
     },
     trackersTorrent: {
+        hash: null,
         original: [],
         type: [0, "http", "udp", "dht"],
         liste: [],
