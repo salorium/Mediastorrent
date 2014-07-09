@@ -601,11 +601,11 @@ Torrent1.view = {
                 });
                 res = ' <form id="updatetracker" method="post" enctype="multipart/form-data" onsubmit="Torrent1.controller.trackersTorrent.edition();">' +
                     '<div class="row expansion">' +
-                    '    <div class="large-6 columns">' +
+                    '    <div class="large-3 columns">' +
                     '<label for="trackers" class="text-center inline">Trackers : </label>' +
                     '</div>' +
-                    '<div class="large-6 columns">' +
-                    '    <textarea name="trackers" id="trackers">' + trackerlist + '</textarea>' +
+                    '<div class="large-9 columns">' +
+                    '    <textarea rows="10" name="trackers" id="trackers">' + trackerlist + '</textarea>' +
                     '</div>' +
                     '</div>';
                 Base.view.boxmodal.make("Edition des Trackers du Torrent", res);
