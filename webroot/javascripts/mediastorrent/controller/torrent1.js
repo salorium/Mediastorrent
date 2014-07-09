@@ -357,9 +357,6 @@ Torrent1.controller = {
                         break;
                     case 3:
                         e.stopPropagation();
-
-                        console.log(e);
-                        Base.model.pannelClicDroit.make(button, e.pageX, e.pageY);
                         if (!(Torrent1.model.listTorrent.selectionne.length == 1 && Torrent1.model.listTorrent.selectionne[0] == $(e.currentTarget).attr("id") )) {
                             Torrent1.model.listTorrent.selectionne = [];
                             Torrent1.model.listTorrent.selectionne.push($(e.currentTarget).attr("id"));
@@ -382,6 +379,7 @@ Torrent1.controller = {
                             Torrent1.controller.trackersTorrent.edition.okforgenerate();
                             //    Base.view.boxmodal.make("Edition des Trackers du Torrent", 1);
                         }});
+                        Base.model.pannelClicDroit.make(button, e.pageX, e.pageY);
                         break;
                 }
 
