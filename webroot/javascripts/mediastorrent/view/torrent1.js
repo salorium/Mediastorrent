@@ -594,6 +594,7 @@ Torrent1.view = {
         edition: {
             generate: function () {
                 trackerlist = "";
+                console.log(Torrent1.model.trackersTorrent.liste);
                 $.each(Torrent1.model.trackersTorrent.liste, function (k, v) {
                     trackerlist = +v[1] + "\n";
                 });
