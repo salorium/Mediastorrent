@@ -94,7 +94,7 @@ class MyImage extends \core\Model
             case "png":
             $handle = fopen($chemin, 'rb');
             $this->image = new \Imagick();
-            //$this->image->readimagefile($handle);
+            $this->image->readimagefile($handle);
             die("ICI");
             break;
         }
