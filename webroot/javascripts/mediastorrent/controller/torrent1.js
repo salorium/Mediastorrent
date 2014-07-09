@@ -362,7 +362,7 @@ Torrent1.controller = {
                          */
                         var button = [];
                         button.push({nom: "Editer les trackers...", dest: function () {
-                            alert("Plop");
+                            Base.view.boxmodal.make("Edition des Tracker du Torrent", 1);
                         }});
                         console.log(e);
                         Base.model.pannelClicDroit.make(button, e.pageX, e.pageY);
