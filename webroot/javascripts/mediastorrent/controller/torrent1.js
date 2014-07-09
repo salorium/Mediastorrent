@@ -369,7 +369,7 @@ Torrent1.controller = {
                              Menu clique droit
                              */
                             var button = [];
-                            button.push({nom: "Editer la liste des trackers...", dest: function () {
+                            button.push({nom: "Editer les trackers...", dest: function () {
                                 alert("Plop");
                             }});
                             console.log(e);
