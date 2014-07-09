@@ -21,7 +21,7 @@ Base.view = {
         },
         make: function (titre, contenu) {
             $loader = $('<div style="background-color: rgba(0,0,0,0.2); position: absolute; top: 0px;left: 0px; bottom: 0px;right: 0px;">' +
-                '<div style="width: 50%;height: 50%;" class="addTorrent">' +
+                '<div style="width: 50%;height: 50%;position: relative;margin: auto;" class="addTorrent">' +
                 '<div class="addTorrentTitle">' +
                 '<a>' + titre.replace(/([A-Z]+)/g, '<span class="secondary">$1</span>') + '</a><a class="close" onclick="Base.view.boxmodal.del(' + Base.model.boxmodal.cpt + ');">&times;</a></div>' +
                 '<div class="addTorrentContenu">' + contenu +
