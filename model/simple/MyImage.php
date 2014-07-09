@@ -95,7 +95,7 @@ class MyImage extends \core\Model
             $handle = fopen($chemin, 'rb');
             $this->image = new \Imagick();
             $this->image->readimagefile($handle);
-            //die("ICI");
+            die("ICI");
             break;
         }
         $imageprops = $this->image->getImageGeometry();
