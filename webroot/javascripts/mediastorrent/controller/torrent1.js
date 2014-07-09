@@ -357,13 +357,7 @@ Torrent1.controller = {
                         break;
                     case 3:
                         e.stopPropagation();
-                        /*
-                         Menu clique droit
-                         */
-                        var button = [];
-                        button.push({nom: "Editer les trackers...", dest: function () {
-                            Base.view.boxmodal.make("Edition des Tracker du Torrent", 1);
-                        }});
+
                         console.log(e);
                         Base.model.pannelClicDroit.make(button, e.pageX, e.pageY);
                         if (!(Torrent1.model.listTorrent.selectionne.length == 1 && Torrent1.model.listTorrent.selectionne[0] == $(e.currentTarget).attr("id") )) {
@@ -380,6 +374,13 @@ Torrent1.controller = {
                             $(e.currentTarget).addClass("torrentselect");
 
                         }
+                        /*
+                         Menu clique droit
+                         */
+                        var button = [];
+                        button.push({nom: "Editer les trackers...", dest: function () {
+                            Base.view.boxmodal.make("Edition des Tracker du Torrent", 1);
+                        }});
                         break;
                 }
 
