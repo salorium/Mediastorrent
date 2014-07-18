@@ -33,6 +33,10 @@ if (!is_null($files)) {
                 <td>
                     <?= \model\simple\Converter::bytes(($v[3] != 0 ? $v[4] * $v[2] / $v[3] : 0), 2); ?>
                 </td>
+                <td>
+                    <progress class="<?= ($v[2] == $v[3] ? "ul" : "dl"); ?> " value="<?= ($v[3] != 0 ? $v[2] : 1) ?>"
+                              max="<?= $v[3] ?>" title="<?= ($v[3] != 0 ? $v[2] / $v[3] * 100 : 100); ?>%"></progress>
+                </td>
             </tr>
         <?
         }
