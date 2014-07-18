@@ -46,6 +46,7 @@ Torrent1.controller = {
             var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/liste/' + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion + "/" + cid;
             if (Torrent1.model.listTorrent.selectionne.length == 1) {
                 url += "/" + Torrent1.model.listTorrent.selectionne[0];
+                $("#listefile").src(Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/getListeFile/' + Torrent1.model.listTorrent.selectionne[0] + "/" + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion);
             }
             $.ajax({
                 url: url + ".json",
@@ -174,6 +175,7 @@ Torrent1.controller = {
         },
         details: function () {
             var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/details/' + Torrent1.model.listTorrent.selectionne[0] + "/" + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion;
+            $("#listefile").src(Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/getListeFile/' + Torrent1.model.listTorrent.selectionne[0] + "/" + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion);
             $.ajax({
                 url: url + ".json",
                 dataType: "json",
