@@ -30,6 +30,9 @@ if (!is_null($files)) {
                 <td>
                     <?= \model\simple\Converter::bytes($v[4], 2); ?>
                 </td>
+                <td>
+                    <?= \model\simple\Converter::bytes(($v[3] != 0 ? $v[4] * $v[2] / $v[3] : 0), 2); ?>
+                </td>
             </tr>
         <?
         }
