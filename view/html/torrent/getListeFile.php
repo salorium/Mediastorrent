@@ -5,6 +5,7 @@
  * Date: 19/07/14
  * Time: 00:42
  */
+//http://www.salorium.com/torrent/download/59F1437E049BA4A7C259012C474901EB495E48F2/2/salorium/b183021aa172e367cbe84cbdabace747e9dfdd65
 if (!is_null($files)) {
     ?>
 
@@ -23,7 +24,9 @@ if (!is_null($files)) {
         foreach ($files as $k => $v) {
             ?>
             <tr>
-                <td><?= basename($v[1]) ?></td>
+                <td>
+                    <a href="<?= \core\Router::url("torrent/download/" . $hashtorrent . "/" . $v[0] . "/" . \config\Conf::$user["user"]->login . "/" . \config\Conf::$user["user"]->keyconnexion); ?>"><?= basename($v[1]) ?></a>
+                </td>
             </tr>
         <?
         }
