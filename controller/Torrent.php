@@ -16,6 +16,41 @@ use model\xmlrpc\rXMLRPCCommand;
 
 class Torrent extends Controller
 {
+    function getListeFile($hashtorrentselectionne, $login = null, $keyconnexion = null)
+    {
+        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
+        $cmds = array(
+            "f.get_path=", "f.get_completed_chunks=", "f.get_size_chunks=", "f.get_size_bytes=", "f.get_priority=", "f.prioritize_first=", "f.prioritize_last="
+        );
+        $cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.multicall", array($hashtorrentselectionne, ""));
+        $torrent = null;
+        foreach ($cmds as $prm) {
+            $cmd->addParameter(\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi, $prm));
+        }
+        $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, $cmd);
+        $files = null;
+        if (!$req->success()) {
+            trigger_error("Impossible de récupéré la liste des fichiers de " . $hashtorrentselectionne);
+            $files = $req->val;
+        } else {
+            $taille = count($req->val);
+            $j = 0;
+            for ($i = 0; $i < $taille; $i += 7) {
+                $files[] = array($j, $req->val[$i], $req->val[$i + 1], $req->val[$i + 2], $req->val[$i + 3], $req->val[$i + 4], $req->val[$i + 5], $req->val[$i + 6]);
+                $j++;
+            }
+            $tmp = $files;
+            $torrent["files"] = $tmp;
+        }
+        $this->set(array(
+            "torrentselectionnee" => $torrent,
+            "hashtorrent" => $hashtorrentselectionne,
+            "host" => HOST,
+            "seedbox" => \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
+        ));
+    }
+
     function getcreate($login, $keyconnexion, $taskNo)
     {
         \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
