@@ -24,7 +24,7 @@ class Torrent extends Controller
             "f.get_path=", "f.get_completed_chunks=", "f.get_size_chunks=", "f.get_size_bytes=", "f.get_priority=", "f.prioritize_first=", "f.prioritize_last="
         );
         $cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.multicall", array($hashtorrentselectionne, ""));
-        $torrent = null;
+        $tmp = null;
         foreach ($cmds as $prm) {
             $cmd->addParameter(\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi, $prm));
         }
@@ -41,10 +41,9 @@ class Torrent extends Controller
                 $j++;
             }
             $tmp = $files;
-            $torrent["files"] = $tmp;
         }
         $this->set(array(
-            "torrentselectionnee" => $torrent,
+            "files" => $tmp,
             "hashtorrent" => $hashtorrentselectionne,
             "host" => HOST,
             "seedbox" => \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
