@@ -25,7 +25,7 @@ if (!is_null($files)) {
             ?>
             <tr>
                 <td>
-                    <a href="<?= \core\Router::url("torrent/download/" . $hashtorrent . "/" . $v[0] . "/" . \config\Conf::$user["user"]->login . "/" . \config\Conf::$user["user"]->keyconnexion); ?>"><?= basename($v[1]) ?></a>
+                    <a href="<?= \core\Router::url("torrent/download/" . $hashtorrent . "/" . $v[0] . "/" . \config\Conf::$user["user"]->keyconnexion); ?>"><?= basename($v[1]) ?></a>
                 </td>
                 <td>
                     <?= \model\simple\Converter::bytes($v[4], 2); ?>
