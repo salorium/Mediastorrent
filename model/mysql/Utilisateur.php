@@ -74,11 +74,10 @@ class Utilisateur extends \core\ModelMysql
         \core\Mysqli::query($query);
         $u = \core\Mysqli::getObjectAndClose(false, __CLASS__);
         if ($u) {
-            $u->keyconnexion = \sha1(\uniqid() . $u->login . $u->motdepasse);
-            if ($u->update()) {
-                return $u;
-            }
-
+            do {
+                $u->keyconnexion = \model\simple\String::random(40);
+            } while (!$u->update());
+            return $u;
         }
         return false;
 
