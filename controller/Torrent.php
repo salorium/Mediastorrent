@@ -402,7 +402,7 @@ class Torrent extends Controller
                     $trackers[] = array($j, $req->val[$i], $req->val[$i + 1], $req->val[$i + 2], $req->val[$i + 3], $req->val[$i + 4], $req->val[$i + 5], $req->val[$i + 6], $req->val[$i + 7], $req->val[$i + 8]);
                     $j++;
                 }
-                for ($i = 0; $i < 30; $i++)
+                /*for ($i = 0; $i < 30; $i++)
                     $trackers[] = $trackers[0];
                     /*$tmp = $files;
                     $data = $tmp;
