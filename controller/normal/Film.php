@@ -178,7 +178,7 @@ class Film extends Controller
         if ($tf->fini === "0") {
 
             $cmds = array(
-                "d.get_name=" /*5*/, "d.get_down_rate=" /*13*/, "d.get_size_chunks=" /*8*/, "d.get_completed_chunks=" /*7*/, "d.get_chunk_size=" /*14*/
+                "d.get_name" /*5*/, "d.get_down_rate" /*13*/, "d.get_size_chunks" /*8*/, "d.get_completed_chunks" /*7*/, "d.get_chunk_size" /*14*/
             );
 
             $req = new \model\xmlrpc\rXMLRPCRequest($tf->scgi);
