@@ -188,7 +188,7 @@ class Film extends Controller
 
 
             if ($req->success()) {
-                var_dump($req->val);
+                $tf->toto = $req->val;
             }
         }
         $this->set("file", $tf);
