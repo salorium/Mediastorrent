@@ -58,7 +58,7 @@ class Allocine extends Controller
         ));
     }
 
-    function getInfosFilm($login = null, $keyconnexion = null, $id = null)
+    function getInfosFilm($keyconnexion = null, $id = null)
     {
         \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
