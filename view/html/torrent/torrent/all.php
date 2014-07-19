@@ -212,10 +212,10 @@
 
                         </tbody>
                     </table>-->
-                    <ul class="inline-list">
-                        <li><a id="listefile" target="_blank">Version Liste</a></li>
 
-                    </ul>
+                    <a id="listefile" target="_blank"><span class="secondary label">Version Liste</span></a>
+
+
                     <div style="overflow-y: auto;position: relative;height: inherit;">
                     <table style="width: 100%;">
                             <thead>
