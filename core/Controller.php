@@ -159,8 +159,8 @@ class Controller
         $this->vars["debuggererreur"] = \core\Debug::$error;
         $this->vars["debuggermysql"] = \core\Mysqli::$query;
         //$this->vars["debuggerxmlrpc"]= array(\model\xmlrpc\rXMLRPCRequest::$time,\model\xmlrpc\rXMLRPCRequest::$query);
-        $this->vars["debuggerlogtime"] = \core\Debug::$timelog;
-        $this->vars["scgi"] = \config\Conf::$portscgi;
+        //$this->vars["debuggerlogtime"] = \core\Debug::$timelog;
+        //$this->vars["scgi"] = \config\Conf::$portscgi;
         $this->vars["perf"] = $this->debug->get_perf();
         echo \json_encode($this->vars);
 
