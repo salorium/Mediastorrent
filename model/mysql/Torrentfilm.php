@@ -191,14 +191,14 @@ class Torrentfilm extends \core\ModelMysql
 
     static function getTorrentFilmParId($id)
     {
-        $query = "select tf.id as id,r.hostname as hostname,tf.mediainfo as mediainfo, tf.qualite as qualite, tf.complementfichier as complementfichier, tf.fini as fini , rs.portscgi as scgi";
+        $query = "select tf.id as id,r.hostname as hostname,tf.mediainfo as mediainfo, tf.qualite as qualite, tf.complementfichier as complementfichier, tf.fini as fini, rs.portscgi as scgi, tf.hashtorrent as hash ";
         $query .= "from torrentfilm tf,rtorrent r,rtorrents rs ";
         $query .= "where( tf.id = " . \core\Mysqli::real_escape_string($id);
         $query .= "and r.nom = tf.nomrtorrent ";
         $query .= "and tf.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login);
         $query .= " and rs.nomrtorrent = r.nom ";
         $query .= " and rs.login = tf.login ";
-        //$query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
+        $query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
         //$query .= " and f.id = " . \core\Mysqli::real_escape_string($id);
         $query .= ") or (";
         //$query .= "tf.fini = true ";
@@ -207,12 +207,12 @@ class Torrentfilm extends \core\ModelMysql
         $query .= "and r.nom = tf.nomrtorrent ";
         $query .= "and rs.login = tf.login ";
         $query .= "and rs.nomrtorrent = r.nom ";
-        //$query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
+        $query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
         $query .= " and tf.id = " . \core\Mysqli::real_escape_string($id);
         $query .= " and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
         $query .= ") order by qualite DESC";
         \core\Mysqli::query($query);
-        return \core\Mysqli::getObjectAndClose(true);
+        return \core\Mysqli::getObjectAndClose();
     }
 
     static function getTorrentFilmParIdForStreaming($id)

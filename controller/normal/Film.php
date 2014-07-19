@@ -170,6 +170,29 @@ class Film extends Controller
         $this->set("film", $tmp);
     }
 
+    function getTime($idtorrentfilm)
+    {
+        $tf = \model\mysql\Torrentfilm::getTorrentFilmParId($idtorrentfilm);
+        if (is_null($tf)) throw new \Exception("Id incorrect");
+        if ($tf->fini === 0) {
+            $cmds = array(
+                "d.get_name=" /*5*/, "d.get_down_rate=" /*13*/, "d.get_size_chunks=" /*8*/, "d.get_completed_chunks=" /*7*/, "d.get_chunk_size=" /*14*/
+            );
+            $cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.multicall", $tf->hash);
+            $res = array();
+            foreach ($cmds as $v) {
+                $res[] = \model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi, $v);
+            }
+            $cmd->addParameters($res);
+            $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, $cmd);
+
+            if ($req->success()) {
+                $tf->toto = $req->val;
+            }
+        }
+        $this->set("file", $tf);
+    }
+
     function getFile($id)
     {
         $a = \model\mysql\Torrentfilm::getTorrentFilmParIdFilm($id);
