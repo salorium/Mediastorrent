@@ -203,6 +203,8 @@ class Controller
             } else {
                 if (is_int($k)) {
                     $xml->addChild("_" . $k . "", $v);
+                } else if (is_numeric($k[0])) {
+                    $xml->addChild("_" . $k, $v);
                 } else {
                     $xml->addChild($k, $v);
                 }
