@@ -213,7 +213,7 @@
                         </tbody>
                     </table>-->
 
-                    <a id="listefile" target="_blank"><span class="label">Version Liste</span></a>
+                    <a id="listefile" target="_blank" class="button tiny">Version Liste</a>
 
 
                     <div style="overflow-y: auto;position: relative;height: inherit;">
