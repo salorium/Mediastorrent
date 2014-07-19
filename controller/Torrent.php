@@ -38,7 +38,7 @@ class Torrent extends Controller
         } else {
             $taille = count($req->val);
             $j = 0;
-            for ($i = 0; $i < $taille; $i += 7) {
+            for ($i = 1; $i < $taille; $i += 7) {
                 $files[] = array($j, $req->val[$i], $req->val[$i + 1], $req->val[$i + 2], $req->val[$i + 3], $req->val[$i + 4], $req->val[$i + 5], $req->val[$i + 6]);
                 $j++;
             }
@@ -47,6 +47,7 @@ class Torrent extends Controller
         $this->set(array(
             "rpc" => rXMLRPCRequest::$query,
             "files" => $tmp,
+            "nom" => $req->val[0],
             "hashtorrent" => $hashtorrentselectionne,
             "host" => HOST,
             "seedbox" => \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
