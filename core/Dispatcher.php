@@ -72,6 +72,7 @@ class Dispatcher
             echo $param->isOptional() . "<br>";
         }
         var_dump($this->request->params);
+        var_dump($_GET);
         die();
 
         call_user_func_array(array($controller, $this->request->action), $this->request->params);
