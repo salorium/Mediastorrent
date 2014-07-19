@@ -398,7 +398,7 @@ var Film = {
 
                         }
                         $table.append(Film.tr[i]);
-                        this.interval.push(setInterval(Film.test, 1000, i, i));
+                        Film.interval.push(setInterval(Film.test, 1000, i, i));
                     }
 
 
