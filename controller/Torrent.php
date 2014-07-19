@@ -12,6 +12,7 @@ namespace controller;
 use core\Controller;
 use core\Debug;
 use model\xmlrpc\rXMLRPCCommand;
+use model\xmlrpc\rXMLRPCRequest;
 
 
 class Torrent extends Controller
@@ -43,6 +44,7 @@ class Torrent extends Controller
             $tmp = $files;
         }
         $this->set(array(
+            "rpc" => rXMLRPCRequest::$query,
             "files" => $tmp,
             "hashtorrent" => $hashtorrentselectionne,
             "host" => HOST,
