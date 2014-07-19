@@ -86,13 +86,13 @@ class Dispatcher
         Memcached::value("deb","ddd");
         Memcached::value("deb1","ddd");*/
         $u = null;
-        if (isset($_COOKIE["login"]) && isset($_COOKIE["keyconnexion"])) {
+        if (isset($_COOKIE["keyconnexion"])) {
             if (extension_loaded("memcached"))
-                $u = Memcached::value($_COOKIE["login"], "user");
+                $u = Memcached::value($_COOKIE["keyconnexion"], "user");
             if (is_null($u)) {
-                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($_COOKIE["login"], $_COOKIE["keyconnexion"]);
+                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($_COOKIE["keyconnexion"]);
                 if ($u)
-                    \core\Memcached::value($u->login, "user", $u, 60 * 5);
+                    \core\Memcached::value($_COOKIE["keyconnexion"], "user", $u, 60 * 5);
             } else {
                 $u = $u->keyconnexion === $_COOKIE["keyconnexion"] ? $u : false;
             }
@@ -103,7 +103,7 @@ class Dispatcher
         if ($u && !is_null($u)) {
             $role = Conf::$rolenumero[$u->role];
             $roletext = $u->role;
-            \core\Memcached::value($u->login, "user", $u, 60 * 5);
+            \core\Memcached::value($_COOKIE["keyconnexion"], "user", $u, 60 * 5);
         }
 
         Conf::$user["user"] = $u;

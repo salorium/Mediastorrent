@@ -106,10 +106,10 @@ class Utilisateur extends \core\ModelMysql
 
     }
 
-    public static function authentifierUtilisateurParKeyConnexion($login, $key)
+    public static function authentifierUtilisateurParKeyConnexion($key)
     {
         $query = "select * from utilisateur ";
-        $query .= " where login=" . \core\Mysqli::real_escape_string($login) . " and keyconnexion=" . \core\Mysqli::real_escape_string($key);
+        $query .= " where keyconnexion=" . \core\Mysqli::real_escape_string($key);
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(false, __CLASS__);
     }
