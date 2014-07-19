@@ -416,7 +416,7 @@ var Film = {
     },
     test: function (a, s) {
         var t = Film.tr[a].html();
-        t = t.html();
+        t = $(t).html();
         if (s == 0) {
             t++;
         } else {
