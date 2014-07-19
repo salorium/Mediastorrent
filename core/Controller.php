@@ -196,6 +196,9 @@ class Controller
                 if (is_int($k)) {
                     $xml1 = $xml->addChild("_" . $k);
                     $this->parserXml($v, $xml1);
+                } else if (is_numeric($k[0])) {
+                    $xml1 = $xml->addChild("_" . $k);
+                    $this->parserXml($v, $xml1);
                 } else {
                     $xml1 = $xml->addChild($k);
                     $this->parserXml($v, $xml1);
