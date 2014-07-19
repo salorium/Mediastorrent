@@ -172,7 +172,6 @@ class Film extends Controller
 
     function getFile($id)
     {
-        //sleep(10);
         $a = \model\mysql\Torrentfilm::getTorrentFilmParIdFilm($id);
         $tmp = array();
         foreach ($a as $v) {
