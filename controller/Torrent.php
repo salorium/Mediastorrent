@@ -30,6 +30,7 @@ class Torrent extends Controller
             $cmd->addParameter(\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi, $prm));
         }
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, $cmd);
+        $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.get_name", array($hashtorrentselectionne, "")));
         $files = null;
         if (!$req->success()) {
             trigger_error("Impossible de récupéré la liste des fichiers de " . $hashtorrentselectionne);
