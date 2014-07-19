@@ -216,7 +216,7 @@
                     <a id="listefile" target="_blank" class="button tiny">Version Liste</a>
 
 
-                    <div style="overflow-y: auto;position: relative;height: inherit;">
+                    <div style="overflow-y: auto;position: relative;">
                     <table style="width: 100%;">
                             <thead>
                             <tr>
@@ -237,8 +237,8 @@
                     </div>
                 </div>
                 <div class="content" id="panel2-3">
-                    <div style="overflow-y: auto;position: relative;height: inherit;">
-                        <table style="width: 100%;">
+                    <div style="overflow-y: auto;position: relative;">
+                    <table style="width: 100%;">
                             <thead>
                             <tr>
                                 <th style='width: 200px;'>Nom</th>
