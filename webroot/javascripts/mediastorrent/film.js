@@ -396,7 +396,7 @@ var Film = {
                             Film.tr[i] = $("<tr></tr>").append(10);
 
                         }
-                        $table.append($tr);
+                        $table.append(Film.tr[i]);
                         setInterval(function () {
                             var t = Film.tr[i].html();
                             if (i == 0) {
