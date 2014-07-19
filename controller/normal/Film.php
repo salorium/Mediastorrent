@@ -183,7 +183,7 @@ class Film extends Controller
 
             $req = new \model\xmlrpc\rXMLRPCRequest($tf->scgi);
             foreach ($cmds as $v) {
-                $req->addCommand(new \model\xmlrpc\rXMLRPCCommand($tf->scgi, $v, $tf->hash))
+                $req->addCommand(new \model\xmlrpc\rXMLRPCCommand($tf->scgi, $v, $tf->hash));
             }
 
 
