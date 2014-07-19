@@ -28,7 +28,7 @@ class Torrent extends Controller
         $tmp = null;*/
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi);
         foreach ($cmds as $prm) {
-            $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, $prm, $hashtorrentselectionne));
+            $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, $prm, array("", $hashtorrentselectionne)));
         }
         $files = null;
         if (!$req->success()) {
