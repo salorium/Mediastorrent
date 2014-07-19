@@ -9,8 +9,8 @@
 if (!is_null($files)) {
     ?>
     <h3><?= $nom; ?></h3>
-    <table>
-        <thead>
+    <table style="margin: auto;">
+    <thead>
         <tr>
             <td>Nom</td>
             <td>Taille</td>
