@@ -47,7 +47,7 @@ if (!is_null($files)) {
 <?
 } else {
     ?>
-    <h1>Aucun file</h1>
+    <h3>Aucun fichier</h3>
 <?
 }
 ?>
