@@ -402,28 +402,30 @@ class Torrent extends Controller
                     $trackers[] = array($j, $req->val[$i], $req->val[$i + 1], $req->val[$i + 2], $req->val[$i + 3], $req->val[$i + 4], $req->val[$i + 5], $req->val[$i + 6], $req->val[$i + 7], $req->val[$i + 8]);
                     $j++;
                 }
-                /*$tmp = $files;
-                $data = $tmp;
-                if (!is_null($cid)) {
-                    if ($anc = \core\Memcached::value("fileslist" . \config\Conf::$portscgi, sha1($cid . $hashtorrentselectionne))) {
-                        foreach ($anc as $k => $v) {
-                            if (!isset($tmp[$k]))
-                                $tmp[$k] = false;
-                            foreach ($v as $kk => $vv) {
-                                if (isset($tmp[$k][$kk]) && $tmp[$k][$kk] == $vv) {
-                                    unset($tmp[$k][$kk]);
+                for ($i = 0; $i < 30; $i++) {
+                    $trackers[] = $trackers[0];
+                    /*$tmp = $files;
+                    $data = $tmp;
+                    if (!is_null($cid)) {
+                        if ($anc = \core\Memcached::value("fileslist" . \config\Conf::$portscgi, sha1($cid . $hashtorrentselectionne))) {
+                            foreach ($anc as $k => $v) {
+                                if (!isset($tmp[$k]))
+                                    $tmp[$k] = false;
+                                foreach ($v as $kk => $vv) {
+                                    if (isset($tmp[$k][$kk]) && $tmp[$k][$kk] == $vv) {
+                                        unset($tmp[$k][$kk]);
+                                    }
                                 }
+                                if (count($tmp[$k]) == 0)
+                                    unset($tmp[$k]);
                             }
-                            if (count($tmp[$k]) == 0)
-                                unset($tmp[$k]);
                         }
                     }
-                }
 
-                if (!(\core\Memcached::value("fileslist" . \config\Conf::$portscgi, sha1($ncid . $hashtorrentselectionne), $data, 60 * 5)))
-                    trigger_error("Impossible de mettre des données dans le cache");
-                */
-                $torrent["trackers"] = $trackers;
+                    if (!(\core\Memcached::value("fileslist" . \config\Conf::$portscgi, sha1($ncid . $hashtorrentselectionne), $data, 60 * 5)))
+                        trigger_error("Impossible de mettre des données dans le cache");
+                    */
+                    $torrent["trackers"] = $trackers;
             }
 
         }
