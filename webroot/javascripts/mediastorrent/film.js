@@ -396,7 +396,7 @@ var Film = {
 
                         }
                         $table.append($tr);
-                        setTimeout(function () {
+                        setInterval(function () {
                             var t = $tr.html();
                             if (i == 0) {
                                 t++;
