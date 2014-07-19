@@ -47,12 +47,12 @@ class Torrent extends Controller
             $tmp = $files;
         }
         $this->set(array(
-            "rpc" => rXMLRPCRequest::$query,
+            //"rpc" => rXMLRPCRequest::$query,
             "files" => $tmp,
 
             "hashtorrent" => $hashtorrentselectionne,
             "host" => HOST,
-            "seedbox" => \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
+            //"seedbox" => \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
         ));
     }
 
@@ -435,7 +435,7 @@ class Torrent extends Controller
             "torrentselectionnee" => $torrent,
             "hashtorrent" => $hashtorrentselectionne,
             "host" => HOST,
-            "seedbox" => \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
+            //"seedbox" => \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
         ));
     }
 
@@ -455,7 +455,7 @@ class Torrent extends Controller
 
         $this->set(array(
             "rtorrent" => $r,
-            "seedbox" => \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
+            //"seedbox" => \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
         ));
     }
 
