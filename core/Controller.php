@@ -187,8 +187,9 @@ class Controller
 
     private function parserXml($item, $key, &$xml)
     {
-        echo $key;
+        echo $key . "<br>";
         var_dump($item);
+        echo "===============<br>";
     }
 
     private function renderTextPlain($view)
