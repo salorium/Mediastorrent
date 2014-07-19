@@ -296,7 +296,7 @@ Torrent1.view = {
     filesTorrent: {
         init: function () {
             Base.view.fixedHeight("#panel2-2", $("#moitiedroite").height() - Base.model.html.hauteur("#moitiedroite > dl"));
-            Base.view.fixedHeight("#panel2-2 > div", $("#panel2-2").height() - Base.model.html.hauteur("#panel2-2 > a"));
+            Base.view.fixedHeight("#panel2-2 > div", $("#panel2-2").height() - Base.model.html.hauteur("#panel2-2 > ul"));
         },
         afficheArbre: function () {
             $("#torrentdetailsfiles").empty();
