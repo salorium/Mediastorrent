@@ -386,11 +386,17 @@ var Film = {
                 if (response.showdebugger == "ok") {
                     $.each(response.file, function (k, v) {
                         //console.log(v);
-                        if (v.fini == 1)
+                        if (v.fini == 1) {
                             $table.append('<tr><td>' + v.mediainfo.typequalite + (v.mediainfo.qualite ? " " + v.mediainfo.qualite : "" ) + '</td><td>' + (v.mediainfo.codec ? v.mediainfo.codec : "" ) + '</td><td>' + (v.mediainfo.audios[0].type ? v.mediainfo.audios[0].type : "" ) + '</td><td>' + (v.complementfichier ? v.complementfichier : "" ) + '</td><td><a href="' + Base.controller.makeUrlBase(v.hostname) + 'film/download/' + v.id + '/' + Base.model.utilisateur.keyconnexion + '"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dl.svg"></a></td><td><a onclick="Film.streaming(\'' + v.id + '\',\'' + v.hostname + '\')"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/streaming.svg"></a></td></tr>');
+                        } else {
+                            $tr = $("<tr></tr>").append("<td>Attente...</td>");
+                            Film.tr.push($tr);
+                            $table.append($tr);
+                            Film.interval.push(setInterval(Film.test, 1000, Film.tr.length - 1, v.hostname, v.id));
+                        }
                     });
-                    for (var i = 0; i < 2; i++) {
-                        if (i == 0) {
+                    /*for (var i = 0; i < 2; i++) {
+                     if (i == 0) {
                             Film.tr[i] = $("<tr></tr>").append("<td>0</td>");
 
                         } else {
@@ -399,7 +405,7 @@ var Film = {
                         }
                         $table.append(Film.tr[i]);
                         Film.interval.push(setInterval(Film.test, 1000, i, i));
-                    }
+                     }*/
 
 
                 } else {
@@ -414,15 +420,8 @@ var Film = {
         });
 
     },
-    test: function (a, s) {
-        var t = Film.tr[a].html();
-        t = $(t).html();
-        if (s == 0) {
-            t++;
-        } else {
-            t--;
-        }
-        Film.tr[a].html("<td>" + t + "</td>");
+    test: function (element, host, id) {
+
     },
     clean: function () {
         $.each(this.interval, function (k, v) {
