@@ -435,7 +435,7 @@ var Film = {
                         Film.tr[element].html('<td>' + response.file.mediainfo.typequalite + (response.file.mediainfo.qualite ? " " + response.file.mediainfo.qualite : "" ) + '</td><td>' + (response.file.mediainfo.codec ? response.file.mediainfo.codec : "" ) + '</td><td>' + (response.file.mediainfo.audios[0].type ? response.file.mediainfo.audios[0].type : "" ) + '</td><td>' + (response.file.complementfichier ? response.file.complementfichier : "" ) + '</td><td><a href="' + Base.controller.makeUrlBase(response.file.hostname) + 'film/download/' + response.file.id + '/' + Base.model.utilisateur.keyconnexion + '"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dl.svg"></a></td><td><a onclick="Film.streaming(\'' + response.file.id + '\',\'' + response.file.hostname + '\')"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/streaming.svg"></a></td>');
                         clearInterval(Film.interval[element]);
                     } else {
-                        Film.tr[element].html('<td>' + response.file.nomtorrent + '</td><td>' + (response.file.timerestant != -1 ? Base.model.converter.time(response.file.timerestant) : "∞") + '</td>');
+                        Film.tr[element].html('<td colspan="2">' + response.file.nomtorrent + '</td><td colspan="2">' + (response.file.timerestant != -1 ? Base.model.converter.time(response.file.timerestant) : "∞") + '</td>');
                     }
 
 
