@@ -188,11 +188,15 @@ class Film extends Controller
 
 
             if ($req->success()) {
-                $tf->toto = $req->val;
+                $tf->nomtorrent = $req->val[0];
+                $get_completed_chunks = $req->val[3];
+                $get_size_chunks = $req->val[2];
+                $get_chunk_size = $req->val[4];
+                $tf->timerestant = ($req->val[1] > 0 ? floor(($get_size_chunks - $get_completed_chunks) * $get_chunk_size / $req->val[1]) : -1); //Eta 9 (Temps restant en seconde)
+
             }
         }
         $this->set("file", $tf);
-        $this->set('rt', \model\xmlrpc\rXMLRPCRequest::$query);
     }
 
     function getFile($id)
