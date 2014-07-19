@@ -192,7 +192,7 @@ class Controller
     {
         foreach ($oject as $k => $v) {
             if (is_array($v)) {
-                $xml1 = $xml->addChild("array");
+                $xml1 = $xml->addChild($k);
                 $this->parserXml($v, $xml1);
 
             } else {
