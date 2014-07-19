@@ -64,6 +64,14 @@ class Dispatcher
             trigger_error("Le controller " . $this->request->controller . " n'a pas de méthode " . $this->request->action);
             $this->error("Le controller " . $this->request->controller . " n'a pas de méthode " . $this->request->action);
         }
+        $r = new \ReflectionMethod($controller, $this->request->action);
+        $params = $r->getParameters();
+        foreach ($params as $param) {
+            //$param is an instance of ReflectionParameter
+            echo $param->getName();
+            echo $param->isOptional();
+        }
+        die();
         call_user_func_array(array($controller, $this->request->action), $this->request->params);
         $controller->render($this->request->action);
     }
