@@ -12,7 +12,7 @@ namespace config;
 
 class Conf
 {
-    static $debug = false;
+    static $debug = true;
     static $debuglocal = true;
     static $debuglocalfile = true;
     static $install = true;
