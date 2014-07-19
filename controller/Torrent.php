@@ -22,14 +22,14 @@ class Torrent extends Controller
         \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         $cmds = array(
-            "d.get_name=", "f.get_path=", "f.get_completed_chunks=", "f.get_size_chunks=", "f.get_size_bytes=", "f.get_priority=", "f.prioritize_first=", "f.prioritize_last="
+            "f.get_path=", "f.get_completed_chunks=", "f.get_size_chunks=", "f.get_size_bytes=", "f.get_priority=", "f.prioritize_first=", "f.prioritize_last="
         );
-        $cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "system.multicall", array($hashtorrentselectionne, ""));
-        $tmp = null;
+        $cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.multicall", array($hashtorrentselectionne, ""));
+
         foreach ($cmds as $prm) {
             $cmd->addParameter(\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi, $prm));
         }
-        $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi);
+        $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, $cmd);
         $files = null;
         if (!$req->success()) {
             trigger_error("Impossible de récupéré la liste des fichiers de " . $hashtorrentselectionne);
