@@ -12,7 +12,6 @@ namespace controller;
 use core\Controller;
 use core\Debug;
 use model\xmlrpc\rXMLRPCCommand;
-use model\xmlrpc\rXMLRPCRequest;
 
 
 class Torrent extends Controller
@@ -22,14 +21,14 @@ class Torrent extends Controller
         \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         $cmds = array(
-            "d.get_name", "f.get_path", "f.get_completed_chunks", "f.get_size_chunks", "f.get_size_bytes", "f.get_priority", "f.prioritize_first", "f.prioritize_last"
+            "d.get_name=", "f.get_path=", "f.get_completed_chunks=", "f.get_size_chunks=", "f.get_size_bytes=", "f.get_priority=", "f.prioritize_first=", "f.prioritize_last="
         );
-        /*$cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, , array($hashtorrentselectionne, ""));
-        $tmp = null;*/
-        $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi);
+        $cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "system.multicall", array($hashtorrentselectionne, ""));
+        $tmp = null;
         foreach ($cmds as $prm) {
-            $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, $prm, array(" ", $hashtorrentselectionne)));
+            $cmd->addParameter(\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi, $prm));
         }
+        $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi);
         $files = null;
         if (!$req->success()) {
             trigger_error("Impossible de récupéré la liste des fichiers de " . $hashtorrentselectionne);
@@ -44,7 +43,6 @@ class Torrent extends Controller
             $tmp = $files;
         }
         $this->set(array(
-            "rpc" => rXMLRPCRequest::$query,
             "files" => $tmp,
             "hashtorrent" => $hashtorrentselectionne,
             "host" => HOST,
