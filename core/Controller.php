@@ -182,9 +182,10 @@ class Controller
         $xml = new \SimpleXMLElement('<root/>');
         //\array_walk_recursive($this->vars, array($this, 'parserXml'), "");
         $this->parserXml($this->vars, $xml);
-        print $xml->asXML();
+        /*print $xml->asXML();
         die();
         $xml->addChild("test", "tes");
+        */
         print $xml->asXML();
     }
 
