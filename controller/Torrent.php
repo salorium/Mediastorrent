@@ -21,9 +21,9 @@ class Torrent extends Controller
         \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         $cmds = array(
-            "f.get_path=", "f.get_completed_chunks=", "f.get_size_chunks=", "f.get_size_bytes=", "f.get_priority=", "f.prioritize_first=", "f.prioritize_last="
+            "d.get_name=", "f.get_path=", "f.get_completed_chunks=", "f.get_size_chunks=", "f.get_size_bytes=", "f.get_priority=", "f.prioritize_first=", "f.prioritize_last="
         );
-        $cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.multicall", array($hashtorrentselectionne, ""));
+        $cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "s.multicall", array($hashtorrentselectionne, ""));
         $tmp = null;
         foreach ($cmds as $prm) {
             $cmd->addParameter(\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi, $prm));
