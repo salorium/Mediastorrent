@@ -72,6 +72,7 @@ class Dispatcher
             echo $param->isOptional();
         }
         die();
+
         call_user_func_array(array($controller, $this->request->action), $this->request->params);
         $controller->render($this->request->action);
     }
