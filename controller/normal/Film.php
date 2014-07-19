@@ -173,6 +173,7 @@ class Film extends Controller
     function getTime($idtorrentfilm)
     {
         $tf = \model\mysql\Torrentfilm::getTorrentFilmParId($idtorrentfilm);
+        $tf->mediainfo = json_decode($tf->mediainfo);
         if (is_null($tf)) throw new \Exception("Id incorrect");
 
         if ($tf->fini === "0") {
