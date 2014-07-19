@@ -178,18 +178,28 @@ class Controller
         if (!is_null($tmp))
             $this->vars["showdebugger"] = $tmp;
         $this->vars["perf"] = $this->debug->get_perf();
-        //$this->vars = json_decode(json_encode($this->vars), true);
+        $this->vars = json_decode(json_encode($this->vars), true);
         $xml = new SimpleXMLElement('<root/>');
-        \array_walk_recursive($this->vars, array($this, 'parserXml'), $xml);
-        die();
+        //\array_walk_recursive($this->vars, array($this, 'parserXml'), "");
+        $this->parserXml($this->vars, $xml);
         print $xml->asXML();
     }
 
-    private function parserXml($item, $key, &$xml)
+    private function parserXml($oject, SimpleXMLElement &$xml)
     {
-        echo $key . "<br>";
-        var_dump($item);
-        echo "===============<br>";
+        foreach ($oject as $k => $v) {
+            if (is_array($v)) {
+                $xml1 = $xml->addChild("array");
+                $this->parserXml($v, $xml1);
+            } else {
+                if (is_int($k)) {
+                    $xml->addChild("element", $v);
+                } else {
+                    $xml->addChild($k, $v);
+                }
+
+            }
+        }
     }
 
     private function renderTextPlain($view)
