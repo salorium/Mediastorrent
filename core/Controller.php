@@ -171,22 +171,24 @@ class Controller
 
     private function renderXml($view)
     {
-        \header('Content-Type: text/xml');
-        \header("Cache-Control: no-cache, must-revalidate");
-        \header("Expires: Mon, 10 Jul 1990 05:00:00 GMT");
+        //\header('Content-Type: text/xml');
+        //\header("Cache-Control: no-cache, must-revalidate");
+        //\header("Expires: Mon, 10 Jul 1990 05:00:00 GMT");
         $tmp = $this->debug->showIcon();
         if (!is_null($tmp))
             $this->vars["showdebugger"] = $tmp;
         $this->vars["perf"] = $this->debug->get_perf();
         $this->vars = json_decode(json_encode($this->vars), true);
         $xml = new SimpleXMLElement('<root/>');
-        \array_walk_recursive($this->vars, array($xml, 'addChild'));
+        \array_walk_recursive($this->vars, array($this, 'parserXml'), $xml);
+        die();
         print $xml->asXML();
     }
 
-    private function parserXml($xml)
+    private function parserXml($item, $key, &$xml)
     {
-
+        echo $key;
+        var_dump($item);
     }
 
     private function renderTextPlain($view)
