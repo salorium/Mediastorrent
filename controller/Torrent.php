@@ -17,9 +17,9 @@ use model\xmlrpc\rXMLRPCRequest;
 
 class Torrent extends Controller
 {
-    function getListeFile($hashtorrentselectionne, $login = null, $keyconnexion = null)
+    function getListeFile($hashtorrentselectionne, $keyconnexion = null)
     {
-        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         $cmds = array(
             "f.get_path=", "f.get_completed_chunks=", "f.get_size_chunks=", "f.get_size_bytes=", "f.get_priority=", "f.prioritize_first=", "f.prioritize_last="
@@ -32,6 +32,7 @@ class Torrent extends Controller
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.get_name", array($hashtorrentselectionne, "")));
         $req->addCommand($cmd);
         $files = null;
+        $tmp = null;
         if (!$req->success()) {
             trigger_error("Impossible de récupéré la liste des fichiers de " . $hashtorrentselectionne);
             $files = $req->val;
@@ -55,21 +56,21 @@ class Torrent extends Controller
         ));
     }
 
-    function getcreate($login, $keyconnexion, $taskNo)
+    function getcreate($keyconnexion, $taskNo)
     {
-        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
-        $to = \core\Memcached::value($login, "torrentfile" . $taskNo);
+        $to = \core\Memcached::value(\config\Conf::$user["user"]->login, "torrentfile" . $taskNo);
         $tott = new \model\simple\Torrent($to);
         $tott->send();
     }
 
-    function checkcreate($login, $keyconnexion, $taskNo)
+    function checkcreate($keyconnexion, $taskNo)
     {
         $ret = null;
-        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
-        $dir = ROOT . DS . "cache" . DS . $login . $taskNo;
+        $dir = ROOT . DS . "cache" . DS . \config\Conf::$user["user"]->login . $taskNo;
         if (is_file($dir . '/pid') && is_readable($dir . '/pid')) {
             $pid = trim(file_get_contents($dir . '/pid'));
             $status = -1;
@@ -124,20 +125,20 @@ class Torrent extends Controller
         $this->set("res", $ret);
     }
 
-    function create($login, $keyconnexion)
+    function create($keyconnexion)
     {
         $ret = null;
-        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
                 $taskNo = time();
-        \core\Memcached::value($login, "task" . $taskNo, serialize($_REQUEST), 60 * 1);
+        \core\Memcached::value(\config\Conf::$user["user"]->login, "task" . $taskNo, serialize($_REQUEST), 60 * 1);
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
             new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "execute", array(
                 "sh", "-c",
                 escapeshellarg(ROOT . DS . "script" . DS . 'createtorrent.sh') . " " .
                 $taskNo . " " .
                 escapeshellarg("php") . " " .
-                escapeshellarg($login) . " " .
+                escapeshellarg(\config\Conf::$user["user"]->login) . " " .
                 escapeshellarg(\config\Conf::$portscgi) . " " .
                 escapeshellarg(ROOT . DS . "cache" . DS) . " &")));
         if ($req->success())
@@ -145,9 +146,9 @@ class Torrent extends Controller
         $this->set("res", $ret);
     }
 
-    function liste($login = null, $keyconnexion = null, $cid = null, $hashtorrentselectionne = null)
+    function liste($keyconnexion = null, $cid = null, $hashtorrentselectionne = null)
     {
-        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         $tor = null;
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         $cmds = array(
@@ -436,9 +437,9 @@ class Torrent extends Controller
         ));
     }
 
-    function pause($login = null, $keyconnexion = null)
+    function pause($keyconnexion = null)
     {
-        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         $cmds = array(
             "d.stop"
@@ -456,9 +457,9 @@ class Torrent extends Controller
         ));
     }
 
-    function start($login = null, $keyconnexion = null)
+    function start($keyconnexion = null)
     {
-        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         $cmds = array("d.open", "d.start");
 
@@ -474,9 +475,9 @@ class Torrent extends Controller
         ));
     }
 
-    function stop($login = null, $keyconnexion = null)
+    function stop($keyconnexion = null)
     {
-        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         $cmds = array("d.stop", "d.close");
 
@@ -492,9 +493,9 @@ class Torrent extends Controller
         ));
     }
 
-    function recheck($login = null, $keyconnexion = null)
+    function recheck($keyconnexion = null)
     {
-        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         $cmds = array("d.check_hash");
 
@@ -510,9 +511,9 @@ class Torrent extends Controller
         ));
     }
 
-    function delete($login = null, $keyconnexion = null)
+    function delete($keyconnexion = null)
     {
-        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         $cmds = array("d.erase");
 
@@ -528,9 +529,9 @@ class Torrent extends Controller
         ));
     }
 
-    function deleteall($login = null, $keyconnexion = null)
+    function deleteall($keyconnexion = null)
     {
-        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
 
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi);
@@ -557,9 +558,9 @@ class Torrent extends Controller
 
     }
 
-    function send($nomrtorrent, $login = null, $keyconnexion = null)
+    function send($nomrtorrent, $keyconnexion = null)
     {
-        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         $erreur = 1;
         $torrents = null;
@@ -706,9 +707,9 @@ class Torrent extends Controller
         ));
     }
 
-    function details($hashtorrentselectionne, $login = null, $keyconnexion = null)
+    function details($hashtorrentselectionne, $keyconnexion = null)
     {
-        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         $cmds = array(
             "f.get_path=", "f.get_completed_chunks=", "f.get_size_chunks=", "f.get_size_bytes=", "f.get_priority=", "f.prioritize_first=", "f.prioritize_last="
@@ -767,9 +768,9 @@ class Torrent extends Controller
         ));
     }
 
-    function download($hashtorrentselectionne, $nofile, $login = null, $keyconnexion = null)
+    function download($hashtorrentselectionne, $nofile, $keyconnexion = null)
     {
-        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
             new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.get_frozen_path", array($hashtorrentselectionne, intval($nofile))));
@@ -788,9 +789,9 @@ class Torrent extends Controller
         throw new \Exception("FILE NOT FOUND");
     }
 
-    function setPrioriteFile($hashtorrentselectionne, $prio, $login = null, $keyconnexion = null)
+    function setPrioriteFile($hashtorrentselectionne, $prio, $keyconnexion = null)
     {
-        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi);
         foreach ($_REQUEST["nofiles"] as $v)
@@ -800,9 +801,9 @@ class Torrent extends Controller
             $result = $req->val;
     }
 
-    function init($login = null, $keyconnexion = null)
+    function init($keyconnexion = null)
     {
-        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         $theSettings = \model\xmlrpc\rTorrentSettings::get(\config\Conf::$portscgi, true);
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, array(
             $theSettings->getOnFinishedCommand(array("seedingtime",

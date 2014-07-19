@@ -11,9 +11,9 @@ namespace controller;
 
 class Film extends \core\Controller
 {
-    function recherche($login = null, $keyconnexion = null, $re = null)
+    function recherche($keyconnexion = null, $re = null)
     {
-        \model\simple\Utilisateur::authentificationDistante($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationDistante($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         if (is_null($re))
             $re = $_REQUEST["recherche"];
@@ -24,9 +24,9 @@ class Film extends \core\Controller
         ));
     }
 
-    function download($id, $login = null, $keyconnexion = null)
+    function download($id, $keyconnexion = null)
     {
-        \model\simple\Utilisateur::authentificationDistante($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationDistante($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         if ($torrentf = \model\mysql\Torrentfilm::getFilmUserDuServeur($id)) {
             \config\Conf::$portscgi = $torrentf->portscgi;
@@ -86,9 +86,9 @@ class Film extends \core\Controller
         }
     }
 
-    function getInfosFilm($login, $keyconnexion, $code, $all = null)
+    function getInfosFilm($keyconnexion, $code, $all = null)
     {
-        \model\simple\Utilisateur::authentificationPourRtorrent($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         if (is_null($all)) {
             $res = \model\mysql\Film::getByIdFormat($code);
