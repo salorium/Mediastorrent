@@ -120,6 +120,7 @@ var Film = {
     containerBtG: null,
     containerBtD: null,
     containerBande: null,
+    interval: [],
     containerDetailsFilm: null,
     CssModulable: "",
     zindex: 1,
@@ -390,14 +391,14 @@ var Film = {
                     });
                     for (var i = 0; i < 2; i++) {
                         if (i == 0) {
-                            Film.tr[i] = $("<tr></tr>").append(0);
+                            Film.tr[i] = $("<tr></tr>").append("<td>0</td>");
 
                         } else {
-                            Film.tr[i] = $("<tr></tr>").append(10);
+                            Film.tr[i] = $("<tr></tr>").append("<td>100</td>");
 
                         }
                         $table.append(Film.tr[i]);
-                        setInterval(Film.test, 1000, i, i);
+                        this.interval.push(setInterval(Film.test, 1000, i, i));
                     }
 
 
@@ -415,11 +416,15 @@ var Film = {
     },
     test: function (a, s) {
         var t = Film.tr[a].html();
+        t = t.html();
         if (s == 0) {
             t++;
         } else {
             t--;
         }
-        Film.tr[a].html(t);
+        Film.tr[a].html("<td>" + t + "</td>");
+    },
+    clean: function () {
+        clearInterval(this.interval);
     }
 }
