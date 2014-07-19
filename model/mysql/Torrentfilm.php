@@ -176,7 +176,7 @@ class Torrentfilm extends \core\ModelMysql
         $query .= " and f.id = " . \core\Mysqli::real_escape_string($id);
         $query .= ") or (";
         //$query .= "tf.fini = true ";
-        $query .= "and tf.partageamis = true ";
+        $query .= "tf.partageamis = true ";
         $query .= "and tf.idfilm = f.id ";
         $query .= "and r.nom = tf.nomrtorrent ";
         $query .= "and rs.login = tf.login ";
