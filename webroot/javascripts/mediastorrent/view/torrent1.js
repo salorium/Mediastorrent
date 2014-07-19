@@ -624,6 +624,7 @@ Torrent1.view = {
         },
         init: function () {
             Base.view.fixedHeight("#panel2-3", $("#moitiedroite").height() - Base.model.html.hauteur("#moitiedroite > dl"));
+            Base.view.fixedHeight("#panel2-3 > div", $("#panel2-3").height());
         },
         afficheTrackers: function () {
             $("#torrentdetailstrackers").empty();
