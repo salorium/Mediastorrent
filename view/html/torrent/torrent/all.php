@@ -214,7 +214,7 @@
                     </table>-->
                     <a id="listefile" target="_blank">Listing</a>
 
-                    <div style="overflow-y: auto;position: relative;max-height: inherit;">
+                    <div style="overflow-y: auto;position: relative;height: inherit;">
                     <table style="width: 100%;">
                             <thead>
                             <tr>
