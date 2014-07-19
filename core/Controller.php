@@ -178,7 +178,7 @@ class Controller
         if (!is_null($tmp))
             $this->vars["showdebugger"] = $tmp;
         $this->vars["perf"] = $this->debug->get_perf();
-        $this->vars = json_decode(json_encode($this->vars), true);
+        //$this->vars = json_decode(json_encode($this->vars), true);
         $xml = new \SimpleXMLElement('<root/>');
         //\array_walk_recursive($this->vars, array($this, 'parserXml'), "");
         $this->parserXml($this->vars, $xml);
@@ -192,7 +192,7 @@ class Controller
     private function parserXml($oject, \SimpleXMLElement &$xml)
     {
         foreach ($oject as $k => $v) {
-            if (is_array($v)) {
+            if (is_array($v) || is_object($v)) {
                 if (is_int($k)) {
                     $xml1 = $xml->addChild("_" . $k);
                     $this->parserXml($v, $xml1);
