@@ -425,6 +425,9 @@ var Film = {
         Film.tr[a].html("<td>" + t + "</td>");
     },
     clean: function () {
-        clearInterval(this.interval);
+        $.each(this.interval, function (v) {
+            clearInterval(v);
+
+        });
     }
 }
