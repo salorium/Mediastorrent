@@ -397,14 +397,14 @@ var Film = {
 
                         }
                         $table.append(Film.tr[i]);
-                        setInterval(function () {
+                        setInterval(function (i) {
                             var t = Film.tr[i].html();
                             if (i == 0) {
                                 t++;
                             } else {
                                 t--;
                             }
-                            $tr.html(t);
+                            Film.tr[i].html(t);
                         }, 1000);
                     }
 
