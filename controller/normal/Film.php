@@ -187,10 +187,11 @@ class Film extends Controller
             $req = new \model\xmlrpc\rXMLRPCRequest($tf->scgi, $cmd);
 
             if ($req->success()) {
-                $tf->toto = $req->val;
+                var_dump($req->val);
             }
         }
         $this->set("file", $tf);
+        $this->set('rt', \model\xmlrpc\rXMLRPCRequest::$query);
     }
 
     function getFile($id)
