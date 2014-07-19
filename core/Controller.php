@@ -178,7 +178,7 @@ class Controller
         if (!is_null($tmp))
             $this->vars["showdebugger"] = $tmp;
         $this->vars["perf"] = $this->debug->get_perf();
-        $this->vars = json_decode(json_encode($this->vars), true);
+        //$this->vars = json_decode(json_encode($this->vars), true);
         $xml = new SimpleXMLElement('<root/>');
         \array_walk_recursive($this->vars, array($this, 'parserXml'), $xml);
         die();
