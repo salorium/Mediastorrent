@@ -175,6 +175,7 @@ class Film extends Controller
         $tf = \model\mysql\Torrentfilm::getTorrentFilmParId($idtorrentfilm);
         if (is_null($tf)) throw new \Exception("Id incorrect");
         var_dump($tf->fini);
+        die();
         if ($tf->fini === 0) {
 
             $cmds = array(
