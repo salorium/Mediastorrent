@@ -397,15 +397,7 @@ var Film = {
 
                         }
                         $table.append(Film.tr[i]);
-                        setInterval(function (i) {
-                            var t = Film.tr[i].html();
-                            if (i == 0) {
-                                t++;
-                            } else {
-                                t--;
-                            }
-                            Film.tr[i].html(t);
-                        }, 1000);
+                        setInterval(Film.test, 1000, i, i);
                     }
 
 
@@ -420,5 +412,14 @@ var Film = {
             }
         });
 
+    },
+    test: function (a, s) {
+        var t = Film.tr[a].html();
+        if (s == 0) {
+            t++;
+        } else {
+            t--;
+        }
+        Film.tr[a].html(t);
     }
 }
