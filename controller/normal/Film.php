@@ -180,13 +180,12 @@ class Film extends Controller
             $cmds = array(
                 "d.get_name=" /*5*/, "d.get_down_rate=" /*13*/, "d.get_size_chunks=" /*8*/, "d.get_completed_chunks=" /*7*/, "d.get_chunk_size=" /*14*/
             );
-            $cmd = new \model\xmlrpc\rXMLRPCCommand($tf->scgi, "d.multicall", $tf->hash);
-            $res = array();
+
+            $req = new \model\xmlrpc\rXMLRPCRequest($tf->scgi);
             foreach ($cmds as $v) {
-                $res[] = \model\xmlrpc\rTorrentSettings::getCmd($tf->scgi, $v);
+                $req->addCommand(new \model\xmlrpc\rXMLRPCCommand($tf->scgi, $v, $tf->hash))
             }
-            $cmd->addParameters($res);
-            $req = new \model\xmlrpc\rXMLRPCRequest($tf->scgi, $cmd);
+
 
             if ($req->success()) {
                 var_dump($req->val);
