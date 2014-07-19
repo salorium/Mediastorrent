@@ -8,7 +8,7 @@
 //http://www.salorium.com/torrent/download/59F1437E049BA4A7C259012C474901EB495E48F2/2/salorium/b183021aa172e367cbe84cbdabace747e9dfdd65
 if (!is_null($files)) {
     ?>
-
+    <h3><?= $nom; ?></h3>
     <table>
         <thead>
         <tr>
