@@ -11,7 +11,7 @@ namespace model\simple;
 
 class Utilisateur extends \core\Model
 {
-    static function authentificationDistante($login, $keyconnexion)
+    static function authentificationDistante($keyconnexion)
     {
         foreach (\config\Conf::$numerorole as $k => $v) {
             if (is_array($v)) {
@@ -23,20 +23,20 @@ class Utilisateur extends \core\Model
             }
 
         }
-        if (!is_null($login) && !is_null($keyconnexion)) {
-            $u = \core\Memcached::value($login, "user");
+        if (!is_null($keyconnexion)) {
+            $u = \core\Memcached::value($keyconnexion, "user");
             if (is_null($u)) {
-                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login, $keyconnexion);
+                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($keyconnexion);
                 if ($u)
-                    \core\Memcached::value($u->login, "user", $u, 60 * 2);
+                    \core\Memcached::value($u->keyconnexion, "user", $u, 60 * 2);
             } else {
                 $u = $u->keyconnexion === $keyconnexion ? $u : false;
                 if (is_bool($u)) {
-                    $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login, $keyconnexion);
+                    $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($keyconnexion);
                     if ($u)
-                        \core\Memcached::value($u->login, "user", $u, 60 * 2);
+                        \core\Memcached::value($u->keyconnexion, "user", $u, 60 * 2);
                 } else {
-                    \core\Memcached::value($u->login, "user", $u, 60 * 2);
+                    \core\Memcached::value($u->keyconnexion, "user", $u, 60 * 2);
                 }
             }
             \config\Conf::$user["user"] = $u;
@@ -46,7 +46,7 @@ class Utilisateur extends \core\Model
         if ($u && !is_null($u)) {
             $role = \config\Conf::$rolenumero[$u->role];
             $roletext = $u->role;
-            \core\Memcached::value($u->login, "user", $u, 60 * 5);
+            \core\Memcached::value($u->keyconnexion, "user", $u, 60 * 5);
         }
 
         \config\Conf::$user["user"] = $u;
@@ -57,27 +57,27 @@ class Utilisateur extends \core\Model
         }
     }
 
-    static function authentificationPourRtorrent($login, $keyconnexion)
+    static function authentificationPourRtorrent($keyconnexion)
     {
-        if (!is_null($login) && !is_null($keyconnexion)) {
-            $u = \core\Memcached::value($login, "user");
+        if (!is_null($keyconnexion)) {
+            $u = \core\Memcached::value($keyconnexion, "user");
             if (is_null($u)) {
-                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login, $keyconnexion);
+                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($keyconnexion);
                 if ($u)
-                    \core\Memcached::value($u->login, "user", $u, 60 * 2);
+                    \core\Memcached::value($u->keyconnexion, "user", $u, 60 * 2);
             } else {
                 $u = $u->keyconnexion === $keyconnexion ? $u : false;
                 if (is_bool($u)) {
-                    $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($login, $keyconnexion);
+                    $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($keyconnexion);
                     if ($u)
-                        \core\Memcached::value($u->login, "user", $u, 60 * 2);
+                        \core\Memcached::value($u->keyconnexion, "user", $u, 60 * 2);
                 } else {
-                    \core\Memcached::value($u->login, "user", $u, 60 * 2);
+                    \core\Memcached::value($u->keyconnexion, "user", $u, 60 * 2);
                 }
             }
             \config\Conf::$user["user"] = $u;
             if (!is_bool($u)) {
-                $portscgi = \model\mysql\Rtorrent::getPortscgiDeUtilisateur($login);
+                $portscgi = \model\mysql\Rtorrent::getPortscgiDeUtilisateur($u->login);
                 if (!$portscgi) {
                     throw new \Exception("Aucun ports scgi sur " . HOST);
                 }
