@@ -43,10 +43,10 @@ Torrent1.controller = {
             //this.update("");
         },
         update: function (cid) {
-            var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/liste/' + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion + "/" + cid;
+            var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/liste/' + Base.model.utilisateur.keyconnexion + "/" + cid;
             if (Torrent1.model.listTorrent.selectionne.length == 1) {
                 url += "/" + Torrent1.model.listTorrent.selectionne[0];
-                $("#listefile").attr("href", Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/getListeFile/' + Torrent1.model.listTorrent.selectionne[0] + "/" + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion);
+                $("#listefile").attr("href", Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/getListeFile/' + Torrent1.model.listTorrent.selectionne[0] + "/" + Base.model.utilisateur.keyconnexion);
             }
             $.ajax({
                 url: url + ".json",
@@ -174,8 +174,8 @@ Torrent1.controller = {
             });
         },
         details: function () {
-            var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/details/' + Torrent1.model.listTorrent.selectionne[0] + "/" + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion;
-            $("#listefile").attr("href", Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/getListeFile/' + Torrent1.model.listTorrent.selectionne[0] + "/" + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion);
+            var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/details/' + Torrent1.model.listTorrent.selectionne[0] + "/" + Base.model.utilisateur.keyconnexion;
+            $("#listefile").attr("href", Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/getListeFile/' + Torrent1.model.listTorrent.selectionne[0] + "/" + Base.model.utilisateur.keyconnexion);
             $.ajax({
                 url: url + ".json",
                 dataType: "json",
@@ -447,7 +447,7 @@ Torrent1.controller = {
             }
 
             $.ajax({
-                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/recheck/' + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion + ".json",
+                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/recheck/' + Base.model.utilisateur.keyconnexion + ".json",
                 dataType: "json",
                 type: "POST",
                 data: {hash: listafaire},
@@ -478,7 +478,7 @@ Torrent1.controller = {
             }
 
             $.ajax({
-                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/stop/' + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion + ".json",
+                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/stop/' + Base.model.utilisateur.keyconnexion + ".json",
                 dataType: "json",
                 type: "POST",
                 data: {hash: listafaire},
@@ -508,7 +508,7 @@ Torrent1.controller = {
                 });
             }
             $.ajax({
-                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/start/' + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion + ".json",
+                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/start/' + Base.model.utilisateur.keyconnexion + ".json",
                 dataType: "json",
                 type: "POST",
                 data: {hash: listafaire},
@@ -538,7 +538,7 @@ Torrent1.controller = {
                 });
             }
             $.ajax({
-                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/pause/' + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion + ".json",
+                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/pause/' + Base.model.utilisateur.keyconnexion + ".json",
                 dataType: "json",
                 type: "POST",
                 data: {hash: listafaire},
@@ -566,7 +566,7 @@ Torrent1.controller = {
             }
             Torrent1.model.listTorrent.selectionne = [];
             $.ajax({
-                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/delete/' + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion + ".json",
+                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/delete/' + Base.model.utilisateur.keyconnexion + ".json",
                 dataType: "json",
                 type: "POST",
                 data: {hash: listafaire},
@@ -598,7 +598,7 @@ Torrent1.controller = {
             Base.view.noty.generateConfirm(res, function () {
                     Torrent1.model.listTorrent.selectionne = [];
                     $.ajax({
-                        url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/deleteall/' + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion + ".json",
+                        url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/deleteall/' + Base.model.utilisateur.keyconnexion + ".json",
                         dataType: "json",
                         type: "POST",
                         data: {hash: listafaire},
@@ -710,7 +710,7 @@ Torrent1.controller = {
             Torrent1.model.filesTorrent.hauteurArbre = 0;
         },
         download: function (k) {
-            var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/download/' + Torrent1.model.listTorrent.selectionne[0] + "/" + Torrent1.model.filesTorrent.original[k][0] + "/" + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion;
+            var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/download/' + Torrent1.model.listTorrent.selectionne[0] + "/" + Torrent1.model.filesTorrent.original[k][0] + "/" + Base.model.utilisateur.keyconnexion;
             if (Torrent1.model.filesTorrent.original[k][2] == Torrent1.model.filesTorrent.original[k][3]) {
                 $("#getdata").attr("action", url).submit();
             } else {
@@ -732,7 +732,7 @@ Torrent1.controller = {
             console.log(listafaire.join());
             this.resetSelectionne();
             $.ajax({
-                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/setPrioriteFile/' + Torrent1.model.listTorrent.selectionne[0] + "/" + priorite + "/" + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion + ".json",
+                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/setPrioriteFile/' + Torrent1.model.listTorrent.selectionne[0] + "/" + priorite + "/" + Base.model.utilisateur.keyconnexion + ".json",
                 dataType: "json",
                 type: "POST",
                 data: {nofiles: listafaire},
@@ -907,7 +907,7 @@ Torrent1.controller = {
 
             }
             $.ajax({
-                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/send/' + Torrent1.model.nomseedbox + "/" + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion + ".json",
+                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/send/' + Torrent1.model.nomseedbox + "/" + Base.model.utilisateur.keyconnexion + ".json",
                 async: false,
                 //dataType :"json",
                 type: "post",
@@ -954,7 +954,7 @@ Torrent1.controller = {
                 movie: {
                     recherche: function (id) {
                         var recherche = $("#torrent" + id + "suggestrecherche").val();
-                        var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'film/recherche/' + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion;
+                        var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'film/recherche/' + Base.model.utilisateur.keyconnexion;
 
                         $.ajax({
                             url: url + ".json",
@@ -973,7 +973,7 @@ Torrent1.controller = {
                         });
                     },
                     allrecherche: function (id, code, type) {
-                        var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'film/getInfosFilm/' + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion + "/" + code;
+                        var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'film/getInfosFilm/' + Base.model.utilisateur.keyconnexion + "/" + code;
                         if (type)
                             url += "/all"
                         $.ajax({
@@ -1019,7 +1019,7 @@ Torrent1.controller = {
             var formData = new FormData($("#createtorrent")[0]);
 
             $.ajax({
-                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/create/' + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion + ".json",
+                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/create/' + Base.model.utilisateur.keyconnexion + ".json",
                 async: false,
                 //dataType :"json",
                 type: "post",
@@ -1044,7 +1044,7 @@ Torrent1.controller = {
         },
         check: function (taskNo) {
             $.ajax({
-                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/checkcreate/' + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion + "/" + taskNo + ".json",
+                url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/checkcreate/' + Base.model.utilisateur.keyconnexion + "/" + taskNo + ".json",
                 async: false,
                 //dataType :"json",
                 type: "get",
@@ -1085,7 +1085,7 @@ Torrent1.controller = {
             });
         },
         get: function () {
-            var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/getcreate/' + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion + "/" + Torrent1.model.createTorrent.noTask;
+            var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/getcreate/' + Base.model.utilisateur.keyconnexion + "/" + Torrent1.model.createTorrent.noTask;
             $("#getdata").attr("action", url).submit();
         },
         folder: {
@@ -1184,7 +1184,7 @@ Torrent1.controller = {
             },
             loader: function () {
                 Torrent1.controller.createTorrent.folder.showLoader();
-                var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'repertoire/liste/' + Base.model.utilisateur.login + "/" + Base.model.utilisateur.keyconnexion;
+                var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'repertoire/liste/' + Base.model.utilisateur.keyconnexion;
                 $.ajax({
                     url: url + ".json",
                     dataType: "json",
