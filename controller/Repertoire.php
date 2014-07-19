@@ -11,9 +11,9 @@ namespace controller;
 
 class Repertoire extends \core\Controller
 {
-    function liste($login, $keyconnexion)
+    function liste($keyconnexion)
     {
-        \model\simple\Utilisateur::authentificationDistante($login, $keyconnexion);
+        \model\simple\Utilisateur::authentificationDistante($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         if (!\config\Conf::$user["role"] >= \config\Conf::$rolenumero["Torrent"]) throw new \Exception("Non authorisé");
         $vv = \model\simple\Repertoire::getFindAll();
