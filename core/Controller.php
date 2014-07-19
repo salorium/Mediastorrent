@@ -171,9 +171,9 @@ class Controller
 
     private function renderXml($view)
     {
-        //\header('Content-Type: text/xml');
-        //\header("Cache-Control: no-cache, must-revalidate");
-        //\header("Expires: Mon, 10 Jul 1990 05:00:00 GMT");
+        \header('Content-Type: text/xml');
+        \header("Cache-Control: no-cache, must-revalidate");
+        \header("Expires: Mon, 10 Jul 1990 05:00:00 GMT");
         $tmp = $this->debug->showIcon();
         if (!is_null($tmp))
             $this->vars["showdebugger"] = $tmp;
