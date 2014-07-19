@@ -179,10 +179,10 @@ class Controller
             $this->vars["showdebugger"] = $tmp;
         $this->vars["perf"] = $this->debug->get_perf();
         $this->vars = json_decode(json_encode($this->vars), true);
-        $xml = new SimpleXMLElement('<root/>');
+        $xml = new \SimpleXMLElement('<root/>');
         //\array_walk_recursive($this->vars, array($this, 'parserXml'), "");
         $this->parserXml($this->vars, $xml);
-        var_dump($xml);
+        print $xml->asXML();
         die();
         $xml->addChild("test", "tes");
         print $xml->asXML();
