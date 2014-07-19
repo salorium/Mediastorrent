@@ -153,11 +153,13 @@ class Controller
             $this->vars[$root] = $ancvars;
             $this->vars[$root]["type"] = $type;
         }
-        if (\config\Conf::$debug) {
-            $this->vars["showdebugger"] = $this->debug->showIcon();
+        $this->vars["showdebugger"] = $this->debug->showIcon();
         $this->vars["debuggerfatal"] = \core\Debug::$fatal;
         $this->vars["debuggererreur"] = \core\Debug::$error;
-        $this->vars["debuggermysql"] = \core\Mysqli::$query;
+        if (\config\Conf::$debug) {
+
+
+            $this->vars["debuggermysql"] = \core\Mysqli::$query;
         //$this->vars["debuggerxmlrpc"]= array(\model\xmlrpc\rXMLRPCRequest::$time,\model\xmlrpc\rXMLRPCRequest::$query);
         //$this->vars["debuggerlogtime"] = \core\Debug::$timelog;
         //$this->vars["scgi"] = \config\Conf::$portscgi;
@@ -179,6 +181,11 @@ class Controller
         $xml = new SimpleXMLElement('<root/>');
         \array_walk_recursive($this->vars, array($xml, 'addChild'));
         print $xml->asXML();
+    }
+
+    private function parserXml($xml)
+    {
+
     }
 
     private function renderTextPlain($view)
