@@ -389,15 +389,15 @@ var Film = {
                     });
                     for (var i = 0; i < 2; i++) {
                         if (i == 0) {
-                            $tr = $("<tr></tr>").append(0);
+                            Film.tr[i] = $("<tr></tr>").append(0);
 
                         } else {
-                            $tr = $("<tr></tr>").append(10);
+                            Film.tr[i] = $("<tr></tr>").append(10);
 
                         }
                         $table.append($tr);
                         setInterval(function () {
-                            var t = $tr.html();
+                            var t = Film.tr[i].html();
                             if (i == 0) {
                                 t++;
                             } else {
