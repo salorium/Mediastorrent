@@ -186,7 +186,7 @@ class Controller
         print $xml->asXML();
     }
 
-    private function parserXml($oject, SimpleXMLElement &$xml)
+    private function parserXml($oject, \SimpleXMLElement &$xml)
     {
         foreach ($oject as $k => $v) {
             if (is_array($v)) {
