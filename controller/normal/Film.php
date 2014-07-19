@@ -147,7 +147,7 @@ class Film extends Controller
 
                 $this->set(array(
                     "titre" => $torrentf->titre . " " . $compfile,
-                    "src" => "http://" . $torrentf->hostname . "/film/download/" . $id . "/" . \config\Conf::$user["user"]->login . "/" . \config\Conf::$user["user"]->keyconnexion . "/" . ($str)
+                    "src" => "http://" . $torrentf->hostname . "/film/download/" . $id . "/" . \config\Conf::$user["user"]->keyconnexion . "/" . ($str)
                 ));
             }
         }
