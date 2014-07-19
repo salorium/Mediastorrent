@@ -181,7 +181,7 @@ class Controller
         $this->vars = json_decode(json_encode($this->vars), true);
         $xml = new SimpleXMLElement('<root/>');
         //\array_walk_recursive($this->vars, array($this, 'parserXml'), "");
-        $this->parserXml($this->vars, $xml);
+        //$this->parserXml($this->vars, $xml);
         print $xml->asXML();
     }
 
