@@ -68,9 +68,10 @@ class Dispatcher
         $params = $r->getParameters();
         foreach ($params as $param) {
             //$param is an instance of ReflectionParameter
-            echo $param->getName();
-            echo $param->isOptional();
+            echo $param->getName() . "<br>";
+            echo $param->isOptional() . "<br>";
         }
+        var_dump($this->request->params);
         die();
 
         call_user_func_array(array($controller, $this->request->action), $this->request->params);
