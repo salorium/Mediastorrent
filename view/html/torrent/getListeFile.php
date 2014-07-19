@@ -6,6 +6,7 @@
  * Time: 00:42
  */
 //http://www.salorium.com/torrent/download/59F1437E049BA4A7C259012C474901EB495E48F2/2/salorium/b183021aa172e367cbe84cbdabace747e9dfdd65
+$prio = ["Ne pas télécharger", "Normal", "Haute"];
 if (!is_null($files)) {
     ?>
     <h3><?= $nom; ?></h3>
@@ -36,6 +37,9 @@ if (!is_null($files)) {
                 <td>
                     <progress class="<?= ($v[2] == $v[3] ? "ul" : "dl"); ?> " value="<?= ($v[3] != 0 ? $v[2] : 1) ?>"
                               max="<?= $v[3] ?>" title="<?= ($v[3] != 0 ? $v[2] / $v[3] * 100 : 100); ?>%"></progress>
+                </td>
+                <td>
+                    <?= $prio[$v[5]] ?>
                 </td>
             </tr>
         <?
