@@ -94,6 +94,7 @@ $(document).ready(function () {
 
 });
 var Film = {
+    tr: [],
     hauteurWindows: 0,
     largeurWindows: 0,
     percentageHauteurControl: 30,
