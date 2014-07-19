@@ -202,7 +202,7 @@ class Controller
                 }
             } else {
                 if (is_int($k)) {
-                    $xml->addChild($k . "", $v);
+                    $xml->addChild("[" . $k . "]", $v);
                 } else {
                     $xml->addChild($k, $v);
                 }
