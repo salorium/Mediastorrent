@@ -930,6 +930,7 @@ Torrent1.controller = {
             loader: function () {
                 Torrent1.controller.addTorrent.folder.show();
                 Torrent1.controller.addTorrent.folder.showLoader();
+                Torrent1.model.addTorrent.folder.hauteurArbre = 0;
                 var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'repertoire/liste/' + Base.model.utilisateur.keyconnexion;
                 $.ajax({
                     url: url + ".json",
