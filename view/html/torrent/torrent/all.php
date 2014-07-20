@@ -294,8 +294,8 @@
                                 </div>
                             </li>
                             <li>
-                                <div id="folderaddTorrent" style="overflow-y: auto;overflow-x: hidden;height: 50%">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci autem
+                            <div id="folderaddTorrent" style="overflow-y: auto;overflow-x: hidden;height: 600px;">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci autem
                                     culpa enim fugiat iusto laudantium maiores molestiae necessitatibus nihil nisi
                                     porro, quod, reprehenderit rerum temporibus ut vitae voluptatum! At?
                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam animi aperiam
