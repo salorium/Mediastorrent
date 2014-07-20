@@ -288,7 +288,8 @@
                                                readonly>
                                     </div>
                                     <div class="small-1 columns">
-                                        <a class="close" onclick="Torrent1.controller.addTorrent.hide();">&times;</a>
+                                        <a class="close" onclick="Torrent1.controller.addTorrent.hide();"
+                                           style="font-size: 30px;">&times;</a>
                                     </div>
                                 </div>
                             </li>
