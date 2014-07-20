@@ -283,13 +283,13 @@
                             <li>
                                 <div class="row expansion">
                                     <div class="small-11 columns">
-                                        <input onclick="alert('ff');" type="text" id="repertoireaddTorrent"
+                                        <input onclick="" type="text" id="repertoireaddTorrent"
                                                name="repertoire"
                                                value="/home/salorium/rtorrent/data/"
                                                readonly>
                                     </div>
                                     <div class="small-1 columns">
-                                        <a class="close" onclick="Torrent1.controller.addTorrent.hide();"
+                                        <a class="close" onclick="Torrent1.controller.addTorrent.folder.hide();"
                                            style="font-size: 20px;">&times;</a>
                                     </div>
                                 </div>

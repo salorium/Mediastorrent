@@ -888,6 +888,7 @@ Torrent1.controller = {
     addTorrent: {
         init: function () {
             Torrent1.view.addTorrent.init();
+            Torrent1.model.addTorrent.folder.loader = Base.view.loader.make("folderaddTorrent");
         },
         show: function () {
             Torrent1.view.addTorrent.show()
@@ -924,6 +925,14 @@ Torrent1.controller = {
                 }
 
             });
+        },
+        folder: {
+            show: function () {
+                Torrent1.view.addTorrent.folder.show();
+            },
+            hide: function () {
+                Torrent1.view.addTorrent.folder.hide();
+            }
         },
         files: {
             check: function (check) {

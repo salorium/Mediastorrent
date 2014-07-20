@@ -44,6 +44,16 @@ Torrent1.model = {
         },
         noTask: null
     },
+    addTorrent: {
+        folder: {
+            loader: null,
+            liste: [],
+            hauteurArbre: 0,
+            makerDirectory: function (rep) {
+                return "/home/" + Base.model.utilisateur.login + "/rtorrent/data" + rep;
+            }
+        }
+    },
     filesTorrent: {
         original: [],
         priorite: ["Ne pas télécharger", "Normal", "Haute"],
