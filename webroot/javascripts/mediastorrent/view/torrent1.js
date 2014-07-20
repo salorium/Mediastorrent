@@ -656,13 +656,68 @@ Torrent1.view = {
                 $("#folderaddTorrent").show();
             },
             showLoader: function () {
-
+                Torrent1.model.addTorrent.folder.loader.show();
             },
             hideLoader: function () {
-
+                Torrent1.model.addTorrent.folder.loader.hide();
             },
             hide: function () {
                 $("#folderaddTorrent").hide();
+            },
+            afficheArbre: function () {
+                $("#folderaddTorrent").empty();
+                $table = $("<table><thead><tr><td>Nom</td><td>Taille</td></tr></thead></table>")
+                $tbody = $("<tbody></tbody>");
+                $table.css("width", "100%");
+                $table.append($tbody);
+                $("#folderaddTorrent").append($table);
+                if (Torrent1.model.addTorrent.folder.liste.length > 0) {
+                    //Parcour dossier
+                    list = Torrent1.model.addTorrent.folder.liste[Torrent1.model.addTorrent.folder.hauteurArbre];
+                    $("#repertoireaddTorrent").val(Torrent1.model.createTorrent.folder.makerDirectory(list.path));
+                    if (!isNaN(list.back)) {
+                        var $tr = $('<tr style="cursor: pointer;" ><td><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dossier.svg">..</td><td></td></tr>');
+
+                        $tbody.append(
+                            $tr
+                        );
+                        $tr.click(function (e) {
+                            e.preventDefault();
+                            Torrent1.model.createTorrent.folder.hauteurArbre = list.back;
+                            Torrent1.view.createTorrent.afficheArbre();
+                        });
+                    }
+                    var cpt = 0;
+                    $.each(list.dossier, function (k, v) {
+                        var $tr = $('<tr style="cursor: pointer;"><td><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dossier.svg">' + v[0] + '</td><td>' + Base.model.converter.bytes(v[2], 2) + '</td></tr>');
+
+                        $tbody.append(
+                            $tr
+                        );
+                        $tr.click(function (e) {
+                            e.preventDefault();
+
+                            Torrent1.model.createTorrent.folder.hauteurArbre = v[1];
+                            Torrent1.view.createTorrent.afficheArbre();
+                        });
+                        cpt++;
+                    });
+                    $.each(list.file, function (k, v) {
+                        var $tr = $('<tr style="cursor: pointer;"><td><img width="30" src="' + Base.controller.makeUrlBase() + 'images/fichier.svg">' + v[0] + '</td><td>' + Base.model.converter.bytes(v[2], 2) + '</td></tr>');
+
+                        $tbody.append(
+                            $tr
+                        );
+
+                        $tr.click(function (e) {
+                            e.preventDefault();
+                            $("#repertoireaddTorrent").val(Torrent1.model.createTorrent.folder.makerDirectory(v[1]));
+                        });
+                        cpt++
+
+
+                    });
+                }
             }
         },
         files: {
