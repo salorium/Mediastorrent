@@ -11,6 +11,7 @@ namespace controller;
 
 use core\Controller;
 use core\Debug;
+use model\mysql\Torrentfilm;
 use model\xmlrpc\rXMLRPCCommand;
 use model\xmlrpc\rXMLRPCRequest;
 
@@ -551,7 +552,13 @@ class Torrent extends Controller
         $taille = count($r);
         $d = array();
         for ($i = 0; $i < $taille; $i += 5) {
-
+            if ($r[$i + 3] !== "aucun") {
+                switch ($r[$i + 3]) {
+                    case "film":
+                        Torrentfilm::deleteByClefunique($r[$i + 2]);
+                        break;
+                }
+            }
             if ($r[$i] !== "" && $r[$i + 1] == 1 && $r[$i + 4] == 0) {
                 $d[$r[$i]] = true;
             } else {
@@ -691,7 +698,7 @@ class Torrent extends Controller
                         usleep(40000);
                         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, array(
                             new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.set_custom", array($to->hash_info(), "clefunique", $clefunique[$to->hash_info()])),
-                            new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.set_custom", array($to->hash_info(), "typemedias", "film"))));
+                            new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.set_custom", array($to->hash_info(), "typemedias", (isset($typemedias[$to->hash_info()]) ? $typemedias[$to->hash_info()] : "aucun")))));
                         $torrent["clefuniqueres"] = ($req->success() ? $req->val : $req->val);
 
                     }

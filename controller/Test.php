@@ -22,7 +22,7 @@ class Test extends Controller
 {
     function delT()
     {
-        Torrentfilm::deleteByClefunique("43NW5URHgH");
+        //Torrentfilm::deleteByClefunique("43NW5URHgH");
     }
 
     function getT()
