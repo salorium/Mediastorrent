@@ -11,7 +11,7 @@ namespace controller;
 
 class Film extends \core\Controller
 {
-    function recherche($keyconnexion = null, $re = null)
+    function recherche($re = null, $keyconnexion = null)
     {
         \model\simple\Utilisateur::authentificationDistante($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
@@ -86,7 +86,7 @@ class Film extends \core\Controller
         }
     }
 
-    function getInfosFilm($keyconnexion, $code, $all = null)
+    function getInfosFilm($code, $all = null, $keyconnexion = null)
     {
         \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");

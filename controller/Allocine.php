@@ -13,7 +13,7 @@ use core\Controller;
 
 class Allocine extends Controller
 {
-    function recherche($keyconnexion = null, $re = null)
+    function recherche($re = null, $keyconnexion = null)
     {
         if (is_null($re))
             $re = $_REQUEST["recherche"];
@@ -25,7 +25,7 @@ class Allocine extends Controller
         ));
     }
 
-    function rechercheFilm($keyconnexion = null, $re = null)
+    function rechercheFilm($re = null, $keyconnexion = null)
     {
         \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
@@ -58,7 +58,7 @@ class Allocine extends Controller
         ));
     }
 
-    function getInfosFilm($keyconnexion = null, $id = null)
+    function getInfosFilm($id = null, $keyconnexion = null)
     {
         \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
