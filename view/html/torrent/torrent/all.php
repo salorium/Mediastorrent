@@ -279,8 +279,8 @@
                         <label for="repertoireaddTorrent" class="right inline">Répertoire</label>
                     </div>
                     <div class="small-6 columns">
-                        <ul style="list-style: none; width: 50%;">
-                            <li>
+                        <ul style="list-style: none; width: 95%;">
+                        <li>
                                 <input type="text" id="repertoireaddTorrent" name="repertoire"
                                        value="/home/salorium/rtorrent/data/"
                                        readonly>
