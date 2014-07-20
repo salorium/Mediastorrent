@@ -53,7 +53,7 @@ class Torrentfilm extends \core\ModelMysql
             $query = "select count(*) as cpt from torrentfilm ";
             $query .= "where idfilm=" . \core\Mysqli::real_escape_string($tf->idfilm);
             \core\Mysqli::query($query);
-            $re = \core\Mysqli::getObjectAndClose(true);
+            $re = \core\Mysqli::getObjectAndClose();
             var_dump($re->cpt);
             //die();
             if ($re->cpt == 0) {
