@@ -651,6 +651,20 @@ Torrent1.view = {
         hide: function () {
             $("#addTorrent").hide();
         },
+        folder: {
+            show: function () {
+                $("#folderaddTorrent").show();
+            },
+            showLoader: function () {
+
+            },
+            hideLoader: function () {
+
+            },
+            hide: function () {
+                $("#folderaddTorrent").hide();
+            }
+        },
         files: {
             show: function (torrents) {
                 $("#addTorrentDetails").empty();
