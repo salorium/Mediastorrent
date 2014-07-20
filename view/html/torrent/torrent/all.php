@@ -276,17 +276,17 @@
             <div id="baseaddTorrent">
                 <div class="row expansion">
                     <div class="small-6 columns">
-                        <label for="torrentfile" class="right inline">Répertoire</label>
+                        <label for="repertoireaddTorrent" class="right inline">Répertoire</label>
                     </div>
                     <div class="small-6 columns">
                         <ul style="list-style: none; width: 50%;">
                             <li>
-                                <input type="text" id="repertoire" name="repertoire"
+                                <input type="text" id="repertoireaddTorrent" name="repertoire"
                                        value="/home/salorium/rtorrent/data/"
                                        readonly>
                             </li>
                             <li>
-                                <div id="folder" style="overflow-y: auto;overflow-x: hidden;">
+                                <div id="folderaddTorrent" style="overflow-y: auto;overflow-x: hidden;">
 
                                 </div>
                             </li>
