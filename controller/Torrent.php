@@ -523,6 +523,7 @@ class Torrent extends Controller
         foreach ($_REQUEST["hash"] as $h)
             foreach ($cmds as $cmd)
                 $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, $cmd, $h));
+        $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.get_custom", array($h, "clefunique")));
         $r = ($req->success() ? $req->val : false);
 
         $this->set(array(
@@ -539,6 +540,7 @@ class Torrent extends Controller
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi);
         foreach ($_REQUEST["hash"] as $h) {
             $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.get_name", $h));
+            //$req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.get_name", $h));
             $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.set_custom1", array($h, "1")));
             $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.erase", $h));
         }
