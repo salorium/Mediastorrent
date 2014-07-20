@@ -177,6 +177,16 @@ class Controller
         $tmp = $this->debug->showIcon();
         if (!is_null($tmp))
             $this->vars["showdebugger"] = $tmp;
+        $this->vars["debuggerfatal"] = \core\Debug::$fatal;
+        $this->vars["debuggererreur"] = \core\Debug::$error;
+        if (\config\Conf::$debug) {
+
+
+            $this->vars["debuggermysql"] = \core\Mysqli::$query;
+            $this->vars["debuggerxmlrpc"] = array(\model\xmlrpc\rXMLRPCRequest::$time, \model\xmlrpc\rXMLRPCRequest::$query);
+            //$this->vars["debuggerlogtime"] = \core\Debug::$timelog;
+            //$this->vars["scgi"] = \config\Conf::$portscgi;
+        }
         $this->vars["perf"] = $this->debug->get_perf();
         //$this->vars = json_decode(json_encode($this->vars), true);
         $xml = new \SimpleXMLElement('<root/>');
