@@ -55,7 +55,7 @@ class Torrentfilm extends \core\ModelMysql
             \core\Mysqli::query($query);
             $re = \core\Mysqli::getObjectAndClose(true);
             var_dump($re->cpt);
-            die();
+            //die();
             if ($re->cpt == 0) {
 
             }
