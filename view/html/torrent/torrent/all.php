@@ -276,6 +276,15 @@
             <div id="baseaddTorrent">
                 <div class="row expansion">
                     <div class="small-6 columns">
+                        <label for="torrentfile" class="right inline">Répertoire</label>
+                    </div>
+                    <div class="small-6 columns">
+                        <input type="text" id="repertoire" name="repertoire" value="/home/salorium/rtorrent/data/"
+                               readonly>
+                    </div>
+                </div>
+                <div class="row expansion">
+                    <div class="small-6 columns">
                         <label for="torrentfile" class="right inline">Torrent</label>
                     </div>
                     <div class="small-6 columns">
@@ -285,7 +294,7 @@
                 </div>
                 <div class="row expansion">
                     <div class="small-6 columns">
-                        <input class="right" name="autostart" id="autostart" type="checkbox">
+                    <input class="right" name="autostart" id="autostart" type="checkbox">
                     </div>
                     <div class="small-6 columns">
                         <label for="autostart">Ne pas démarrer le téléchargement</label>
