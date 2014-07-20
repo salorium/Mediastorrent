@@ -929,6 +929,7 @@ Torrent1.controller = {
         folder: {
             loader: function () {
                 Torrent1.controller.addTorrent.folder.show();
+                Torrent1.controller.addTorrent.folder.showLoader();
                 var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'repertoire/liste/' + Base.model.utilisateur.keyconnexion;
                 $.ajax({
                     url: url + ".json",
@@ -937,7 +938,7 @@ Torrent1.controller = {
                     success: function (response, textStatus, jqXHR) {
                         Torrent1.controller.addTorrent.folder.hideLoader();
                         Torrent1.controller.addTorrent.folder.conversion(response.rep);
-                        Torrent1.view.addTorrent.afficheArbre();
+                        Torrent1.view.addTorrent.folder.afficheArbre();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         Base.view.noty.generate("error", "Impossible de récupéré le répertoire de " + Torrent1.model.nomseedbox);
