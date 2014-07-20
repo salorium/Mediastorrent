@@ -61,6 +61,16 @@ class Film extends \core\ModelMysql
         }
     }
 
+    static function delete($id)
+    {
+        $query = "delete  from film ";
+        $query .= "where id=" . \core\Mysqli::real_escape_string($id);
+        \core\Mysqli::query($query);
+        $res = (\core\Mysqli::nombreDeLigneAffecte() > 1);
+        \core\Mysqli::close();
+        return $res;
+    }
+
     static function ajouteFilm($titre, $titreoriginal, $infos, $urlposter, $urlbackdrop, $anneeprod, $acteurs, $realisateurs, $idallocine = null, $idthemoviedb = null)
     {
 

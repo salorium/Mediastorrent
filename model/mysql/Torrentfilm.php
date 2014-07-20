@@ -49,17 +49,21 @@ class Torrentfilm extends \core\ModelMysql
         $query .= "where clefunique=" . \core\Mysqli::real_escape_string($clefunique);
         \core\Mysqli::query($query);
         $tfs = \core\Mysqli::getObjectAndClose(true);
+        $query = "delete  from torrentfilm ";
+        $query .= "where clefunique=" . \core\Mysqli::real_escape_string($clefunique);
+        \core\Mysqli::query($query);
+        $res = (\core\Mysqli::nombreDeLigneAffecte() > 1);
+        \core\Mysqli::close();
         foreach ($tfs as $k => $tf) {
             $query = "select count(*) as cpt from torrentfilm ";
             $query .= "where idfilm=" . \core\Mysqli::real_escape_string($tf->idfilm);
             \core\Mysqli::query($query);
             $re = \core\Mysqli::getObjectAndClose();
-            var_dump($re->cpt);
-            //die();
-            if ($re->cpt == 0) {
-
+            if ($re->cpt === "0") {
+                $res &= Film::delete($tf->idfilm);
             }
         }
+        return $res;
     }
 
     public function insert()
