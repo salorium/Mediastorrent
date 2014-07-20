@@ -146,7 +146,7 @@ class Torrent extends Controller
         $this->set("res", $ret);
     }
 
-    function liste($cid = null, $hashtorrentselectionne = null, $keyconnexion = null)
+    function liste($cid = null, $hashtorrentselectionne = "", $keyconnexion = null)
     {
         \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         $tor = null;
@@ -304,7 +304,7 @@ class Torrent extends Controller
         }
         if (is_null($t)) trigger_error("Impossible de se connecter à rtorrent :(");
         $torrent = null;
-        if (!is_null($hashtorrentselectionne)) {
+        if ($hashtorrentselectionne !== "") {
             /*
              * =================================================
              * Détails du torrent hashtorrent
