@@ -73,6 +73,7 @@ class Dispatcher
         }
         var_dump($this->request->params);
         var_dump($_GET);
+        var_dump($this->request);
         die();
 
         call_user_func_array(array($controller, $this->request->action), $this->request->params);
