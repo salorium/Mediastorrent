@@ -283,7 +283,8 @@
                             <li>
                                 <div class="row expansion">
                                     <div class="small-11 columns">
-                                        <input onclick="" type="text" id="repertoireaddTorrent"
+                                        <input onclick="Torrent1.controller.addTorrent.folder.loader();" type="text"
+                                               id="repertoireaddTorrent"
                                                name="repertoire"
                                                value="/home/salorium/rtorrent/data/"
                                                readonly>
