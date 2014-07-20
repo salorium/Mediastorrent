@@ -502,12 +502,9 @@ class Torrent extends Controller
         $cmds = array("d.check_hash");
 
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi);
-        foreach ($_REQUEST["hash"] as $h) {
-
+        foreach ($_REQUEST["hash"] as $h)
             foreach ($cmds as $cmd)
                 $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, $cmd, $h));
-            $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.get_custom", array($h, "clefunique")));
-        }
 
         $r = ($req->success() ? $req->val : false);
 
@@ -545,14 +542,17 @@ class Torrent extends Controller
             $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.get_name", $h));
             //$req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.get_name", $h));
             $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.set_custom1", array($h, "1")));
+            $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.get_custom", array($h, "clefunique")));
+            $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.get_custom", array($h, "typemedias")));
             $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.erase", $h));
         }
 
         $r = ($req->success() ? $req->val : $req->val);
         $taille = count($r);
         $d = array();
-        for ($i = 0; $i < $taille; $i += 3) {
-            if ($r[$i] !== "" && $r[$i + 1] == 1 && $r[$i + 2] == 0) {
+        for ($i = 0; $i < $taille; $i += 5) {
+
+            if ($r[$i] !== "" && $r[$i + 1] == 1 && $r[$i + 4] == 0) {
                 $d[$r[$i]] = true;
             } else {
                 $d[$r[$i]] = false;

@@ -43,6 +43,25 @@ class Torrentfilm extends \core\ModelMysql
         return $tofilm;
     }
 
+    static function deleteByClefunique($clefunique)
+    {
+        $query = "select distinct idfilm as idfilm from torrentfilm ";
+        $query .= "where clefunique=" . \core\Mysqli::real_escape_string($clefunique);
+        \core\Mysqli::query($query);
+        $tfs = \core\Mysqli::getObjectAndClose(true);
+        foreach ($tfs as $k => $tf) {
+            $query = "select count(*) as cpt from torrentfilm ";
+            $query .= "where idfilm=" . \core\Mysqli::real_escape_string($tf->idfilm);
+            \core\Mysqli::query($query);
+            $re = \core\Mysqli::getObjectAndClose(true);
+            var_dump($re->cpt);
+            die();
+            if ($re->cpt == 0) {
+
+            }
+        }
+    }
+
     public function insert()
     {
         if (is_null($this->id) || is_null($this->numfile) || is_null($this->idfilm) || is_null($this->login) || is_null($this->nomrtorrent) || is_null($this->hashtorrent) || is_null($this->fini) || is_null($this->partageamis) || is_null($this->clefunique))

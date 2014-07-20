@@ -11,6 +11,7 @@ namespace controller;
 
 use core\Controller;
 use model\mysql\Film;
+use model\mysql\Torrentfilm;
 use model\simple\Mail;
 use model\simple\Repertoire;
 use model\simple\Torrent;
@@ -19,6 +20,11 @@ use model\xmlrpc\rTorrentSettings;
 
 class Test extends Controller
 {
+    function delT()
+    {
+        Torrentfilm::deleteByClefunique("43NW5URHgH");
+    }
+
     function getT()
     {
         $to = \core\Memcached::value("salorium", "torrentfile1404853105");
