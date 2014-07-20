@@ -279,11 +279,12 @@
                         <label for="repertoireaddTorrent" class="right inline">Répertoire</label>
                     </div>
                     <div class="small-6 columns">
-                        <ul style="list-style: none; width: 95%;">
-                        <li>
+                        <ul style="list-style: none;">
+                            <li>
                                 <input type="text" id="repertoireaddTorrent" name="repertoire"
                                        value="/home/salorium/rtorrent/data/"
-                                       readonly>
+                                       readonly><a
+                                    class="close" onclick="Torrent1.controller.addTorrent.hide();">&times;</a>
                             </li>
                             <li>
                                 <div id="folderaddTorrent" style="overflow-y: auto;overflow-x: hidden;">
