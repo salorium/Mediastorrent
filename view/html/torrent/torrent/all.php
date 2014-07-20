@@ -279,8 +279,20 @@
                         <label for="torrentfile" class="right inline">Répertoire</label>
                     </div>
                     <div class="small-6 columns">
-                        <input type="text" id="repertoire" name="repertoire" value="/home/salorium/rtorrent/data/"
-                               readonly>
+                        <ul style="list-style: none; width: 50%;">
+                            <li>
+                                <input type="text" id="repertoire" name="repertoire"
+                                       value="/home/salorium/rtorrent/data/"
+                                       readonly>
+                            </li>
+                            <li>
+                                <div id="folder" style="overflow-y: auto;overflow-x: hidden;">
+
+                                </div>
+                            </li>
+                        </ul>
+
+
                     </div>
                 </div>
                 <div class="row expansion">
