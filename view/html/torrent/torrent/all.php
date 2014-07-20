@@ -294,7 +294,8 @@
                                 </div>
                             </li>
                             <li>
-                                <div id="folderaddTorrent" style="overflow-y: auto;overflow-x: hidden;height: 500px;">
+                                <div id="folderaddTorrent"
+                                     style="overflow-y: auto;overflow-x: hidden;height: 500px; display: none;">
                                 </div>
                             </li>
                         </ul>
