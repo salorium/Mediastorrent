@@ -13,6 +13,7 @@ class Repertoire extends \core\Controller
 {
     function liste($keyconnexion = null)
     {
+        sleep(10);
         \model\simple\Utilisateur::authentificationDistante($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         if (!\config\Conf::$user["role"] >= \config\Conf::$rolenumero["Torrent"]) throw new \Exception("Non authorisé");
