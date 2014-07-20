@@ -28,6 +28,9 @@ class  Router
     {
         $url = urldecode($url);
         $ext = pathinfo($url, PATHINFO_EXTENSION);
+        $url = preg_replace("#\?(.+)$#i", "", $url);
+        echo $url;
+
         $url = trim(preg_replace("#\." . $ext . "$#i", "", $url), "/");
         if (empty($url)) {
             $url = self::$routesredir[\config\Conf::$user["roletxt"]]["/"]["url"];
