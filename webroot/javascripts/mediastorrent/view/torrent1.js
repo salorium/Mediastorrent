@@ -683,8 +683,8 @@ Torrent1.view = {
                         );
                         $tr.click(function (e) {
                             e.preventDefault();
-                            Torrent1.model.createTorrent.folder.hauteurArbre = list.back;
-                            Torrent1.view.createTorrent.afficheArbre();
+                            Torrent1.model.addTorrent.folder.hauteurArbre = list.back;
+                            Torrent1.view.addTorrent.folder.afficheArbre();
                         });
                     }
                     var cpt = 0;
@@ -697,8 +697,8 @@ Torrent1.view = {
                         $tr.click(function (e) {
                             e.preventDefault();
 
-                            Torrent1.model.createTorrent.folder.hauteurArbre = v[1];
-                            Torrent1.view.createTorrent.afficheArbre();
+                            Torrent1.model.addTorrent.folder.hauteurArbre = v[1];
+                            Torrent1.view.addTorrent.folder.afficheArbre();
                         });
                         cpt++;
                     });
@@ -711,7 +711,7 @@ Torrent1.view = {
 
                         $tr.click(function (e) {
                             e.preventDefault();
-                            $("#repertoireaddTorrent").val(Torrent1.model.createTorrent.folder.makerDirectory(v[1]));
+                            $("#repertoireaddTorrent").val(Torrent1.model.addTorrent.folder.makerDirectory(v[1]));
                         });
                         cpt++
 
