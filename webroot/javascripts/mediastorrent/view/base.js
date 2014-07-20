@@ -98,7 +98,15 @@ Base.view = {
             $("#" + container).css("position", "relative");
             $loader.css("padding", $("#" + container).css("padding"));
             $("#" + container).append($loader);
-            return $loader;
+
+            return{parent: $container, loader: $loader, show: function () {
+                if (this.loader.parent().length == 0) {
+                    this.parent.append(this.loader);
+                }
+                this.loader.show();
+            }, hide: function () {
+                this.loader.hide();
+            }};
             // $container.parent().append($loader);
         }
     },
