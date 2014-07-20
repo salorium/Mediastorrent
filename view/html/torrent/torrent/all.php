@@ -279,8 +279,8 @@
                         <label for="repertoireaddTorrent" class="right inline">Répertoire</label>
                     </div>
                     <div class="small-6 columns">
-                        <ul style="list-style: none;">
-                            <li>
+                        <ul style="list-style: none;margin: 0;">
+                        <li>
                                 <div class="row expansion">
                                     <div class="small-11 columns">
                                         <input onclick="Torrent1.controller.addTorrent.folder.loader();" type="text"
