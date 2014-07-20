@@ -506,7 +506,7 @@ class Torrent extends Controller
 
             foreach ($cmds as $cmd)
                 $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, $cmd, $h));
-            $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.get_custom", $h));
+            $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.get_custom", array("clefunique", $h)));
         }
 
         $r = ($req->success() ? $req->val : false);
