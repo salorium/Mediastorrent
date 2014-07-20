@@ -56,7 +56,7 @@ class Torrent extends Controller
         ));
     }
 
-    function getcreate($keyconnexion, $taskNo)
+    function getcreate($taskNo, $keyconnexion = null)
     {
         \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
@@ -65,7 +65,7 @@ class Torrent extends Controller
         $tott->send();
     }
 
-    function checkcreate($keyconnexion, $taskNo)
+    function checkcreate($taskNo, $keyconnexion = null)
     {
         $ret = null;
         \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
@@ -125,7 +125,7 @@ class Torrent extends Controller
         $this->set("res", $ret);
     }
 
-    function create($keyconnexion)
+    function create($keyconnexion = null)
     {
         $ret = null;
         \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
@@ -146,7 +146,7 @@ class Torrent extends Controller
         $this->set("res", $ret);
     }
 
-    function liste($keyconnexion = null, $cid = null, $hashtorrentselectionne = null)
+    function liste($cid = null, $hashtorrentselectionne = null, $keyconnexion = null)
     {
         \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         $tor = null;
@@ -560,7 +560,7 @@ class Torrent extends Controller
 
     }
 
-    function send($nomrtorrent, $keyconnexion = null)
+    function send($keyconnexion = null)
     {
         \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
@@ -637,7 +637,7 @@ class Torrent extends Controller
                             $clefunique[$_REQUEST["torrent" . $idtorrent . "hash"]] = $clef;
                             for ($idfile = 0; $idfile < $_REQUEST["torrent" . $idtorrent . "nbfiles"]; $idfile++) {
                                 if (isset($_REQUEST["torrent" . $idtorrent . "ajoutecheckfile" . $idfile])) {
-                                    \model\mysql\Torrentfilm::addTorrentFilm($idfilm, $_REQUEST["torrent" . $idtorrent . "numfile" . $idfile], $_REQUEST["torrent" . $idtorrent . "filecomplement" . $idfile], \config\Conf::$user["user"]->login, $nomrtorrent, $_REQUEST["torrent" . $idtorrent . "hash"], $clef, (isset($_REQUEST["torrent" . $idtorrent . "partagecheckfile" . $idfile])));
+                                    \model\mysql\Torrentfilm::addTorrentFilm($idfilm, $_REQUEST["torrent" . $idtorrent . "numfile" . $idfile], $_REQUEST["torrent" . $idtorrent . "filecomplement" . $idfile], \config\Conf::$user["user"]->login, \config\Conf::$nomrtorrent, $_REQUEST["torrent" . $idtorrent . "hash"], $clef, (isset($_REQUEST["torrent" . $idtorrent . "partagecheckfile" . $idfile])));
                                 }
                             }
                             break;

@@ -11,7 +11,7 @@ namespace controller;
 
 class Repertoire extends \core\Controller
 {
-    function liste($keyconnexion)
+    function liste($keyconnexion = null)
     {
         \model\simple\Utilisateur::authentificationDistante($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
