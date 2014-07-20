@@ -281,10 +281,16 @@
                     <div class="small-6 columns">
                         <ul style="list-style: none;">
                             <li>
-                                <input type="text" id="repertoireaddTorrent" name="repertoire"
-                                       value="/home/salorium/rtorrent/data/"
-                                       readonly><a
-                                    class="close" onclick="Torrent1.controller.addTorrent.hide();">&times;</a>
+                                <div class="row expansion">
+                                    <div class="small-11 columns">
+                                        <input type="text" id="repertoireaddTorrent" name="repertoire"
+                                               value="/home/salorium/rtorrent/data/"
+                                               readonly>
+                                    </div>
+                                    <div class="small-1 columns">
+                                        <a class="close" onclick="Torrent1.controller.addTorrent.hide();">&times;</a>
+                                    </div>
+                                </div>
                             </li>
                             <li>
                                 <div id="folderaddTorrent" style="overflow-y: auto;overflow-x: hidden;">
