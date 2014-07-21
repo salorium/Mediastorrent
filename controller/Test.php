@@ -23,9 +23,6 @@ class Test extends Controller
     function infofichier()
     {
 
-        //if (isset($_REQUEST["username"])) {
-        //     file_put_contents(ROOT . DS . "webroot" . DS . "blob.torrent", $HTTP_RAW_POST_DATA);
-        //}
         if (isset ($_FILES ['torrentfile'])) {
             if (is_array($_FILES['torrentfile']['name'])) {
 
@@ -49,10 +46,7 @@ class Test extends Controller
                 $torrent['nom'] = $file["name"];
                 if (pathinfo($file["name"], PATHINFO_EXTENSION) != "torrent")
                     $file["name"] .= ".torrent";
-                $des = ROOT . DS . "webroot" . DS . $file["name"];
-                /*if (file_exists($des))
-                    unlink($des);
-                */
+                $des = DS . "tmp" . DS . $file["name"];
                 $torrent['nom'] = $file["name"];
                 $ok = move_uploaded_file($file['tmp_name'], $des);
                 if ($ok) {
@@ -107,7 +101,7 @@ class Test extends Controller
                             $torrent["files"] = $f;
                         }
                     }
-                    //unlink($des);
+                    unlink($des);
                 }
                 $torrents[] = $torrent;
             }
