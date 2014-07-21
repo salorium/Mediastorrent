@@ -101,7 +101,7 @@ class Test extends Controller
                             $torrent["files"] = $f;
                         }
                     }
-                    unlink($des);
+                    //unlink($des);
                 }
                 $torrents[] = $torrent;
             }
