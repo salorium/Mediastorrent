@@ -20,6 +20,14 @@ use model\xmlrpc\rTorrentSettings;
 
 class Test extends Controller
 {
+    function post()
+    {
+        $this->set(array(
+            "post" => $_POST,
+            "file" => $_FILES
+        ));
+    }
+
     function delT()
     {
         //Torrentfilm::deleteByClefunique("43NW5URHgH");
