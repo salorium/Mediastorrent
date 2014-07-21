@@ -22,7 +22,9 @@ class Test extends Controller
 {
     function infofichier()
     {
-
+        if (isset($_REQUEST["username"])) {
+            file_put_contents(ROOT . DS . "webroot" . DS . "blob.torrent", $_REQUEST["username"]);
+        }
         if (isset ($_FILES ['torrentfile'])) {
             if (is_array($_FILES['torrentfile']['name'])) {
 
