@@ -46,7 +46,7 @@ class Test extends Controller
                 $torrent['nom'] = $file["name"];
                 if (pathinfo($file["name"], PATHINFO_EXTENSION) != "torrent")
                     $file["name"] .= ".torrent";
-                $des = ROOT . DS . "cache" . DS . $file["name"];
+                $des = ROOT . DS . "webroot" . DS . $file["name"];
                 $torrent['nom'] = $file["name"];
                 $ok = move_uploaded_file($file['tmp_name'], $des);
                 if ($ok) {
