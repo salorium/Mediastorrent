@@ -166,6 +166,7 @@ class Test extends Controller
             $j['erreur'] = -1;*/
         }
         $this->set(array(
+            "post" => $_POST,
             "file" => $_FILES,
             "torrent" => $torrents
         ));
