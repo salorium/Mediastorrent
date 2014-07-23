@@ -62,6 +62,7 @@ class Utilisateur extends \core\Controller
         $u = \model\mysql\Utilisateur::authentifierUtilisateurParMotDePasse($_POST["login"], $_POST["motdepasse"]);
         if (is_object($u))
             $this->set("key", $u->keyconnexion);
+        $this->set("cookie", $_COOKIE);
 
     }
 
