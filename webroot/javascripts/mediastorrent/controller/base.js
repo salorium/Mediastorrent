@@ -10,7 +10,7 @@ Base.controller = {
         if (base) {
             return "http" + (Base.model.conf.ssl ? "s" : "") + "://" + base + "/";
         } else {
-            return "http" + (Base.model.conf.ssl ? "s" : "") + "://" + Base.model.conf.base_url;
+            return "http" + (Base.model.conf.ssl ? "s" : "") + "://" + Base.model.conf.base_url + "/";
         }
     },
     tableScroll: function () {
