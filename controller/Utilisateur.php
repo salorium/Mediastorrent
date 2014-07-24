@@ -60,7 +60,7 @@ class Utilisateur extends \core\Controller
         if (isset($_COOKIE["keyconnexion"])) {
             $this->set("key", $_COOKIE["keyconnexion"]);
         } else {
-            $u = \model\mysql\Utilisateur::authentifierUtilisateurParMotDePasse($_POST["login"], $_POST["motdepasse"]);
+            $u = \model\mysql\Utilisateur::authentifierUtilisateurParMotDePasse($_REQUEST["login"], $_REQUEST["motdepasse"]);
             if (is_object($u))
                 $this->set("key", $u->keyconnexion);
         }
