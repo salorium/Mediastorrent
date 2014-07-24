@@ -110,7 +110,10 @@ class Torrent extends Controller
                         } else {
                             $torrent["files"] = $f;
                         }
+                        if (isset($_REQUEST["extension"]))
+                            $torrent['nom'] = $info ['name'];
                     }
+
                     unlink($des);
                 }
                 $torrents[] = $torrent;
