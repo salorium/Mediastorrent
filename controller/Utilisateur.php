@@ -91,7 +91,7 @@ class Utilisateur extends \core\Controller
             $this->set("erreur", 1);
 
         } else {
-            $this->set("seedbox", \model\mysql\Rtorrent::getPortscgiDeUtilisateur(\config\Conf::$user["user"]->login));
+            $this->set("seedbox", \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login));
         }
 
     }
