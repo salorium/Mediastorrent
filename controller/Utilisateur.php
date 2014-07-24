@@ -60,8 +60,22 @@ class Utilisateur extends \core\Controller
     function getKeyconnexion()
     {
         if (isset($_COOKIE["keyconnexion"])) {
-            $this->set("key", $_COOKIE["keyconnexion"]);
+            $u = \core\Memcached::value($_COOKIE["keyconnexion"], "user");
+            if (is_null($u)) {
+                $u = \model\mysql\Utilisateur::authentifierUtilisateurParKeyConnexion($_COOKIE["keyconnexion"]);
+                if ($u)
+                    \core\Memcached::value($_COOKIE["keyconnexion"], "user", $u, 60 * 5);
+            } else {
+                $u = $u->keyconnexion === $_COOKIE["keyconnexion"] ? $u : false;
+            }
             $this->set("seedbox", Rtorrent::getPortscgiDeUtilisateur(\config\Conf::$user["user"]->login));
+        }
+
+        if ($u && !is_null($u)) {
+            \core\Memcached::value($_COOKIE["keyconnexion"], "user", $u, 60 * 5);
+            \config\Conf::$user["user"] = $u;
+            $this->set("key", $u->keyconnexion);
+
         } else {
             $u = \model\mysql\Utilisateur::authentifierUtilisateurParMotDePasse($_REQUEST["login"], $_REQUEST["motdepasse"]);
             if (is_object($u)) {
@@ -70,10 +84,15 @@ class Utilisateur extends \core\Controller
                     trigger_error("Impossible de mettre des données dans memcached");
                 //setcookie("login", $u->login, strtotime('+1 days'), "/");
                 setcookie("keyconnexion", $u->keyconnexion, strtotime('+1 days'), "/");
-                $this->set("seedbox", Rtorrent::getPortscgiDeUtilisateur($u->login));
+                \config\Conf::$user["user"] = $u;
             }
         }
+        if (is_null(\config\Conf::$user["user"])) {
+            $this->set("erreur", 1);
 
+        } else {
+            $this->set("seedbox", \model\mysql\Rtorrent::getPortscgiDeUtilisateur(\config\Conf::$user["user"]->login));
+        }
 
     }
 
