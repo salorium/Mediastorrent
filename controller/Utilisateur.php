@@ -64,6 +64,7 @@ class Utilisateur extends \core\Controller
             if (is_object($u))
                 $this->set("key", $u->keyconnexion);
         }
+        $this->set("post", $_POST);
     }
 
     function connexionApi()
