@@ -55,6 +55,17 @@ class Utilisateur extends \core\Controller
         }
     }
 
+    function getKeyconnexion()
+    {
+        if (isset($_COOKIE["keyconnexion"])) {
+            $this->set("key", $_COOKIE["keyconnexion"]);
+        } else {
+            $u = \model\mysql\Utilisateur::authentifierUtilisateurParMotDePasse($_POST["login"], $_POST["motdepasse"]);
+            if (is_object($u))
+                $this->set("key", $u->keyconnexion);
+        }
+    }
+
     function connexionApi()
     {
         //if (!(isset($_POST["login"]) && isset($_POST["motdepasse"])))
