@@ -10,6 +10,8 @@
 namespace controller;
 
 
+use model\mysql\Rtorrent;
+
 class Utilisateur extends \core\Controller
 {
     function view($nom)
@@ -38,7 +40,7 @@ class Utilisateur extends \core\Controller
         $u = \model\mysql\Utilisateur::authentifierUtilisateurParMotDePasse($_POST["login"], $_POST["motdepasse"]);
         if (is_object($u)) {
             // header("HTTP/1.1 307 Temporary Redirect");
-            if (!\core\Memcached::value($u->login, "user", $u, 60 * 5))
+            if (!\core\Memcached::value($u->keyconnexion, "user", $u, 60 * 5))
                 trigger_error("Impossible de mettre des données dans memcached");
             //setcookie("login", $u->login, strtotime('+1 days'), "/");
             setcookie("keyconnexion", $u->keyconnexion, strtotime('+1 days'), "/");
@@ -59,12 +61,20 @@ class Utilisateur extends \core\Controller
     {
         if (isset($_COOKIE["keyconnexion"])) {
             $this->set("key", $_COOKIE["keyconnexion"]);
+            $this->set("seedbox", Rtorrent::getPortscgiDeUtilisateur(\config\Conf::$user["user"]->login));
         } else {
             $u = \model\mysql\Utilisateur::authentifierUtilisateurParMotDePasse($_REQUEST["login"], $_REQUEST["motdepasse"]);
-            if (is_object($u))
+            if (is_object($u)) {
                 $this->set("key", $u->keyconnexion);
+                if (!\core\Memcached::value($u->keyconnexion, "user", $u, 60 * 5))
+                    trigger_error("Impossible de mettre des données dans memcached");
+                //setcookie("login", $u->login, strtotime('+1 days'), "/");
+                setcookie("keyconnexion", $u->keyconnexion, strtotime('+1 days'), "/");
+                $this->set("seedbox", Rtorrent::getPortscgiDeUtilisateur($u->login));
+            }
         }
-        $this->set("post", $_POST);
+
+
     }
 
     function connexionApi()
