@@ -402,7 +402,7 @@ class Allocine extends Model
                             $height = $info[1];
                         }
                         if ($width > $height) {
-                            //Backdrop test
+                            //Backdrop
                             if ($maxratiobackdrop < $height / $width)
                                 $maxratiobackdrop = $height / $width;
                             $tmp["imagebackdrop"]["url"][] = array($vv->thumbnail->href, $width, $height);
