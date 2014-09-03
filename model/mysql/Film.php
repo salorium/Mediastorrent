@@ -154,6 +154,9 @@ class Film extends \core\ModelMysql
         //$query .= "and r.nom = tf.nomrtorrent ";
         $query .= " and tf.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login);
         //$query .= " and rs.nomrtorrent = r.nom ";
+        $query .= "and tf.date = (
+            select max(tf1.date) from torrentfilm tf1 where tf1.idfilm = tf.idfilm
+        )";
         $query .= " ) or ( ";
         //$query .= "tf.fini = true ";
         $query .= "tf.partageamis = true ";
@@ -163,6 +166,9 @@ class Film extends \core\ModelMysql
             $query .= "and g.label = " . \core\Mysqli::real_escape_string($genre);
         //$query .= "and r.nom = tf.nomrtorrent ";
         //$query .= "and rs.nomrtorrent = r.nom ";
+        $query .= "and tf.date = (
+            select max(tf1.date) from torrentfilm tf1 where tf1.idfilm = tf.idfilm
+        )";
         $query .= " and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
         $query .= ")  ) t GROUP BY id ORDER BY date DESC";
         \core\Mysqli::query($query);
