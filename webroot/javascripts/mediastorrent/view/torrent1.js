@@ -674,6 +674,9 @@ Torrent1.view = {
                 if (Torrent1.model.addTorrent.folder.liste.length > 0) {
                     //Parcour dossier
                     list = Torrent1.model.addTorrent.folder.liste[Torrent1.model.addTorrent.folder.hauteurArbre];
+                    console.log(Torrent1.model.addTorrent.folder.liste);
+                    console.log(Torrent1.model.addTorrent.folder.hauteurArbre);
+
                     console.log(list);
                     $("#repertoireaddTorrent").val(Torrent1.model.addTorrent.folder.makerDirectory(list.path));
                     if (!isNaN(list.back)) {
