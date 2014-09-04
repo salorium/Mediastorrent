@@ -673,7 +673,7 @@ Torrent1.view = {
                 $("#folderaddTorrent").append($table);
                 if (Torrent1.model.addTorrent.folder.liste.length > 0) {
                     //Parcour dossier
-                    list = Torrent1.model.addTorrent.folder.liste[Torrent1.model.addTorrent.folder.hauteurArbre];
+                    var list = Torrent1.model.addTorrent.folder.liste[Torrent1.model.addTorrent.folder.hauteurArbre];
                     console.log(Torrent1.model.addTorrent.folder.liste);
                     console.log(Torrent1.model.addTorrent.folder.hauteurArbre);
 
