@@ -11,8 +11,6 @@
 \core\LoaderJavascript::add("base", "controller.tableScroll");
 \core\LoaderJavascript::add("torrent1", "controller.init", $seedbox);
 \core\LoaderJavascript::add("base", "controller.setHost", array(substr($_SERVER["HTTP_HOST"] . dirname(dirname($_SERVER["SCRIPT_NAME"])) . ($_SERVER["SCRIPT_NAME"] !== "/index.php" ? "/" : ""), 0, -1), $_SERVER["SERVER_PORT"] == 443));
-var_dump($_SERVER["HTTP_HOST"]);
-var_dump($_SERVER["SCRIPT_NAME"]);
 ?>
 <script>
     document.oncontextmenu = new Function("return false");
@@ -218,7 +216,7 @@ var_dump($_SERVER["SCRIPT_NAME"]);
 
 
                     <div style="overflow-y: auto;position: relative;">
-                    <table style="width: 100%;">
+                        <table style="width: 100%;">
                             <thead>
                             <tr>
                                 <th>Nom</th>
@@ -239,7 +237,7 @@ var_dump($_SERVER["SCRIPT_NAME"]);
                 </div>
                 <div class="content" id="panel2-3">
                     <div style="overflow-y: auto;position: relative;">
-                    <table style="width: 100%;">
+                        <table style="width: 100%;">
                             <thead>
                             <tr>
                                 <th style='width: 200px;'>Nom</th>
@@ -281,7 +279,7 @@ var_dump($_SERVER["SCRIPT_NAME"]);
                     </div>
                     <div class="small-6 columns">
                         <ul style="list-style: none;margin: 0;">
-                        <li>
+                            <li>
                                 <div class="row expansion">
                                     <div class="small-11 columns">
                                         <input onclick="Torrent1.controller.addTorrent.folder.loader();" type="text"
@@ -317,7 +315,7 @@ var_dump($_SERVER["SCRIPT_NAME"]);
                 </div>
                 <div class="row expansion">
                     <div class="small-6 columns">
-                    <input class="right" name="autostart" id="autostart" type="checkbox">
+                        <input class="right" name="autostart" id="autostart" type="checkbox">
                     </div>
                     <div class="small-6 columns">
                         <label for="autostart">Ne pas démarrer le téléchargement</label>
@@ -355,7 +353,7 @@ var_dump($_SERVER["SCRIPT_NAME"]);
         <form id="createtorrent" method="post" enctype="multipart/form-data"
               onsubmit="Torrent1.controller.createTorrent.create(event);">
 
-        <div id="divrepcreatetorrent" class="row">
+            <div id="divrepcreatetorrent" class="row">
                 <fieldset>
                     <legend>Répertoire</legend>
                     <div class="row expansion">
@@ -426,25 +424,25 @@ var_dump($_SERVER["SCRIPT_NAME"]);
     </div>
     <div id="createToto" style="display: none;">
         <div class="row">
-        <fieldset>
+            <fieldset>
                 <legend>Log</legend>
-            <div id="logcreate" class="large-12 columns" style="overflow-y: auto;overflow-x: hidden;">
-            </div>
+                <div id="logcreate" class="large-12 columns" style="overflow-y: auto;overflow-x: hidden;">
+                </div>
             </fieldset>
 
         </div>
         <div class="row">
-        <fieldset>
+            <fieldset>
                 <legend>Erreur</legend>
-            <div id="erreurcreate" class="large-12 columns" style="overflow-y: auto;overflow-x: hidden;">
-            </div>
+                <div id="erreurcreate" class="large-12 columns" style="overflow-y: auto;overflow-x: hidden;">
+                </div>
             </fieldset>
         </div>
         <div class="row">
             <div class="small-2 small-centered columns">
                 <button class="button small secondary expand" onclick="Torrent1.controller.createTorrent.get();"
                         type="button">
-                Enregistrer
+                    Enregistrer
                 </button>
             </div>
         </div>
