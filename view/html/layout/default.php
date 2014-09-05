@@ -21,6 +21,7 @@
     <!-- <link rel="stylesheet" href="<?php echo BASE_URL; ?>stylesheets/app.css">
 -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>stylesheets/mediastorrent1.css">
+    <link rel="icon" type="image/png" href="<?php echo BASE_URL; ?>images/favicon.png"/>
     <script src="<?php echo BASE_URL; ?>bower_components/modernizr/modernizr.js"></script>
 </head>
 <body>

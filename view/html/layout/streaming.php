@@ -14,6 +14,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/png" href="<?php echo BASE_URL; ?>images/favicon.png"/>
     <title><?php echo $titre; ?></title>
 
 
