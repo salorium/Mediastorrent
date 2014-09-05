@@ -10,8 +10,9 @@
 \core\LoaderJavascript::add("base", "controller.fixeHeightContainer");
 \core\LoaderJavascript::add("base", "controller.tableScroll");
 \core\LoaderJavascript::add("torrent1", "controller.init", $seedbox);
-\core\LoaderJavascript::add("base", "controller.setHost", array($_SERVER["HTTP_HOST"] . dirname(dirname($_SERVER["SCRIPT_NAME"])) . ($_SERVER["SCRIPT_NAME"] !== "/index.php" ? "/" : ""), $_SERVER["SERVER_PORT"] == 443))
-
+\core\LoaderJavascript::add("base", "controller.setHost", array($_SERVER["HTTP_HOST"] . dirname(dirname($_SERVER["SCRIPT_NAME"])) . ($_SERVER["SCRIPT_NAME"] !== "/index.php" ? "/" : ""), $_SERVER["SERVER_PORT"] == 443));
+var_dump($_SERVER["HTTP_HOST"]);
+var_dump($_SERVER["SCRIPT_NAME"]);
 ?>
 <script>
     document.oncontextmenu = new Function("return false");
