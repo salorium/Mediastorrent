@@ -227,7 +227,7 @@ Torrent1.view = {
                 state = this.analiseState(torrent[0], torrent[3]);
 
             }
-            return '<fieldset title="Bonjour\nffd FFD<br/>BBBFFFFDSf" id="' + torrent[27] + '" class="torrent ' + ($.inArray(torrent[27], Torrent1.model.listTorrent.selectionne) > -1 ? "torrentselect" : "") + '" idcpt="' + cpt + '"><legend><table><tr><td><svg title="' + state[0] + '" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="60px"  viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">' +
+            return '<fieldset title="Bonjour\nffd FFD" id="' + torrent[27] + '" class="torrent ' + ($.inArray(torrent[27], Torrent1.model.listTorrent.selectionne) > -1 ? "torrentselect" : "") + '" idcpt="' + cpt + '"><legend><table><tr><td><svg title="' + state[0] + '" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="60px"  viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">' +
                 '<path style="fill: ' + state[1].color + ';" d="' + this.getIconDessin(state[1].name) + '"/></svg></td><td>' + (torrent[1] ? torrent[1] : "Test" ) + '</td></tr></table></legend>' +
                 '<table style="width: 100%"><tr><td width="100%"><progress class="' + state[1].colorname + '" id="p" value="' + (torrent[3] ? torrent[3] / 10 : "0" ) + '" max="100"></progress></td><td  width="70px" style="text-align:center;min-width:70px; "><span class="pcr">' + (torrent[3] ? torrent[3] / 10 : "0" ) + '</span>%</td></tr></table>' +
                 '<table style="width: 100%">' +
