@@ -183,8 +183,8 @@ class Test extends Controller
     function get()
     {
         $this->set(array(
-            "post" => $_GET
-
+            "post" => $_GET,
+            "SCRIPT_NAME" => $_SERVER["SCRIPT_NAME"]
         ));
     }
 
