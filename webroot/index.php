@@ -6,13 +6,7 @@
  * Time: 11:02
  * To change this template use File | Settings | File Templates.
  */
-echo "GET<br>";
-var_dump($_GET);
-var_dump($_SERVER["SCRIPT_NAME"]);
-var_dump($_SERVER["DOCUMENT_ROOT"]);
-var_dump($_SERVER["PATH_INFO"]);
 
-/*
 header("Access-Control-Allow-Origin: *");
 define('WEBROOT', __DIR__);
 define('ROOT', dirname(WEBROOT));
@@ -53,7 +47,7 @@ spl_autoload_register(function($traitName) {
 });
 
 */
-/*
+
 function debug($var)
 {
     $backtrace = debug_backtrace();
@@ -76,7 +70,6 @@ core\Router::connect("Sysop", "/", "mediastorrent/accueil");
 $Dispa = new core\Dispatcher();
 
 $Dispa->load();
-*/
 
 
 ?>
