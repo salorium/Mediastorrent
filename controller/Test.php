@@ -184,7 +184,9 @@ class Test extends Controller
     {
         $this->set(array(
             "post" => $_GET,
-            "SCRIPT_NAME" => $_SERVER["SCRIPT_NAME"]
+            "SCRIPT_NAME" => $_SERVER["SCRIPT_NAME"],
+            "DOCUMENT_ROOT" => $_SERVER["DOCUMENT_ROOT"],
+            "PATH_INFO" => $_SERVER["PATH_INFO"]
         ));
     }
 
