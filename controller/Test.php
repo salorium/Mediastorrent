@@ -180,6 +180,14 @@ class Test extends Controller
         ));
     }
 
+    function get()
+    {
+        $this->set(array(
+            "post" => $_GET
+
+        ));
+    }
+
     function delT()
     {
         //Torrentfilm::deleteByClefunique("43NW5URHgH");
