@@ -43,4 +43,11 @@ class Utilisateur extends \core\Controller
             "user" => $user
         ));
     }
+
+    function create()
+    {
+        if (!(isset($_REQUEST["login"]) && isset($_REQUEST["mail"]) && isset($_REQUEST["role"])))
+            throw new \Exception("Manque les variables post");
+
+    }
 } 
