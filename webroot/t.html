@@ -130,34 +130,6 @@
 
                     return new AudioContext().sampleRate;
                 }());
-
-                (function (DGPlayer) {
-                    if (unsupported) return;
-
-                    DGPlayer.volume = 100;
-
-                    var player, onplay;
-                    var url = '';
-
-                    DGPlayer.on('play', onplay = function () {
-                        if (player)
-                            player.disconnect();
-
-                        player = new DGAuroraPlayer(AV.Player.fromURL(url), DGPlayer);
-                        DGPlayer.off('play', onplay);
-                    });
-
-                    DGPlayer.on('file', function (file) {
-                        if (file) {
-                            if (player)
-                                player.disconnect();
-
-                            player = new DGAuroraPlayer(AV.Player.fromFile(file), DGPlayer);
-                            DGPlayer.off('play', onplay);
-                        }
-                    });
-
-                }(DGPlayer(document.getElementById('dgplayer'))));
             </script>
 
 
