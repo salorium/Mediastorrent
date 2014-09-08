@@ -74,7 +74,7 @@ class Mail extends \core\Model
        <table>
         ';
         foreach ($data["system"] as $v) {
-            $message .= '<tr><td>' . $v[0] . '</td><td>' . $v[1] . '</td><td>' . $v[2] . '</td></tr>';
+            $message .= '<tr><td>' . $v[0] . '</td><td>' . implode("<br>", $v[1]) . '</td><td>' . $v[2] . '</td></tr>';
         }
         if (isset($data["rtorrentsadj"]))
             $message .= '</table> rtorrentsadj : ' . $data["rtorrentsadj"] . '</td></tr>';

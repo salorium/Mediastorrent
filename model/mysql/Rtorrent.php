@@ -70,6 +70,15 @@ class Rtorrent extends \core\ModelMysql
         return $res;
     }
 
+    public static function getHostRtorrent()
+    {
+        $query = "select hostname from rtorrent";
+        $query .= " where nom=" . \core\Mysqli::real_escape_string(\config\Conf::$nomrtorrent);
+        \core\Mysqli::query($query);
+        $objet = \core\Mysqli::getObjectAndClose();
+        return $objet->hostname;
+    }
+
     public static function isRtorrentServeur()
     {
         $query = "select count(*) as nb from rtorrent";
