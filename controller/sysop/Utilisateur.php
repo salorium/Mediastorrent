@@ -38,6 +38,7 @@ class Utilisateur extends \core\Controller
         //debug($rtorrents["VPS1"]);
         $this->set(array(
             "users" => $users,
+            "role" => array_slice(\config\Conf::$numerorole, 2),
             "rtorrents" => $rtorrents,
             "user" => $user
         ));
