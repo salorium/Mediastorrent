@@ -238,6 +238,33 @@ class Torrentfilm extends \core\ModelMysql
         return \core\Mysqli::getObjectAndClose();
     }
 
+    static function getTorrentFilmParIdForStreamingDeUtilisateur($id)
+    {
+        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre, r.hostname as hostname,tf.mediainfo as mediainfo ";
+        $query .= "from torrentfilm tf,film f,rtorrent r,rtorrents rs ";
+        $query .= "where( tf.fini = true ";
+        $query .= "and tf.idfilm = f.id ";
+        $query .= "and r.nom = tf.nomrtorrent ";
+        $query .= "and tf.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login);
+        $query .= " and rs.nomrtorrent = r.nom ";
+        $query .= " and rs.login = tf.login ";
+        //$query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
+        $query .= " and tf.id = " . \core\Mysqli::real_escape_string($id);
+        $query .= ") or (";
+        $query .= "tf.fini = true ";
+        $query .= "and tf.partageamis = true ";
+        $query .= "and tf.idfilm = f.id ";
+        $query .= "and r.nom = tf.nomrtorrent ";
+        $query .= "and rs.login = tf.login ";
+        $query .= "and rs.nomrtorrent = r.nom ";
+        //$query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
+        $query .= " and tf.id = " . \core\Mysqli::real_escape_string($id);
+        $query .= " and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
+        $query .= ")";
+        \core\Mysqli::query($query);
+        return \core\Mysqli::getObjectAndClose();
+    }
+
     static function getTorrentFilmParIdForStreaming($id)
     {
         $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre, r.hostname as hostname,tf.mediainfo as mediainfo ";

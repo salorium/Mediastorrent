@@ -30,8 +30,7 @@ class Utilisateur extends \core\Controller
         if ($err) {
             $us = \model\mysql\Utilisateur::getAllUtilisateurSysop();
             foreach ($us as $u) {
-                if (!Mail::infosSysopErreurAdjRtorrent($u->mail, $res))
-                    \model\simple\Console::println("Impossible d'envoyer le mail au Sysop");
+                Mail::infosSysopErreurAdjRtorrent($u->mail, $res);
             }
         }
         return $res;
