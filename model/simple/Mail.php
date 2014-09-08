@@ -48,7 +48,7 @@ class Mail extends \core\Model
        <title>Bienvenue sur ' . \config\Conf::$nomdusite . '</title>
       </head>
       <body>
-      <h1>Bienvenue sur ' . \config\Conf::$nomdusite . '</h1>
+      <h3>Bienvenue sur ' . \config\Conf::$nomdusite . '</h3>
        <table>
         <tr>
          <td>Votre login :</td><td>' . $login . '</td>
