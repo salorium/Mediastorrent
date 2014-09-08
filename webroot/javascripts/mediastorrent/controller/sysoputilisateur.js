@@ -18,7 +18,7 @@ Sysoputilisateur.controller = {
         var formData = new FormData($("#ajouterUtilisateur")[0]);
 
         $.ajax({
-            url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'utilisateur/create.json',
+            url: Base.controller.makeUrlBase() + 'utilisateur/create.json',
             async: false,
             //dataType :"json",
             type: "post",
