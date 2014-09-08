@@ -3,6 +3,6 @@
  */
 var Sysoputilisateur = new Object();
 Sysoputilisateur.model = {
-
+    role: []
 
 };

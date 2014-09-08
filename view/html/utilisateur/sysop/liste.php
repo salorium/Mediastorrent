@@ -8,6 +8,7 @@
 \core\LoaderJavascript::add("base", "controller.fixeHeightContainer");
 
 \core\LoaderJavascript::add("sysoputilisateur", "controller.init");
+\core\LoaderJavascript::add("sysoputilisateur", "controller.setRole", array_slice(\config\Conf::$numerorole, 2));
 ?>
 <div class="container">
 <nav class="top-bar" data-topbar>
