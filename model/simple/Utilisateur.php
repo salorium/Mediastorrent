@@ -90,4 +90,12 @@ class Utilisateur extends \core\Model
     {
         return (\config\Conf::$rolenumero[$role] <= \config\Conf::$rolenumero[$roleuser]);
     }
+
+    static function getRandomMdp()
+    {
+        do {
+            $mdp = \model\simple\String::random(8);
+        } while (preg_match('/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/', $mdp) != 1);
+        return $mdp;
+    }
 } 
