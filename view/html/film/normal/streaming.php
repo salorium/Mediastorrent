@@ -6,6 +6,8 @@
  * Time: 14:28
  */
 $b = \get_browser(null, true);
+var_dump(\config\Conf::$user);
+die();
 if ($b["platform"] == "Linux" || isset(\config\Conf::$user["user"]->options["vlc"])) {
     ?>
     <embed type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"
