@@ -6,6 +6,10 @@ Sysoputilisateur.view = {
         Base.view.fixedHeight("#contenu", hauteur);
     },
     ajouteUtilisateur: function () {
+        var opt = '';
+        $.each(Sysoputilisateur.model.role, function (k, v) {
+            opt += '<option value="' + v + '">' + v + '</option>';
+        });
         res = ' <form id="ajouterUtilisateur" method="post" enctype="multipart/form-data" onsubmit="Sysoputilisateur.controller();">' +
             '<div class="row expansion">' +
             '    <div class="large-3 columns">' +
@@ -13,6 +17,15 @@ Sysoputilisateur.view = {
             '</div>' +
             '<div class="large-9 columns">' +
             '    <input type="text" name="login" id="adjlogin" />' +
+            '</div>' +
+            '</div>' +
+            '<div class="row expansion">' +
+            '    <div class="large-3 columns">' +
+            '<label for="role" class="text-center inline">Rôle : </label>' +
+            '</div>' +
+            '<div class="large-9 columns">' +
+            '    <select name="role" data-invalid="" id="role" class="medium" required="">' + opt +
+            '</select>' +
             '</div>' +
             '</div>' +
             '<div class="row expansion">' +
