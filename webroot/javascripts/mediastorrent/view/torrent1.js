@@ -461,7 +461,7 @@ Torrent1.view = {
                     cpt++;
                 });
                 $.each(list.file, function (k, v) {
-                    var $tr = $('<tr style="cursor: pointer;" class="' + ($.inArray(cpt + "", Torrent1.model.filesTorrent.selectionne) > -1 ? "active" : "") + '" id="file' + cpt + '" data-cpt="' + cpt + '" data-dossier="0" data-id="' + v[1] + '"><td><img width="30" src="' + Base.controller.makeUrlBase() + 'images/fichier.svg">' + v[0] + '</td><td>' + Base.model.converter.bytes(v[4], 2) + '</td><td>' + Base.model.converter.bytes((v[3] != 0 ? v[4] * v[2] / v[3] : 0), 2) + '</td><td><progress class="' + (v[2] == v[3] ? "ul" : "dl") + '"  value="' + (v[3] != 0 ? v[2] : 1) + '" max="' + v[3] + '" title="' + (v[3] != 0 ? v[2] / v[3] * 100 : 100) + '%"></progress></td><td>' + Torrent1.model.filesTorrent.getPriorite(v[5]) + '</td></tr>');
+                    var $tr = $('<tr style="cursor: pointer;" class="' + ($.inArray(cpt + "", Torrent1.model.filesTorrent.selectionne) > -1 ? "active" : "") + '" id="file' + cpt + '" data-cpt="' + cpt + '" data-dossier="0" data-id="' + v[1] + '"><td><img width="30" src="' + Base.controller.makeUrlBase() + 'images/fichier.svg">' + v[0] + '</td><td>' + Base.model.converter.bytes(v[4], 2) + '</td><td>' + Base.model.converter.bytes((v[3] != 0 ? v[4] * v[2] / v[3] : 0), 2) + '</td><td><progress class="' + (v[2] == v[3] ? "ul" : "dl") + '"  value="' + (v[3] != 0 ? v[2] : 1) + '" max="' + v[3] + '" title="' + (v[3] != 0 ? v[2] / v[3] * 100 : 100) + '%"></progress></td><td>' + Torrent1.model.filesTorrent.getPriorite(v[5]) + '</td><td><a onclick="Torrent1.controller.filesTorrent.streaming(v[1])"></a></td></tr>');
 
                     $("#torrentdetailsfiles").append(
                         $tr
