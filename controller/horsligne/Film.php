@@ -76,5 +76,6 @@ class Film extends \core\Controller
                 ));
             }
         }
+        return true;
     }
 } 
