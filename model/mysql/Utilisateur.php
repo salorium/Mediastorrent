@@ -17,6 +17,7 @@ class Utilisateur extends \core\ModelMysql
     public $mail;
     public $role;
     public $keyconnexion;
+    public $options;
 
     function __construct()
     {
@@ -84,6 +85,7 @@ class Utilisateur extends \core\ModelMysql
         \core\Mysqli::query($query);
         $u = \core\Mysqli::getObjectAndClose(false, __CLASS__);
         if ($u) {
+            $u->options = json_decode($u->options);
             do {
                 $u->keyconnexion = \model\simple\String::random(40);
             } while (!$u->update());
@@ -121,7 +123,11 @@ class Utilisateur extends \core\ModelMysql
         $query = "select * from utilisateur ";
         $query .= " where keyconnexion=" . \core\Mysqli::real_escape_string($key);
         \core\Mysqli::query($query);
-        return \core\Mysqli::getObjectAndClose(false, __CLASS__);
+        $u = \core\Mysqli::getObjectAndClose(false, __CLASS__);
+        if ($u) {
+            $u->options = json_decode($u->options);
+        }
+        return $u;
     }
 
     public static function getAllUtilisateur()
