@@ -20,6 +20,17 @@ use model\xmlrpc\rTorrentSettings;
 
 class Test extends Controller
 {
+    function ca()
+    {
+        $erre = false;
+        try {
+            throw new \Exception("dd");
+        } catch (\Exception $e) {
+            $erre = true;
+        }
+        var_dump($erre);
+    }
+
     function infofichier()
     {
 
