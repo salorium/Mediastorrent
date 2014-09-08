@@ -12,5 +12,8 @@ Sysoputilisateur.controller = {
     },
     setRole: function (args) {
         Sysoputilisateur.model.role = args;
+    },
+    ajouterUtilisateur: function () {
+
     }
 }
