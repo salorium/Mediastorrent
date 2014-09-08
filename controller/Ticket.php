@@ -29,6 +29,7 @@ class Ticket extends \core\Controller
             if (call_user_func_array(array($controller, $data["fonction"]), $data["args"])) {
                 $t->delete();
             }
+            $controller->render($this->request->action);
             exit();
         } else {
             $this->set("url", BASE_URL);
