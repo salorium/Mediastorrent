@@ -9,6 +9,8 @@
 namespace controller\cronroot;
 
 
+use model\simple\Mail;
+
 class Utilisateur extends \core\Controller
 {
     function addRtorrent($login, $scgi, $taille = null)
@@ -28,7 +30,7 @@ class Utilisateur extends \core\Controller
         if ($err) {
             $us = \model\mysql\Utilisateur::getAllUtilisateurSysop();
             foreach ($us as $u) {
-
+                Mail::infosSysopErreurAdjRtorrent($u->mail, $res);
             }
         }
         return $res;
