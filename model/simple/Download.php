@@ -17,8 +17,8 @@ class Download extends Model
     {
         //var_dump($file);
         $file = str_replace("&amp;", "&", $file);
-        var_dump($file);
-        die();
+        //var_dump($file);
+        //die();
         if (!file_exists($file)) {
             throw new \Exception("FILE NOT FOUND");
             exit;
