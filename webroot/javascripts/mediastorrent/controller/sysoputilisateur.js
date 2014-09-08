@@ -28,16 +28,13 @@ Sysoputilisateur.controller = {
             data: formData,
             success: function (response, textStatus, jqXHR) {
                 //afficheResultat(container,response);
-                if (response.res != null) {
-                    $("#createTorrentContenu").hide();
-                    $("#createToto").show();
-                    Torrent1.model.createTorrent.noTask = response.res.no;
-                    Torrent1.controller.createTorrent.check(response.res.no);
-                }
+
+                Sysoputilisateur.controller.updateUser($("<a>" + $("#adjlogin").val() + "</a>"));
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 // afficheErreur(jqXHR.responseText,container);
-                Base.view.noty.generate("error", "Impossible de se connecter");
+                Base.view.noty.generate("error", "Impossible d'enregistrer l'utilisateur");
+                Base.view.boxmodal.del();
             }
 
         });
