@@ -99,8 +99,7 @@
                         foreach ($role as $k => $rt) {
                             ?>
                             <option
-                                value="<?= $rt; ?>" <?= ($user->role === $rt ? 'selected="selected"' : ""); ?>><?= $rt; ?>
-                            </option>
+                                value="<?= $rt; ?>" <?= ($user->role === $rt ? 'selected="selected" ' : ""); ?>><?= $rt; ?></option>
                         <?
                         }
                         ?>
