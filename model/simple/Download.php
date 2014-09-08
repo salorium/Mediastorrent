@@ -16,10 +16,10 @@ class Download extends Model
     static function sendFile($file)
     {
         //var_dump($file);
-        $file = str_replace("&amp;", "", $file);
+        //$file = str_replace("&amp;", "", $file);
         //var_dump($file);
         //die();
-        if (!file_exists($file)) {
+        if (!file_exists(mb_convert_encoding($file, "UTF-8"))) {
             throw new \Exception("FILE NOT FOUND");
             exit;
         }
