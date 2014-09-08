@@ -30,7 +30,11 @@ class Utilisateur extends \core\Controller
                 $user = $u;
             }
         }
-        $rtorrents = \model\mysql\Rtorrents::getRtorrentsDispoPourUtilisateur($user->login);
+        if (\model\simple\Utilisateur::checkRoleOk($user->role, "Torrent")) {
+            $rtorrents = \model\mysql\Rtorrents::getRtorrentsDispoPourUtilisateur($user->login);
+        } else {
+            $rtorrents = array();
+        }
         //debug($rtorrents["VPS1"]);
         $this->set(array(
             "users" => $users,
