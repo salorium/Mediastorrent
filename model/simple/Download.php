@@ -102,6 +102,7 @@ class Download extends Model
 
     static function sendFileName($file, $name)
     {
+        $file = str_replace("&amp;", "&", $file);
         if (!file_exists($file)) {
             throw new \Exception("FILE NOT FOUND");
             exit;
