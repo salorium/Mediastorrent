@@ -85,4 +85,9 @@ class Utilisateur extends \core\Model
             }
         }
     }
+
+    static function checkRoleOk($roleuser, $role)
+    {
+        return (\config\Conf::$rolenumero[$role] <= \config\Conf::$rolenumero[$roleuser]);
+    }
 } 
