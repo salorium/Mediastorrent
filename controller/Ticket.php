@@ -26,6 +26,7 @@ class Ticket extends \core\Controller
             $cn = explode("\\", $cname);
             $cn = $cn[count($cn) - 1];
             $this->request->controller = strtolower($cn);
+            $this->request->action = $data["fonction"];
             if (call_user_func_array(array($controller, $data["fonction"]), $data["args"])) {
                 $t->delete();
             }
