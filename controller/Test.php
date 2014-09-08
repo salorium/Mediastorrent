@@ -24,7 +24,7 @@ class Test extends Controller
     {
         $erre = false;
         try {
-            throw new \Exception("dd");
+            //throw new \Exception("dd");
         } catch (\Exception $e) {
             $erre = true;
         }
