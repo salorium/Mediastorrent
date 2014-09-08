@@ -9,10 +9,10 @@ Sysoputilisateur.view = {
         res = ' <form id="ajouterUtilisateur" method="post" enctype="multipart/form-data" onsubmit="Sysoputilisateur.controller();">' +
             '<div class="row expansion">' +
             '    <div class="large-3 columns">' +
-            '<label for="login" class="text-center inline">Login : </label>' +
+            '<label for="adjlogin" class="text-center inline">Login : </label>' +
             '</div>' +
             '<div class="large-9 columns">' +
-            '    <input type="text" name="login" id="login" />' +
+            '    <input type="text" name="login" id="adjlogin" />' +
             '</div>' +
             '</div>' +
             '<div class="row expansion">' +
