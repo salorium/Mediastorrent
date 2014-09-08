@@ -22,13 +22,20 @@ class Test extends Controller
 {
     function ca()
     {
+        date_default_timezone_set("UTC");
+        echo "UTC:" . time();
+        echo "<br>";
+
+        date_default_timezone_set("Europe/Helsinki");
+        echo "Europe/Helsinki:" . time();
+        echo "<br>";
         $erre = false;
         try {
             //throw new \Exception("dd");
         } catch (\Exception $e) {
             $erre = true;
         }
-        var_dump($erre);
+        var_dump(\date_timezone_get());
         die();
     }
 

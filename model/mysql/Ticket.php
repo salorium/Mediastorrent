@@ -13,6 +13,7 @@ class Ticket extends \core\ModelMysql
 {
     public $id;
     public $donnee;
+    public $expire;
 
     function __construct()
     {
@@ -20,8 +21,9 @@ class Ticket extends \core\ModelMysql
 
     public function insert()
     {
-        $query = "insert into ticket (id,donnee) values(";
+        $query = "insert into ticket (id,donnee,expire) values(";
         $query .= \core\Mysqli::real_escape_string($this->id) . ", ";
+        $query .= \core\Mysqli::real_escape_string($this->donnee) . ", ";
         $query .= \core\Mysqli::real_escape_string($this->donnee) . ") ";
         \core\Mysqli::query($query);
         $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
