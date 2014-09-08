@@ -81,7 +81,7 @@ class Download extends Model
         }
         if ($start) fseek($fp, $start);
         while ($length) { // Read in blocks of 8KB so we don't chew up memory on the server
-            $read = ($length > 8192000) ? 8192000 : $length;
+            $read = ($length > 8192) ? 8192 : $length;
             $length -= $read;
             print(fread($fp, $read));
         }
