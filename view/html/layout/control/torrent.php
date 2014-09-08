@@ -177,8 +177,9 @@ $genre = \model\mysql\Genre::getAllGenre();
                         <input id="recherche" placeholder="Recherche" type="text">
                     </div>
                     <div class="large-4 small-3 columns">
-                        <a href="#" id="recherchesubmit" class="alert button expanded"><img width="18px"
-                                                                                            src="<?= BASE_URL ?>images/search.svg?color=rgba(240,240,240,1)"></a>
+                        <a href="#" id="recherchesubmit" class="alert button expanded" style="line-height: 1;"><img
+                                width="18px"
+                                src="<?= BASE_URL ?>images/search.svg?color=rgba(240,240,240,1)"></a>
                     </div>
                 </div>
             </li>
