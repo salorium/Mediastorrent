@@ -62,4 +62,26 @@ class Mail extends \core\Model
      ';
         return Mail::envoi($mail, "Bienvenue sur " . \config\Conf::$nomdusite, $message);
     }
+
+    static function infosSysopErreurAdjRtorrent($mail, $data)
+    {
+        $message = '
+     <html>
+      <head>
+       <title>Erreur lors de l\'ajout d\'un rtorrent </title>
+      </head>
+      <body>
+       <table>
+        ';
+        foreach ($data["system"] as $v) {
+            $message .= '<tr><td>' . $v[0] . '</td><td>' . $v[1] . '</td><td>' . $v[2] . '</td></tr>';
+        }
+        if (isset($data["rtorrentsadj"]))
+            $message .= '</table> rtorrentsadj : ' . $data["rtorrentsadj"] . '</td></tr>';
+        $message .= '   </table>
+      </body>
+     </html>
+     ';
+        return Mail::envoi($mail, "[ERREUR] AddTorrent", $message);
+    }
 } 

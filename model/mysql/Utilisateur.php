@@ -131,6 +131,13 @@ class Utilisateur extends \core\ModelMysql
         return \core\Mysqli::getObjectAndClose(true, __CLASS__);
     }
 
+    public static function getAllUtilisateurSysop()
+    {
+        $query = "select * from utilisateur where role='Sysop'";
+        \core\Mysqli::query($query);
+        return \core\Mysqli::getObjectAndClose(true, __CLASS__);
+    }
+
     public static function getUtilisteur($login)
     {
         $query = "select * from utilisateur";
