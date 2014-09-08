@@ -69,7 +69,7 @@ class Film extends \core\Controller
                 $str = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $str);
 // Supprimer tout le reste
                 $str = preg_replace('#&[^;]+;#', '', $str);
-                $idticket = \model\mysql\Ticket::savTicket("controller\\horsligne\\Film", "download", [$id]);
+                $idticket = \model\mysql\Ticket::savTicket("controller\\horsligne\\Film", "download", [$id], 60 * 60 * 6);
                 $this->set(array(
                     "titre" => $torrentf->titre . " " . $compfile,
                     "src" => "http://" . $torrentf->hostname . "/ticket/traite/" . $idticket . "/" . ($str)
