@@ -76,7 +76,7 @@ class Film extends \core\Controller
                 ));
             }
         }
-        return true;
+        //return true;
     }
 
     function download($id)
