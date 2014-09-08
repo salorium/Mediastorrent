@@ -69,6 +69,7 @@
 
             <form data-abide method="post">
                 <input type="hidden" name="login" value="<?= $user->login; ?>"/>
+                <input type="hidden" value="modifierpassword" name="action">
                 <fieldset>
                     <legend>Changer le mot de passe</legend>
                     <div class="row">
@@ -85,6 +86,39 @@
 
                 </fieldset>
             </form>
+
+            <form data-abide method="post">
+                <input type="hidden" name="login" value="<?= $user->login; ?>"/>
+                <input type="hidden" value="changerrole" name="action">
+                <fieldset>
+                    <legend>Changer le rôle</legend>
+                    <div class="row">
+                        <div class="large-8 columns">
+                            <label for="customDropdown1">Rôle
+                                <small>obligatoire</small>
+                                <select name="role" data-invalid="" id="customDropdown1" class="medium" required="">
+                                    <?
+                                    foreach ($role as $k => $rt) {
+                                        ?>
+                                        <option value="<?= $rt; ?>"><?= $rt; ?>
+                                        </option>
+                                    <?
+                                    }
+                                    ?>
+
+                                </select>
+                            </label>
+                            <small class="error">Sélectionner un rôle.</small>
+                        </div>
+                        <div class="large-4 columns">
+                            <button type="submit" class="secondary tiny">Modifier</button>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+
+
             <? if (count($rtorrents) > 0) { ?>
                 <form data-abide method="post">
                     <input type="hidden" name="login" value="<?= $user->login; ?>"/>
