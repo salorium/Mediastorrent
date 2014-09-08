@@ -9,6 +9,8 @@
 namespace controller\sysop;
 
 
+use model\simple\Mail;
+
 class Utilisateur extends \core\Controller
 {
     public $layout = "connecter";
@@ -51,6 +53,8 @@ class Utilisateur extends \core\Controller
         $mdp = \model\simple\Utilisateur::getRandomMdp();
         if (!\model\mysql\Utilisateur::insertUtilisateur($_REQUEST["login"], $mdp, $_REQUEST["role"], $_REQUEST["mail"]))
             throw new \Exception("Impossible d'enregistrer cet utilisateur");
+
+        Mail::creationCompte($_REQUEST["mail"], $_REQUEST["login"], $mdp);
 
     }
 } 
