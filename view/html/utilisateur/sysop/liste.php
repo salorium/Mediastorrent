@@ -6,6 +6,7 @@
  * Time: 18:21
  */
 \core\LoaderJavascript::add("base", "controller.fixeHeightContainer");
+\core\LoaderJavascript::add("base", "controller.setHost", array(substr($_SERVER["HTTP_HOST"] . dirname(dirname($_SERVER["SCRIPT_NAME"])) . ($_SERVER["SCRIPT_NAME"] !== "/index.php" ? "/" : ""), 0, -1), $_SERVER["SERVER_PORT"] == 443));
 
 \core\LoaderJavascript::add("sysoputilisateur", "controller.init");
 \core\LoaderJavascript::add("sysoputilisateur", "controller.setRole", array_slice(\config\Conf::$numerorole, 2));
