@@ -17,7 +17,7 @@ Base.view = {
     },
     boxmodal: {
         del: function () {
-            Base.model.boxmodal.allmodal[Base.model.boxmodal.cpt - 1].remove();
+            Base.model.boxmodal.modal.remove();
         },
         make: function (titre, contenu) {
             $loader = $('<div style="background-color: rgba(0,0,0,0.2); position: absolute; top: 0px;left: 0px; bottom: 0px;right: 0px;">' +
@@ -28,8 +28,7 @@ Base.view = {
                 '</div>' +
                 '</div>');
             $("body").append($loader);
-            Base.model.boxmodal.allmodal[Base.model.boxmodal.cpt] = $loader;
-            Base.model.boxmodal.cpt++;
+            Base.model.boxmodal.modal = $loader;
             //return Base.model.boxmodal.cpt - 1;
         }
 
