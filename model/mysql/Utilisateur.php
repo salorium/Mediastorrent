@@ -67,6 +67,16 @@ class Utilisateur extends \core\ModelMysql
         return $u->insert();
     }
 
+    public static function insertUtilisateur($login, $mdp, $role, $mail)
+    {
+        $u = new Utilisateur();
+        $u->login = $login;
+        $u->motdepasse = sha1($mdp);
+        $u->mail = $mail;
+        $u->role = $role;
+        return $u->insert();
+    }
+
     public static function authentifierUtilisateurParMotDePasse($login, $mdp)
     {
         $query = "select * from utilisateur ";

@@ -111,9 +111,7 @@ class Utilisateur extends \core\Controller
         if (isset ($_POST["mail"])) {
             $u = \model\mysql\Utilisateur::getUtilisateurParMail($_POST["mail"]);
             if ($u) {
-                do {
-                    $mdp = \model\simple\String::random(8);
-                } while (preg_match('/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/', $mdp) != 1);
+                $mdp = \model\simple\Utilisateur::getRandomMdp();
 
                 $args["login"] = $u->login;
                 $args["mdp"] = $mdp;
