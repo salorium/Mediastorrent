@@ -10,7 +10,7 @@ Sysoputilisateur.view = {
         $.each(Sysoputilisateur.model.role, function (k, v) {
             opt += '<option value="' + v + '">' + v + '</option>';
         });
-        res = ' <form id="ajouterUtilisateur" method="post" enctype="multipart/form-data" onsubmit="Sysoputilisateur.controller();">' +
+        res = ' <form id="ajouterUtilisateur" method="post" enctype="multipart/form-data" onsubmit="Sysoputilisateur.controller.ajouterUtilisateur(event);">' +
             '<div class="row expansion">' +
             '    <div class="large-3 columns">' +
             '<label for="adjlogin" class="text-center inline">Login : </label>' +

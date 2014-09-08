@@ -15,10 +15,10 @@ Sysoputilisateur.controller = {
     },
     ajouterUtilisateur: function (e) {
         e.preventDefault();
-        var formData = new FormData($("#createtorrent")[0]);
+        var formData = new FormData($("#ajouterUtilisateur")[0]);
 
         $.ajax({
-            url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/create/' + Base.model.utilisateur.keyconnexion + ".json",
+            url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'utilisateur/create.json',
             async: false,
             //dataType :"json",
             type: "post",
@@ -37,6 +37,7 @@ Sysoputilisateur.controller = {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 // afficheErreur(jqXHR.responseText,container);
+                Base.view.noty.generate("error", "Impossible de se connecter");
             }
 
         });
