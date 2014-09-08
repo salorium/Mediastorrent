@@ -64,7 +64,7 @@ class Download extends Model
 
 // Send standard headers
         header("Content-Type: " . mime_content_type($file));
-        header("Content-Length: $filesize");
+        header("Content-Length: $length");
         header('Content-Disposition: attachment; filename="' . basename($file) . '"');
         header('Accept-Ranges: bytes');
 
