@@ -25,6 +25,12 @@ class Utilisateur extends \core\Controller
         }
 
         $res["system"] = \model\simple\Console::$query;
+        if ($err) {
+            $us = \model\mysql\Utilisateur::getAllUtilisateurSysop();
+            foreach ($us as $u) {
+
+            }
+        }
         return $res;
     }
 
