@@ -16,7 +16,7 @@ class Download extends Model
     static function sendFile($file)
     {
         var_dump($file);
-        $file = htmlspecialchars($file);
+        $file = str_replace("&amp;", "", $file);
         var_dump($file);
         die();
         if (!file_exists($file)) {
