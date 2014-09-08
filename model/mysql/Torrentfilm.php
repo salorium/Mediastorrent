@@ -132,6 +132,21 @@ class Torrentfilm extends \core\ModelMysql
         return \core\Mysqli::getObjectAndClose(false, __CLASS__);
     }
 
+    static function getFilmDuServeur($id)
+    {
+        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre, tf.mediainfo as mediainfo ";
+        $query .= "from torrentfilm tf, film f,rtorrent r,rtorrents rs ";
+        $query .= "where tf.fini = true ";
+        $query .= "and tf.idfilm = f.id ";
+        $query .= "and r.nom = tf.nomrtorrent ";
+        $query .= " and rs.nomrtorrent = r.nom ";
+        $query .= " and rs.login = tf.login ";
+        $query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
+        $query .= " and tf.id = " . \core\Mysqli::real_escape_string($id);
+        \core\Mysqli::query($query);
+        return \core\Mysqli::getObjectAndClose(false, __CLASS__);
+    }
+
     static function getAdresseServeurFilmUser($id)
     {
         $query = "select r.hostname as hostname ";
