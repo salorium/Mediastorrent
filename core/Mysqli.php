@@ -57,6 +57,15 @@ class Mysqli
         return "'%" . self::$dblink->real_escape_string(str_replace(" ", "%", $str)) . "%'";
     }
 
+    public static function dateUnixTime($date)
+    {
+        if (is_int($date)) {
+            return "FROM_UNIXTIME(" . $date . ")";
+        } else {
+            return "NULL";
+        }
+    }
+
     public static function query($query)
     {
         $QueryStartTime = \microtime(true);
