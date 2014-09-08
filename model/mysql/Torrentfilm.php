@@ -269,14 +269,14 @@ class Torrentfilm extends \core\ModelMysql
     {
         $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre, r.hostname as hostname,tf.mediainfo as mediainfo ";
         $query .= "from torrentfilm tf,film f,rtorrent r,rtorrents rs ";
-        $query .= "where( tf.fini = true ";
+        $query .= "where tf.fini = true ";
         $query .= "and tf.idfilm = f.id ";
         $query .= "and r.nom = tf.nomrtorrent ";
         $query .= " and rs.nomrtorrent = r.nom ";
         $query .= " and rs.login = tf.login ";
         //$query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
         $query .= " and tf.id = " . \core\Mysqli::real_escape_string($id);
-        $query .= ") or (";
+        /*$query .= ") or (";
         $query .= "tf.fini = true ";
         $query .= "and tf.partageamis = true ";
         $query .= "and tf.idfilm = f.id ";
@@ -285,7 +285,7 @@ class Torrentfilm extends \core\ModelMysql
         $query .= "and rs.nomrtorrent = r.nom ";
         //$query .= "and r.hostname = " . \core\Mysqli::real_escape_string(HOST);
         $query .= " and tf.id = " . \core\Mysqli::real_escape_string($id);
-        $query .= " )";
+        $query .= " )";*/
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose();
     }
