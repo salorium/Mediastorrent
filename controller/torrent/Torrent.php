@@ -190,6 +190,7 @@ class Torrent extends Controller
         $user = \config\Conf::$user["user"]->login;
         $keyconnexion = \config\Conf::$user["user"]->keyconnexion;
         $this->set(array(
+            "titre" => $file,
             "src" => "http://" . $host . "/torrent/download/" . $hashtorrent . "/" . $nofile . "/" . $keyconnexion . "/" . str_replace("'", "\'", $file)
         ));
     }
