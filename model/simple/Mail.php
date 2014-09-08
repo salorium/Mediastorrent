@@ -40,4 +40,26 @@ class Mail extends \core\Model
         return Mail::envoi($mail, "[Mot de passe] Réinitialisation", $message);
     }
 
+    static function creationCompte($mail, $login, $mdp)
+    {
+        $message = '
+     <html>
+      <head>
+       <title>Bienvenue sur ' . \config\Conf::$nomdusite . '</title>
+      </head>
+      <body>
+      <h1>Bienvenue sur ' . \config\Conf::$nomdusite . '</h1>
+       <table>
+        <tr>
+         <td>Votre login :</td><td>' . $login . '</td>
+        </tr>
+        <tr>
+         <td>Votre mot de passe :</td><td>' . $mdp . '</td>
+        </tr>
+        </table>
+      </body>
+     </html>
+     ';
+        return Mail::envoi($mail, "Bienvenue sur " . \config\Conf::$nomdusite, $message);
+    }
 } 
