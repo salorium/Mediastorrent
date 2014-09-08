@@ -15,6 +15,8 @@ class Download extends Model
 {
     static function sendFile($file)
     {
+        var_dump($file);
+        die();
         if (!file_exists($file)) {
             throw new \Exception("FILE NOT FOUND");
             exit;
