@@ -24,7 +24,7 @@ class Ticket extends \core\ModelMysql
         $query = "insert into ticket (id,donnee,expire) values(";
         $query .= \core\Mysqli::real_escape_string($this->id) . ", ";
         $query .= \core\Mysqli::real_escape_string($this->donnee) . ", ";
-        $query .= \core\Mysqli::real_escape_string($this->donnee) . ") ";
+        $query .= \core\Mysqli::dateUnixTime($this->expire) . ") ";
         \core\Mysqli::query($query);
         $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
         \core\Mysqli::close();
@@ -45,7 +45,27 @@ class Ticket extends \core\ModelMysql
         return false;
     }
 
-    public static function savTicket($classe, $fonction, $args)
+    public static function savTicket($classe, $fonction, $args, $expire = 0)
+    {
+        $data = array("classe" => $classe, "fonction" => $fonction, "args" => $args);
+        $data = json_encode($data);
+        $id = 0;
+        do {
+            $id = sha1(uniqid());
+            $query = "select * from ticket ";
+            $query .= " where id=" . \core\Mysqli::real_escape_string($id);
+            \core\Mysqli::query($query);
+            $u = \core\Mysqli::getObjectAndClose(false, __CLASS__);
+        } while ($u);
+        $t = new Ticket();
+        $t->id = $id;
+        $t->donnee = $data;
+        if ($expire > 0)
+            $t->expire = time() + $expire;
+        return ($t->insert() ? $id : false);
+    }
+
+    /*public static function savTicketExpire($classe, $fonction, $args)
     {
         $data = array("classe" => $classe, "fonction" => $fonction, "args" => $args);
         $data = json_encode($data);
@@ -61,7 +81,7 @@ class Ticket extends \core\ModelMysql
         $t->id = $id;
         $t->donnee = $data;
         return ($t->insert() ? $id : false);
-    }
+    }*/
 
     public static function traiteTicket($id)
     {
