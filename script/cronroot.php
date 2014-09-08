@@ -23,6 +23,7 @@ function __autoload($class_name)
 //Retour visuel
 \config\Conf::$debuglocalfile = false;
 \model\simple\Console::println("Debut cron");
+$_SERVER["HTTP_HOST"] = \model\mysql\Rtorrent::getHostRtorrent();
 $crontache = \model\mysql\Cronroot::getAllNonFini();
 foreach ($crontache as $tache) {
     $data = json_decode($tache->donnee, true);
