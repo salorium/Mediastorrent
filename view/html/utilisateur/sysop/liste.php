@@ -25,6 +25,10 @@
         <!--<img src="images/disk.svg" title="Disque dur">
         <!-- Top Bar Left Nav Elements -->
         <ul class="left">
+            <li class="divider"></li>
+            <li><a onclick="Sysoputilisateur.controller.updateUser(this);">Ajouter un utilisateur</a>
+            </li>
+            <li class="divider"></li>
             <li id="utilisateur" class="has-dropdown not-click">
 
                 <a><?= $user->login ?></a>
