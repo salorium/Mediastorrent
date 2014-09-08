@@ -29,6 +29,7 @@ class Test extends Controller
             $erre = true;
         }
         var_dump($erre);
+        die();
     }
 
     function infofichier()
