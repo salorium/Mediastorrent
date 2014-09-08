@@ -13,7 +13,32 @@ Sysoputilisateur.controller = {
     setRole: function (args) {
         Sysoputilisateur.model.role = args;
     },
-    ajouterUtilisateur: function () {
+    ajouterUtilisateur: function (e) {
+        e.preventDefault();
+        var formData = new FormData($("#createtorrent")[0]);
 
+        $.ajax({
+            url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/create/' + Base.model.utilisateur.keyconnexion + ".json",
+            async: false,
+            //dataType :"json",
+            type: "post",
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function (response, textStatus, jqXHR) {
+                //afficheResultat(container,response);
+                if (response.res != null) {
+                    $("#createTorrentContenu").hide();
+                    $("#createToto").show();
+                    Torrent1.model.createTorrent.noTask = response.res.no;
+                    Torrent1.controller.createTorrent.check(response.res.no);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                // afficheErreur(jqXHR.responseText,container);
+            }
+
+        });
     }
 }
