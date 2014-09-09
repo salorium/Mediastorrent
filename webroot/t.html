@@ -115,9 +115,11 @@
         });
         pa.on('progress', onprogress = function (time) {
             $("#cur").val(time);
+            $("#time").html(time);
         });
         pa.on('duration', onduration = function (duration) {
             $("#cur").attr("max", duration);
+            $("#timeFin").html(duration);
         });
         $("#vol").on("change mousemove", function () {
             //play.volume = $(this).val() / 100;
