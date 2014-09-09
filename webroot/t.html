@@ -107,19 +107,25 @@
        src="https://www.salorium.com/torrent/download/B3BA648309CE4C4E17D2920E82A9FB3F91C3B592/0/ZwBMAsWK4ZmXVT9AKGuE6Ma5pgHRb5EErqbOAXgl"></audio>
 <script>
     $('#a').parent().append('<div style="position:relative;"><input id="cur" style="position:absolute;z-index:10;display: block;" type="range" value="0" min="0" max="100" step="1"><div id="second">  <input id="load" style="display: block" type="range" value="0" min="0" max="100" step="1"></div></div><div><a id="time"></a>-><a id="timeFin"></a><br><input type="range" id="vol" value="100" min="0" max="100" step="5" style="-webkit-appearance: slider-vertical;"><a id="flacl">FLAC</a></div>');
-    var pa = AV.Player.fromURL("https://www.salorium.com/torrent/download/656A2C7195CF848B6C4041359CCC078427432A77/0/ZwBMAsWK4ZmXVT9AKGuE6Ma5pgHRb5EErqbOAXgl");
-    pa.on("error", function (e) {
-        console.log(e);
-    });
+
     $("#flacl").click(function () {
+        var pa = AV.Player.fromURL("https://www.salorium.com/torrent/download/656A2C7195CF848B6C4041359CCC078427432A77/0/ZwBMAsWK4ZmXVT9AKGuE6Ma5pgHRb5EErqbOAXgl");
+        pa.on("error", function (e) {
+            console.log(e);
+        });
+        pa.on('progress', onprogress = function (time) {
+            $("#cur").val(time);
+        });
+        pa.on('duration', onduration = function (duration) {
+            $("#cur").attr("max", duration);
+        });
+        $("#vol").on("change mousemove", function () {
+            //play.volume = $(this).val() / 100;
+            pa.volume = $(this).val();
+        });
         pa.play();
     });
-    pa.on('progress', onprogress = function (time) {
-        $("#cur").val(time);
-    });
-    pa.on('duration', onduration = function (duration) {
-        $("#cur").attr("max", duration);
-    });
+
     var play = $('#a')[0];
     $("#cur").on("change", function () {
         if (play.ended)
@@ -129,7 +135,7 @@
     });
 
     $("#vol").on("change mousemove", function () {
-        play.volume = $(this).val() / 100;
+        //play.volume = $(this).val() / 100;
         pa.volume = $(this).val();
     });
 
