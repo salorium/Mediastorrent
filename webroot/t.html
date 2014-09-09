@@ -115,7 +115,7 @@
 
     });
 
-    $("#vol").on("change", function () {
+    $("#vol").live("change", function () {
         play.volume = $(this).val() / 100;
 
     });
