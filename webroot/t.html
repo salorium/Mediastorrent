@@ -125,6 +125,11 @@
             //play.volume = $(this).val() / 100;
             pa.volume = $(this).val();
         });
+        $("#cur").on("change", function () {
+
+            pa.seek($(this).val());
+
+        });
         pa.play();
     });
 
