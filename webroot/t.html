@@ -14,8 +14,8 @@
         margin: 0;
         border: none;
         padding: 1px 2px;
-        border-radius: 14px;
-
+        /*border-radius: 14px;
+*/
         box-shadow: inset 0 1px 0 0 #0d0e0f, inset 0 -1px 0 0 #3a3d42;
         -webkit-box-shadow: inset 0 1px 0 0 #0d0e0f, inset 0 -1px 0 0 #3a3d42;
         outline: none; /* no focus outline */
@@ -29,7 +29,7 @@
         width: 100%;
         background: transparent;
         height: 18px;
-        border-radius: 12px;
+        /*border-radius: 12px;*/
     }
 
     input[type="range"]::-ms-track {
@@ -54,7 +54,7 @@
         width: 40px;
         height: 18px;
         border: none;
-        border-radius: 12px;
+        /* border-radius: 12px;*/
         background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #529de1), color-stop(100%, #245e8f)); /* android <= 2.2 */
         background-image: -webkit-linear-gradient(top, #529de1 0, #245e8f 100%); /* older mobile safari and android > 2.2 */;
         background-image: linear-gradient(to bottom, #529de1 0, #245e8f 100%); /* W3C */
@@ -64,7 +64,7 @@
         width: 18px;
         height: 18px;
         border: none;
-        border-radius: 12px;
+        border-radius: 0px;
         background-image: linear-gradient(to bottom, #529de1 0, #245e8f 100%); /* W3C */
     }
 
@@ -87,6 +87,14 @@
         background-color: #0F0;
     }
 
+    #second input[type="range"]::-moz-range-thumb {
+        width: 0px;
+        height: 18px;
+        border: none;
+        border-radius: 0px;
+        background-image: linear-gradient(to bottom, #529de1 0, #245e8f 100%); /* W3C */
+    }
+
     #second input[type="range"] {
         background: #232528;
     }
@@ -98,12 +106,17 @@
 <audio style="position: absolute; top: -50px;" id="a" preload="auto"
        src="https://www.salorium.com/torrent/download/B3BA648309CE4C4E17D2920E82A9FB3F91C3B592/0/ZwBMAsWK4ZmXVT9AKGuE6Ma5pgHRb5EErqbOAXgl"></audio>
 <script>
-    $('#a').parent().append('<div style="position:relative;"><input id="cur" style="position:absolute;z-index:10;display: block;" type="range" value="0" min="0" max="100" step="1"><div id="second">  <input id="load" style="display: block" type="range" value="0" min="0" max="100" step="1"></div></div><div><a id="time"></a>-><a id="timeFin"></a></div>');
+    $('#a').parent().append('<div style="position:relative;"><input id="cur" style="position:absolute;z-index:10;display: block;" type="range" value="0" min="0" max="100" step="1"><div id="second">  <input id="load" style="display: block" type="range" value="0" min="0" max="100" step="1"></div></div><div><a id="time"></a>-><a id="timeFin"></a><input type="range" id="vol" value="100" min="0" max="100" step="5"></div>');
     var play = $('#a')[0];
     $("#cur").on("change", function () {
         if (play.ended)
             play.play()
         play.currentTime = $(this).val();
+
+    });
+
+    $("#vol").on("change", function () {
+        play.volume = $(this).val() / 100;
 
     });
 
