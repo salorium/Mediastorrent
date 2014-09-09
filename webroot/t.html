@@ -114,6 +114,12 @@
     $("#flacl").click(function () {
         pa.play();
     });
+    pa.on('progress', onprogress = function (time) {
+        $("#cur").val(time);
+    });
+    pa.on('duration', onduration = function (duration) {
+        $("#cur").attr("max", duration);
+    });
     var play = $('#a')[0];
     $("#cur").on("change", function () {
         if (play.ended)
