@@ -101,7 +101,10 @@
     $('#a').parent().append('<input id="cur" style="position:absolute;top:10px;left:0px;z-index:10;" type="range" value="0" min="0" max="100" step="1"><div id="second">  <input id="load" style="position:absolute;top:10px;left:0px;" type="range" value="0" min="0" max="100" step="1"></div>');
     var play = $('#a')[0];
     $("#cur").on("change", function () {
+        if (play.ended)
+            play.play()
         play.currentTime = $(this).val();
+
     });
 
     play.onloadedmetadata = function (e) {
