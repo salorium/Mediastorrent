@@ -131,7 +131,7 @@
             type: 'HEAD',
             success: function (message, text, response) {
                 console.log("AAA");
-                $("#console-log").html(response.getResponseHeader('Content-Disposition'));
+                console.log(response.getResponseHeader('Content-Disposition'));
                 play.src = 'https://www.salorium.com/torrent/download/B3BA648309CE4C4E17D2920E82A9FB3F91C3B592/0/ZwBMAsWK4ZmXVT9AKGuE6Ma5pgHRb5EErqbOAXgl';
                 play.play();
             }
