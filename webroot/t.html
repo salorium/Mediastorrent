@@ -115,10 +115,10 @@
 
     });
 
-    $("#vol").change(function () {
-        play.volume = $(this).val() / 100;
+    $("#vol")[0].onchange = function (e) {
+        play.volume = $(e.target).val() / 100;
 
-    });
+    };
 
     play.onloadedmetadata = function (e) {
         $("#load").attr("max", e.target.duration);
