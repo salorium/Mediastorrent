@@ -135,8 +135,8 @@
     });
 
     $("#vol").on("change mousemove", function () {
-        //play.volume = $(this).val() / 100;
-        pa.volume = $(this).val();
+        play.volume = $(this).val() / 100;
+        //pa.volume = $(this).val();
     });
 
     play.onloadedmetadata = function (e) {
