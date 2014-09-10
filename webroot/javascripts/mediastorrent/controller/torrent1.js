@@ -34,6 +34,55 @@ Torrent1.controller = {
             Torrent1.view.detailsTorrent.affiche();
             //Torrent1.view.filesTorrent.afficheArbre();
             Torrent1.view.trackersTorrent.afficheTrackers();
+            $.ajax({
+                url: Base.controller.makeUrlBase() + 'torrent/reboot/' + Torrent1.model.nomseedbox + ".json",
+                dataType: "json",
+                type: "GET",
+
+                //contentType: "application/json",
+                success: function (response, textStatus, jqXHR) {
+                    if (response.showdebugger == "ok") {
+                        if (response.id != false) {
+                            Torrent1.view.loaders.showListeTorrent();
+                            Base.view.noty.generate("success", "Reboot en cour", "center");
+                            Torrent1.controller.seedbox.rebootCheck(response.id);
+                        } else {
+                            Base.view.noty.generate("error", "ERREUR Reboot rtorrent");
+                        }
+                    } else {
+
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Base.view.noty.generate("error", textStatus + " " + jqXHR + " " + errorThrown);
+                }
+            });
+        },
+        rebootCheck: function (id) {
+            $.ajax({
+                url: Base.controller.makeUrlBase() + 'cronroot/check/' + id + ".json",
+                dataType: "json",
+                type: "GET",
+
+                //contentType: "application/json",
+                success: function (response, textStatus, jqXHR) {
+                    if (response.showdebugger == "ok") {
+                        if (response.fini) {
+                            Torrent1.model.reboot = false;
+                            Torrent1.controller.seedbox.update("");
+                        } else {
+                            setTimeout(function () {
+                                Torrent1.controller.seedbox.rebootCheck(id);
+                            }, 5000);
+                        }
+                    } else {
+
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Base.view.noty.generate("error", textStatus + " " + jqXHR + " " + errorThrown);
+                }
+            });
         },
         init: function (seedbox) {
             if (seedbox.length > 0) {
@@ -43,14 +92,18 @@ Torrent1.controller = {
                 Torrent1.view.seedbox.init(0);
                 this.update("");
             } else {
-                Base.view.noty.generate("information", "Aucune seedbox n'est associée à votre compte !", "center")
+                Base.view.noty.generate("information", "Aucune seedbox n'est associée à votre compte !", "center");
             }
         },
         reload: function (id) {
             Torrent1.view.seedbox.init(id);
             Torrent1.model.seedbox.changed = true;
-            Torrent1.controller.listTorrent.resetSelectionne();
+            Torrent1.controller.listTorrent.reset();
             Torrent1.controller.filesTorrent.reset();
+            Torrent1.controller.detailsTorrent.reset();
+            Torrent1.controller.trackersTorrent.reset();
+            Torrent1.view.detailsTorrent.affiche();
+            Torrent1.view.trackersTorrent.afficheTrackers();
             if (Torrent1.model.errorServer) {
                 this.update("");
                 Torrent1.model.errorServer = false;
