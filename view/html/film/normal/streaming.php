@@ -11,6 +11,7 @@ $b = \get_browser(null, true);
 if ($b["platform"] == "Linux" || isset(\config\Conf::$user["user"]->options->vlc)) {
     unset (\config\Conf::$user["user"]->options->vlc);
     \config\Conf::$user["user"]->update();
+    \core\Memcached::value(\config\Conf::$user["user"]->keyconnexion, "user", \config\Conf::$user["user"], 60 * 2);
     ?>
     <embed type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"
            width="640px" height="480px" id="vlc" loop="yes" autoplay="yes" target="<?= $src ?>"></embed><!----->
