@@ -47,6 +47,7 @@ class Utilisateur extends \core\ModelMysql
             $query .= "motdepasse=" . \core\Mysqli::real_escape_string($this->motdepasse) . ", ";
             $query .= "mail=" . \core\Mysqli::real_escape_string($this->mail) . ", ";
             $query .= "role=" . \core\Mysqli::real_escape_string($this->role) . ", ";
+            $query .= "options=" . \core\Mysqli::real_escape_string(json_encode($this->options)) . ", ";
             $query .= "keyconnexion=" . \core\Mysqli::real_escape_string($this->keyconnexion);
             $query .= " where login=" . \core\Mysqli::real_escape_string($this->login);
             \core\Mysqli::query($query);
