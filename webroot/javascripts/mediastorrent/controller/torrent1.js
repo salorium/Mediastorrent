@@ -58,12 +58,12 @@ Torrent1.controller = {
             //this.update("");
         },
         update: function (cid) {
-            var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/liste/' + cid + "/";
+            var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/liste/' + Base.model.utilisateur.keyconnexion + "/" + cid;
             if (Torrent1.model.listTorrent.selectionne.length == 1) {
-                url += Torrent1.model.listTorrent.selectionne[0];
+                url += "/" + Torrent1.model.listTorrent.selectionne[0];
                 $("#listefile").attr("href", Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/getListeFile/' + Torrent1.model.listTorrent.selectionne[0] + "/" + Base.model.utilisateur.keyconnexion);
             }
-            url += "/" + Base.model.utilisateur.keyconnexion;
+
             $.ajax({
                 url: url + ".json",
                 dataType: "json",
