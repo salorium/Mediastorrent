@@ -23,6 +23,11 @@ class Torrent extends Controller
         ));
     }
 
+    function reboot($nomrtorrent)
+    {
+        $a = \model\mysql\Cronroot::sav($nomrtorrent, "controller\\cronroot\\Utilisateur", "rebootRtorrent", array("login" => \config\Conf::$user["user"]->login));
+        $this->set("id", $a);
+    }
 
     /*function send(){
         $this->set(array(

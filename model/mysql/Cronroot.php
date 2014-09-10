@@ -116,4 +116,16 @@ class Cronroot extends \core\ModelMysql
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(true, __CLASS__);
     }
+
+    public static function estFini($id)
+    {
+        $query = "select count(*) as nb from cronroot ";
+        $query .= " where fini=" . \core\Mysqli::real_escape_string(true) . " and encour=" . \core\Mysqli::real_escape_string(true) . " and id=" . \core\Mysqli::real_escape_string($id);
+        \core\Mysqli::query($query);
+        $res = \core\Mysqli::getObjectAndClose();
+        if (!is_bool($res)) {
+            return $res->nb == 1;
+        }
+        return false;
+    }
 } 
