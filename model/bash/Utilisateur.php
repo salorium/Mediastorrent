@@ -79,8 +79,58 @@ class Utilisateur extends \core\Model
         }
     }
 
+    static function delRtorrent($login)
+    {
+
+        \model\simple\Console::println("Del " . $login);
+        //Arret de rtorrent
+        $sortie = \model\simple\MakerRtorrentLancer::stop($login);
+        if ($sortie[0] !== 0) {
+            \model\simple\Console::println("Impossible d'arrêté rtorrent");
+        }
+//Voir l'utilisateur utilise lvm
+        if (!is_null(\config\Conf::$nomvg)) {
+            $sortie = \model\simple\Console::executePath("lvdisplay /dev/" . \config\Conf::$nomvg . '/' . $login);
+            if ($sortie[0] === 0) {
+                \model\simple\Console::println("Suppression du lvm en cour");
+                //Demontage de l'home de l'utilisateur
+                do {
+                    $sortie = \model\simple\Console::execute("umount -f /dev/" . \config\Conf::$nomvg . '/' . $login);
+                    if ($sortie[0] !== 0) {
+                        \model\simple\Console::println("Impossible de démonter /dev/" . \config\Conf::$nomvg . '/' . $login);
+                        sleep(10);
+                    }
+                } while ($sortie[0] !== 0);
+
+                $sortie = \model\simple\Console::executePath("lvremove -f /dev/" . \config\Conf::$nomvg . '/' . $login);
+                if ($sortie[0] !== 0) {
+                    throw new \Exception("Impossible de supprimer /dev/" . \config\Conf::$nomvg . '/' . $login);
+                }
+            } else {
+                \model\simple\Console::println("Pas de lvm");
+            }
+        }
+        \model\simple\Console::println("Suppression de l'utilisateur");
+        $sortie = \model\simple\Console::executePath("userdel -r " . escapeshellarg($login));
+        if ($sortie[0] !== 0) {
+            throw new \Exception("Impossible de supprimer l'utilisateur " . $login);
+        }
+    }
+
     static function rebootRtorrent($login)
     {
+        $sortie = MakerRtorrentLancer::stop($login);
+        if ($sortie[0] !== 0) {
+            throw new \Exception("Impossible d'arrêté rtorrent");
+        }
+        do {
+            $sortie = \model\simple\Console::execute('su ' . escapeshellarg($login) . ' -c "tmux list-sessions"');
+            if ($sortie[0] !== 1) {
+                \model\simple\Console::println("Rtorrent est encore en exécution");
+                sleep(10);
+            }
+
+        } while ($sortie[0] !== 1);
         $sortie = MakerRtorrentLancer::start($login);
         if ($sortie[0] !== 0) {
             throw new \Exception("Impossible de lancer rtorrent");

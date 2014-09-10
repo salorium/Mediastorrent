@@ -43,18 +43,28 @@ class Rtorrents extends \core\ModelMysql
         $rtable = array();
         if (!is_bool($rtorrent))
             foreach ($rtorrent as $v) {
-            if (isset($rtable[$v->nomrtorrent . ""])) {
-                if (!is_null($v->portscgi)) {
-                    $rtable[$v->nomrtorrent . ""]["scgi"][] = $v->portscgi;
-                }
-            } else {
-                $rtable[$v->nomrtorrent . ""] = array("host" => $v->hostname, "scgi" => array());
-                if (!is_null($v->portscgi)) {
-                    $rtable[$v->nomrtorrent . ""]["scgi"][] = $v->portscgi;
+                if (isset($rtable[$v->nomrtorrent . ""])) {
+                    if (!is_null($v->portscgi)) {
+                        $rtable[$v->nomrtorrent . ""]["scgi"][] = $v->portscgi;
+                    }
+                } else {
+                    $rtable[$v->nomrtorrent . ""] = array("host" => $v->hostname, "scgi" => array());
+                    if (!is_null($v->portscgi)) {
+                        $rtable[$v->nomrtorrent . ""]["scgi"][] = $v->portscgi;
+                    }
                 }
             }
-        }
         return $rtable;
+    }
+
+    static function getAllRtorrentUtilisateur($login)
+    {
+        $query = "select nomrtorrent ";
+        $query .= "from rtorrents ";
+        $query .= "where ";
+        $query .= "login =" . \core\Mysqli::real_escape_string($login);
+        \core\Mysqli::query($query);
+        return \core\Mysqli::getObjectAndClose(true);
     }
 
     static function addRtorrentUtilisateurScgi($login, $nomrtorrent, $scgi)

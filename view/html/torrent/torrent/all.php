@@ -39,6 +39,11 @@
                 </ul>
             </li>
             <li class="divider"></li>
+            <li><a onclick="Torrent1.controller.seedbox.reboot();" title="Redémarrer rtorrent"><img width="40px"
+                                                                                                    src="<?= BASE_URL ?>images/power.svg"/></a>
+            </li>
+            <li class="divider"></li>
+            <li class="divider"></li>
             <li><a onclick="Torrent1.controller.createTorrent.show();" title="Créer un Torrent"><img width="40px"
                                                                                                      src="<?= BASE_URL ?>images/star.svg"/></a>
             </li>

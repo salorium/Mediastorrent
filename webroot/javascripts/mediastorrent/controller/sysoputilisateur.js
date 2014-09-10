@@ -10,6 +10,9 @@ Sysoputilisateur.controller = {
         $('#updateuser').append("<input type='hidden' name='login' value='" + $(element).html() + "'>");
         $('#updateuser').submit();
     },
+    delUser: function () {
+        $("#deluser").submit();
+    },
     setRole: function (args) {
         Sysoputilisateur.model.role = args;
     },

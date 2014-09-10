@@ -36,6 +36,26 @@ class Utilisateur extends \core\Controller
         return $res;
     }
 
+    function delRtorrent($login)
+    {
+        $res = null;
+        $err = false;
+        try {
+            \model\bash\Utilisateur::delRtorrent($login);
+        } catch (\Exception $e) {
+            \model\simple\Console::println($e->getMessage());
+            $err = true;
+        }
+        $res["system"] = \model\simple\Console::$query;
+        if ($err) {
+            $us = \model\mysql\Utilisateur::getAllUtilisateurSysop();
+            foreach ($us as $u) {
+                Mail::infosSysopErreurAdjRtorrent($u->mail, $res);
+            }
+        }
+        return $res;
+    }
+
     function rebootRtorrent($login)
     {
         $res = null;
@@ -43,5 +63,10 @@ class Utilisateur extends \core\Controller
         \model\bash\Utilisateur::rebootRtorrent($login);
         $res["system"] = \model\simple\Console::$query;
         return $res;
+    }
+
+    function tester()
+    {
+        return true;
     }
 } 

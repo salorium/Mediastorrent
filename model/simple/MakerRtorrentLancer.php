@@ -122,4 +122,27 @@ WantedBy=multi-user.target
         return \model\simple\Console::execute('systemctl start rt@' . $user);
     }
 
+    static function stop($user)
+    {
+        switch (\config\Conf::$distribution) {
+            case 'arch':
+                return self::stopForArchLinux($user);
+                break;
+            case 'ubuntu':
+            case 'debian':
+                return self::stopForDebian($user);
+                break;
+        }
+    }
+
+    static function stopForDebian($user)
+    {
+        return \model\simple\Console::execute('/etc/init.d/rtorrent stop ' . $user);
+    }
+
+    static function stopForArchLinux($user)
+    {
+        return \model\simple\Console::execute('systemctl stop rt@' . $user);
+    }
+
 } 

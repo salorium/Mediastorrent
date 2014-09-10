@@ -18,6 +18,11 @@ use model\xmlrpc\rXMLRPCRequest;
 
 class Torrent extends Controller
 {
+    function lvm()
+    {
+        $this->set("lvm", !is_null(\config\Conf::$nomvg));
+    }
+
     function getListeFile($hashtorrentselectionne, $keyconnexion = null)
     {
         \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
@@ -131,7 +136,7 @@ class Torrent extends Controller
         $ret = null;
         \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
-                $taskNo = time();
+        $taskNo = time();
         \core\Memcached::value(\config\Conf::$user["user"]->login, "task" . $taskNo, serialize($_REQUEST), 60 * 1);
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
             new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "execute", array(
@@ -426,7 +431,7 @@ class Torrent extends Controller
                     if (!(\core\Memcached::value("fileslist" . \config\Conf::$portscgi, sha1($ncid . $hashtorrentselectionne), $data, 60 * 5)))
                         trigger_error("Impossible de mettre des données dans le cache");
                     */
-                    $torrent["trackers"] = $trackers;
+                $torrent["trackers"] = $trackers;
             }
 
         }

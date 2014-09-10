@@ -22,9 +22,41 @@ function __autoload($class_name)
 }
 
 \config\Conf::$debuglocalfile = false;
+$login = "t2";
+$sortie = \model\simple\MakerRtorrentLancer::stop($login);
+if ($sortie[0] !== 0) {
+    \model\simple\Console::println("Impossible d'arrêté rtorrent");
+}
+//Voir l'utilisateur utilise lvm
+if (!is_null(\config\Conf::$nomvg)) {
+    $sortie = \model\simple\Console::executePath("lvdisplay /dev/" . \config\Conf::$nomvg . '/' . $login);
+    if ($sortie[0] === 0) {
+        \model\simple\Console::println("Suppression du lvm en cour");
+        //Demontage de l'home de l'utilisateur
+        do {
+            $sortie = \model\simple\Console::execute("umount -f /dev/" . \config\Conf::$nomvg . '/' . $login);
+            if ($sortie[0] !== 0) {
+                \model\simple\Console::println("Impossible de démonter /dev/" . \config\Conf::$nomvg . '/' . $login);
+                sleep(10);
+            }
+        } while ($sortie[0] !== 0);
+
+        $sortie = \model\simple\Console::executePath("lvremove -f /dev/" . \config\Conf::$nomvg . '/' . $login);
+        if ($sortie[0] !== 0) {
+            throw new \Exception("Impossible de supprimer /dev/" . \config\Conf::$nomvg . '/' . $login);
+        }
+    } else {
+        \model\simple\Console::println("Pas de lvm");
+    }
+}
+\model\simple\Console::println("Suppression de l'utilisateur");
+$sortie = \model\simple\Console::executePath("userdel -r " . escapeshellarg($login));
+if ($sortie[0] !== 0) {
+    throw new \Exception("Impossible de supprimer l'utilisateur " . $login);
+}
 //\model\bash\Utilisateur::addRtorrent("salorium", 5001);
 //exec("nano test.tester");
-$taille = 100;
+/*$taille = 100;
 $sortie = \model\simple\Console::execute('vgdisplay -c ' . \config\Conf::$nomvg . ' | awk -F ":" \'{print $16}\'');
 if ($sortie[0] === 1) {
     throw new \Exception("Lvm ou le volume groupe " . \config\Conf::$nomvg . " est il bien disponible ?");
@@ -40,5 +72,5 @@ $free = (int)($extends * $tailleextends / 1024 / 1024);
 if ($taille > $free) {
     $taille = $free;
 }
-
+*/
 ?>

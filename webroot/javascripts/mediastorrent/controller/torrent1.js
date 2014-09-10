@@ -20,6 +20,21 @@ Torrent1.controller = {
         Torrent1.view.createTorrent.hide();
     },
     seedbox: {
+        reboot: function () {
+            Torrent1.model.reboot = true;
+            Torrent1.controller.listTorrent.reset();
+            Torrent1.controller.filesTorrent.reset();
+            Torrent1.controller.detailsTorrent.reset();
+            Torrent1.controller.trackersTorrent.reset();
+            $("#btdetails").parent().children().removeClass('active');
+            $("#btdetails").addClass('active');
+            $("#panel2-1").parent().children().removeClass('active');
+            $("#panel2-1").addClass('active');
+            Torrent1.model.container.listtorrent.empty();
+            Torrent1.view.detailsTorrent.affiche();
+            //Torrent1.view.filesTorrent.afficheArbre();
+            Torrent1.view.trackersTorrent.afficheTrackers();
+        },
         init: function (seedbox) {
             if (seedbox.length > 0) {
                 Torrent1.model.baseUrl = seedbox[0].hostname;
@@ -54,7 +69,10 @@ Torrent1.controller = {
                 dataType: "json",
                 //contentType: "application/json",
                 success: function (response, textStatus, jqXHR) {
-                    if (response.host === Torrent1.model.baseUrl) {
+                    if (Torrent1.model.reboot) {
+
+                    } else {
+                        if (response.host === Torrent1.model.baseUrl) {
                         Torrent1.view.loaders.hideListeTorrent();
                         if (response.showdebugger === "ok") {
                             var res = response.torrent;
@@ -113,6 +131,7 @@ Torrent1.controller = {
                         setTimeout(function () {
                             Torrent1.controller.seedbox.update("");
                         }, 100);
+                        }
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -660,8 +679,13 @@ Torrent1.controller = {
             }
 
             return(ret);
+        },
+        reset: function () {
+            this.resetSelectionne();
+            this.resetRecherche();
+            Torrent1.model.listTorrent.liste = [];
+            Torrent1.model.listTorrent.original = [];
         }
-
     },
     detailsTorrent: {
         init: function () {
@@ -705,6 +729,7 @@ Torrent1.controller = {
         reset: function () {
             this.resetSelectionne();
             $("#torrentdetailsfiles").empty();
+            $("#listefile").removeAttr("href");
             Torrent1.model.filesTorrent.changed = false;
             Torrent1.model.filesTorrent.original = [];
             Torrent1.model.filesTorrent.liste = [];
@@ -869,6 +894,10 @@ Torrent1.controller = {
     trackersTorrent: {
         init: function () {
             Torrent1.view.trackersTorrent.init();
+        },
+        reset: function () {
+            Torrent1.model.trackersTorrent.liste = [];
+            Torrent1.model.trackersTorrent.original = [];
         },
         edition: {
             okforgenerate: function () {

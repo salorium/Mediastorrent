@@ -47,7 +47,8 @@
                 </ul>
             </li>
             <li class="divider"></li>
-            <li><a><img width="40px" src="<?= BASE_URL ?>images/poubelle.svg"/></a>
+            <li><a onclick="Sysoputilisateur.controller.delUser()"><img width="40px"
+                                                                        src="<?= BASE_URL ?>images/poubelle.svg"/></a>
             </li>
             <li class="divider"></li>
 
@@ -65,6 +66,10 @@
 <div id="moitiegauche" class="large-5 columns panel heightfixed">
     <form id="updateuser" method="post">
         <input type="hidden" value="updateuser" name="action">
+    </form>
+    <form id="deluser" method="post">
+        <input type="hidden" value="deluser" name="action">
+        <input type="hidden" name="login" value="<?= $user->login; ?>"/>
     </form>
     <input type="hidden" id="login" value="<?= $user->login; ?>"/>
 
@@ -95,7 +100,7 @@
             <legend>Changer le rôle</legend>
             <div class="row">
                 <div class="large-8 columns">
-                    <select name="role" data-invalid="" id="customDropdown1" class="medium" required="">
+                    <select name="role" data-invalid="" id="customDropdown2" class="medium" required="">
                         <?
                         foreach ($role as $k => $rt) {
                             ?>
@@ -148,19 +153,11 @@
                     <small class="error">Le ports scgi est obligatoire, un nombre à 4 chiffres!
                     </small>
                 </label>
-                <?php
-                if (!is_null(\config\Conf::$nomvg)) {
-                    ?>
-                    <label>Taille du répertoire en Go:
-                        <small>obligatoire</small>
-                        <input type="text" required pattern="[0-9]+" name="taille"/>
-                        <small class="error">Merci d'entrer la taille du repertoire de l'utilisateur!
-                        </small>
-                    </label>
-
-                <?
-                }
-                ?>
+                <label>Taille du répertoire en Go si le serveur de rtorrent est configuré en lvm2:
+                    <input type="text" pattern="[0-9]+" name="taille"/>
+                    <small class="error">Merci d'entrer la taille du repertoire de l'utilisateur!
+                    </small>
+                </label>
                 <button type="submit" class="secondary tiny small-3">Ajouter</button>
             </fieldset>
             <input type="hidden" value="addrtorrent" name="action">
