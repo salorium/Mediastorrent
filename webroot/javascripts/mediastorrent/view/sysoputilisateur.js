@@ -36,6 +36,10 @@ Sysoputilisateur.view = {
             '    <input type="text" name="mail" id="mail"/>' +
             '</div>' +
             '</div>' +
+            '<div class="row expansion">' +
+            '<input name="vlc" id="vlc" type="checkbox"><label for="vlc">Vlc</label>' +
+            '</div>' +
+
             '<div class="row">' +
             '<div class="small-2 small-centered columns">' +
             '<button class="button small secondary expand" type="submit">Ajouter</button>' +
