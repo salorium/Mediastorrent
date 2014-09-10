@@ -27,12 +27,13 @@ class Utilisateur extends \core\ModelMysql
     {
         if (is_null($this->login))
             return false;
-        $query = "insert into utilisateur (login,motdepasse,mail,role,keyconnexion) values(";
+        $query = "insert into utilisateur (login,motdepasse,mail,role,keyconnexion,options) values(";
         $query .= \core\Mysqli::real_escape_string($this->login) . ",";
         $query .= \core\Mysqli::real_escape_string($this->motdepasse) . ",";
         $query .= \core\Mysqli::real_escape_string($this->mail) . ",";
         $query .= \core\Mysqli::real_escape_string($this->role) . ",";
-        $query .= \core\Mysqli::real_escape_string($this->keyconnexion) . ")";
+        $query .= \core\Mysqli::real_escape_string($this->keyconnexion) . ",";
+        $query .= \core\Mysqli::real_escape_json($this->options) . ")";
         \core\Mysqli::query($query);
         $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
         \core\Mysqli::close();
@@ -47,7 +48,7 @@ class Utilisateur extends \core\ModelMysql
             $query .= "motdepasse=" . \core\Mysqli::real_escape_string($this->motdepasse) . ", ";
             $query .= "mail=" . \core\Mysqli::real_escape_string($this->mail) . ", ";
             $query .= "role=" . \core\Mysqli::real_escape_string($this->role) . ", ";
-            $query .= "options=" . \core\Mysqli::real_escape_string(json_encode($this->options)) . ", ";
+            $query .= "options=" . \core\Mysqli::real_escape_json($this->options) . ", ";
             $query .= "keyconnexion=" . \core\Mysqli::real_escape_string($this->keyconnexion);
             $query .= " where login=" . \core\Mysqli::real_escape_string($this->login);
             \core\Mysqli::query($query);
@@ -69,13 +70,14 @@ class Utilisateur extends \core\ModelMysql
         return $u->insert();
     }
 
-    public static function insertUtilisateur($login, $mdp, $role, $mail)
+    public static function insertUtilisateur($login, $mdp, $role, $mail, $options = null)
     {
         $u = new Utilisateur();
         $u->login = $login;
         $u->motdepasse = sha1($mdp);
         $u->mail = $mail;
         $u->role = $role;
+        $u->options = $options;
         return $u->insert();
     }
 

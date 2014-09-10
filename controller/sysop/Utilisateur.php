@@ -51,7 +51,10 @@ class Utilisateur extends \core\Controller
         if (!(isset($_REQUEST["login"]) && isset($_REQUEST["mail"]) && isset($_REQUEST["role"])))
             throw new \Exception("Manque les variables post");
         $mdp = \model\simple\Utilisateur::getRandomMdp();
-        if (!\model\mysql\Utilisateur::insertUtilisateur($_REQUEST["login"], $mdp, $_REQUEST["role"], $_REQUEST["mail"]))
+        $options = null;
+        if (isset($_REQUEST["vlc"]))
+            $options["vlc"] = true;
+        if (!\model\mysql\Utilisateur::insertUtilisateur($_REQUEST["login"], $mdp, $_REQUEST["role"], $_REQUEST["mail"], $options))
             throw new \Exception("Impossible d'enregistrer cet utilisateur");
 
         Mail::creationCompte($_REQUEST["mail"], $_REQUEST["login"], $mdp);
