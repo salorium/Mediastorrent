@@ -951,6 +951,7 @@ Torrent1.view = {
             $("#createToto").hide();
         },
         show: function () {
+            $("#repertoire").val(Torrent1.model.createTorrent.folder.makerDirectory(""));
             $("#createTorrent").show();
         },
         hide: function () {

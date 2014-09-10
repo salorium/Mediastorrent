@@ -8,13 +8,13 @@
 
 namespace model\mysql;
 
-
 class Cronroot extends \core\ModelMysql
 {
     public $id;
     public $donnee;
     public $resultat;
     public $nomrtorrent;
+    public $encour;
     public $fini;
 
     function __construct()
@@ -23,10 +23,11 @@ class Cronroot extends \core\ModelMysql
 
     public function insert()
     {
-        $query = "insert into cronroot (id,donnee,resultat,nomrtorrent,fini) values(";
+        $query = "insert into cronroot (id,donnee,resultat,nomrtorrent,encour,fini) values(";
         $query .= \core\Mysqli::real_escape_string($this->id) . ", ";
         $query .= \core\Mysqli::real_escape_string($this->donnee) . ", ";
         $query .= \core\Mysqli::real_escape_string($this->resultat) . ", ";
+        $query .= \core\Mysqli::real_escape_string($this->nomrtorrent) . ", ";
         $query .= \core\Mysqli::real_escape_string($this->nomrtorrent) . ", ";
         $query .= \core\Mysqli::real_escape_string($this->fini) . ")";
         \core\Mysqli::query($query);
@@ -66,6 +67,7 @@ class Cronroot extends \core\ModelMysql
         $t->nomrtorrent = $nomrtorrent;
         $t->donnee = $data;
         $t->fini = false;
+        $t->encour = false;
         return ($t->insert() ? $id : false);
     }
 
@@ -75,6 +77,20 @@ class Cronroot extends \core\ModelMysql
         $query .= " where id=" . \core\Mysqli::real_escape_string($id);
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(false, __CLASS__);
+    }
+
+    public function setEncour()
+    {
+        $this->encour = true;
+        $query = "update cronroot set ";
+        $query .= "encour=" . \core\Mysqli::real_escape_string($this->encour);
+        //$query .= ", resultat=" . \core\Mysqli::real_escape_string($this->resultat);
+        $query .= " where id=" . \core\Mysqli::real_escape_string($this->id) . " and encour=" . \core\Mysqli::real_escape_string(false);
+        \core\Mysqli::query($query);
+        //echo $query;
+        $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
+        \core\Mysqli::close();
+        return $res;
     }
 
     public function setFini($resultat)
@@ -96,7 +112,7 @@ class Cronroot extends \core\ModelMysql
     public static function getAllNonFini()
     {
         $query = "select * from cronroot ";
-        $query .= " where fini=" . \core\Mysqli::real_escape_string(false) . " and nomrtorrent=" . \core\Mysqli::real_escape_string(\config\Conf::$nomrtorrent);
+        $query .= " where fini=" . \core\Mysqli::real_escape_string(false) . " and nomrtorrent=" . \core\Mysqli::real_escape_string(\config\Conf::$nomrtorrent) . " and encour=" . \core\Mysqli::real_escape_string(false);
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(true, __CLASS__);
     }

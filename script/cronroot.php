@@ -26,8 +26,9 @@ function __autoload($class_name)
 $_SERVER["HTTP_HOST"] = \model\mysql\Rtorrent::getHostRtorrent();
 $crontache = \model\mysql\Cronroot::getAllNonFini();
 foreach ($crontache as $tache) {
-    $data = json_decode($tache->donnee, true);
-    $cname = $data["classe"];
+    if ($tache->setEncour()) {
+        $data = json_decode($tache->donnee, true);
+        $cname = $data["classe"];
     $controller = new $cname(null, null);
     if (!in_array($data["fonction"], get_class_methods($controller))) {
         trigger_error("Le controller " . $cname . " n'a pas de méthode " . $data["fonction"]);
@@ -39,6 +40,7 @@ foreach ($crontache as $tache) {
         //$t->delete();
         $tache->setFini($res);
 
+    }
     }
 }
 ?>

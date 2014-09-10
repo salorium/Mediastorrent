@@ -154,4 +154,14 @@ class Utilisateur extends \core\ModelMysql
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(false, __CLASS__);
     }
+
+    public static function supprimeUtilisateur($login)
+    {
+        $query = "delete from utilisateur ";
+        $query .= " where login=" . \core\Mysqli::real_escape_string($login);
+        \core\Mysqli::query($query);
+        $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
+        \core\Mysqli::close();
+        return $res;
+    }
 }

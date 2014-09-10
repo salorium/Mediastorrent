@@ -3,6 +3,7 @@
  */
 var Torrent1 = new Object();
 Torrent1.model = {
+    reboot: false,
     baseUrl: "",
     nomseedbox: "",
     errorServer: false,
