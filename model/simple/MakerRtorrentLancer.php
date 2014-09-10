@@ -58,9 +58,11 @@ stop() {
 case $1 in
         start)
                start
+               exit 0
         ;;
         stop)
                 stop
+                exit 0
         ;;
         *)
                 echo "Usage:  {start|stop}" >&2
