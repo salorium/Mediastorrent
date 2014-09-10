@@ -23,9 +23,6 @@ class Utilisateur extends \core\Controller
                     $a = \model\mysql\Cronroot::sav($_REQUEST["nomrtorrent"], "controller\\cronroot\\Utilisateur", "addRtorrent", array("login" => $_REQUEST["login"], "scgi" => $_REQUEST["scgi"], "taille" => (isset($_REQUEST["taille"]) ? $_REQUEST["taille"] : null)));
                     break;
                 case 'deluser':
-                    /**
-                     * Todo, si l'utilisateur à des seedbox faut les supprimer aussi :)
-                     */
                     $rts = \model\mysql\Rtorrents::getAllRtorrentUtilisateur($_REQUEST["login"]);
                     if (is_array($rts)) {
                         foreach ($rts as $v) {

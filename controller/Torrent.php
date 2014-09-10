@@ -152,7 +152,7 @@ class Torrent extends Controller
         $this->set("res", $ret);
     }
 
-    function liste($cid = null, $hashtorrentselectionne = "", $keyconnexion = null)
+    function liste($keyconnexion = null, $cid = null, $hashtorrentselectionne = "")
     {
         \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         $tor = null;
