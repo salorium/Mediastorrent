@@ -45,6 +45,16 @@ class Mysqli
         return "'" . self::$dblink->real_escape_string(str_replace("<", "&lt;", $str)) . "'";
     }
 
+    public static function real_escape_json($str)
+    {
+        if (!isset(self::$dblink)) {
+            self::connect();
+        }
+        if (is_null($str))
+            return "NULL";
+        return "'" . self::$dblink->real_escape_string(str_replace("<", "&lt;", json_encode($str))) . "'";
+    }
+
     public static function real_escape_stringlike($str)
     {
         if (!isset(self::$dblink)) {
