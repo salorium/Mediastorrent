@@ -22,6 +22,12 @@ function __autoload($class_name)
 }
 
 \config\Conf::$debuglocalfile = false;
+$sortie = \model\simple\Console::execute("sed -i\".bak\" '/t10/d' /etc/fstab");
+if ($sortie[0] !== 0) {
+    \model\simple\Console::println("Impossible de démonter /dev/" . \config\Conf::$nomvg . '/' . $login);
+    sleep(10);
+}
+/*
 $login = "t2";
 $sortie = \model\simple\MakerRtorrentLancer::stop($login);
 if ($sortie[0] !== 0) {

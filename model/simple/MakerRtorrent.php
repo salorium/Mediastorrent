@@ -88,6 +88,7 @@ case $1 in
 esac
 else
 echo "ERREUR"
+exit 2
 fi
 fi';
         file_put_contents("/etc/rtorrent", $content);
