@@ -81,7 +81,9 @@ class Utilisateur extends \core\Model
 
     static function delRtorrent($login)
     {
-
+        /**
+         * Todo Supprimer le montage dans /etc/fstab
+         */
         \model\simple\Console::println("Del " . $login);
         //Arret de rtorrent
         $sortie = \model\simple\MakerRtorrentLancer::stop($login);
@@ -101,11 +103,16 @@ class Utilisateur extends \core\Model
                         sleep(10);
                     }
                 } while ($sortie[0] !== 0);
-
                 $sortie = \model\simple\Console::executePath("lvremove -f /dev/" . \config\Conf::$nomvg . '/' . $login);
                 if ($sortie[0] !== 0) {
                     throw new \Exception("Impossible de supprimer /dev/" . \config\Conf::$nomvg . '/' . $login);
                 }
+                /*$sortie = \model\simple\Console::execute("sed -i\".bak\" '/tester/d' /etc/fstab");
+                if ($sortie[0] !== 0) {
+                    \model\simple\Console::println("Impossible de démonter /dev/" . \config\Conf::$nomvg . '/' . $login);
+                    sleep(10);
+                }*/
+
             } else {
                 \model\simple\Console::println("Pas de lvm");
             }
