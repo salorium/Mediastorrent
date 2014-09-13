@@ -170,35 +170,6 @@ class Film extends Controller
         $this->set("film", $tmp);
     }
 
-    function getTime($idtorrentfilm)
-    {
-        $tf = \model\mysql\Torrentfilm::getTorrentFilmParId($idtorrentfilm);
-        $tf->mediainfo = json_decode($tf->mediainfo);
-        if (is_null($tf)) throw new \Exception("Id incorrect");
-
-        if ($tf->fini === "0") {
-
-            $cmds = array(
-                "d.get_name" /*5*/, "d.get_down_rate" /*13*/, "d.get_size_chunks" /*8*/, "d.get_completed_chunks" /*7*/, "d.get_chunk_size" /*14*/
-            );
-
-            $req = new \model\xmlrpc\rXMLRPCRequest($tf->scgi);
-            foreach ($cmds as $v) {
-                $req->addCommand(new \model\xmlrpc\rXMLRPCCommand($tf->scgi, $v, $tf->hash));
-            }
-
-
-            if ($req->success()) {
-                $tf->nomtorrent = $req->val[0];
-                $get_completed_chunks = $req->val[3];
-                $get_size_chunks = $req->val[2];
-                $get_chunk_size = $req->val[4];
-                $tf->timerestant = ($req->val[1] > 0 ? floor(($get_size_chunks - $get_completed_chunks) * $get_chunk_size / $req->val[1]) : -1); //Eta 9 (Temps restant en seconde)
-
-            }
-        }
-        $this->set("file", $tf);
-    }
 
     function getFile($id)
     {
