@@ -116,6 +116,7 @@ class Dispatcher
             $role = Conf::$rolenumero[$u->role];
             $roletext = $u->role;
             \core\Memcached::value($_COOKIE["keyconnexion"], "user", $u, 60 * 5);
+            setcookie("keyconnexion", $u->keyconnexion, strtotime('+1 days'), "/");
         }
 
         Conf::$user["user"] = $u;

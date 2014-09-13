@@ -82,10 +82,10 @@ Torrent1.view = {
         init: function (id) {
             if (!Torrent1.model.seedbox.changed) {
                 Torrent1.view.loaders.showListeTorrent();
-                seedbox = Torrent1.model.seedbox.seedboxs;
-                res = "";
-                for (i = seedbox.length - 1; i > -1; i--) {
-                    v = seedbox[i];
+                var seedbox = Torrent1.model.seedbox.seedboxs;
+                var res = "";
+                for (var i = seedbox.length - 1; i > -1; i--) {
+                    var v = seedbox[i];
                     if (i != id)
                         res = '<li><a onclick="Torrent1.controller.seedbox.reload(' + i + ')">' + v.nom + '</a></li>' + res;
                 }
@@ -179,9 +179,9 @@ Torrent1.view = {
             }
         },
         analiseState: function (state, done) {
-            status = "";
-            icon = null;
-            dStatus = Torrent1.model.listTorrent.dStatus;
+            var status = "";
+            var icon = null;
+            var dStatus = Torrent1.model.listTorrent.dStatus;
             if (state & dStatus.checking) {
                 icon = {name: "checking", color: "orange", colorname: "checking"};
                 status = "Vérification";
@@ -219,6 +219,7 @@ Torrent1.view = {
             return [status, icon];
         },
         liste: function (torrent, cpt) {
+            var state;
             if (torrent == null)
                 torrent = [];
             if (torrent.length == 0) {
@@ -307,7 +308,7 @@ Torrent1.view = {
             $("#torrentdetailsfiles").empty();
             if (Torrent1.model.filesTorrent.liste.length > 0) {
                 //Parcour dossier
-                list = Torrent1.model.filesTorrent.liste[Torrent1.model.filesTorrent.hauteurArbre];
+                var list = Torrent1.model.filesTorrent.liste[Torrent1.model.filesTorrent.hauteurArbre];
                 if (!isNaN(list.back)) {
                     var $tr = $('<tr style="cursor: pointer;" ><td><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dossier.svg">..</td><td></td><td></td><td></td><td></td></tr>');
 
@@ -344,10 +345,10 @@ Torrent1.view = {
                                     Torrent1.controller.filesTorrent.resetSelectionne();
                                     $(e.currentTarget).parent().children().removeClass("active");
                                     if (Torrent1.model.filesTorrent.selectionneid > -1) {
-                                        max = Base.model.converter.iv($(e.currentTarget).attr("data-cpt"));
-                                        i1 = Base.model.converter.iv(Torrent1.model.filesTorrent.selectionneid);
+                                        var max = Base.model.converter.iv($(e.currentTarget).attr("data-cpt"));
+                                        var i1 = Base.model.converter.iv(Torrent1.model.filesTorrent.selectionneid);
                                         if (i1 < max) {
-                                            for (i = i1; i < max; i++) {
+                                            for (var i = i1; i < max; i++) {
                                                 if ($("#file" + i).attr("data-dossier") === "1") {
                                                     Torrent1.model.filesTorrent.selectionneno = Torrent1.model.filesTorrent.selectionneno.concat(Torrent1.model.filesTorrent.liste[Torrent1.model.filesTorrent.hauteurArbre].dossier[$("#file" + i).attr("data-dossierk")][6]);
                                                 } else {
@@ -377,7 +378,7 @@ Torrent1.view = {
                                     $(e.currentTarget).addClass("active");
                                     //  mon action
                                 } else if (e.ctrlKey) {//Clique gauche avec CTRL
-                                    id = $.inArray($(e.currentTarget).attr("data-cpt"), Torrent1.model.filesTorrent.selectionne);
+                                    var id = $.inArray($(e.currentTarget).attr("data-cpt"), Torrent1.model.filesTorrent.selectionne);
                                     if (id > -1) {
                                         $(e.currentTarget).removeClass("active");
                                         Torrent1.model.filesTorrent.selectionne.splice(id, 1);
@@ -475,10 +476,10 @@ Torrent1.view = {
                                     Torrent1.controller.filesTorrent.resetSelectionne();
                                     $(e.currentTarget).parent().children().removeClass("active");
                                     if (Torrent1.model.filesTorrent.selectionneid > -1) {
-                                        max = Base.model.converter.iv($(e.currentTarget).attr("data-cpt"));
-                                        i1 = Base.model.converter.iv(Torrent1.model.filesTorrent.selectionneid);
+                                        var max = Base.model.converter.iv($(e.currentTarget).attr("data-cpt"));
+                                        var i1 = Base.model.converter.iv(Torrent1.model.filesTorrent.selectionneid);
                                         if (i1 < max) {
-                                            for (i = i1; i < max; i++) {
+                                            for (var i = i1; i < max; i++) {
                                                 if ($("#file" + i).attr("data-dossier") === "1") {
                                                     Torrent1.model.filesTorrent.selectionneno = Torrent1.model.filesTorrent.selectionneno.concat(Torrent1.model.filesTorrent.liste[Torrent1.model.filesTorrent.hauteurArbre].dossier[$("#file" + i).attr("data-dossierk")][6]);
                                                 } else {
@@ -508,7 +509,7 @@ Torrent1.view = {
                                     $(e.currentTarget).addClass("active");
                                     //  mon action
                                 } else if (e.ctrlKey) {//Clique gauche avec CTRL
-                                    id = $.inArray($(e.currentTarget).attr("data-cpt"), Torrent1.model.filesTorrent.selectionne);
+                                    var id = $.inArray($(e.currentTarget).attr("data-cpt"), Torrent1.model.filesTorrent.selectionne);
                                     if (id > -1) {
                                         $(e.currentTarget).removeClass("active");
                                         Torrent1.model.filesTorrent.selectionne.splice(id, 1);
@@ -599,7 +600,7 @@ Torrent1.view = {
     trackersTorrent: {
         edition: {
             generate: function () {
-                trackerlist = "";
+                var trackerlist = "";
                 console.log(Torrent1.model.trackersTorrent.liste);
                 $.each(Torrent1.model.trackersTorrent.liste, function (k, v) {
                     console.log(v[1]);
@@ -666,8 +667,8 @@ Torrent1.view = {
             },
             afficheArbre: function () {
                 $("#folderaddTorrent").empty();
-                $table = $("<table><thead><tr><td>Nom</td><td>Taille</td></tr></thead></table>")
-                $tbody = $("<tbody></tbody>");
+                var $table = $("<table><thead><tr><td>Nom</td><td>Taille</td></tr></thead></table>")
+                var $tbody = $("<tbody></tbody>");
                 $table.css("width", "100%");
                 $table.append($tbody);
                 $("#folderaddTorrent").append($table);
@@ -734,14 +735,14 @@ Torrent1.view = {
             },
             file: {
                 show: function (torrent, id) {
-                    $fieldset = $("<fieldset><legend>" + torrent.nom + "</legend></fieldset>");
+                    var $fieldset = $("<fieldset><legend>" + torrent.nom + "</legend></fieldset>");
                     $fieldset.append('<input type="hidden" name="torrent' + id + 'hash" value="' + torrent.hash + '">');
                     if (torrent.type == "movie") {
                         //Type sois FILM ou Série
-                        $inputfilm = $('<input type="radio" name="torrent' + id + 'type" value="film" id="torrent' + id + 'typefilm">');
+                        var $inputfilm = $('<input type="radio" name="torrent' + id + 'type" value="film" id="torrent' + id + 'typefilm">');
                         $fieldset.append($inputfilm);
                         $fieldset.append('<label for="torrent' + id + 'typefilm">Film</label>');
-                        $inputserie = $('<input type="radio" name="torrent' + id + 'type" value="serie" id="torrent' + id + 'typeserie">');
+                        var $inputserie = $('<input type="radio" name="torrent' + id + 'type" value="serie" id="torrent' + id + 'typeserie">');
                         $fieldset.append($inputserie);
                         $fieldset.append('<label for="torrent' + id + 'typeserie">Série</label>');
                         $inputfilm.click(function (e) {
@@ -770,8 +771,8 @@ Torrent1.view = {
                     show: function (files, id) {
                         $("#torrent" + id + "files").empty();
                         $("#torrent" + id + "files").append('<input type="hidden" name="torrent' + id + 'nbfiles" value="' + files.length + '">');
-                        $tablefile = $('<table><thead><tr><th><input onchange="Base.controller.checkerCheckbox(this);" id="torrent' + id + 'ajoutecheck" class="torrent' + id + 'ajoutecheck" type="checkbox"><label for="torrent' + id + 'ajoutecheck">Ajoute</label></th><th><input onchange="Base.controller.checkerCheckbox(this);" id="torrent' + id + 'partagecheck" class="torrent' + id + 'partagecheck" type="checkbox"><label for="torrent' + id + 'partagecheck">Partage</label></th><th>Fichier</th><th>Complément</th></tr></thead></table>');
-                        $tbodyfile = $("<tbody></tbody>");
+                        var $tablefile = $('<table><thead><tr><th><input onchange="Base.controller.checkerCheckbox(this);" id="torrent' + id + 'ajoutecheck" class="torrent' + id + 'ajoutecheck" type="checkbox"><label for="torrent' + id + 'ajoutecheck">Ajoute</label></th><th><input onchange="Base.controller.checkerCheckbox(this);" id="torrent' + id + 'partagecheck" class="torrent' + id + 'partagecheck" type="checkbox"><label for="torrent' + id + 'partagecheck">Partage</label></th><th>Fichier</th><th>Complément</th></tr></thead></table>');
+                        var $tbodyfile = $("<tbody></tbody>");
                         $.each(files, function (k, v) {
                             $tbodyfile.append('<tr><td><input type="checkbox" name="torrent' + id + 'ajoutecheckfile' + k + '" class="torrent' + id + 'ajoutecheck"></td><td><input type="checkbox" name="torrent' + id + 'partagecheckfile' + k + '" class="torrent' + id + 'partagecheck"></td><input type="hidden" name="torrent' + id + 'numfile' + k + '" value="' + v.numfile + '"><td>' + Base.model.path.basename(v.nom) + '</td><td><input type="text" placeholder="Truefrench.Unrated..." name="torrent' + id + 'filecomplement' + k + '"></td></tr>');
                         });
@@ -784,8 +785,8 @@ Torrent1.view = {
                     recherche: {
                         manuel: function (id) {
                             $("#torrent" + id + "details").empty();
-                            $table = $('<table></table>');
-                            $tbody = $('<tbody></tbody>');
+                            var $table = $('<table></table>');
+                            var $tbody = $('<tbody></tbody>');
                             $tbody.append('<tr><td><label for="torrent' + id + 'detailstitre">Titre :</label></td><td><input type="text" name="torrent' + id + 'detailstitre" id="torrent' + id + 'detailstitre"></td></tr>');
                             $tbody.append('<tr><td><label for="torrent' + id + 'detailstitreoriginal">Titre original :</label></td><td><input type="text" name="torrent' + id + 'detailstitreoriginal" id="torrent' + id + 'detailstitreoriginal"></td></tr>');
                             $tbody.append('<tr><td><label for="torrent' + id + 'detailsgenre">Genre (séparer par ",") :</label></td><td><input type="text" name="torrent' + id + 'detailsgenre" id="torrent' + id + 'detailsgenre"></td></tr>');
@@ -814,15 +815,15 @@ Torrent1.view = {
                              });*/
                         },
                         recherche: function (id) {
-                            $auto = $('<input type="radio" checked="checked" name="torrent' + id + 'recherche" value="auto" id="torrent' + id + 'rechercheauto">');
+                            var $auto = $('<input type="radio" checked="checked" name="torrent' + id + 'recherche" value="auto" id="torrent' + id + 'rechercheauto">');
                             $("#torrent" + id + "files").append($auto);
                             $("#torrent" + id + "files").append('<label for="torrent' + id + 'rechercheauto">Recherche</label>');
-                            $manuel = $('<input type="radio" name="torrent' + id + 'recherche" value="manuel" id="torrent' + id + 'recherchemanuel">');
+                            var $manuel = $('<input type="radio" name="torrent' + id + 'recherche" value="manuel" id="torrent' + id + 'recherchemanuel">');
                             $("#torrent" + id + "files").append($manuel);
                             $("#torrent" + id + "files").append('<label for="torrent' + id + 'recherchemanuel">Manuel</label>');
-                            $ul = $('<ul style="list-style: none; width: 50%;"></ul>');
-                            $li = $('<li></li>');
-                            $input = $('<input type="text" id="torrent' + id + 'suggestrecherche" name="torrent' + id + 'suggestrecherche">');
+                            var $ul = $('<ul style="list-style: none; width: 50%;"></ul>');
+                            var $li = $('<li></li>');
+                            var $input = $('<input type="text" id="torrent' + id + 'suggestrecherche" name="torrent' + id + 'suggestrecherche">');
                             $input[0].onupdate = $input[0].onkeyup = function () {
                                 if ($auto.is(':checked')) {
                                     if ($.trim($input[0].value).length > 1) {
@@ -860,14 +861,14 @@ Torrent1.view = {
                             $('#torrent' + id + 'suggest').show();
                         },
                         result: function (id, film, color) {
-                            $fieldset = $('<fieldset style="border-color: ' + color + ';"><legend>' + (film.titre ? film.titre : film.originaltitre) + '</legend></fieldset>');
+                            var $fieldset = $('<fieldset style="border-color: ' + color + ';"><legend>' + (film.titre ? film.titre : film.originaltitre) + '</legend></fieldset>');
                             $fieldset.click(function (e) {
                                 console.log(film.code);
                                 $('#torrent' + id + 'suggest').empty();
                                 $('#torrent' + id + 'suggest').hide();
                                 Torrent1.controller.addTorrent.files.file.movie.allrecherche(id, film.code, (film.type ? true : false));
                             });
-                            $table = $('<table class="noneventrowbg"></table>');
+                            var $table = $('<table class="noneventrowbg"></table>');
                             if (film.image) {
                                 $table.append('<tr><td rowspan="4" ><img src="' + Base.controller.makeUrlBase() + "proxy/imageSetWidth/" + Base.model.converter.paramUrl(film.image) + '/100.jpg"></td><td></td></tr>');
 
@@ -907,8 +908,8 @@ Torrent1.view = {
                                     Base.view.image.input("torrent" + id + "details", "Backdrop", "torrent" + id + "detailsbackdrop", "", true, 400);
                                 }
                             }
-                            $table = $('<table></table>');
-                            $tbody = $('<tbody></tbody>');
+                            var $table = $('<table></table>');
+                            var $tbody = $('<tbody></tbody>');
                             $.each(film, function (k, v) {
                                 if (/^[A-Z]+/.test(k))
                                     $tbody.append('<tr><td>' + k + '</td><td>' + v + '</td></tr>');
@@ -959,8 +960,8 @@ Torrent1.view = {
         },
         afficheArbre: function () {
             $("#folder").empty();
-            $table = $("<table><thead><tr><td>Nom</td><td>Taille</td></tr></thead></table>")
-            $tbody = $("<tbody></tbody>");
+            var $table = $("<table><thead><tr><td>Nom</td><td>Taille</td></tr></thead></table>")
+            var $tbody = $("<tbody></tbody>");
             $table.css("width", "100%");
             $table.append($tbody);
             $("#folder").append($table);
