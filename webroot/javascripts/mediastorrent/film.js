@@ -423,7 +423,7 @@ var Film = {
     },
     test: function (element, host, id) {
         $.ajax({
-            url: Base.controller.makeUrlBase(host) + 'film/getTime/' + id + ".json",
+            url: Base.controller.makeUrlBase(host) + 'film/getTime/' + Base.model.utilisateur.keyconnexion + "/" + id + ".json",
             dataType: "json",
             type: "GET",
             //data: {hash: listafaire},
