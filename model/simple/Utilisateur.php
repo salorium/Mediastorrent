@@ -47,6 +47,7 @@ class Utilisateur extends \core\Model
             $role = \config\Conf::$rolenumero[$u->role];
             $roletext = $u->role;
             \core\Memcached::value($u->keyconnexion, "user", $u, 60 * 5);
+            setcookie("keyconnexion", $u->keyconnexion, strtotime('+1 days'), "/");
         }
 
         \config\Conf::$user["user"] = $u;
@@ -76,7 +77,8 @@ class Utilisateur extends \core\Model
                 }
             }
             \config\Conf::$user["user"] = $u;
-            if (!is_bool($u)) {
+            if ($u && !is_null($u)) {
+                setcookie("keyconnexion", $u->keyconnexion, strtotime('+1 days'), "/");
                 $portscgi = \model\mysql\Rtorrent::getPortscgiDeUtilisateur($u->login);
                 if (!$portscgi) {
                     throw new \Exception("Aucun ports scgi sur " . HOST);

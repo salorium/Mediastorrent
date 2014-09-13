@@ -186,6 +186,7 @@ Torrent1.controller = {
                         }, 100);
                         }
                     }
+                    //response = null;*/
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     Torrent1.view.loaders.hideListeTorrent();
@@ -340,13 +341,13 @@ Torrent1.controller = {
             if (Torrent1.model.listTorrent.cpt + Torrent1.model.listTorrent.nbtorrents > liste.length)
                 max = liste.length;
             //Affichage d'une partie de la liste
-            for (i = Torrent1.model.listTorrent.cpt; i < max; i++) {
+            for (var i = Torrent1.model.listTorrent.cpt; i < max; i++) {
                 Torrent1.model.container.listtorrent.append(Torrent1.view.listTorrent.liste(liste[i], i));
             }
             //Ajout de la roulette sur la liste des torrents
             $('fieldset.torrent').bind('mousewheel DOMMouseScroll', function (e) {
                 e.preventDefault();
-                delta = e.originalEvent.detail;
+                var delta = e.originalEvent.detail;
                 if (e.originalEvent.wheelDelta)
                     delta = e.originalEvent.wheelDelta * -1;
                 if (delta < 0) {
@@ -375,7 +376,7 @@ Torrent1.controller = {
                             $(".torrent").removeClass("torrentselect");
                             if (Torrent1.model.listTorrent.selectionneid > -1) {
                                 max = Base.model.converter.iv($(e.currentTarget).attr("idcpt"));
-                                i1 = Base.model.converter.iv(Torrent1.model.listTorrent.selectionneid);
+                                var i1 = Base.model.converter.iv(Torrent1.model.listTorrent.selectionneid);
                                 if (i1 < max) {
                                     for (i = i1; i < max; i++) {
 
@@ -401,7 +402,7 @@ Torrent1.controller = {
                             $(e.currentTarget).addClass("torrentselect");
                             //  mon action
                         } else if (e.ctrlKey) {
-                            id = $.inArray($(e.currentTarget).attr("id"), Torrent1.model.listTorrent.selectionne)
+                            var id = $.inArray($(e.currentTarget).attr("id"), Torrent1.model.listTorrent.selectionne)
                             if (id > -1) {
                                 $(e.currentTarget).removeClass("torrentselect");
                                 Torrent1.model.listTorrent.selectionne.splice(id, 1);
@@ -983,7 +984,7 @@ Torrent1.controller = {
             var formData = new FormData($("#addtorrent")[0]);
             var nbtorrent = $('input[name="nbtorrents"]').val();
             if (nbtorrent) {
-                for (id = 0; id < nbtorrent; id++) {
+                for (var id = 0; id < nbtorrent; id++) {
                     if ($('.torrent' + id + 'ajoutecheck').is(":checked")) {
                         formData.append("torrent" + id + "addbibli", "on");
                     }
