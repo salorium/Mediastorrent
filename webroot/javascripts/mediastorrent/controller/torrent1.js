@@ -1163,6 +1163,58 @@ Torrent1.controller = {
             },
             file: {
                 movie: {
+                    showPanel: function (id, numfile) {
+                        Base.view.boxmodal.make("Infos films", Torrent1.view.addTorrent.files.file.movie.recherche.recherche());
+                        console.log($("#modalcontenu").height());
+                        console.log();
+
+                        $("#details").height($("#modalc").height() - $("#modaltitre").height() - $("#modalcontenu").height())
+                    },
+                    recherche: function () {
+                        var recherche = $("#suggestrecherche").val();
+                        var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'film/recherche/' + Base.model.utilisateur.keyconnexion;
+
+                        $.ajax({
+                            url: url + ".json",
+                            dataType: "json",
+                            type: "POST",
+                            data: {recherche: recherche},
+
+                            //contentType: "application/json",
+                            success: function (response, textStatus, jqXHR) {
+                                //console.log(response);
+                                Torrent1.view.addTorrent.files.file.movie.recherche.results(response);
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                Base.view.noty.generate("error", "Impossible de se connecter à " + Torrent1.model.nomseedbox);
+                            }
+                        });
+                    },
+                    allrecherche: function (code, type) {
+                        var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'film/getInfosFilm/' + code + "/";
+                        if (type) {
+                            url += "all";
+                        }
+                        url += "/" + Base.model.utilisateur.keyconnexion;
+                        $.ajax({
+                            url: url + ".json",
+                            dataType: "json",
+                            type: "GET",
+
+                            //contentType: "application/json",
+                            success: function (response, textStatus, jqXHR) {
+                                //console.log(response);
+                                Torrent1.view.addTorrent.files.file.movie.recherche.allrecherche(response.film);
+                                //Torrent1.view.addTorrent.files.file.movie.recherche.results(id,response.film);
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                Base.view.noty.generate("error", "Impossible de se connecter à " + Torrent1.model.nomseedbox);
+                            }
+                        });
+                    }
+
+                },
+                serie: {
                     recherche: function (id) {
                         var recherche = $("#torrent" + id + "suggestrecherche").val();
                         var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'film/recherche/' + Base.model.utilisateur.keyconnexion;
@@ -1184,11 +1236,10 @@ Torrent1.controller = {
                         });
                     },
                     allrecherche: function (id, code, type) {
-                        var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'film/getInfosFilm/' + code + "/";
+                        var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'film/getInfosFilm/' + code + "/" + Base.model.utilisateur.keyconnexion;
                         if (type) {
-                            url += "all";
+                            url += "/all";
                         }
-                        url += "/" + Base.model.utilisateur.keyconnexion;
                         $.ajax({
                             url: url + ".json",
                             dataType: "json",
@@ -1205,7 +1256,6 @@ Torrent1.controller = {
                             }
                         });
                     }
-
                 }
             }
         }

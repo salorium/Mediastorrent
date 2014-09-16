@@ -118,7 +118,7 @@ class Film extends \core\Controller
         }
     }
 
-    function getInfosFilm($code, $all = "", $keyconnexion = null)
+    function getInfosFilm($code, $keyconnexion, $all = "")
     {
         \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");

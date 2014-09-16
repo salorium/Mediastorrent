@@ -20,15 +20,18 @@ Base.view = {
             Base.model.boxmodal.modal.remove();
         },
         make: function (titre, contenu) {
-            $loader = $('<div style="background-color: rgba(0,0,0,0.2); position: absolute; top: 0px;left: 0px; bottom: 0px;right: 0px;">' +
-                '<div style="width: 50%;height: 50%;position: relative;margin: auto;" class="addTorrent">' +
-                '<div class="addTorrentTitle">' +
-                '<a>' + titre.replace(/([A-Z]+)/g, '<span class="secondary">$1</span>') + '</a><a class="close" onclick="Base.view.boxmodal.del();">&times;</a></div>' +
-                '<div class="addTorrentContenu">' + contenu +
-                '</div>' +
-                '</div>');
+            var $a = $('<a class="close" onclick=";">&times;</a>');
+            $a.click(
+                function () {
+                    Base.view.boxmodal.del()
+                });
+            var loadertitre = $('<div id="modaltitre" class="addTorrentTitle"><a>' + titre.replace(/([A-Z]+)/g, '<span class="secondary">$1</span>') + '</a></div>').append($a);
+            var cloader = $('<div id="modalc" style="width: 80%;height: 90%;position: relative;margin: auto;" class="addTorrent"></div>').append(loadertitre);
+            $loader = $('<div style="background-color: rgba(0,0,0,0.2); position: absolute; top: 0px;left: 0px; bottom: 0px;right: 0px;"></div>').append(cloader);
+            cloader.append($('<div id="modalcontenu" class="addTorrentContenu"></div>').append(contenu));
             $("body").append($loader);
             Base.model.boxmodal.modal = $loader;
+
             //return Base.model.boxmodal.cpt - 1;
         }
 

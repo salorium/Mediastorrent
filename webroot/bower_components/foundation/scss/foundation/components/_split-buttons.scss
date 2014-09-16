@@ -18,8 +18,8 @@ $include-html-button-classes: $include-html-classes !default;
 
 // We use these to control different shared styles for Split Buttons
 $split-button-function-factor: 10% !default;
-$split-button-pip-color: #fff !default;
-$split-button-pip-color-alt: #333 !default;
+$split-button-pip-color: $white !default;
+$split-button-pip-color-alt: $oil !default;
 $split-button-active-bg-tint: rgba(0, 0, 0, 0.1) !default;
 
 // We use these to control tiny split buttons
@@ -79,7 +79,7 @@ $base-style: true) {
       border-#{$default-float}: solid 1px;
 
       // Building the triangle pip indicator
-      &:before {
+      &:after {
         position: absolute;
         content: "";
         width: 0;
@@ -110,7 +110,7 @@ $base-style: true) {
 
     span {
       width: $split-button-span-width-tny;
-      &:before {
+      &:after {
         border-top-style: solid;
         border-width: $split-button-pip-size-tny;
         top: 48%;
@@ -125,7 +125,7 @@ $base-style: true) {
 
     span {
       width: $split-button-span-width-sml;
-      &:before {
+      &:after {
         border-top-style: solid;
         border-width: $split-button-pip-size-sml;
         top: 48%;
@@ -140,7 +140,7 @@ $base-style: true) {
 
     span {
       width: $split-button-span-width-med;
-      &:before {
+      &:after {
         border-top-style: solid;
         border-width: $split-button-pip-size-med;
         top: 48%;
@@ -155,7 +155,7 @@ $base-style: true) {
 
     span {
       width: $split-button-span-width-lrg;
-      &:before {
+      &:after {
         border-top-style: solid;
         border-width: $split-button-pip-size-lrg;
         top: 48%;
@@ -166,7 +166,7 @@ $base-style: true) {
 
   // Control the color of the triangle pip
   @if $pip-color {
-    span:before {
+    span:after {
       border-color: $pip-color transparent transparent transparent;
     }
   }

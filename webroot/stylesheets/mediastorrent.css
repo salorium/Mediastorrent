@@ -1,57 +1,102 @@
 /*
-Syntax error: Undefined variable: "$small".
-        on line 6 of D:/Mediastorrent/webroot/scss/mediastorrent.scss
+Error: Invalid CSS after "...dules, $name) !": expected identifier, was " global;"
+        on line 13 of D:/Mediastorrent/webroot/bower_components/foundation/scss/foundation/_functions.scss
+        from line 53 of D:/Mediastorrent/webroot/scss/_settings.scss
+        from line 1 of D:/Mediastorrent/webroot/scss/mediastorrent.scss
 
-1: D:/Mediastorrent/webroot/scss/mediastorrent.scss
+8: // IMPORT ONCE
+9: // We use this to prevent styles from being loaded multiple times for compenents that rely on other components. 
+10: $modules: () !default;
+11: @mixin exports($name) {
+12:   @if(not index($modules, $name)) {
+13:     $modules: append($modules, $name) ! global;
+14:     @content;
+15:   }
+16: }
+17: 
+18: //
 
 Backtrace:
-D:/Mediastorrent/webroot/scss/mediastorrent.scss:6
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/script/variable.rb:49:in `_perform'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/script/node.rb:40:in `perform'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:398:in `block in run_interp_no_strip'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:396:in `map'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:396:in `run_interp_no_strip'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:406:in `run_interp'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:360:in `visit_media'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/tree/visitors/base.rb:37:in `visit'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:100:in `visit'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/tree/visitors/base.rb:53:in `block in visit_children'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/tree/visitors/base.rb:53:in `map'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/tree/visitors/base.rb:53:in `visit_children'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:109:in `block in visit_children'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:121:in `with_environment'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:108:in `visit_children'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/tree/visitors/base.rb:37:in `block in visit'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:128:in `visit_root'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/tree/visitors/base.rb:37:in `visit'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:100:in `visit'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:7:in `visit'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/tree/root_node.rb:20:in `render'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/engine.rb:315:in `_render'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.19/lib/sass/engine.rb:262:in `render'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.5/lib/compass/compiler.rb:139:in `block (2 levels) in compile'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.5/lib/compass/compiler.rb:126:in `timed'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.5/lib/compass/compiler.rb:138:in `block in compile'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.5/lib/compass/logger.rb:45:in `red'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.5/lib/compass/compiler.rb:137:in `compile'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.5/lib/compass/compiler.rb:118:in `compile_if_required'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.5/lib/compass/compiler.rb:103:in `block (2 levels) in run'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.5/lib/compass/compiler.rb:101:in `each'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.5/lib/compass/compiler.rb:101:in `block in run'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.5/lib/compass/compiler.rb:126:in `timed'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.5/lib/compass/compiler.rb:100:in `run'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.5/lib/compass/commands/update_project.rb:45:in `perform'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.5/lib/compass/commands/base.rb:18:in `execute'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.5/lib/compass/commands/project_base.rb:19:in `execute'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.5/lib/compass/exec/sub_command_ui.rb:43:in `perform!'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.5/lib/compass/exec/sub_command_ui.rb:15:in `run!'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.5/bin/compass:30:in `block in <top (required)>'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.5/bin/compass:44:in `call'
-C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.5/bin/compass:44:in `<top (required)>'
+D:/Mediastorrent/webroot/bower_components/foundation/scss/foundation/_functions.scss:13
+D:/Mediastorrent/webroot/scss/_settings.scss:53
+D:/Mediastorrent/webroot/scss/mediastorrent.scss:1
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/scss/parser.rb:1165:in `expected'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/scss/parser.rb:1099:in `expected'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/scss/parser.rb:1094:in `tok!'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/scss/parser.rb:609:in `variable'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/scss/parser.rb:661:in `block_child'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/scss/parser.rb:650:in `block_contents'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/scss/parser.rb:642:in `block'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/scss/parser.rb:316:in `if_directive'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/scss/parser.rb:219:in `special_directive'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/scss/parser.rb:194:in `directive'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/scss/parser.rb:661:in `block_child'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/scss/parser.rb:650:in `block_contents'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/scss/parser.rb:642:in `block'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/scss/parser.rb:231:in `mixin_directive'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/scss/parser.rb:219:in `special_directive'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/scss/parser.rb:194:in `directive'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/scss/parser.rb:660:in `block_child'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/scss/parser.rb:653:in `block_contents'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/scss/parser.rb:117:in `stylesheet'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/scss/parser.rb:42:in `parse'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/engine.rb:393:in `_to_tree'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/engine.rb:299:in `to_tree'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/perform.rb:313:in `block in visit_import'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/stack.rb:88:in `block in with_import'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/stack.rb:115:in `with_frame'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/stack.rb:88:in `with_import'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/perform.rb:312:in `visit_import'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/stack.rb:79:in `block in with_base'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/stack.rb:115:in `with_frame'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/stack.rb:79:in `with_base'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/perform.rb:158:in `visit'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/perform.rb:315:in `block (2 levels) in visit_import'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/perform.rb:315:in `map'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/perform.rb:315:in `block in visit_import'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/stack.rb:88:in `block in with_import'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/stack.rb:115:in `with_frame'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/stack.rb:88:in `with_import'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/perform.rb:312:in `visit_import'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/stack.rb:79:in `block in with_base'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/stack.rb:115:in `with_frame'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/stack.rb:79:in `with_base'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/perform.rb:158:in `visit'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/base.rb:52:in `map'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/perform.rb:167:in `block in visit_children'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/perform.rb:166:in `visit_children'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/perform.rb:186:in `visit_root'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/perform.rb:157:in `visit'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/visitors/perform.rb:8:in `visit'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/root_node.rb:36:in `css_tree'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/tree/root_node.rb:20:in `render'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/engine.rb:268:in `render'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/plugin/compiler.rb:491:in `update_stylesheet'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/plugin/compiler.rb:209:in `each'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.4.4/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-1.0.1/lib/compass/sass_compiler.rb:40:in `compile!'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-1.0.1/lib/compass/commands/update_project.rb:49:in `perform'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-1.0.1/lib/compass/commands/base.rb:18:in `execute'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-1.0.1/lib/compass/commands/project_base.rb:19:in `execute'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-1.0.1/lib/compass/exec/sub_command_ui.rb:43:in `perform!'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-1.0.1/lib/compass/exec/sub_command_ui.rb:15:in `run!'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-1.0.1/bin/compass:30:in `block in <top (required)>'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-1.0.1/bin/compass:44:in `call'
+C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-1.0.1/bin/compass:44:in `<top (required)>'
 C:/Ruby193/bin/compass:23:in `load'
 C:/Ruby193/bin/compass:23:in `<main>'
 */
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Syntax error: Undefined variable: \"$small\".\A         on line 6 of D:/Mediastorrent/webroot/scss/mediastorrent.scss\A \A 1: D:/Mediastorrent/webroot/scss/mediastorrent.scss"; }
+  content: "Error: Invalid CSS after \"...dules, $name) !\": expected identifier, was \" global;\"\A         on line 13 of D:/Mediastorrent/webroot/bower_components/foundation/scss/foundation/_functions.scss\A         from line 53 of D:/Mediastorrent/webroot/scss/_settings.scss\A         from line 1 of D:/Mediastorrent/webroot/scss/mediastorrent.scss\A \A 8: // IMPORT ONCE\A 9: // We use this to prevent styles from being loaded multiple times for compenents that rely on other components. \A 10: $modules: () !default;\A 11: @mixin exports($name) {\A 12:   @if(not index($modules, $name)) {\A 13:     $modules: append($modules, $name) ! global;\A 14:     @content;\A 15:   }\A 16: }\A 17: \A 18: //"; }
