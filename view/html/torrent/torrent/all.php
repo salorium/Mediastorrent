@@ -300,7 +300,7 @@
                                 </div>
                             </li>
                             <li>
-                                <div id="folderaddTorrent"
+                                <div onmouseleave="Torrent1.controller.addTorrent.folder.hide();" id="folderaddTorrent"
                                      style="overflow-y: auto;overflow-x: hidden;height: 500px; display: none;">
                                 </div>
                             </li>
