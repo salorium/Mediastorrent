@@ -1031,13 +1031,9 @@ Torrent1.controller = {
             },
             conversion: function (liste) {
                 if (liste != null) {
-
-                    //Torrent1.model.filesTorrent.liste = [];
-
                     var dossier = [];
                     for (var j = 0; j < liste.length; j++) {
                         var v = liste[j];
-                        //Torrent1.model.filesTorrent.liste[Torrent1.model.filesTorrent.liste.length]= v;
                         var paths = v[0].split("/");
                         var dire = "/";
                         var ancdire = "/";
@@ -1066,7 +1062,6 @@ Torrent1.controller = {
                                             Torrent1.model.addTorrent.folder.liste[parent] = {dossier: [], file: [], path: dire};
                                         where = Torrent1.model.addTorrent.folder.liste[parent].dossier.length;
                                         if (!dossier[(dire + paths[i])]) {
-//                                Torrent1.model.addTorrent.folder.liste[parent].dossier[where] = {nom :paths[i], parent:parent,childs:Torrent1.model.addTorrent.folder.liste.length,chunkscomplete : v[2],chunkstotal :v[3], size: v[4]};
                                             Torrent1.model.addTorrent.folder.liste[parent].dossier[where] = [paths[i], Torrent1.model.addTorrent.folder.liste.length, Base.model.converter.iv((v[2] === 'f' ? v[1] : 0)), [v[0]]];
                                         } else {
                                             where = dossier[(dire + paths[i])].ou;
@@ -1074,7 +1069,6 @@ Torrent1.controller = {
                                             Torrent1.model.addTorrent.folder.liste[parent].dossier[where][3][Torrent1.model.addTorrent.folder.liste[parent].dossier[where][3].length] = v[0];
                                         }
                                     } else {
-                                        //parent = dossier[(ancdire+paths[i-1])].parent;
                                         if (!Torrent1.model.addTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id])
                                             Torrent1.model.addTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id] = {dossier: [], file: [], back: dossier[(ancdire + paths[i - 1])].parent, path: dire};
                                         where = Torrent1.model.addTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id].dossier.length;
@@ -1083,9 +1077,6 @@ Torrent1.controller = {
                                             Torrent1.model.addTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where] = [paths[i], Torrent1.model.addTorrent.folder.liste.length, Base.model.converter.iv((v[2] === 'f' ? v[1] : 0)), [v[0]]];
                                         } else {
                                             where = dossier[(dire + paths[i])].ou;
-                                            // console.log((dire+paths[i]));
-                                            // console.log(where);
-                                            //  console.log(Torrent1.model.addTorrent.folder.liste[dossier[(ancdire+paths[i-1])].id].dossier[where]);
                                             Torrent1.model.addTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where][2] += Base.model.converter.iv((v[2] === 'f' ? v[1] : 0));
                                             Torrent1.model.addTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where][3][Torrent1.model.addTorrent.folder.liste[dossier[(ancdire + paths[i - 1])].id].dossier[where][3].length] = v[0];
                                         }
@@ -1110,14 +1101,7 @@ Torrent1.controller = {
                             }
 
                         }
-                        //Torrent1.model.filesTorrent.liste[ Torrent1.model.filesTorrent.liste.length-1] = vv;
-
-
                     }
-                    //Tri par fusion si nécessaire
-                    /*if (Torrent.model.sortcolonne > -1){
-                     Torrent.model.fileliste = Base.model.tableau.triFusion(Torrent.model.fileliste,Torrent.model.sortcolonne,Torrent.model.sorttype);
-                     }*/
 
 
                 }
@@ -1163,18 +1147,16 @@ Torrent1.controller = {
             },
             file: {
                 movie: {
-                    showPanel: function (id, numfile) {
-                        Base.view.boxmodal.make("Infos films", Torrent1.view.addTorrent.files.file.movie.recherche.recherche());
-                        console.log($("#modalcontenu").height());
-                        console.log();
-
+                    showPanel: function (id, numfile, nom) {
+                        Base.view.boxmodal.make("Infos films ", Torrent1.view.addTorrent.files.file.movie.recherche.recherche(nom, id, numfile));
                         $("#details").height($("#modalc").height() - $("#modaltitre").height() - $("#modalcontenu").height())
                     },
                     recherche: function () {
                         var recherche = $("#suggestrecherche").val();
                         var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'film/recherche/' + Base.model.utilisateur.keyconnexion;
-
-                        $.ajax({
+                        if (Torrent1.model.addTorrent.rechercheAjax)
+                            Torrent1.model.addTorrent.rechercheAjax.abort();
+                        Torrent1.model.addTorrent.rechercheAjax = $.ajax({
                             url: url + ".json",
                             dataType: "json",
                             type: "POST",
@@ -1186,16 +1168,19 @@ Torrent1.controller = {
                                 Torrent1.view.addTorrent.files.file.movie.recherche.results(response);
                             },
                             error: function (jqXHR, textStatus, errorThrown) {
-                                Base.view.noty.generate("error", "Impossible de se connecter à " + Torrent1.model.nomseedbox);
+                                if (textStatus !== "abort" && textStatus !== "parsererror") {
+                                    console.info(textStatus);
+
+                                    Base.view.noty.generate("error", "Impossible de se connecter à " + Torrent1.model.nomseedbox);
+                                }
                             }
                         });
                     },
                     allrecherche: function (code, type) {
-                        var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'film/getInfosFilm/' + code + "/";
+                        var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'film/getInfosFilm/' + code + "/" + Base.model.utilisateur.keyconnexion;
                         if (type) {
-                            url += "all";
+                            url += "/all";
                         }
-                        url += "/" + Base.model.utilisateur.keyconnexion;
                         $.ajax({
                             url: url + ".json",
                             dataType: "json",

@@ -746,13 +746,7 @@ Torrent1.view = {
                         $fieldset.append($inputserie);
                         $fieldset.append('<label for="torrent' + id + 'typeserie">Série</label>');
                         $inputfilm.click(function (e) {
-                            //$("#torrent" + id + "details").empty();
                             Torrent1.view.addTorrent.files.file.movie.show(torrent, id);
-                            //var nom = torrent.nom.replace(/(\d{4}|FRENCH).+/gi, "");
-                            //nom = nom.replace(/\./gi, " ");
-                            /*$('#torrent' + id + 'suggestrecherche').val(nom);
-                             Torrent1.controller.addTorrent.files.file.movie.recherche(id);
-                             //Torrent.controller.addTorrent.rechercher(id);*/
                         });
 
                         $inputserie.click(function (e) {
@@ -806,49 +800,34 @@ Torrent1.view = {
                             var $a = $("<a></a>").append("Saisir");
                             $tr.append($('<td id="torrent' + id + 'file' + k + 'infosfilm"></td>').append($a));
                             $a.click(function () {
-                                Torrent1.controller.addTorrent.files.file.movie.showPanel(id, k);
+                                Torrent1.controller.addTorrent.files.file.movie.showPanel(id, k, Base.model.path.basename(v.nom));
                             });
                             $tbodyfile.append($tr);
                         });
                         $tablefile.append($tbodyfile);
                         $("#torrent" + id + "files").append($tablefile);
-                        /*Torrent.view.addTorrent.addRechercher(id);
-                         $("#torrent"+id+"files").append('<h1>Testtt</h1>');*/
                     },
                     recherche: {
                         manuel: function (id) {
-                            $("#torrent" + id + "details").empty();
+                            $("#details").empty();
                             var $table = $('<table></table>');
                             var $tbody = $('<tbody></tbody>');
-                            $tbody.append('<tr><td><label for="torrent' + id + 'detailstitre">Titre :</label></td><td><input type="text" name="torrent' + id + 'detailstitre" id="torrent' + id + 'detailstitre"></td></tr>');
-                            $tbody.append('<tr><td><label for="torrent' + id + 'detailstitreoriginal">Titre original :</label></td><td><input type="text" name="torrent' + id + 'detailstitreoriginal" id="torrent' + id + 'detailstitreoriginal"></td></tr>');
-                            $tbody.append('<tr><td><label for="torrent' + id + 'detailsgenre">Genre (séparer par ",") :</label></td><td><input type="text" name="torrent' + id + 'detailsgenre" id="torrent' + id + 'detailsgenre"></td></tr>');
-                            $tbody.append('<tr><td><label for="torrent' + id + 'detailsacteur">Acteur(s) (séparer par ",") :</label></td><td><input type="text" name="torrent' + id + 'detailsacteur" id="torrent' + id + 'detailsacteur"></td></tr>');
-                            $tbody.append('<tr><td><label for="torrent' + id + 'detailsrealisateur">Réalisateur(s) (séparer par ",") :</label></td><td><input type="text" name="torrent' + id + 'detailsrealisateur" id="torrent' + id + 'detailsrealisateur"></td></tr>');
-                            $tbody.append('<tr><td><label for="torrent' + id + 'detailsanneeprod">Année de production :</label></td><td><input type="text" name="torrent' + id + 'detailsanneeprod" id="torrent' + id + 'detailsanneeprod"></td></tr>');
-                            $tbody.append('<tr><td><label for="torrent' + id + 'detailssynopsis">Synopsis :</label></td><td><textarea rows="5" name="torrent' + id + 'detailssynopsis" id="torrent' + id + 'detailssynopsis"></textarea></td></tr>');
+                            $tbody.append('<tr><td><label for="titre">Titre :</label></td><td><input type="text" id="titre"></td></tr>');
+                            $tbody.append('<tr><td><label for="titreoriginal">Titre original :</label></td><td><input type="text"  id="titreoriginal"></td></tr>');
+                            $tbody.append('<tr><td><label for="genre">Genre (séparer par ",") :</label></td><td><input type="text"  id="genre"></td></tr>');
+                            $tbody.append('<tr><td><label for="acteur">Acteur(s) (séparer par ",") :</label></td><td><input type="text" id="acteur"></td></tr>');
+                            $tbody.append('<tr><td><label for="realisateur">Réalisateur(s) (séparer par ",") :</label></td><td><input type="text" id="realisateur"></td></tr>');
+                            $tbody.append('<tr><td><label for="anneeprod">Année de production :</label></td><td><input type="text" id="anneeprod"></td></tr>');
+                            $tbody.append('<tr><td><label for="synopsis">Synopsis :</label></td><td><textarea rows="5" id="synopsis"></textarea></td></tr>');
 
                             $table.append($tbody);
-                            $table.appendTo("#torrent" + id + "details");
-                            /*Base.view.image.input("Poster","torrent'+id+'detailsposter","torrent"+id+"details",300);
-                             Base.view.image.input("Backdrop","torrent'+id+'detailsbackdrop","torrent"+id+"details",400);*/
-
-                            Base.view.image.input("torrent" + id + "details", "Poster", "torrent" + id + "detailsposter", "", true, 300);
-                            Base.view.image.input("torrent" + id + "details", "Backdrop", "torrent" + id + "detailsbackdrop", "", true, 400);
-                            /*$back = $('<input class="large-2" type="text" name="torrent'+id+'detailsbackdrop" id="torrent'+id+'detailsbackdrop">');
-                             $("#torrent"+id+"details").append($('<div class="row"></div>').append($('<div class="large-12"></div>').append($poster)));
-                             $img1 = $('<img height="500px" src="'+Base.controller.makeUrlBase()+"proxy/imageSetHeight/non/500.jpg"+'">');
-                             $("#torrent"+id+"details").append($img);
-                             $poster.on("change paste keyup update input", function() {
-                             if ($.trim($poster.val()).length > 1){
-                             $img.attr("src",Base.controller.makeUrlBase()+"proxy/imageSetHeight/"+Base.model.converter.paramUrl($poster.val())+"/500.jpg");
-                             }else{
-                             $img.attr("src",Base.controller.makeUrlBase()+"proxy/imageSetHeight/non/500.jpg");
-                             }
-                             });*/
+                            $table.appendTo("#details");
+                            Base.view.image.input("details", "Poster", "detailsposter", "", true, 300);
+                            Base.view.image.input("details", "Backdrop", "detailsbackdrop", "", true, 400);
                         },
-                        recherche: function () {
+                        recherche: function (nom, id, numfile) {
                             var $bigcontenu = $("<center id=\"infosfilm\"></center>");
+                            $bigcontenu.append("<h5>" + nom + "</h5>");
                             var $auto = $('<input type="radio" checked="checked" name="torrentrecherche" value="auto" id="torrentrechercheauto">');
                             $bigcontenu.append($auto);
                             $bigcontenu.append('<label for="torrentrechercheauto">Recherche</label>');
@@ -863,29 +842,78 @@ Torrent1.view = {
                                     if ($.trim($input[0].value).length > 1) {
                                         Torrent1.controller.addTorrent.files.file.movie.recherche();
                                     } else {
-                                        $('#suggest').hide();
+                                        $("#details").empty();
                                     }
                                 }
                             }
                             $auto.click(function (e) {
-                                $("#torrentdetails").empty();
                                 $input[0].onupdate();
                             });
                             $manuel.click(function (e) {
-                                $('#suggest').empty();
-                                $('#suggest').hide();
                                 Torrent1.view.addTorrent.files.file.movie.recherche.manuel();
                             });
                             $li.append($input);
                             $ul.append($li);
-                            $ul.append('<li><div class="suggest" id="suggest" style="display: none;"></div></li>');
+                            //$ul.append('<li><div class="suggest" id="suggest" style="display: none;"></div></li>');
                             $bigcontenu.append($ul);
                             $bigcontenu.append('<div id="details" style="overflow: auto;"></div>');
+                            $button = $('<button id="ok" type="button" value="ajouter" class="button small secondary expand">Ok</button>');
+                            $button.click(function (e) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                switch ($("input:radio[name=torrentrecherche]:checked").val()) {
+                                    case "auto":
+                                        if ($("#typerecherche").val() != null) {
+                                            $('#torrent' + id + 'file' + numfile + 'infosfilm').empty();
+                                            switch ($("#typerecherche").val()) {
+                                                case "allo":
+                                                    $('#torrent' + id + 'file' + numfile + 'infosfilm').append('<input type="hidden" name="torrent' + id + 'file' + numfile + 'typerecherche" value="allo">');
+                                                    $('#torrent' + id + 'file' + numfile + 'infosfilm').append('<input type="hidden" name="torrent' + id + 'file' + numfile + 'poster" value="' + $("#detailsposter").val() + '">');
+                                                    $('#torrent' + id + 'file' + numfile + 'infosfilm').append('<input type="hidden" name="torrent' + id + 'file' + numfile + 'backdrop" value="' + $("#detailsbackdrop").val() + '">');
+                                                    break;
+                                                case "local":
+                                                    $('#torrent' + id + 'file' + numfile + 'infosfilm').append('<input type="hidden" name="torrent' + id + 'file' + numfile + 'typerecherche" value="local">');
+                                                    break;
+                                            }
+                                            $('#torrent' + id + 'file' + numfile + 'infosfilm').append('<input type="hidden" name="torrent' + id + 'file' + numfile + 'code" value="' + $("#code").val() + '">');
+                                            $('#torrent' + id + 'file' + numfile + 'infosfilm').append('<img src="' + Base.controller.makeUrlBase() + "proxy/imageSetHeight/" + Base.model.converter.paramUrl($("#detailsposter").val()) + "/75.jpg" + '">');
+                                            $('#torrent' + id + 'file' + numfile + 'infosfilm').append('<input type="hidden" name="torrent' + id + 'file' + numfile + 'recherche" value="auto">');
+                                            var $a = $("<a></a>").append("Modifier");
+                                            $a.click(function () {
+                                                Torrent1.controller.addTorrent.files.file.movie.showPanel(id, numfile, nom);
+                                            });
+                                            $('#torrent' + id + 'file' + numfile + 'infosfilm').append($a);
+                                            Base.view.boxmodal.del();
+                                        }
+                                        break;
+                                    case "manuel":
+                                        $('#torrent' + id + 'file' + numfile + 'infosfilm').empty();
+                                        $('#torrent' + id + 'file' + numfile + 'infosfilm').append('<input type="hidden" name="torrent' + id + 'file' + numfile + 'recherche" value="manuel">');
+                                        $('#torrent' + id + 'file' + numfile + 'infosfilm').append('<input type="hidden" name="torrent' + id + 'file' + numfile + 'poster" value="' + $("#detailsposter").val() + '">');
+                                        $('#torrent' + id + 'file' + numfile + 'infosfilm').append('<input type="hidden" name="torrent' + id + 'file' + numfile + 'backdrop" value="' + $("#detailsbackdrop").val() + '">');
+                                        $('#torrent' + id + 'file' + numfile + 'infosfilm').append('<input type="hidden" name="torrent' + id + 'file' + numfile + 'titre" value="' + $("#titre").val() + '">');
+                                        $('#torrent' + id + 'file' + numfile + 'infosfilm').append('<input type="hidden" name="torrent' + id + 'file' + numfile + 'titreoriginal" value="' + $("#titreoriginal").val() + '">');
+                                        $('#torrent' + id + 'file' + numfile + 'infosfilm').append('<input type="hidden" name="torrent' + id + 'file' + numfile + 'genre" value="' + $("#genre").val() + '">');
+                                        $('#torrent' + id + 'file' + numfile + 'infosfilm').append('<input type="hidden" name="torrent' + id + 'file' + numfile + 'acteur" value="' + $("#acteur").val() + '">');
+                                        $('#torrent' + id + 'file' + numfile + 'infosfilm').append('<input type="hidden" name="torrent' + id + 'file' + numfile + 'realisateur" value="' + $("#realisateur").val() + '">');
+                                        $('#torrent' + id + 'file' + numfile + 'infosfilm').append('<input type="hidden" name="torrent' + id + 'file' + numfile + 'anneeprod" value="' + $("#anneeprod").val() + '">');
+                                        $('#torrent' + id + 'file' + numfile + 'infosfilm').append('<input type="hidden" name="torrent' + id + 'file' + numfile + 'synopsis" value="' + $("#synopsis").val() + '">');
+                                        $('#torrent' + id + 'file' + numfile + 'infosfilm').append('<img src="' + Base.controller.makeUrlBase() + "proxy/imageSetHeight/" + Base.model.converter.paramUrl($("#detailsposter").val()) + "/75.jpg" + '">');
+                                        var $a = $("<a></a>").append("Modifier");
+                                        $a.click(function () {
+                                            Torrent1.controller.addTorrent.files.file.movie.showPanel(id, numfile, nom);
+                                        });
+                                        $('#torrent' + id + 'file' + numfile + 'infosfilm').append($a);
+                                        Base.view.boxmodal.del();
+
+                                        break;
+                                }
+                            });
+                            $bigcontenu.append($('<div class="small-2 small-centered columns"></div>').append($button));
                             return $bigcontenu;
 
                         },
                         results: function (films) {
-                            //$('#suggest').empty();
                             $("#details").empty();
                             $.each(films.localfilm, function (k, v) {
                                 Torrent1.view.addTorrent.files.file.movie.recherche.result(v, "red");
@@ -893,15 +921,12 @@ Torrent1.view = {
                             $.each(films.film, function (k, v) {
                                 Torrent1.view.addTorrent.files.file.movie.recherche.result(v, "yellow");
                             });
-
-                            //$('#suggest').show();
                         },
                         result: function (film, color) {
+                            var $div = $('<div class="columns large-7 large-centered"></div>');
                             var $fieldset = $('<fieldset style="border-color: ' + color + ';"><legend>' + (film.titre ? film.titre : film.originaltitre) + '</legend></fieldset>');
                             $fieldset.click(function (e) {
-                                console.log(film.code);
                                 $('#details').empty();
-                                //$('#suggest').hide();
                                 Torrent1.controller.addTorrent.files.file.movie.allrecherche(film.code, (film.type ? true : false));
                             });
                             var $table = $('<table class="noneventrowbg"></table>');
@@ -920,15 +945,18 @@ Torrent1.view = {
                             $table.append('<tr><td>' + (film.realisateur ? 'Par : ' + film.realisateur : "") + (film.anneeprod ? ' en ' + film.anneeprod : "") + '</td></tr>');
 
                             $fieldset.append($table);
-                            $('#details').append($fieldset);
+                            $('#details').append($div.append($fieldset));
                         },
                         allrecherche: function (film) {
                             $("#details").empty();
                             if (!film.type) {
+                                $("#details").append('<input type="hidden" id="typerecherche" value="local">');
+                                $("#details").append('<input type="hidden" id="detailsposter" value="' + film.imageposter + '">');
 
                                 Base.view.image.input("details", "Poster", "detailsposter", film.imageposter, false, 300);
                                 Base.view.image.input("details", "Backdrop", "detailsbackdrop", film.imagebackdrop, false, 400);
                             } else {
+                                $("#details").append('<input type="hidden" id="typerecherche" value="allo">');
                                 if (film.imageposter) {
                                     Base.view.image.chooser("details", "Poster", "detailsposter", film.imageposter, 300, 150);
 
@@ -942,6 +970,7 @@ Torrent1.view = {
                                     Base.view.image.input("details", "Backdrop", "detailsbackdrop", "", true, 400);
                                 }
                             }
+                            $("#details").append('<input type="hidden" id="code" value="' + film.code + '">');
                             var $table = $('<table></table>');
                             var $tbody = $('<tbody></tbody>');
                             $.each(film, function (k, v) {
@@ -960,8 +989,6 @@ Torrent1.view = {
                                     ' </td></tr>');
                             $table.append($tbody);
                             $table.appendTo("#details");
-                            //$("#torrent" + id + "details").append('<input type="hidden" name="torrent' + id + 'code" value="' + film.code + '">');
-
                         }
                     }
 

@@ -577,8 +577,9 @@ class Torrent extends Controller
 
     }
 
-    function send($keyconnexion = null)
+    function senda($keyconnexion = null)
     {
+        /*
         \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         $erreur = 1;
@@ -716,6 +717,159 @@ class Torrent extends Controller
         } else {
             $status = "Pas de fichier envoyer";
         }
+        */
+        $this->set(array(
+            //"torrent" => $torrents,
+            //"erreur" => $erreur,
+            //"status" => $status,
+
+            "post" => $_REQUEST,
+            //  "seedbox" => \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
+        ));
+    }
+
+
+    function send($keyconnexion = null)
+    {
+
+        \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
+        if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
+        $erreur = 1;
+        $torrents = null;
+        $clefunique = null;
+        $typemedias = null;
+        if (isset($_REQUEST["mediastorrent"])) {
+            $tmpclefunique = null;
+            for ($idtorrent = 0; $idtorrent < $_REQUEST["nbtorrents"]; $idtorrent++) {
+                if (isset($_REQUEST["torrent" . $idtorrent . "addbibli"])) {
+                    $typemedias[$_REQUEST["torrent" . $idtorrent . "hash"]] = $_REQUEST["torrent" . $idtorrent . "type"];
+                    switch ($_REQUEST["torrent" . $idtorrent . "type"]) {
+                        case 'film':
+                            $clef = \model\mysql\Torrentfilm::getClefUnique();
+                            $clefunique[$_REQUEST["torrent" . $idtorrent . "hash"]] = $clef;
+                            for ($idfile = 0; $idfile < $_REQUEST["torrent" . $idtorrent . "nbfiles"]; $idfile++) {
+                                if (isset($_REQUEST["torrent" . $idtorrent . "ajoutecheckfile" . $idfile]) && isset($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "recherche"])) {
+                                    if ($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "recherche"] === "manuel") {
+                                        //Manuel
+                                        $titre = trim($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "titre"]);
+                                        $otitre = trim($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "titreoriginal"]);
+                                        $synopsis = trim($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "synopsis"]);
+                                        $genre = explode(",", $_REQUEST["torrent" . $idtorrent . "file" . $idfile . "genre"]);
+                                        array_walk($genre, create_function('&$val', '$val = trim($val);'));
+                                        array_walk($genre, create_function('&$val', '$val = strtolower($val);'));
+                                        array_walk($genre, create_function('&$val', '$val = ucfirst($val);'));
+                                        $acteurs = explode(",", $_REQUEST["torrent" . $idtorrent . "file" . $idfile . "acteur"]);
+                                        array_walk($acteurs, create_function('&$val', '$val = trim($val);'));
+                                        array_walk($acteurs, create_function('&$val', '$val = strtolower($val);'));
+                                        array_walk($acteurs, create_function('&$val', '$val = ucwords($val);'));
+                                        $acteurs = implode(", ", $acteurs);
+                                        $realisateurs = explode(",", $_REQUEST["torrent" . $idtorrent . "file" . $idfile . "realisateur"]);
+                                        array_walk($realisateurs, create_function('&$val', '$val = trim($val);'));
+                                        array_walk($realisateurs, create_function('&$val', '$val = strtolower($val);'));
+                                        array_walk($realisateurs, create_function('&$val', '$val = ucwords($val);'));
+                                        $realisateurs = implode(", ", $realisateurs);
+                                        $anneeprod = trim($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "anneeprod"]);
+                                        $urlposter = trim($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "poster"]);
+                                        $urlbackdrop = trim($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "backdrop"]);
+                                        $infos["Titre"] = $titre;
+                                        $infos["Titre original"] = $otitre;
+                                        $infos["Genre"] = implode(", ", $genre);
+                                        $infos["Réalisateur(s)"] = $realisateurs;
+                                        $infos["Acteur(s)"] = $acteurs;
+                                        $infos["Année de production"] = $anneeprod;
+                                        $infos["Synopsis"] = $synopsis;
+                                        $film = \model\mysql\Film::ajouteFilm($titre, $otitre, json_encode($infos), $urlposter, $urlbackdrop, $anneeprod, $acteurs, $realisateurs);
+                                        $idfilm = $film->id;
+                                        $film->addGenre($genre);
+                                    } else {
+                                        //Auto
+                                        if ($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "typerecherche"] === "local") {
+                                            //Local
+                                            $idfilm = $_REQUEST["torrent" . $idtorrent . "file" . $idfile . "code"];
+                                        } else {
+                                            //Allo
+                                            $o["typesearch"] = "movie";
+                                            $allo = new \model\simple\Allocine($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "code"], $o);
+                                            $infos = $allo->retourneResMovieFormatForBD();
+                                            $genre = $infos["Genre"];
+                                            $infos["Genre"] = implode(", ", $genre);
+                                            $titre = (isset($infos["Titre"]) ? $infos["Titre"] : $infos["Titre original"]);
+                                            $otitre = $infos["Titre original"];
+                                            $urlposter = trim($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "poster"]);
+                                            $urlbackdrop = trim($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "backdrop"]);
+                                            $realisateurs = $infos["Réalisateur(s)"];
+                                            $acteurs = "";
+                                            if (isset($infos["Acteur(s)"]))
+                                                $acteurs = $infos["Acteur(s)"];
+                                            $anneeprod = $infos["Année de production"];
+                                            $film = \model\mysql\Film::ajouteFilm($titre, $otitre, json_encode($infos), $urlposter, $urlbackdrop, $anneeprod, $acteurs, $realisateurs, $_REQUEST["torrent" . $idtorrent . "file" . $idfile . "code"]);
+                                            $idfilm = $film->id;
+                                            $film->addGenre($genre);
+                                        }
+                                    }
+                                    \model\mysql\Torrentfilm::addTorrentFilm($idfilm, $_REQUEST["torrent" . $idtorrent . "numfile" . $idfile], $_REQUEST["torrent" . $idtorrent . "filecomplement" . $idfile], \config\Conf::$user["user"]->login, \config\Conf::$nomrtorrent, $_REQUEST["torrent" . $idtorrent . "hash"], $clef, (isset($_REQUEST["torrent" . $idtorrent . "partagecheckfile" . $idfile])));
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+        if (isset ($_FILES ['torrentfile'])) {
+            if (is_array($_FILES['torrentfile']['name'])) {
+
+                for ($i = 0; $i < count($_FILES['torrentfile']['name']); ++$i) {
+                    $files[] = array
+                    (
+                        'name' => $_FILES['torrentfile']['name'][$i],
+                        'tmp_name' => $_FILES['torrentfile']['tmp_name'][$i],
+                        'error' => $_FILES ['torrentfile'] ['error'][$i]
+                    );
+                }
+
+            } else {
+                $files[] = $_FILES['torrentfile'];
+
+            }
+
+
+            foreach ($files as $file) {
+                $erreur = 0;
+                $torrent = null;
+                $torrent['erreur'] = 1;
+                $torrent['nom'] = $file["name"];
+                if (pathinfo($file["name"], PATHINFO_EXTENSION) != "torrent")
+                    $file["name"] .= ".torrent";
+                $des = DS . "tmp" . DS . $file["name"];
+                $torrent['nom'] = $file["name"];
+                $ok = move_uploaded_file($file['tmp_name'], $des);
+                if ($ok) {
+                    $to = new \model\simple\Torrent($des);
+
+                    //$torrents[]= array($to->getFileName(),$to->info["name"]);
+                    if ($to->errors()) {
+                        $torrent['status'] = "Erreur du fichier torrent";
+                    } else {
+                        $torrent['erreur'] = 0;
+                        $torrent["status"] = \model\xmlrpc\rTorrent::sendTorrent($to, !isset($_REQUEST['autostart']));
+                        $torrent["clefunique"] = \model\simple\String::random(10);
+                        usleep(40000);
+                        $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, array(
+                            new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.set_custom", array($to->hash_info(), "clefunique", $clefunique[$to->hash_info()])),
+                            new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.set_custom", array($to->hash_info(), "typemedias", (isset($typemedias[$to->hash_info()]) ? $typemedias[$to->hash_info()] : "aucun")))));
+                        $torrent["clefuniqueres"] = ($req->success() ? $req->val : $req->val);
+
+                    }
+                    unlink($des);
+                } else {
+                    $torrent['status'] = "Erreur lors de l'upload | Code d'erreur => " . $file["error"];
+                }
+                $torrents[] = $torrent;
+            }
+        } else {
+            $status = "Pas de fichier envoyer";
+        }
+
         $this->set(array(
             "torrent" => $torrents,
             "erreur" => $erreur,

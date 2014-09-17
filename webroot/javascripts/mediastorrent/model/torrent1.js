@@ -46,6 +46,7 @@ Torrent1.model = {
         noTask: null
     },
     addTorrent: {
+        rechercheAjax: null,
         folder: {
             loader: null,
             liste: [],
