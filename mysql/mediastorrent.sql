@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Jeu 05 Juin 2014 à 01:07
--- Version du serveur :  5.5.37-MariaDB-log
--- Version de PHP :  5.5.12
+-- Généré le :  Ven 21 Novembre 2014 à 12:28
+-- Version du serveur :  10.0.13-MariaDB-log
+-- Version de PHP :  5.6.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS `cronroot` (
                 COLLATE utf8_unicode_ci,
   `nomrtorrent` VARCHAR(200)
                 COLLATE utf8_unicode_ci NOT NULL,
+  `encour`      TINYINT(1)              NOT NULL,
   `fini`        TINYINT(1)              NOT NULL
 )
   ENGINE =InnoDB
@@ -149,6 +150,35 @@ CREATE TABLE IF NOT EXISTS `rtorrents` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `savpass`
+--
+
+CREATE TABLE IF NOT EXISTS `savpass` (
+  `login`    VARCHAR(200)
+             COLLATE utf8_unicode_ci NOT NULL,
+  `password` TEXT
+             COLLATE utf8_unicode_ci
+)
+  ENGINE =InnoDB
+  DEFAULT CHARSET =utf8
+  COLLATE =utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `test`
+--
+
+CREATE TABLE IF NOT EXISTS `test` (
+  `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+)
+  ENGINE =InnoDB
+  DEFAULT CHARSET =utf8
+  COLLATE =utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `ticket`
 --
 
@@ -156,7 +186,8 @@ CREATE TABLE IF NOT EXISTS `ticket` (
   `id`     VARCHAR(40)
            COLLATE utf8_unicode_ci NOT NULL,
   `donnee` LONGTEXT
-           COLLATE utf8_unicode_ci NOT NULL
+           COLLATE utf8_unicode_ci NOT NULL,
+  `expire` TIMESTAMP               NULL DEFAULT NULL
 )
   ENGINE =InnoDB
   DEFAULT CHARSET =utf8
@@ -175,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `torrentfilm` (
   `numfile`           VARCHAR(10)
                       COLLATE utf8_unicode_ci NOT NULL,
   `complementfichier` VARCHAR(1000)
-                      COLLATE utf8_unicode_ci DEFAULT NULL,
+                      COLLATE utf8_unicode_ci          DEFAULT NULL,
   `idfilm`            VARCHAR(10)
                       COLLATE utf8_unicode_ci NOT NULL,
   `login`             VARCHAR(200)
@@ -189,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `torrentfilm` (
   `fini`              TINYINT(1)              NOT NULL,
   `mediainfo`         TEXT
                       COLLATE utf8_unicode_ci,
-  `qualite`           INT(1) DEFAULT NULL,
+  `qualite`           INT(1)                           DEFAULT NULL,
   `partageamis`       TINYINT(1)              NOT NULL
 )
   ENGINE =InnoDB
@@ -212,23 +243,13 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `role`         VARCHAR(250)
                  COLLATE utf8_unicode_ci NOT NULL,
   `keyconnexion` VARCHAR(40)
-                 COLLATE utf8_unicode_ci DEFAULT NULL
+                 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `options`      LONGTEXT
+                 COLLATE utf8_unicode_ci
 )
   ENGINE =InnoDB
   DEFAULT CHARSET =utf8
   COLLATE =utf8_unicode_ci;
-
-CREATE TABLE IF NOT EXISTS `savpass` (
-  `login`      VARCHAR(200)
-               COLLATE utf8_unicode_ci NOT NULL,
-  `motdepasse` TEXT
-               COLLATE utf8_unicode_ci
-
-)
-  ENGINE =InnoDB
-  DEFAULT CHARSET =utf8
-  COLLATE =utf8_unicode_ci;
-
 
 --
 -- Index pour les tables exportées
@@ -271,6 +292,12 @@ ALTER TABLE `rtorrents`
 ADD PRIMARY KEY (`nomrtorrent`, `login`), ADD KEY `nomrtorrent` (`nomrtorrent`), ADD KEY `login` (`login`);
 
 --
+-- Index pour la table `savpass`
+--
+ALTER TABLE `savpass`
+ADD PRIMARY KEY (`login`);
+
+--
 -- Index pour la table `ticket`
 --
 ALTER TABLE `ticket`
@@ -286,7 +313,7 @@ ADD PRIMARY KEY (`id`), ADD KEY `idfilm` (`idfilm`), ADD KEY `login` (`login`), 
 -- Index pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-ADD PRIMARY KEY (`login`), ADD UNIQUE KEY `mail` (`mail`);
+ADD PRIMARY KEY (`login`), ADD UNIQUE KEY `mail` (`mail`), ADD UNIQUE KEY `keyconnexion` (`keyconnexion`);
 
 --
 -- Contraintes pour les tables exportées
@@ -327,6 +354,14 @@ ADD CONSTRAINT `rtorrents_ibfk_1` FOREIGN KEY (`nomrtorrent`) REFERENCES `rtorre
   ON DELETE CASCADE
   ON UPDATE CASCADE,
 ADD CONSTRAINT `rtorrents_ibfk_2` FOREIGN KEY (`login`) REFERENCES `utilisateur` (`login`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `savpass`
+--
+ALTER TABLE `savpass`
+ADD CONSTRAINT `savpass_ibfk_1` FOREIGN KEY (`login`) REFERENCES `utilisateur` (`login`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 

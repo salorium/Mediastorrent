@@ -854,7 +854,6 @@ Torrent1.view = {
                             });
                             $li.append($input);
                             $ul.append($li);
-                            //$ul.append('<li><div class="suggest" id="suggest" style="display: none;"></div></li>');
                             $bigcontenu.append($ul);
                             $bigcontenu.append('<div id="details" style="overflow: auto;"></div>');
                             $button = $('<button id="ok" type="button" value="ajouter" class="button small secondary expand">Ok</button>');

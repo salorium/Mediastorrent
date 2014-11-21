@@ -22,7 +22,7 @@ class Film extends \core\Controller
         if ($tf->fini === "0") {
 
             $cmds = array(
-                "d.get_name" /*5*/, "d.get_down_rate" /*13*/, "d.get_size_chunks" /*8*/, "d.get_completed_chunks" /*7*/, "d.get_chunk_size" /*14*/
+                "d.name" /*5*/, "d.down.rate" /*13*/, "d.size_chunks" /*8*/, "d.completed_chunks" /*7*/, "d.chunk_size" /*14*/
             );
 
             $req = new \model\xmlrpc\rXMLRPCRequest($tf->scgi);
@@ -63,13 +63,13 @@ class Film extends \core\Controller
         if ($torrentf = \model\mysql\Torrentfilm::getFilmUserDuServeur($id)) {
             \config\Conf::$portscgi = $torrentf->portscgi;
             $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
-                new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.get_frozen_path", array($torrentf->hash, intval($torrentf->numfile))));
+                new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.frozen_path", array($torrentf->hash . ":f" . $torrentf->numfile)));
             if ($req->success()) {
                 $filename = $req->val[0];
                 if ($filename == '') {
                     $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, array(
                         new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.open", $torrentf->hash),
-                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.get_frozen_path", array($torrentf->hash, intval($torrentf->numfile))),
+                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.frozen_path", array($torrentf->hash . ":f" . $torrentf->numfile)),
                         new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.close", $torrentf->hash)));
                     if ($req->success())
                         $filename = $req->val[1];

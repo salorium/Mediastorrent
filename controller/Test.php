@@ -202,7 +202,8 @@ class Test extends Controller
     function get()
     {
         $this->set(array(
-            "post" => $_GET,
+            "post" => $_POST,
+            "file" => $_FILES,
             "SCRIPT_NAME" => $_SERVER["SCRIPT_NAME"],
             "DOCUMENT_ROOT" => $_SERVER["DOCUMENT_ROOT"],
             "PATH_INFO" => $_SERVER["PATH_INFO"]
