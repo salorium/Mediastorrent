@@ -34,7 +34,7 @@ class rTorrentSettings extends \core\Model
     public $idNotFound = false;
     public $home = '';
     public $portscgi;
-
+    public $pid = null;
     static private $theSettings = null;
 
     function __construct($portscgi)
@@ -107,12 +107,13 @@ class rTorrentSettings extends \core\Model
                 if (!$req->fault)
                     $this->badXMLRPCVersion = false;
                 $req = new rXMLRPCRequest($this->portscgi, array(
-                    new rXMLRPCCommand($this->portscgi, "get_directory"),
-                    new rXMLRPCCommand($this->portscgi, "get_session"),
+                    new rXMLRPCCommand($this->portscgi, "directory.default"),
+                    new rXMLRPCCommand($this->portscgi, "session.path"),
                     new rXMLRPCCommand($this->portscgi, "system.library_version"),
-                    new rXMLRPCCommand($this->portscgi, "set_xmlrpc_size_limit", 67108863),
-                    new rXMLRPCCommand($this->portscgi, "get_name"),
-                    new rXMLRPCCommand($this->portscgi, "get_port_range"),
+                    new rXMLRPCCommand($this->portscgi, "network.xmlrpc.size_limit.set", array("", 67108863)),
+                    new rXMLRPCCommand($this->portscgi, "session.name"),
+                    new rXMLRPCCommand($this->portscgi, "network.port_range"),
+                    new rXMLRPCCommand($this->portscgi, "system.pid"),
                 ));
                 if ($req->run() && !$req->fault) {
                     $this->directory = $req->val[0];
@@ -120,6 +121,7 @@ class rTorrentSettings extends \core\Model
                     $this->libVersion = $req->val[2];
                     $this->server = $req->val[4];
                     $this->portRange = $req->val[5];
+                    $this->pid = intval($req->val[6]);
                     $this->port = intval($this->portRange);
 
                     if ($this->iVersion >= 0x809) {
@@ -139,7 +141,7 @@ class rTorrentSettings extends \core\Model
                         }
                     $id = "id"; //getExternal('id');
                     $req = new rXMLRPCRequest($this->portscgi,
-                        new rXMLRPCCommand($this->portscgi, "execute_capture", array("sh", "-c", $id . " -u ; " . $id . " -G ; echo ~ ")));
+                        new rXMLRPCCommand($this->portscgi, "execute.capture", array("", "sh", "-c", $id . " -u ; " . $id . " -G ; echo ~ ")));
                     if ($req->run() && !$req->fault && (($line = explode("\n", $req->val[0])) !== false) && (count($line) > 2)) {
                         $this->uid = intval(trim($line[0]));
                             $this->gid = explode(' ',trim($line[1]));

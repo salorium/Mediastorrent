@@ -26,6 +26,17 @@ if (!is_null($files)) {
             ?>
             <tr>
                 <td>
+                    <?
+                    switch (pathinfo($v[1], PATHINFO_EXTENSION)) {
+                        case "mkv":
+                        case "avi":
+                        case "mp4":
+                            ?>
+                            <a onclick="window.open('torrent/streaming/.html', '_blank', 'menubar=no, status=no, scrollbars=no, toolbar=no,location=no,resizable=no, width=650, height=510');">Streaming</a>
+                            <?
+                            break;
+                    }
+                    ?>
                     <a href="<?= \core\Router::url("torrent/download/" . $hashtorrent . "/" . $v[0] . "/" . \config\Conf::$user["user"]->keyconnexion); ?>"><?= basename($v[1]) ?></a>
                 </td>
                 <td>

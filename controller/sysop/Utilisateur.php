@@ -32,6 +32,7 @@ class Utilisateur extends \core\Controller
                     }
                     $a = \model\mysql\Utilisateur::supprimeUtilisateur($_REQUEST["login"]);
                     break;
+
             }
         }
         $users = \model\mysql\Utilisateur::getAllUtilisateur();

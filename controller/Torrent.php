@@ -28,14 +28,14 @@ class Torrent extends Controller
         \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         $cmds = array(
-            "f.get_path=", "f.get_completed_chunks=", "f.get_size_chunks=", "f.get_size_bytes=", "f.get_priority=", "f.prioritize_first=", "f.prioritize_last="
+            "f.path=", "f.completed_chunks=", "f.size_chunks=", "f.size_bytes=", "f.priority=", "f.prioritize_first=", "f.prioritize_last="
         );
         $cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.multicall", array($hashtorrentselectionne, ""));
 
         foreach ($cmds as $prm) {
             $cmd->addParameter(\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi, $prm));
         }
-        $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.get_name", array($hashtorrentselectionne, "")));
+        $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.name", array($hashtorrentselectionne, "")));
         $req->addCommand($cmd);
         $files = null;
         $tmp = null;
@@ -158,17 +158,17 @@ class Torrent extends Controller
         $tor = null;
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         $cmds = array(
-            "d.get_hash=" /*0*/, "d.is_open=" /*1*/, "d.is_hash_checking=" /*2*/, "d.is_hash_checked=" /*3*/, "d.get_state=" /*4*/,
-            "d.get_name=" /*5*/, "d.get_size_bytes=" /*6*/, "d.get_completed_chunks=" /*7*/, "d.get_size_chunks=" /*8*/, "d.get_bytes_done=" /*9*/,
-            "d.get_up_total=" /*10*/, "d.get_ratio=" /*11*/, "d.get_up_rate=" /*12*/, "d.get_down_rate=" /*13*/, "d.get_chunk_size=" /*14*/,
-            "d.get_custom1=" /*15 A supprimer*/, "d.get_peers_accounted=" /*16*/, "d.get_peers_not_connected=" /*17*/, "d.get_peers_connected=" /*18*/, "d.get_peers_complete=" /*19*/,
-            "d.get_left_bytes=" /*20*/, "d.get_priority=" /*21*/, "d.get_state_changed=" /*22*/, "d.get_skip_total=" /*23*/, "d.get_hashing=" /*24*/,
-            "d.get_chunks_hashed=" /*25*/, "d.get_base_path=" /*26*/, "d.get_creation_date=" /*27*/, "d.get_tracker_focus=" /*28*/, "d.is_active=" /*29*/,
-            "d.get_message=" /*30*/, "d.get_custom2=" /*31 A supprimer*/, "d.get_free_diskspace=" /*32*/, "d.is_private=" /*33*/, "d.is_multi_file=" /*34*/, "d.get_throttle_name=" /*35*/, "d.get_custom=chk-state" /*36*/,
-            "d.get_custom=chk-time" /*37*/, "d.get_custom=sch_ignore" /*38*/, 'cat="$t.multicall=d.get_hash=,t.get_scrape_complete=,cat={#}"' /*39*/, 'cat="$t.multicall=d.get_hash=,t.get_scrape_incomplete=,cat={#}"' /*40*/,
-            'cat=$d.views=' /*41*/, "d.get_custom=seedingtime" /*42*/, "d.get_custom=addtime" /*43*/, "d.get_custom=clefunique", "d.get_custom=typemedias"
+            "d.hash=" /*0*/, "d.is_open=" /*1*/, "d.is_hash_checking=" /*2*/, "d.is_hash_checked=" /*3*/, "d.state=" /*4*/,
+            "d.name=" /*5*/, "d.size_bytes=" /*6*/, "d.completed_chunks=" /*7*/, "d.size_chunks=" /*8*/, "d.bytes_done=" /*9*/,
+            "d.up.total=" /*10*/, "d.ratio=" /*11*/, "d.up.rate=" /*12*/, "d.down.rate=" /*13*/, "d.chunk_size=" /*14*/,
+            "d.custom1=" /*15 A supprimer*/, "d.peers_accounted=" /*16*/, "d.peers_not_connected=" /*17*/, "d.peers_connected=" /*18*/, "d.peers_complete=" /*19*/,
+            "d.left_bytes=" /*20*/, "d.priority=" /*21*/, "d.state_changed=" /*22*/, "d.skip.total=" /*23*/, "d.hashing=" /*24*/,
+            "d.chunks_hashed=" /*25*/, "d.base_path=" /*26*/, "d.creation_date=" /*27*/, "d.tracker_focus=" /*28*/, "d.is_active=" /*29*/,
+            "d.message=" /*30*/, "d.custom2=" /*31 A supprimer*/, "d.free_diskspace=" /*32*/, "d.is_private=" /*33*/, "d.is_multi_file=" /*34*/, "d.throttle_name=" /*35*/, "d.custom=chk-state" /*36*/,
+            "d.custom=chk-time" /*37*/, "d.custom=sch_ignore" /*38*/, 'cat="$t.multicall=d.hash=,t.scrape_complete=,cat={#}"' /*39*/, 'cat="$t.multicall=d.hash=,t.scrape_incomplete=,cat={#}"' /*40*/,
+            'cat=$d.views=' /*41*/, "d.timestamp.finished=" /*42*/, "d.timestamp.started=" /*43*/, "d.custom=clefunique", "d.custom=typemedias"
         );
-        $cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.multicall", "main");
+        $cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.multicall2", array("", "main"));
         $res = array();
         foreach ($cmds as $v) {
             $res[] = \model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$portscgi, $v);
@@ -260,8 +260,10 @@ class Torrent extends Controller
                 $torrent[] = intval($tmp1[2 + 4 * 32][$ii]); //Torrent free diskspace 21
                 $torrent[] = intval($tmp1[2 + 4 * 33][$ii]); //Torrent is private 22
                 $torrent[] = intval($tmp1[2 + 4 * 34][$ii]); //Torrent is multifile 23
-                $torrent[] = preg_replace("#\n#", "", $tmp1[2 + 4 * 42][$ii]); //Torrent seed time 24
-                $torrent[] = preg_replace("#\n#", "", $tmp1[2 + 4 * 43][$ii]); //Torrent add time 25
+                $torrent[] = /*preg_replace("#\n#", "", */
+                    intval($tmp1[2 + 4 * 42][$ii]); //Torrent seed time 24
+                $torrent[] = /*preg_replace("#\n#", "", */
+                    intval($tmp1[2 + 4 * 43][$ii]); //Torrent add time 25
                 $torrent[] = $msg; //Message tracker 26
                 $torrent[] = $tmp1[2 + 4 * 0][$ii]; //Hash 27
                 $torrent[] = $tmp1[2 + 4 * 44][$ii]; //Clefunique
@@ -298,7 +300,7 @@ class Torrent extends Controller
 
 
             $cmds = array(
-                "get_up_rate", "get_upload_rate", "get_up_total", "get_down_rate", "get_download_rate", "get_down_total"
+                "throttle.global_up.rate", "throttle.global_up.max_rate", "throttle.global_up.total", "throttle.global_down.rate", "throttle.global_down.max_rate", "throttle.global_down.total"
             );
             $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi);
 
@@ -338,7 +340,7 @@ class Torrent extends Controller
              * =================================================
              */
             $cmds = array(
-                "f.get_path=", "f.get_completed_chunks=", "f.get_size_chunks=", "f.get_size_bytes=", "f.get_priority=", "f.prioritize_first=", "f.prioritize_last="
+                "f.path=", "f.completed_chunks=", "f.size_chunks=", "f.size_bytes=", "f.priority=", "f.prioritize_first=", "f.prioritize_last="
             );
             $cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.multicall", array($hashtorrentselectionne, ""));
 
@@ -386,9 +388,9 @@ class Torrent extends Controller
              * =================================================
              */
             $cmds = array(
-                "t.get_url=", "t.get_type=", "t.is_enabled=", "t.get_group=", "t.get_scrape_complete=",
-                "t.get_scrape_incomplete=", "t.get_scrape_downloaded=",
-                "t.get_normal_interval=", "t.get_scrape_time_last="
+                "t.url=", "t.type=", "t.is_enabled=", "t.group=", "t.scrape_complete=",
+                "t.scrape_incomplete=", "t.scrape_downloaded=",
+                "t.normal_interval=", "t.scrape_time_last="
             );
             $cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "t.multicall", array($hashtorrentselectionne, ""));
 
@@ -545,11 +547,11 @@ class Torrent extends Controller
 
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi);
         foreach ($_REQUEST["hash"] as $h) {
-            $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.get_name", $h));
+            $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.name", $h));
             //$req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.get_name", $h));
-            $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.set_custom1", array($h, "1")));
-            $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.get_custom", array($h, "clefunique")));
-            $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.get_custom", array($h, "typemedias")));
+            $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.custom1.set", array($h, "1")));
+            $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.custom", array($h, "clefunique")));
+            $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.custom", array($h, "typemedias")));
             $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.erase", $h));
         }
 
@@ -855,8 +857,8 @@ class Torrent extends Controller
                         $torrent["clefunique"] = \model\simple\String::random(10);
                         usleep(40000);
                         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, array(
-                            new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.set_custom", array($to->hash_info(), "clefunique", $clefunique[$to->hash_info()])),
-                            new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.set_custom", array($to->hash_info(), "typemedias", (isset($typemedias[$to->hash_info()]) ? $typemedias[$to->hash_info()] : "aucun")))));
+                            new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.custom.set", array($to->hash_info(), "clefunique", $clefunique[$to->hash_info()])),
+                            new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.custom.set", array($to->hash_info(), "typemedias", (isset($typemedias[$to->hash_info()]) ? $typemedias[$to->hash_info()] : "aucun")))));
                         $torrent["clefuniqueres"] = ($req->success() ? $req->val : $req->val);
 
                     }
@@ -885,7 +887,7 @@ class Torrent extends Controller
         \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         $cmds = array(
-            "f.get_path=", "f.get_completed_chunks=", "f.get_size_chunks=", "f.get_size_bytes=", "f.get_priority=", "f.prioritize_first=", "f.prioritize_last="
+            "f.path=", "f.completed_chunks=", "f.size_chunks=", "f.size_bytes=", "f.priority=", "f.prioritize_first=", "f.prioritize_last="
         );
         $cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.multicall", array($hashtorrentselectionne, ""));
 
@@ -908,9 +910,9 @@ class Torrent extends Controller
             $to["files"] = $files;
         }
         $cmds = array(
-            "t.get_url=", "t.get_type=", "t.is_enabled=", "t.get_group=", "t.get_scrape_complete=",
-            "t.get_scrape_incomplete=", "t.get_scrape_downloaded=",
-            "t.get_normal_interval=", "t.get_scrape_time_last="
+            "t.url=", "t.type=", "t.is_enabled=", "t.group=", "t.scrape_complete=",
+            "t.scrape_incomplete=", "t.scrape_downloaded=",
+            "t.normal_interval=", "t.scrape_time_last="
         );
         $cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "t.multicall", array($hashtorrentselectionne, ""));
 
@@ -946,13 +948,13 @@ class Torrent extends Controller
         \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
-            new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.get_frozen_path", array($hashtorrentselectionne, intval($nofile))));
+            new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.frozen_path", array($hashtorrentselectionne . ":f" . $nofile)));
         if ($req->success()) {
             $filename = $req->val[0];
             if ($filename == '') {
                 $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, array(
                     new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.open", $hashtorrentselectionne),
-                    new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.get_frozen_path", array($hashtorrentselectionne, intval($nofile))),
+                    new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.frozen_path", array($hashtorrentselectionne . ":f" . $nofile)),
                     new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.close", $hashtorrentselectionne)));
                 if ($req->success())
                     $filename = $req->val[1];
@@ -968,7 +970,7 @@ class Torrent extends Controller
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi);
         foreach ($_REQUEST["nofiles"] as $v)
-            $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.set_priority", array($hashtorrentselectionne, intval($v), intval($prio))));
+            $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.priority.set", array($hashtorrentselectionne . ":f" . intval($v), intval($prio))));
         $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.update_priorities", $hashtorrentselectionne));
         if ($req->success())
             $result = $req->val;
