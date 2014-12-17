@@ -21,9 +21,9 @@ class Rtorrents extends \core\ModelMysql
         if (is_null($this->nomrtorrent) || is_null($this->login) || is_null($this->portscgi))
             return false;
         $query = "insert into rtorrents (nomrtorrent,login,portscgi) values(";
-        $query .= \core\Mysqli::real_escape_string($this->nomrtorrent) . ",";
-        $query .= \core\Mysqli::real_escape_string($this->login) . ",";
-        $query .= \core\Mysqli::real_escape_string($this->portscgi) . ")";
+        $query .= \core\Mysqli::real_escape_string_html($this->nomrtorrent) . ",";
+        $query .= \core\Mysqli::real_escape_string_html($this->login) . ",";
+        $query .= \core\Mysqli::real_escape_string_html($this->portscgi) . ")";
         \core\Mysqli::query($query);
         $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
         \core\Mysqli::close();
@@ -37,7 +37,7 @@ class Rtorrents extends \core\ModelMysql
         $query .= "from rtorrent r ";
         $query .= "LEFT JOIN rtorrents rs ";
         $query .= "ON rs.nomrtorrent = r.nom ";
-        $query .= "where r.nom not in ( select nomrtorrent from rtorrents where login =" . \core\Mysqli::real_escape_string($login) . ")";
+        $query .= "where r.nom not in ( select nomrtorrent from rtorrents where login =" . \core\Mysqli::real_escape_string_html($login) . ")";
         \core\Mysqli::query($query);
         $rtorrent = \core\Mysqli::getObjectAndClose(true);
         $rtable = array();
@@ -62,7 +62,7 @@ class Rtorrents extends \core\ModelMysql
         $query = "select nomrtorrent ";
         $query .= "from rtorrents ";
         $query .= "where ";
-        $query .= "login =" . \core\Mysqli::real_escape_string($login);
+        $query .= "login =" . \core\Mysqli::real_escape_string_html($login);
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(true);
     }

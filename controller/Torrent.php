@@ -117,7 +117,7 @@ class Torrent extends Controller
                 $out = trim(file_get_contents($dir . '/out'));
             if ($status >= 0) {
                 $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
-                    new rXMLRPCCommand(\config\Conf::$portscgi, "execute", array("rm", "-fr", $dir)));
+                    new rXMLRPCCommand(\config\Conf::$portscgi, "execute2", array("", "rm", "-fr", $dir)));
                 $req->run();
             }
             $ret = array(
@@ -139,7 +139,7 @@ class Torrent extends Controller
         $taskNo = time();
         \core\Memcached::value(\config\Conf::$user["user"]->login, "task" . $taskNo, serialize($_REQUEST), 60 * 1);
         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
-            new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "execute", array(
+            new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "execute2", array("",
                 "sh", "-c",
                 escapeshellarg(ROOT . DS . "script" . DS . 'createtorrent.sh') . " " .
                 $taskNo . " " .

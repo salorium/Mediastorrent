@@ -28,11 +28,11 @@ class Utilisateur extends \core\ModelMysql
         if (is_null($this->login))
             return false;
         $query = "insert into utilisateur (login,motdepasse,mail,role,keyconnexion,options) values(";
-        $query .= \core\Mysqli::real_escape_string($this->login) . ",";
-        $query .= \core\Mysqli::real_escape_string($this->motdepasse) . ",";
-        $query .= \core\Mysqli::real_escape_string($this->mail) . ",";
-        $query .= \core\Mysqli::real_escape_string($this->role) . ",";
-        $query .= \core\Mysqli::real_escape_string($this->keyconnexion) . ",";
+        $query .= \core\Mysqli::real_escape_string_html($this->login) . ",";
+        $query .= \core\Mysqli::real_escape_string_html($this->motdepasse) . ",";
+        $query .= \core\Mysqli::real_escape_string_html($this->mail) . ",";
+        $query .= \core\Mysqli::real_escape_string_html($this->role) . ",";
+        $query .= \core\Mysqli::real_escape_string_html($this->keyconnexion) . ",";
         $query .= \core\Mysqli::real_escape_json($this->options) . ")";
         \core\Mysqli::query($query);
         $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
@@ -45,12 +45,12 @@ class Utilisateur extends \core\ModelMysql
     {
         if (!is_null($this->login)) {
             $query = "update utilisateur set ";
-            $query .= "motdepasse=" . \core\Mysqli::real_escape_string($this->motdepasse) . ", ";
-            $query .= "mail=" . \core\Mysqli::real_escape_string($this->mail) . ", ";
-            $query .= "role=" . \core\Mysqli::real_escape_string($this->role) . ", ";
+            $query .= "motdepasse=" . \core\Mysqli::real_escape_string_html($this->motdepasse) . ", ";
+            $query .= "mail=" . \core\Mysqli::real_escape_string_html($this->mail) . ", ";
+            $query .= "role=" . \core\Mysqli::real_escape_string_html($this->role) . ", ";
             $query .= "options=" . \core\Mysqli::real_escape_json($this->options) . ", ";
-            $query .= "keyconnexion=" . \core\Mysqli::real_escape_string($this->keyconnexion);
-            $query .= " where login=" . \core\Mysqli::real_escape_string($this->login);
+            $query .= "keyconnexion=" . \core\Mysqli::real_escape_string_html($this->keyconnexion);
+            $query .= " where login=" . \core\Mysqli::real_escape_string_html($this->login);
             \core\Mysqli::query($query);
             //\model\simple\Console::println("Requête sql :[" . $query . "]");
             $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
@@ -84,7 +84,7 @@ class Utilisateur extends \core\ModelMysql
     public static function authentifierUtilisateurParMotDePasse($login, $mdp)
     {
         $query = "select * from utilisateur ";
-        $query .= " where login=" . \core\Mysqli::real_escape_string($login) . " and motdepasse=" . \core\Mysqli::real_escape_string(sha1($mdp));
+        $query .= " where login=" . \core\Mysqli::real_escape_string_html($login) . " and motdepasse=" . \core\Mysqli::real_escape_string_html(sha1($mdp));
         \core\Mysqli::query($query);
         $u = \core\Mysqli::getObjectAndClose(false, __CLASS__);
         if ($u) {
@@ -101,7 +101,7 @@ class Utilisateur extends \core\ModelMysql
     public static function getUtilisateurParMail($mail)
     {
         $query = "select * from utilisateur ";
-        $query .= " where mail=" . \core\Mysqli::real_escape_string($mail);
+        $query .= " where mail=" . \core\Mysqli::real_escape_string_html($mail);
         \core\Mysqli::query($query);
         $u = \core\Mysqli::getObjectAndClose(false, __CLASS__);
         return $u;
@@ -110,9 +110,9 @@ class Utilisateur extends \core\ModelMysql
 
     public static function modifierMotDePasse($login, $mdp)
     {
-        $query = "update utilisateur set motdepasse=" . \core\Mysqli::real_escape_string(sha1($mdp));
+        $query = "update utilisateur set motdepasse=" . \core\Mysqli::real_escape_string_html(sha1($mdp));
 
-        $query .= " where login=" . \core\Mysqli::real_escape_string($login);
+        $query .= " where login=" . \core\Mysqli::real_escape_string_html($login);
         \core\Mysqli::query($query);
         $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
 
@@ -124,7 +124,7 @@ class Utilisateur extends \core\ModelMysql
     public static function authentifierUtilisateurParKeyConnexion($key)
     {
         $query = "select * from utilisateur ";
-        $query .= " where keyconnexion=" . \core\Mysqli::real_escape_string($key);
+        $query .= " where keyconnexion=" . \core\Mysqli::real_escape_string_html($key);
         \core\Mysqli::query($query);
         $u = \core\Mysqli::getObjectAndClose(false, __CLASS__);
         if ($u) {
@@ -150,7 +150,7 @@ class Utilisateur extends \core\ModelMysql
     public static function getUtilisteur($login)
     {
         $query = "select * from utilisateur";
-        $query .= " where login=" . \core\Mysqli::real_escape_string($login);
+        $query .= " where login=" . \core\Mysqli::real_escape_string_html($login);
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(false, __CLASS__);
     }
@@ -158,7 +158,7 @@ class Utilisateur extends \core\ModelMysql
     public static function supprimeUtilisateur($login)
     {
         $query = "delete from utilisateur ";
-        $query .= " where login=" . \core\Mysqli::real_escape_string($login);
+        $query .= " where login=" . \core\Mysqli::real_escape_string_html($login);
         \core\Mysqli::query($query);
         $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
         \core\Mysqli::close();

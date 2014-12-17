@@ -24,8 +24,8 @@ class Savpass extends \core\ModelMysql
         if (is_null($this->login))
             return false;
         $query = "insert into savpass (login,password) values(";
-        $query .= \core\Mysqli::real_escape_string($this->login) . ",";
-        $query .= \core\Mysqli::real_escape_string($this->password) . ")";
+        $query .= \core\Mysqli::real_escape_string_html($this->login) . ",";
+        $query .= \core\Mysqli::real_escape_string_html($this->password) . ")";
         \core\Mysqli::query($query);
         $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
         \core\Mysqli::close();
@@ -37,8 +37,8 @@ class Savpass extends \core\ModelMysql
     {
         if (!is_null($this->login)) {
             $query = "update savpass set ";
-            $query .= "password=" . \core\Mysqli::real_escape_string($this->password) . " ";
-            $query .= " where login=" . \core\Mysqli::real_escape_string($this->login);
+            $query .= "password=" . \core\Mysqli::real_escape_string_html($this->password) . " ";
+            $query .= " where login=" . \core\Mysqli::real_escape_string_html($this->login);
             \core\Mysqli::query($query);
             $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
             \core\Mysqli::close();
@@ -63,7 +63,7 @@ class Savpass extends \core\ModelMysql
     public static function getUserPassword($login)
     {
         $query = "select * from savpass ";
-        $query .= " where login=" . \core\Mysqli::real_escape_string($login) . " and password is not null";
+        $query .= " where login=" . \core\Mysqli::real_escape_string_html($login) . " and password is not null";
         \core\Mysqli::query($query);
         $u = \core\Mysqli::getObjectAndClose(false, __CLASS__);
         if ($u) {
@@ -75,9 +75,9 @@ class Savpass extends \core\ModelMysql
 
     public static function deleted($login, $mdp)
     {
-        $query = "update utilisateur set motdepasse=" . \core\Mysqli::real_escape_string(sha1($mdp));
+        $query = "update utilisateur set motdepasse=" . \core\Mysqli::real_escape_string_html(sha1($mdp));
 
-        $query .= " where login=" . \core\Mysqli::real_escape_string($login);
+        $query .= " where login=" . \core\Mysqli::real_escape_string_html($login);
         \core\Mysqli::query($query);
         $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
 
@@ -89,7 +89,7 @@ class Savpass extends \core\ModelMysql
     public static function authentifierUtilisateurParKeyConnexion($login, $key)
     {
         $query = "select * from utilisateur ";
-        $query .= " where login=" . \core\Mysqli::real_escape_string($login) . " and keyconnexion=" . \core\Mysqli::real_escape_string($key);
+        $query .= " where login=" . \core\Mysqli::real_escape_string_html($login) . " and keyconnexion=" . \core\Mysqli::real_escape_string_html($key);
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(false, __CLASS__);
     }
@@ -104,7 +104,7 @@ class Savpass extends \core\ModelMysql
     public static function getUtilisteur($login)
     {
         $query = "select * from utilisateur";
-        $query .= " where login=" . \core\Mysqli::real_escape_string($login);
+        $query .= " where login=" . \core\Mysqli::real_escape_string_html($login);
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(false, __CLASS__);
     }

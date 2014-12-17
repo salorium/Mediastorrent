@@ -32,8 +32,21 @@ class Mysqli
             throw new \Exception(self::$dblink->connect_error);
         }
     }
-
     public static function real_escape_string($str)
+    {
+        if (!isset(self::$dblink)) {
+            self::connect();
+        }
+        if (is_null($str))
+            return "NULL";
+        if ($str === "")
+            return "NULL";
+        return "'" . self::$dblink->real_escape_string( $str) . "'";
+    }
+    public static function getLastId(){
+        return self::$dblink->insert_id;
+    }
+    public static function real_escape_string_html($str)
     {
         if (!isset(self::$dblink)) {
             self::connect();

@@ -55,6 +55,9 @@ class Debug
 
     public static function php_error_handler($Level, $Error, $File, $Line)
     {
+        if (0 === error_reporting()) {
+            return true;
+        }
         //Who added this, it's still something to pay attention to...
         if (stripos('Undefined index', $Error) !== false) {
 //return true;
@@ -141,7 +144,9 @@ class Debug
     public static function shutDownFunction()
     {
         $error = \error_get_last();
-
+        if (0 === error_reporting()) {
+            return true;
+        }
         if ($error['type']) {
             //die();
             $error["message"] = str_replace(str_replace("/", DS, ROOT . DS), '', $error["message"]);

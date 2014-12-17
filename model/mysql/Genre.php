@@ -19,8 +19,8 @@ class Genre extends \core\ModelMysql
         if (is_null($this->id) || is_null($this->label))
             return false;
         $query = "insert into genre (id,label) values(";
-        $query .= \core\Mysqli::real_escape_string($this->id) . ",";
-        $query .= \core\Mysqli::real_escape_string($this->label) . ")";
+        $query .= \core\Mysqli::real_escape_string_html($this->id) . ",";
+        $query .= \core\Mysqli::real_escape_string_html($this->label) . ")";
         \core\Mysqli::query($query);
         $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
         \core\Mysqli::close();
@@ -34,7 +34,7 @@ class Genre extends \core\ModelMysql
         $query .= "where ( ";
         $query .= "tf.idfilm = f.id ";
         $query .= "and g.id = f.id ";
-        $query .= "and tf.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login);
+        $query .= "and tf.login = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login);
         //$query .= " and rs.nomrtorrent = r.nom ";
         $query .= " ) or ( ";
         //$query .= "tf.fini = true ";
@@ -42,7 +42,7 @@ class Genre extends \core\ModelMysql
         $query .= "and tf.idfilm = f.id ";
         $query .= "and g.id = f.id ";
         //$query .= "and rs.nomrtorrent = r.nom ";
-        $query .= "and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
+        $query .= "and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
         $query .= ") ORDER BY label ASC";
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(true);
