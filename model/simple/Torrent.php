@@ -175,7 +175,7 @@ class Torrent extends \core\Model
 
     protected function decode($string)
     {
-        if (is_file($string)) {
+        if (@is_file($string)) {
             $this->data = file_get_contents($string);
             $this->filename = $string;
         } else
@@ -395,11 +395,11 @@ class Torrent extends \core\Model
             $this->info = $this->files($data, $piece_length);
             return (true);
         }
-        if (is_dir($data)) {
+        if (@is_dir($data)) {
             $this->info = $this->folder($data, $piece_length);
             return (true);
         }
-        if (is_file($data) && (pathinfo($data, PATHINFO_EXTENSION) != 'torrent')) {
+        if (@is_file($data) && (pathinfo($data, PATHINFO_EXTENSION) != 'torrent')) {
             $this->info = $this->file($data, $piece_length);
             return (true);
         }
@@ -559,4 +559,4 @@ class Torrent extends \core\Model
     {
         return (isset($this->info) ? strtoupper(sha1(self::encode($this->info))) : null);
     }
-} 
+}

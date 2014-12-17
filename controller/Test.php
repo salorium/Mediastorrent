@@ -12,14 +12,126 @@ namespace controller;
 use core\Controller;
 use model\mysql\Film;
 use model\mysql\Torrentfilm;
+use model\mysql\Torrents_files;
+use model\mysql\Utilisateur;
+use model\ocelot\Requete;
 use model\simple\Mail;
 use model\simple\Repertoire;
+use model\simple\String;
 use model\simple\Torrent;
 use model\xmlrpc\rTorrentSettings;
 
 
 class Test extends Controller
 {
+    function trackerUptorrent($user)
+    {
+        \core\Mysqli::$default = "gazelle";
+        $u = Utilisateur::getUtilisteur($user);
+        if ($u) {
+            \config\Conf::$torrentpass = $u->torrentpass;
+            if (isset($_FILES["torrent"])) {
+                if ($_FILES["torrent"]["error"] > 0) {
+
+                } else {
+                    $torrent = new Torrent(file_get_contents($_FILES["torrent"]["tmp_name"]));
+                    if (!$torrent->errors()) {
+                        $torrent->is_private(true);
+                        $torrent->announce("");
+                        $hash = pack("H*", $torrent->hash_info());
+                        $a = \model\mysql\Torrents::insertTorrent($hash, $torrent->__toString());
+                        if (!is_bool($a)) {
+                            $az = \model\ocelot\Requete::addTorrent($a, $hash, "0");
+                        }
+                    }
+                }
+
+
+            }
+        } else {
+            throw new \Exception("Pas d'utilisateur");
+        }
+    }
+
+    function getTorrent($user = null)
+    {
+        \core\Mysqli::$default = "gazelle";
+        \config\Conf::$torrentpass = $user;
+        if (is_null($user)) {
+            $user = String::random(5);
+            $pass = String::random(32);
+            \config\Conf::$torrentpass = $pass;
+            Requete::addUser($user, $pass, "1");
+        }
+
+        $a = Torrents_files::getFile(12);
+        $to = new Torrent($a->file);
+        $to->announce(Torrent::getAnnounceUser());
+        $to->send();
+    }
+
+    function wbb()
+    {
+        $enjson = null;
+        $frjson = null;
+        $xml = simplexml_load_file(ROOT . DS . "cache" . DS . "en.xml");
+        $en = json_decode(json_encode($xml), true);
+        $xml = simplexml_load_file(ROOT . DS . "cache" . DS . "WoltLab.Burning.Board.4.0.5-French.xml");
+        $fr = json_decode(json_encode($xml), true);
+        foreach ($en["category"] as $k => $v) {
+            //var_dump($v["@attributes"]["name"]);
+            $item = null;
+            foreach ($v["item"] as $kk => $vv) {
+                $enjson[$v["@attributes"]["name"]][$vv["@attributes"]["name"]] = $vv["@attributes"]["name"];
+
+            }
+            //var_dump($item);
+            // = $item;
+            //var_dump($v["item"]);
+            //die();
+        }
+        foreach ($fr["category"] as $k => $v) {
+            //var_dump($v["@attributes"]["name"]);
+            $item = null;
+            foreach ($v["item"] as $kk => $vv) {
+                $frjson[$v["@attributes"]["name"]][$vv["@attributes"]["name"]] = $vv["@attributes"]["name"];
+
+            }
+
+            //var_dump($v["item"]);
+            //die();
+        }
+        //var_dump($frjson["wbb.acp.board"]);
+        //var_dump($frjson);
+        foreach ($enjson as $k => $v) {
+            if (isset($frjson[$k])) {
+                //var_dump($frjson[$k]);
+                echo "=" . $k . "<br>";
+                foreach ($v as $kk => $vv) {
+                    if (isset($frjson[$k][$vv])) {
+
+                    } else {
+                        echo "[" . $k . "]" . $kk . "<br>";
+                    }
+                }
+            } else {
+                echo "<span style='color: red'>" . $k . "</span><br>";
+            }
+            //die();
+        }
+        //var_dump(($en["category"][0]["@attributes"]["name"]));
+        //var_dump(($fr->category));
+        die();
+
+    }
+
+    function iti()
+    {
+        $c = file_get_contents("https://api.dailymotion.com/videos?fields=id,thumbnail_480_url%2Ctitle%2C&owners=x4ak7b&limit=100");
+        $this->set("data", json_decode($c));
+        $c = file_get_contents("https://api.dailymotion.com/videos?fields=id,thumbnail_480_url%2Ctitle%2C&owners=x8yhwu,x5if3,xi4txd&limit=100");
+        $this->set("dataamis", json_decode($c));
+    }
     function ca()
     {
         date_default_timezone_set("UTC");
