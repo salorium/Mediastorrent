@@ -70,4 +70,4 @@ class Film extends \core\Model
         $myimage = new \model\simple\MyImage(Film::getPoster($id));
         return $myimage->getImageHeightFixed($height);
     }
-} 
+}

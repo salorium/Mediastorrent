@@ -1333,7 +1333,7 @@ Torrent1.controller = {
             });
         },
         get: function () {
-            var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/getcreate/' + Torrent1.model.createTorrent.noTask + "/" + Base.model.utilisateur.keyconnexion;
+            var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/getcreate/' + Torrent1.model.createTorrent.noTask + "/" + Base.model.utilisateur.keyconnexion + ".torrent";
             $("#getdata").attr("action", url).submit();
         },
         folder: {

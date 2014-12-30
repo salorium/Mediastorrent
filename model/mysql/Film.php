@@ -99,7 +99,7 @@ class Film extends \core\ModelMysql
     static function rechercheFormat($titre)
     {
         $query = "select titre, titreoriginal as originaltitre, id as code, urlposter as image, realisateurs as realisateur, acteurs as acteur, anneeprod from film ";
-        $query .= "where titre like " . \core\Mysqli::real_escape_string_htmllike($titre) . " or titreoriginal like " . \core\Mysqli::real_escape_string_htmllike($titre);
+        $query .= "where titre like " . \core\Mysqli::real_escape_stringlike($titre) . " or titreoriginal like " . \core\Mysqli::real_escape_stringlike($titre);
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(true, __CLASS__);
     }
