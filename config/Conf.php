@@ -44,5 +44,3 @@ class Conf
     static $musicExtensions = array("mp3", "flac", "ogg");
     static $portscgi = 5001;
 }
-
-?>

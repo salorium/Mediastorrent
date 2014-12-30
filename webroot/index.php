@@ -64,12 +64,10 @@ if (\config\Conf::$install) {
     core\Router::connect("Visiteur", "/", "utilisateur/index");
 //
 }
+
 core\Router::connect("Normal", "/", "mediastorrent/accueil");
 core\Router::connect("Torrent", "/", "mediastorrent/accueil");
 core\Router::connect("Sysop", "/", "mediastorrent/accueil");
 $Dispa = new core\Dispatcher();
 
 $Dispa->load();
-
-
-?>
