@@ -24,6 +24,10 @@ use model\xmlrpc\rTorrentSettings;
 
 class Test extends Controller
 {
+    function linux()
+    {
+
+    }
     function trackerUptorrent($user)
     {
         \core\Mysqli::$default = "gazelle";
