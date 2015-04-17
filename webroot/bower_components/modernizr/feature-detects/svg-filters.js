@@ -6,7 +6,7 @@ Modernizr.addTest('svgfilters', function () {
     var result = false;
     try {
         result = typeof SVGFEColorMatrixElement !== undefined &&
-            SVGFEColorMatrixElement.SVG_FECOLORMATRIX_TYPE_SATURATE == 2;
+        SVGFEColorMatrixElement.SVG_FECOLORMATRIX_TYPE_SATURATE == 2;
     }
     catch (e) {
     }

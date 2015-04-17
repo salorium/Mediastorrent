@@ -1,6 +1,7 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
+
 @import "global";
 
 //
@@ -47,6 +48,7 @@ $progress-meter-alert-color: $alert-color !default;
   height: 100%;
   display: block;
 }
+
 
 @include exports("progress-bar") {
   @if $include-html-media-classes {

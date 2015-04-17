@@ -49,7 +49,7 @@ class Utilisateur extends \core\Model
             \core\Memcached::value($u->keyconnexion, "user", $u, 60 * 5);
             setcookie("keyconnexion", $u->keyconnexion, strtotime('+1 days'), "/");
         }
-
+        if ( is_null(\config\Conf::$user["user"] ))
         \config\Conf::$user["user"] = $u;
         \config\Conf::$user["role"] = $role;
         \config\Conf::$user["roletxt"] = $roletext;

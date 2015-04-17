@@ -16,7 +16,7 @@ function dumpModernizr() {
             str += '<li><b>' + prop + '{}</b><ul>';
             for (var field in Modernizr[prop]) {
                 str += '<li class="' + (Modernizr[prop][field] ? 'yes' : '') + '">' + field + ': ' + Modernizr[prop][field] + '</li>';
-            }
+        }
             str += '</ul></li>';
         } else {
             str += '<li  id="' + prop + '" class="' + (Modernizr[prop] ? 'yes' : '') + '">' + prop + ': ' + Modernizr[prop] + '</li>';

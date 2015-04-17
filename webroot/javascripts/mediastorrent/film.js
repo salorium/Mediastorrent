@@ -3,6 +3,7 @@
  * @author Salorium
  **/
 var timer;
+var lastY;
 $(document).ready(function () {
     $(document).on('click', ".btcontroll", function (event) {
         event.preventDefault();
@@ -109,6 +110,7 @@ var Film = {
     qualiteposter: "",
     qualitebackdrop: "",
     tonObjet: [],
+    tonObjet1: [],
     compteur: 0,
     container: null,
     nombreControlDansLargeur: 0,
@@ -127,16 +129,101 @@ var Film = {
     time: null,
     init: function (all) {
         console.log("INIT");
-        if (this.tonObjet.length == 0)
+        if (this.tonObjet.length == 0){
             this.tonObjet = all;
+            $.each(this.tonObjet, function (k,v) {
+                //console.log(v.id);
+                Film.tonObjet1[v.id] = k+1;
+            })
+        }
         if (this.container) {
             $(this.container).remove();
         }
         if ($(window).height() < 750 || $(window).width() < 960) {
             console.info("Mosaique");
+            //$(".container").append("<img id='t' src='"+ Base.controller.makeUrlBase() + "film/getPosterSetWidth/" + Base.model.converter.paramUrl(this.tonObjet[1].id) + "/"+$(window).width() +".jpg'>");
+
+            this.mobileAffiche(0);
         } else {
             this.initTopBar();
         }
+    },
+    mobileAffiche:function(id){
+        $(".container").empty();
+        $img = $("<div></div>");
+        $img.css({
+            "background": 'url("' + Base.controller.makeUrlBase() + "film/getPosterSetWidth/" + Base.model.converter.paramUrl(this.tonObjet[id].id) + '/1920.jpg") center center fixed',
+            "background-size": "cover",
+            "height":( $(window).height()-45)+'px'
+        });
+        $(".container").append($img);
+        $img.bind('touchstart', function(e) {
+            lastX = e.originalEvent.touches[0].clientX;
+        });
+        $img.bind('touchmove', function(e) {
+            if (lastX > e.originalEvent.touches[0].clientX){
+                console.log("gauche");
+                var t = id +1;
+                if ( t > Film.tonObjet.length-1)
+                    t = Film.tonObjet.length-1;
+
+            }else{
+                console.log("droite");
+                var t = id-1;
+                if ( t < 0)
+                    t =0;
+
+            }
+            Film.mobileAffiche(t);
+
+        });
+        $img.append($("<a style='background-color: #ffffff'></a>").append(this.tonObjet[id].Titre));
+        if (this.time)this.time.abort();
+        this.time = $.ajax({
+            url: Base.controller.makeUrlBase() + 'film/getFile/' + this.tonObjet[id].id + ".json",
+            dataType: "json",
+            type: "GET",
+            //data: {hash: listafaire},
+            //contentType: "application/json",
+            success: function (response, textStatus, jqXHR) {
+                $table = $("<tbody></tbody>");
+                $img.append($("<table></table>").append($table));
+                if (response.showdebugger == "ok") {
+                    $.each(response.file, function (k, v) {
+                        //console.log(v);
+                        if (v.fini == 1) {
+                            $table.append('<tr><td>' + v.mediainfo.typequalite + (v.mediainfo.qualite ? " " + v.mediainfo.qualite : "" ) + '</td><td>' + (v.mediainfo.codec ? v.mediainfo.codec : "" ) + '</td><td>' + (v.mediainfo.audios[0].type ? v.mediainfo.audios[0].type : "" ) + '</td><td>' + (v.complementfichier ? v.complementfichier : "" ) + '</td><td><a href="' + Base.controller.makeUrlBase(v.hostname) + 'film/download/' + v.id + '/' + Base.model.utilisateur.keyconnexion + '"><img width="60" src="' + Base.controller.makeUrlBase() + 'images/dl.svg"></a></td></tr>');
+                        } else {
+                            $tr = $("<tr></tr>").append("<td>Attente...</td>");
+                            Film.tr.push($tr);
+                            $table.append($tr);
+                            Film.interval.push(setInterval(Film.test1, 1000, Film.tr.length - 1, v.hostname, v.id));
+                        }
+                    });
+                    /*for (var i = 0; i < 2; i++) {
+                     if (i == 0) {
+                     Film.tr[i] = $("<tr></tr>").append("<td>0</td>");
+
+                     } else {
+                     Film.tr[i] = $("<tr></tr>").append("<td>100</td>");
+
+                     }
+                     $table.append(Film.tr[i]);
+                     Film.interval.push(setInterval(Film.test, 1000, i, i));
+                     }*/
+
+
+                } else {
+
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (textStatus != "abort")
+                    Base.view.noty.generate("error", textStatus + " " + jqXHR + " " + errorThrown);
+
+            }
+        });
+
     },
     initTopBar: function () {
         this.container = $('<div></div>').appendTo(".container");
@@ -233,9 +320,17 @@ var Film = {
         });
         Base.view.loader.make("detailsFilm");
         this.containerDetailsFilm.hide();
-        this.genereControlTopBar(null, true);
+        if ( window.location.hash.substr(1) != ""){
+            this.genereControlTopBarId(window.location.hash.substr(1));
+        }else{
+            this.genereControlTopBar(null, true);
+        }
     },
-
+    genereControlTopBarId : function (id){
+        if ( this.tonObjet1[id] != null){
+            this.genereControlTopBar(this.tonObjet1[id],true);
+        }
+    },
     genereControlTopBar: function (milieux, screenshot) {
         var central = this.borneControlPartieCentral;
         if (milieux != null) {
@@ -297,6 +392,7 @@ var Film = {
             } else {
                 this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.largeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot2"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="' + Base.controller.makeUrlBase() + "proxy/noimage/" + Base.model.converter.paramUrl(control.Titre) + '.jpg" alt="' + control.Titre + '"></a></div> </div></div>');
              }*/
+            window.location.hash = control.id;
             this.containerBtControl.append('<div class="scene3D" style="z-index :' + this.zindex + '; width:' + (this.largeurControl) + 'px; height:' + this.hauteurControl + 'px;"><div class="rot2"><div id="controlbt' + id + '" class="round"><a class="btcontroll" mediastorrent_id="' + id + '"> <img style="width: ' + this.largeurControl + 'px; height: ' + this.hauteurControl + 'px; border-radius: ' + this.pixelArrondi + 'px; -webkit-border-radius: ' + this.pixelArrondi + 'px; -moz-border-radius: ' + this.pixelArrondi + 'px; -ms-border-radius: ' + this.pixelArrondi + 'px;" src="' + Base.controller.makeUrlBase() + "film/getPosterSetWidth/" + Base.model.converter.paramUrl(control.id) + '/200.jpg" alt="' + control.Titre + '"></a></div> </div></div>');
             if (control.backdrop && screenshot) {
                 console.log(Base.model.converter.paramUrl(control.backdrop));
@@ -434,6 +530,37 @@ var Film = {
                     //console.log(v);
                     if (response.file.fini == 1) {
                         Film.tr[element].html('<td>' + response.file.mediainfo.typequalite + (response.file.mediainfo.qualite ? " " + response.file.mediainfo.qualite : "" ) + '</td><td>' + (response.file.mediainfo.codec ? response.file.mediainfo.codec : "" ) + '</td><td>' + (response.file.mediainfo.audios[0].type ? response.file.mediainfo.audios[0].type : "" ) + '</td><td>' + (response.file.complementfichier ? response.file.complementfichier : "" ) + '</td><td><a href="' + Base.controller.makeUrlBase(response.file.hostname) + 'film/download/' + response.file.id + '/' + Base.model.utilisateur.keyconnexion + '"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dl.svg"></a></td><td><a onclick="Film.streaming(\'' + response.file.id + '\',\'' + response.file.hostname + '\')"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/streaming.svg"></a></td>');
+                        clearInterval(Film.interval[element]);
+                    } else {
+                        Film.tr[element].html('<td colspan="4">' + response.file.nomtorrent + '</td><td colspan="2">' + (response.file.timerestant != -1 ? Base.model.converter.time(response.file.timerestant) : "∞") + '</td>');
+                    }
+
+
+                } else {
+                    Base.view.noty.generate("error", response);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (textStatus != "abort")
+                    Base.view.noty.generate("error", textStatus + " " + jqXHR + " " + errorThrown);
+
+            }
+        });
+    },
+    test1: function (element, host, id) {
+        $.ajax({
+            url: Base.controller.makeUrlBase(host) + 'film/getTime/' + Base.model.utilisateur.keyconnexion + "/" + id + ".json",
+            dataType: "json",
+            type: "GET",
+            //data: {hash: listafaire},
+            //contentType: "application/json",
+            success: function (response, textStatus, jqXHR) {
+                if (response.showdebugger == "ok") {
+                    //response.file
+                    //console.log(v);
+                    if (response.file.fini == 1) {
+                        Film.tr[element].html('<td>' + response.file.mediainfo.typequalite + (response.file.mediainfo.qualite ? " " + response.file.mediainfo.qualite : "" ) + '</td><td>' + (response.file.mediainfo.codec ? response.file.mediainfo.codec : "" ) + '</td><td>' + (response.file.mediainfo.audios[0].type ? response.file.mediainfo.audios[0].type : "" ) + '</td><td>' + (response.file.complementfichier ? response.file.complementfichier : "" ) + '</td><td><a href="' + Base.controller.makeUrlBase(response.file.hostname) + 'film/download/' + response.file.id + '/' + Base.model.utilisateur.keyconnexion + '"><img width="60" src="' + Base.controller.makeUrlBase() + 'images/dl.svg"></a></td>');
+                        console.log('TEST1');
                         clearInterval(Film.interval[element]);
                     } else {
                         Film.tr[element].html('<td colspan="4">' + response.file.nomtorrent + '</td><td colspan="2">' + (response.file.timerestant != -1 ? Base.model.converter.time(response.file.timerestant) : "∞") + '</td>');

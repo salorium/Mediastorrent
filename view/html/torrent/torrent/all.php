@@ -100,8 +100,8 @@
                 <table id="infoserver" class="infoserver">
                     <tr>
                         <td><img width="30px" src="<?= BASE_URL ?>images/upload.svg"/></td>
-                        <td><span id="vup">0.1 Ko/s</span> / <span id="vupl">2.9 Mo/s</span> | <span
-                                id="vupt">9.22 Ko</span></td>
+                        <td><span id="vup">0.1 Ko/s</span><span><span class="show-for-xlarge-up"> / <span id="vupl">2.9 Mo/s</span> | <span
+                                id="vupt">9.22 Ko</span></span></span></td>
                     </tr>
                 </table>
 
@@ -111,8 +111,8 @@
                 <table id="infoserver" class="infoserver">
                     <tr>
                         <td><img width="30px" src="<?= BASE_URL ?>images/download.svg"/></td>
-                        <td><span id="vdl">0.1 Ko/s</span> / <span id="vdll">2.9 Mo/s</span> | <span
-                                id="vdlt">9.22 Ko</span></td>
+                        <td><span id="vdl">0.1 Ko/s</span><span><span class="show-for-xlarge-up"> / <span id="vdll">2.9 Mo/s</span> | <span
+                                id="vdlt">9.22 Ko</span></span></span></td>
                     </tr>
                 </table>
 
@@ -126,7 +126,7 @@
     <div id="souscontenu" class="heightfixed">
         <div id="moitiegauche" class="large-5 columns panel heightfixed">
 
-            <dl class="sub-nav">
+            <dl class="show-for-medium-up sub-nav">
                 <dt>Tri:</dt>
                 <dd class=""><a onclick="Torrent1.controller.listTorrent.tri(this);" sort-colonne="0">Status
                         <span></span></a></dd>
@@ -140,7 +140,7 @@
             </div>
 
         </div>
-        <div id="moitiedroite" class="large-7 columns panel heightfixed">
+        <div id="moitiedroite" class="large-7 columns panel heightfixed show-for-medium-up">
             <dl class="tabs" data-tab>
                 <dd id="btdetails" class="active"><a href="#panel2-1">Détails</a></dd>
                 <dd><a href="#panel2-2">Fichier</a></dd>
@@ -290,7 +290,7 @@
                                         <input onclick="Torrent1.controller.addTorrent.folder.loader();" type="text"
                                                id="repertoireaddTorrent"
                                                name="repertoire"
-                                               value="/home/salorium/rtorrent/data/"
+                                               value=""
                                                readonly>
                                     </div>
                                     <div class="small-1 columns">
@@ -314,7 +314,7 @@
                         <label for="torrentfile" class="right inline">Torrent</label>
                     </div>
                     <div class="small-6 columns">
-                        <input type="file" name="torrentfile[]" multiple
+                        <input type="file" name="torrentfile[]" multiple id="torrentfile"
                                onchange="Torrent1.controller.addTorrent.files.check($('#mediastorrent').is(':checked'));">
                     </div>
                 </div>

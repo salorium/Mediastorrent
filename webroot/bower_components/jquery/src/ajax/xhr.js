@@ -24,10 +24,11 @@ define([
 
 // Support: IE9
 // Open requests must be manually aborted on unload (#5280)
-    if (window.ActiveXObject) {
-        jQuery(window).on("unload", function () {
+// See https://support.microsoft.com/kb/2856746 for more info
+    if (window.attachEvent) {
+        window.attachEvent("onunload", function () {
             for (var key in xhrCallbacks) {
-                xhrCallbacks[ key ]();
+                xhrCallbacks[key]();
             }
         });
     }
@@ -51,7 +52,7 @@ define([
                     // Apply custom fields if provided
                     if (options.xhrFields) {
                         for (i in options.xhrFields) {
-                            xhr[ i ] = options.xhrFields[ i ];
+                            xhr[i] = options.xhrFields[i];
                         }
                     }
 
@@ -71,14 +72,14 @@ define([
 
                     // Set headers
                     for (i in headers) {
-                        xhr.setRequestHeader(i, headers[ i ]);
+                        xhr.setRequestHeader(i, headers[i]);
                     }
 
                     // Callback
                     callback = function (type) {
                         return function () {
                             if (callback) {
-                                delete xhrCallbacks[ id ];
+                                delete xhrCallbacks[id];
                                 callback = xhr.onload = xhr.onerror = null;
 
                                 if (type === "abort") {
@@ -91,7 +92,7 @@ define([
                                     );
                                 } else {
                                     complete(
-                                        xhrSuccessStatus[ xhr.status ] || xhr.status,
+                                        xhrSuccessStatus[xhr.status] || xhr.status,
                                         xhr.statusText,
                                         // Support: IE9
                                         // Accessing binary-data responseText throws an exception
@@ -111,12 +112,17 @@ define([
                     xhr.onerror = callback("error");
 
                     // Create the abort callback
-                    callback = xhrCallbacks[ id ] = callback("abort");
+                    callback = xhrCallbacks[id] = callback("abort");
 
-                    // Do send the request
-                    // This may raise an exception which is actually
-                    // handled in jQuery.ajax (so no try/catch here)
-                    xhr.send(options.hasContent && options.data || null);
+                    try {
+                        // Do send the request (this may raise an exception)
+                        xhr.send(options.hasContent && options.data || null);
+                    } catch (e) {
+                        // #14683: Only rethrow if this hasn't been notified as an error yet
+                        if (callback) {
+                            throw e;
+                        }
+                    }
                 },
 
                 abort: function () {

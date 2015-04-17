@@ -4,7 +4,7 @@
 Modernizr.addTest('placeholder', function () {
 
     return !!( 'placeholder' in ( Modernizr.input || document.createElement('input')    ) &&
-        'placeholder' in ( Modernizr.textarea || document.createElement('textarea') )
-        );
+    'placeholder' in ( Modernizr.textarea || document.createElement('textarea') )
+    );
 
 });

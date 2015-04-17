@@ -26,7 +26,7 @@ for ($i = 0; $i < 4; $i++) {
     $v = $data->list[$i];
     ?>
 
-    <img onclick="change('<?= $v->id ?>');" width="100" src="<?= $v->thumbnail_480_url ?>">
+    <img onclick="change('<?= $v->id ?>');" width="200" src="<?= $v->thumbnail_480_url ?>">
 
 <?
 }

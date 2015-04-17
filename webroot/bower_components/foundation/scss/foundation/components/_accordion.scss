@@ -1,6 +1,7 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
+
 @import "global";
 
 //
@@ -17,8 +18,9 @@ $accordion-navigation-font-color: $jet !default;
 $accordion-navigation-font-size: rem-calc(16) !default;
 $accordion-navigation-font-family: $body-font-family !default;
 
-$accordion-content-padding: $column-gutter/2 !default;
+$accordion-content-padding: ($column-gutter/2) !default;
 $accordion-content-active-bg-color: $white !default;
+
 
 //  Mixin: accordion-container()
 //  Decription: Responsible for the container component of accordions, generating styles relating to a margin of zero and a clearfix

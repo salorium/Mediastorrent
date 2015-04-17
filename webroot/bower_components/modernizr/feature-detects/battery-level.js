@@ -1,3 +1,4 @@
+
 // Low Battery Level
 // Enable a developer to remove CPU intensive CSS/JS when battery is low
 // developer.mozilla.org/en/DOM/window.navigator.mozBattery

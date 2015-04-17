@@ -51,7 +51,7 @@
                 // `a` initialized at top of scope
                 a = document.createElement("a");
                 a.innerHTML = "Rerun";
-                a.href = QUnit.url({ testNumber: this.testNumber });
+                a.href = QUnit.url({testNumber: this.testNumber});
 
                 li = document.createElement("li");
                 li.appendChild(b);
@@ -73,7 +73,7 @@
                     });
                 }
                 config.previousModule = this.module;
-                config.moduleStats = { all: 0, bad: 0 };
+                config.moduleStats = {all: 0, bad: 0};
                 runLoggingCallbacks("moduleStart", QUnit, {
                     name: this.module
                 });
@@ -227,7 +227,7 @@
                         target = target.parentNode;
                     }
                     if (window.location && target.nodeName.toLowerCase() === "strong") {
-                        window.location = QUnit.url({ testNumber: test.testNumber });
+                        window.location = QUnit.url({testNumber: test.testNumber});
                     }
                 });
 
@@ -616,19 +616,19 @@
 // Initialize more QUnit.config and QUnit.urlParams
     (function () {
         var i,
-            location = window.location || { search: "", protocol: "file:" },
+            location = window.location || {search: "", protocol: "file:"},
             params = location.search.slice(1).split("&"),
             length = params.length,
             urlParams = {},
             current;
 
-        if (params[ 0 ]) {
+        if (params[0]) {
             for (i = 0; i < length; i++) {
-                current = params[ i ].split("=");
-                current[ 0 ] = decodeURIComponent(current[ 0 ]);
+                current = params[i].split("=");
+                current[0] = decodeURIComponent(current[0]);
                 // allow just a key to turn on a flag, e.g., test.html?noglobals
-                current[ 1 ] = current[ 1 ] ? decodeURIComponent(current[ 1 ]) : true;
-                urlParams[ current[ 0 ] ] = current[ 1 ];
+                current[1] = current[1] ? decodeURIComponent(current[1]) : true;
+                urlParams[current[0]] = current[1];
             }
         }
 
@@ -663,8 +663,8 @@
         // Initialize the configuration options
         init: function () {
             extend(config, {
-                stats: { all: 0, bad: 0 },
-                moduleStats: { all: 0, bad: 0 },
+                stats: {all: 0, bad: 0},
+                moduleStats: {all: 0, bad: 0},
                 started: +new Date(),
                 updateRate: 1000,
                 blocking: false,
@@ -681,10 +681,10 @@
             if (qunit) {
                 qunit.innerHTML =
                     "<h1 id='qunit-header'>" + escapeInnerText(document.title) + "</h1>" +
-                        "<h2 id='qunit-banner'></h2>" +
-                        "<div id='qunit-testrunner-toolbar'></div>" +
-                        "<h2 id='qunit-userAgent'></h2>" +
-                        "<ol id='qunit-tests'></ol>";
+                    "<h2 id='qunit-banner'></h2>" +
+                    "<div id='qunit-testrunner-toolbar'></div>" +
+                    "<h2 id='qunit-userAgent'></h2>" +
+                    "<ol id='qunit-tests'></ol>";
             }
 
             tests = id("qunit-tests");
@@ -868,7 +868,7 @@
                     continue;
                 }
                 querystring += encodeURIComponent(key) + "=" +
-                    encodeURIComponent(params[ key ]) + "&";
+                encodeURIComponent(params[key]) + "&";
             }
             return window.location.pathname + querystring.slice(0, -1);
         },
@@ -939,8 +939,8 @@
                     tooltip: "[no tooltip available]"
                 };
             }
-            config[ val.id ] = QUnit.urlParams[ val.id ];
-            urlConfigHtml += "<input id='qunit-urlconfig-" + val.id + "' name='" + val.id + "' type='checkbox'" + ( config[ val.id ] ? " checked='checked'" : "" ) + " title='" + val.tooltip + "'><label for='qunit-urlconfig-" + val.id + "' title='" + val.tooltip + "'>" + val.label + "</label>";
+            config[val.id] = QUnit.urlParams[val.id];
+            urlConfigHtml += "<input id='qunit-urlconfig-" + val.id + "' name='" + val.id + "' type='checkbox'" + ( config[val.id] ? " checked='checked'" : "" ) + " title='" + val.tooltip + "'><label for='qunit-urlconfig-" + val.id + "' title='" + val.tooltip + "'>" + val.label + "</label>";
         }
 
         // `userAgent` initialized at top of scope
@@ -952,7 +952,11 @@
         // `banner` initialized at top of scope
         banner = id("qunit-header");
         if (banner) {
-            banner.innerHTML = "<a href='" + QUnit.url({ filter: undefined, module: undefined, testNumber: undefined }) + "'>" + banner.innerHTML + "</a> ";
+            banner.innerHTML = "<a href='" + QUnit.url({
+                filter: undefined,
+                module: undefined,
+                testNumber: undefined
+            }) + "'>" + banner.innerHTML + "</a> ";
         }
 
         // `toolbar` initialized at top of scope
@@ -1001,7 +1005,7 @@
             urlConfigCheckboxes.innerHTML = urlConfigHtml;
             addEvent(urlConfigCheckboxes, "change", function (event) {
                 var params = {};
-                params[ event.target.name ] = event.target.checked ? true : undefined;
+                params[event.target.name] = event.target.checked ? true : undefined;
                 window.location = QUnit.url(params);
             });
             toolbar.appendChild(urlConfigCheckboxes);
@@ -1162,7 +1166,7 @@
 
         if (e.stacktrace) {
             // Opera
-            return e.stacktrace.split("\n")[ offset + 3 ];
+            return e.stacktrace.split("\n")[offset + 3];
         } else if (e.stack) {
             // Firefox, Chrome
             stack = e.stack.split("\n");
@@ -1172,16 +1176,16 @@
             if (fileName) {
                 include = [];
                 for (i = offset; i < stack.length; i++) {
-                    if (stack[ i ].indexOf(fileName) != -1) {
+                    if (stack[i].indexOf(fileName) != -1) {
                         break;
                     }
-                    include.push(stack[ i ]);
+                    include.push(stack[i]);
                 }
                 if (include.length) {
                     return include.join("\n");
                 }
             }
-            return stack[ offset ];
+            return stack[offset];
         } else if (e.sourceURL) {
             // Safari, PhantomJS
             // hopefully one day Safari provides actual stacktraces
@@ -1302,12 +1306,12 @@
 
     function extend(a, b) {
         for (var prop in b) {
-            if (b[ prop ] === undefined) {
-                delete a[ prop ];
+            if (b[prop] === undefined) {
+                delete a[prop];
 
                 // Avoid "Member not found" error in IE8 caused by setting window.constructor
             } else if (prop !== "constructor" || a !== window) {
-                a[ prop ] = b[ prop ];
+                a[prop] = b[prop];
             }
         }
 
@@ -1340,11 +1344,11 @@
         //debugger;
         var i, callbacks;
         if (QUnit.hasOwnProperty(key)) {
-            QUnit[ key ].call(scope, args);
+            QUnit[key].call(scope, args);
         } else {
-            callbacks = config[ key ];
+            callbacks = config[key];
             for (i = 0; i < callbacks.length; i++) {
-                callbacks[ i ].call(scope, args);
+                callbacks[i].call(scope, args);
             }
         }
     }
@@ -1357,10 +1361,10 @@
         function bindCallbacks(o, callbacks, args) {
             var prop = QUnit.objectType(o);
             if (prop) {
-                if (QUnit.objectType(callbacks[ prop ]) === "function") {
-                    return callbacks[ prop ].apply(callbacks, args);
+                if (QUnit.objectType(callbacks[prop]) === "function") {
+                    return callbacks[prop].apply(callbacks, args);
                 } else {
-                    return callbacks[ prop ]; // or undefined
+                    return callbacks[prop]; // or undefined
                 }
             }
         }
@@ -1373,8 +1377,8 @@
             parents = [],
 
             getProto = Object.getPrototypeOf || function (obj) {
-                return obj.__proto__;
-            },
+                    return obj.__proto__;
+                },
             callbacks = (function () {
 
                 // for string, boolean, number and null
@@ -1407,11 +1411,11 @@
 
                     "regexp": function (b, a) {
                         return QUnit.objectType(b) === "regexp" &&
-                            // the regex itself
+                                // the regex itself
                             a.source === b.source &&
-                            // and its modifers
+                                // and its modifers
                             a.global === b.global &&
-                            // (gmi) ...
+                                // (gmi) ...
                             a.ignoreCase === b.ignoreCase &&
                             a.multiline === b.multiline;
                     },
@@ -1523,7 +1527,7 @@
                     QUnit.objectType(a) !== QUnit.objectType(b)) {
                     return false; // don't lose time with error prone cases
                 } else {
-                    return bindCallbacks(a, callbacks, [ b, a ]);
+                    return bindCallbacks(a, callbacks, [b, a]);
                 }
 
                 // apply transition with (1..n) arguments
@@ -1562,7 +1566,7 @@
             if (!arr) {
                 return pre + post;
             }
-            return [ pre, inner + arr, base + post ].join(s);
+            return [pre, inner + arr, base + post].join(s);
         }
 
         function array(arr, stack) {
@@ -1578,9 +1582,9 @@
         var reName = /^function (\w+)/,
             jsDump = {
                 parse: function (obj, type, stack) { //type is used mostly internally, you can fix a (custom)type in advance
-                    stack = stack || [ ];
+                    stack = stack || [];
                     var inStack, res,
-                        parser = this.parsers[ type || this.typeOf(obj) ];
+                        parser = this.parsers[type || this.typeOf(obj)];
 
                     type = typeof parser;
                     inStack = inArray(obj, stack);
@@ -1617,11 +1621,11 @@
                     } else if (obj.nodeType) {
                         type = "node";
                     } else if (
-                    // native arrays
-                        toString.call(obj) === "[object Array]" ||
-                            // NodeList objects
-                            ( typeof obj.length === "number" && typeof obj.item !== "undefined" && ( obj.length ? obj.item(0) === obj[0] : ( obj.item(0) === null && typeof obj[0] === "undefined" ) ) )
-                        ) {
+                        // native arrays
+                    toString.call(obj) === "[object Array]" ||
+                        // NodeList objects
+                    ( typeof obj.length === "number" && typeof obj.item !== "undefined" && ( obj.length ? obj.item(0) === obj[0] : ( obj.item(0) === null && typeof obj[0] === "undefined" ) ) )
+                    ) {
                         type = "array";
                     } else {
                         type = typeof obj;
@@ -1673,14 +1677,14 @@
                         }
                         ret += "( ";
 
-                        ret = [ ret, QUnit.jsDump.parse(fn, "functionArgs"), "){" ].join("");
+                        ret = [ret, QUnit.jsDump.parse(fn, "functionArgs"), "){"].join("");
                         return join(ret, QUnit.jsDump.parse(fn, "functionCode"), "}");
                     },
                     array: array,
                     nodelist: array,
                     "arguments": array,
                     object: function (map, stack) {
-                        var ret = [ ], keys, key, val, i;
+                        var ret = [], keys, key, val, i;
                         QUnit.jsDump.up();
                         if (Object.keys) {
                             keys = Object.keys(map);
@@ -1692,8 +1696,8 @@
                         }
                         keys.sort();
                         for (i = 0; i < keys.length; i++) {
-                            key = keys[ i ];
-                            val = map[ key ];
+                            key = keys[i];
+                            val = map[key];
                             ret.push(QUnit.jsDump.parse(key, "key") + ": " + QUnit.jsDump.parse(val, undefined, stack));
                         }
                         QUnit.jsDump.down();
@@ -1707,7 +1711,7 @@
                             ret = open + tag;
 
                         for (a in QUnit.jsDump.DOMAttrs) {
-                            val = node[ QUnit.jsDump.DOMAttrs[a] ];
+                            val = node[QUnit.jsDump.DOMAttrs[a]];
                             if (val) {
                                 ret += " " + a + "=" + QUnit.jsDump.parse(val, "attribute");
                             }
@@ -1779,7 +1783,7 @@
         }
 
         for (var i = 0, length = array.length; i < length; i++) {
-            if (array[ i ] === elem) {
+            if (array[i] === elem) {
                 return i;
             }
         }
@@ -1808,23 +1812,23 @@
                 os = {};
 
             for (i = 0; i < n.length; i++) {
-                if (ns[ n[i] ] == null) {
-                    ns[ n[i] ] = {
+                if (ns[n[i]] == null) {
+                    ns[n[i]] = {
                         rows: [],
                         o: null
                     };
                 }
-                ns[ n[i] ].rows.push(i);
+                ns[n[i]].rows.push(i);
             }
 
             for (i = 0; i < o.length; i++) {
-                if (os[ o[i] ] == null) {
-                    os[ o[i] ] = {
+                if (os[o[i]] == null) {
+                    os[o[i]] = {
                         rows: [],
                         n: null
                     };
                 }
-                os[ o[i] ].rows.push(i);
+                os[o[i]].rows.push(i);
             }
 
             for (i in ns) {
@@ -1832,42 +1836,42 @@
                     continue;
                 }
                 if (ns[i].rows.length == 1 && typeof os[i] != "undefined" && os[i].rows.length == 1) {
-                    n[ ns[i].rows[0] ] = {
-                        text: n[ ns[i].rows[0] ],
+                    n[ns[i].rows[0]] = {
+                        text: n[ns[i].rows[0]],
                         row: os[i].rows[0]
                     };
-                    o[ os[i].rows[0] ] = {
-                        text: o[ os[i].rows[0] ],
+                    o[os[i].rows[0]] = {
+                        text: o[os[i].rows[0]],
                         row: ns[i].rows[0]
                     };
                 }
             }
 
             for (i = 0; i < n.length - 1; i++) {
-                if (n[i].text != null && n[ i + 1 ].text == null && n[i].row + 1 < o.length && o[ n[i].row + 1 ].text == null &&
-                    n[ i + 1 ] == o[ n[i].row + 1 ]) {
+                if (n[i].text != null && n[i + 1].text == null && n[i].row + 1 < o.length && o[n[i].row + 1].text == null &&
+                    n[i + 1] == o[n[i].row + 1]) {
 
-                    n[ i + 1 ] = {
-                        text: n[ i + 1 ],
+                    n[i + 1] = {
+                        text: n[i + 1],
                         row: n[i].row + 1
                     };
-                    o[ n[i].row + 1 ] = {
-                        text: o[ n[i].row + 1 ],
+                    o[n[i].row + 1] = {
+                        text: o[n[i].row + 1],
                         row: i + 1
                     };
                 }
             }
 
             for (i = n.length - 1; i > 0; i--) {
-                if (n[i].text != null && n[ i - 1 ].text == null && n[i].row > 0 && o[ n[i].row - 1 ].text == null &&
-                    n[ i - 1 ] == o[ n[i].row - 1 ]) {
+                if (n[i].text != null && n[i - 1].text == null && n[i].row > 0 && o[n[i].row - 1].text == null &&
+                    n[i - 1] == o[n[i].row - 1]) {
 
-                    n[ i - 1 ] = {
-                        text: n[ i - 1 ],
+                    n[i - 1] = {
+                        text: n[i - 1],
                         row: n[i].row - 1
                     };
-                    o[ n[i].row - 1 ] = {
-                        text: o[ n[i].row - 1 ],
+                    o[n[i].row - 1] = {
+                        text: o[n[i].row - 1],
                         row: i - 1
                     };
                 }
@@ -1890,14 +1894,14 @@
                 nSpace = n.match(/\s+/g);
 
             if (oSpace == null) {
-                oSpace = [ " " ];
+                oSpace = [" "];
             }
             else {
                 oSpace.push(" ");
             }
 
             if (nSpace == null) {
-                nSpace = [ " " ];
+                nSpace = [" "];
             }
             else {
                 nSpace.push(" ");
@@ -1942,5 +1946,5 @@
 
 // get at whatever the global object is, like window in browsers
 }((function () {
-        return this;
-    }.call())));
+    return this;
+}.call())));

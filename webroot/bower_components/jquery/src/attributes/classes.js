@@ -26,11 +26,11 @@ define([
                 classes = ( value || "" ).match(rnotwhite) || [];
 
                 for (; i < len; i++) {
-                    elem = this[ i ];
+                    elem = this[i];
                     cur = elem.nodeType === 1 && ( elem.className ?
                         ( " " + elem.className + " " ).replace(rclass, " ") :
                         " "
-                        );
+                    );
 
                     if (cur) {
                         j = 0;
@@ -67,12 +67,12 @@ define([
                 classes = ( value || "" ).match(rnotwhite) || [];
 
                 for (; i < len; i++) {
-                    elem = this[ i ];
+                    elem = this[i];
                     // This expression is here for better compressibility (see addClass)
                     cur = elem.nodeType === 1 && ( elem.className ?
                         ( " " + elem.className + " " ).replace(rclass, " ") :
                         ""
-                        );
+                    );
 
                     if (cur) {
                         j = 0;
@@ -83,7 +83,7 @@ define([
                             }
                         }
 
-                        // only assign if different to avoid unneeded rendering.
+                        // Only assign if different to avoid unneeded rendering.
                         finalValue = value ? jQuery.trim(cur) : "";
                         if (elem.className !== finalValue) {
                             elem.className = finalValue;
@@ -110,14 +110,14 @@ define([
 
             return this.each(function () {
                 if (type === "string") {
-                    // toggle individual class names
+                    // Toggle individual class names
                     var className,
                         i = 0,
                         self = jQuery(this),
                         classNames = value.match(rnotwhite) || [];
 
-                    while ((className = classNames[ i++ ])) {
-                        // check each className given, space separated list
+                    while ((className = classNames[i++])) {
+                        // Check each className given, space separated list
                         if (self.hasClass(className)) {
                             self.removeClass(className);
                         } else {
@@ -132,7 +132,7 @@ define([
                         data_priv.set(this, "__className__", this.className);
                     }
 
-                    // If the element has a class name or if we're passed "false",
+                    // If the element has a class name or if we're passed `false`,
                     // then remove the whole classname (if there was one, the above saved it).
                     // Otherwise bring back whatever was previously saved (if anything),
                     // falling back to the empty string if nothing was stored.

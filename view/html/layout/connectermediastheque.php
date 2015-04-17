@@ -35,7 +35,7 @@
 <?php
 require ROOT . DS . "view" . DS . "html" . DS . "layout" . DS . "control" . strtolower(DS . \config\Conf::$user["user"]->role) . ".php"; ?>
 <div id="background" style="padding-top: 10px;"><?php echo $content_for_layout; ?>
-    <div style="
+    <div class="show-for-medium-up" style="
     position			: fixed;
 			bottom				: 0;
 			left				: 0;

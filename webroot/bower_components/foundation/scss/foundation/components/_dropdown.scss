@@ -1,6 +1,7 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
+
 @import "global";
 
 //
@@ -67,6 +68,7 @@ $f-dropdown-radius: $global-radius !default;
   left: -9999px;
   list-style: $f-dropdown-list-style;
   margin-#{$default-float}: 0;
+  outline: none;
 
   > *:first-child {
     margin-top: 0;

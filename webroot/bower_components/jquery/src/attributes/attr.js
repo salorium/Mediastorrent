@@ -41,8 +41,8 @@ define([
             // Grab necessary hook if one is defined
             if (nType !== 1 || !jQuery.isXMLDoc(elem)) {
                 name = name.toLowerCase();
-                hooks = jQuery.attrHooks[ name ] ||
-                    ( jQuery.expr.match.bool.test(name) ? boolHook : nodeHook );
+                hooks = jQuery.attrHooks[name] ||
+                ( jQuery.expr.match.bool.test(name) ? boolHook : nodeHook );
             }
 
             if (value !== undefined) {
@@ -78,12 +78,12 @@ define([
 
             if (attrNames && elem.nodeType === 1) {
                 while ((name = attrNames[i++])) {
-                    propName = jQuery.propFix[ name ] || name;
+                    propName = jQuery.propFix[name] || name;
 
                     // Boolean attributes get special treatment (#10870)
                     if (jQuery.expr.match.bool.test(name)) {
                         // Set corresponding property to false
-                        elem[ propName ] = false;
+                        elem[propName] = false;
                     }
 
                     elem.removeAttribute(name);
@@ -96,8 +96,6 @@ define([
                 set: function (elem, value) {
                     if (!support.radioValue && value === "radio" &&
                         jQuery.nodeName(elem, "input")) {
-                        // Setting the type on a radio button after the value resets the value in IE6-9
-                        // Reset value to default in case type is set after value during creation
                         var val = elem.value;
                         elem.setAttribute("type", value);
                         if (val) {
@@ -123,18 +121,18 @@ define([
         }
     };
     jQuery.each(jQuery.expr.match.bool.source.match(/\w+/g), function (i, name) {
-        var getter = attrHandle[ name ] || jQuery.find.attr;
+        var getter = attrHandle[name] || jQuery.find.attr;
 
-        attrHandle[ name ] = function (elem, name, isXML) {
+        attrHandle[name] = function (elem, name, isXML) {
             var ret, handle;
             if (!isXML) {
                 // Avoid an infinite loop by temporarily removing this function from the getter
-                handle = attrHandle[ name ];
-                attrHandle[ name ] = ret;
+                handle = attrHandle[name];
+                attrHandle[name] = ret;
                 ret = getter(elem, name, isXML) != null ?
                     name.toLowerCase() :
                     null;
-                attrHandle[ name ] = handle;
+                attrHandle[name] = handle;
             }
             return ret;
         };

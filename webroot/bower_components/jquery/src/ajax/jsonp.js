@@ -13,7 +13,7 @@ define([
         jsonp: "callback",
         jsonpCallback: function () {
             var callback = oldCallbacks.pop() || ( jQuery.expando + "_" + ( nonce++ ) );
-            this[ callback ] = true;
+            this[callback] = true;
             return callback;
         }
     });
@@ -23,12 +23,12 @@ define([
 
         var callbackName, overwritten, responseContainer,
             jsonProp = s.jsonp !== false && ( rjsonp.test(s.url) ?
-                "url" :
+                    "url" :
                 typeof s.data === "string" && !( s.contentType || "" ).indexOf("application/x-www-form-urlencoded") && rjsonp.test(s.data) && "data"
                 );
 
         // Handle iff the expected data type is "jsonp" or we have a parameter to set
-        if (jsonProp || s.dataTypes[ 0 ] === "jsonp") {
+        if (jsonProp || s.dataTypes[0] === "jsonp") {
 
             // Get callback name, remembering preexisting value associated with it
             callbackName = s.jsonpCallback = jQuery.isFunction(s.jsonpCallback) ?
@@ -37,7 +37,7 @@ define([
 
             // Insert callback into url or form data
             if (jsonProp) {
-                s[ jsonProp ] = s[ jsonProp ].replace(rjsonp, "$1" + callbackName);
+                s[jsonProp] = s[jsonProp].replace(rjsonp, "$1" + callbackName);
             } else if (s.jsonp !== false) {
                 s.url += ( rquery.test(s.url) ? "&" : "?" ) + s.jsonp + "=" + callbackName;
             }
@@ -47,25 +47,25 @@ define([
                 if (!responseContainer) {
                     jQuery.error(callbackName + " was not called");
                 }
-                return responseContainer[ 0 ];
+                return responseContainer[0];
             };
 
             // force json dataType
-            s.dataTypes[ 0 ] = "json";
+            s.dataTypes[0] = "json";
 
             // Install callback
-            overwritten = window[ callbackName ];
-            window[ callbackName ] = function () {
+            overwritten = window[callbackName];
+            window[callbackName] = function () {
                 responseContainer = arguments;
             };
 
             // Clean-up function (fires after converters)
             jqXHR.always(function () {
                 // Restore preexisting value
-                window[ callbackName ] = overwritten;
+                window[callbackName] = overwritten;
 
                 // Save back as free
-                if (s[ callbackName ]) {
+                if (s[callbackName]) {
                     // make sure that re-using the options doesn't screw things around
                     s.jsonpCallback = originalSettings.jsonpCallback;
 
@@ -75,7 +75,7 @@ define([
 
                 // Call if it was a function and we have a response
                 if (responseContainer && jQuery.isFunction(overwritten)) {
-                    overwritten(responseContainer[ 0 ]);
+                    overwritten(responseContainer[0]);
                 }
 
                 responseContainer = overwritten = undefined;

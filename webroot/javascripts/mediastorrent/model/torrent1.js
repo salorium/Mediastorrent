@@ -3,6 +3,7 @@
  */
 var Torrent1 = new Object();
 Torrent1.model = {
+    up:true,
     reboot: false,
     baseUrl: "",
     nomseedbox: "",
@@ -53,6 +54,15 @@ Torrent1.model = {
             hauteurArbre: 0,
             makerDirectory: function (rep) {
                 return "/home/" + Base.model.utilisateur.login + "/rtorrent/data" + rep;
+            }
+        },
+        files :{
+            file:{
+                serie:{
+                    regexsaison: /(s(\d+)|(\d+)x(\d+))/img,
+                    regexepisode: /e(\d+)/gi,
+                    regexepisode1: /(\d+)/gi
+                }
             }
         }
     },

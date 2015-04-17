@@ -5,7 +5,7 @@ define([
 ], function (jQuery, rnotwhite) {
 
     function Data() {
-        // Support: Android < 4,
+        // Support: Android<4,
         // Old WebKit does not have Object.preventExtensions/freeze method,
         // return new empty object instead with no [[set]] accessor
         Object.defineProperty(this.cache = {}, 0, {
@@ -14,7 +14,7 @@ define([
             }
         });
 
-        this.expando = jQuery.expando + Math.random();
+        this.expando = jQuery.expando + Data.uid++;
     }
 
     Data.uid = 1;
@@ -31,7 +31,7 @@ define([
 
             var descriptor = {},
             // Check if the owner object already has a cache key
-                unlock = owner[ this.expando ];
+                unlock = owner[this.expando];
 
             // If not, create one
             if (!unlock) {
@@ -39,20 +39,20 @@ define([
 
                 // Secure it in a non-enumerable, non-writable property
                 try {
-                    descriptor[ this.expando ] = { value: unlock };
+                    descriptor[this.expando] = {value: unlock};
                     Object.defineProperties(owner, descriptor);
 
-                    // Support: Android < 4
+                    // Support: Android<4
                     // Fallback to a less secure definition
                 } catch (e) {
-                    descriptor[ this.expando ] = unlock;
+                    descriptor[this.expando] = unlock;
                     jQuery.extend(owner, descriptor);
                 }
             }
 
             // Ensure the cache object
-            if (!this.cache[ unlock ]) {
-                this.cache[ unlock ] = {};
+            if (!this.cache[unlock]) {
+                this.cache[unlock] = {};
             }
 
             return unlock;
@@ -63,21 +63,21 @@ define([
             // if there is no entry for this "owner", create one inline
             // and set the unlock as though an owner entry had always existed
                 unlock = this.key(owner),
-                cache = this.cache[ unlock ];
+                cache = this.cache[unlock];
 
             // Handle: [ owner, key, value ] args
             if (typeof data === "string") {
-                cache[ data ] = value;
+                cache[data] = value;
 
                 // Handle: [ owner, { properties } ] args
             } else {
                 // Fresh assignments by object are shallow copied
                 if (jQuery.isEmptyObject(cache)) {
-                    jQuery.extend(this.cache[ unlock ], data);
+                    jQuery.extend(this.cache[unlock], data);
                     // Otherwise, copy the properties one-by-one to the cache object
                 } else {
                     for (prop in data) {
-                        cache[ prop ] = data[ prop ];
+                        cache[prop] = data[prop];
                     }
                 }
             }
@@ -88,10 +88,10 @@ define([
             // New caches will be created and the unlock returned,
             // allowing direct access to the newly created
             // empty data object. A valid owner object must be provided.
-            var cache = this.cache[ this.key(owner) ];
+            var cache = this.cache[this.key(owner)];
 
             return key === undefined ?
-                cache : cache[ key ];
+                cache : cache[key];
         },
         access: function (owner, key, value) {
             var stored;
@@ -130,10 +130,10 @@ define([
         remove: function (owner, key) {
             var i, name, camel,
                 unlock = this.key(owner),
-                cache = this.cache[ unlock ];
+                cache = this.cache[unlock];
 
             if (key === undefined) {
-                this.cache[ unlock ] = {};
+                this.cache[unlock] = {};
 
             } else {
                 // Support array or space separated string of keys
@@ -149,30 +149,30 @@ define([
                     camel = jQuery.camelCase(key);
                     // Try the string as a key before any manipulation
                     if (key in cache) {
-                        name = [ key, camel ];
+                        name = [key, camel];
                     } else {
                         // If a key with the spaces exists, use it.
                         // Otherwise, create an array by matching non-whitespace
                         name = camel;
                         name = name in cache ?
-                            [ name ] : ( name.match(rnotwhite) || [] );
+                            [name] : ( name.match(rnotwhite) || [] );
                     }
                 }
 
                 i = name.length;
                 while (i--) {
-                    delete cache[ name[ i ] ];
+                    delete cache[name[i]];
                 }
             }
         },
         hasData: function (owner) {
             return !jQuery.isEmptyObject(
-                this.cache[ owner[ this.expando ] ] || {}
+                this.cache[owner[this.expando]] || {}
             );
         },
         discard: function (owner) {
-            if (owner[ this.expando ]) {
-                delete this.cache[ owner[ this.expando ] ];
+            if (owner[this.expando]) {
+                delete this.cache[owner[this.expando]];
             }
         }
     };

@@ -17,6 +17,8 @@ class Repertoire extends \core\Controller
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         if (!\config\Conf::$user["role"] >= \config\Conf::$rolenumero["Torrent"]) throw new \Exception("Non authorisé");
         $vv = \model\simple\Repertoire::getFindAll();
+        //var_dump($vv);
         $this->set("rep", $vv);
+        //$this->set("rep", "rigolo");
     }
 } 

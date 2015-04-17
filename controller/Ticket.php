@@ -15,7 +15,6 @@ class Ticket extends \core\Controller
     {
         $t = \model\mysql\Ticket::traiteTicket($id);
         if ($t) {
-
             $data = json_decode($t->donnee, true);
             $cname = $data["classe"];
             $controller = new $cname($this->request, $this->debug);
@@ -27,6 +26,7 @@ class Ticket extends \core\Controller
             $cn = $cn[count($cn) - 1];
             $this->request->controller = strtolower($cn);
             $this->request->action = $data["fonction"];
+            \config\Conf::$user["user"]= "TICKET";
             if (call_user_func_array(array($controller, $data["fonction"]), $data["args"])) {
                 $t->delete();
             }

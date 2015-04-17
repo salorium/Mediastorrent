@@ -1,6 +1,7 @@
 /**
  * Created by salorium on 15/03/14.
  */
+var lastY;
 Torrent1.controller = {
     init: function (seedbox) {
         //Hide du panneau d'ajout d'un torrent
@@ -111,100 +112,110 @@ Torrent1.controller = {
             //this.update("");
         },
         update: function (cid) {
-            var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/liste/' + Base.model.utilisateur.keyconnexion + "/" + cid;
-            if (Torrent1.model.listTorrent.selectionne.length == 1) {
-                url += "/" + Torrent1.model.listTorrent.selectionne[0];
-                $("#listefile").attr("href", Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/getListeFile/' + Torrent1.model.listTorrent.selectionne[0] + "/" + Base.model.utilisateur.keyconnexion);
-            }
-
-            $.ajax({
-                url: url + ".json",
-                dataType: "json",
-                //contentType: "application/json",
-                success: function (response, textStatus, jqXHR) {
-                    if (Torrent1.model.reboot) {
-
-                    } else {
-                        if (response.host === Torrent1.model.baseUrl) {
-                        Torrent1.view.loaders.hideListeTorrent();
-                        if (response.showdebugger === "ok") {
-                            var res = response.torrent;
-                            torrent = res[0];
-                            Torrent1.view.listTorrent.stats(res[2], res[3], res[4]);
-                            Torrent1.controller.listTorrent.conversion(torrent);
-                            if ($("#recherche").val().length > 1) {
-                                Torrent1.controller.listTorrent.recherche();
-                            } else {
-                                Torrent1.controller.listTorrent.resetRecherche();
-                            }
-                            Torrent1.controller.listTorrent.affiche();
-                            if (response.hashtorrent == Torrent1.model.listTorrent.selectionne[0]) {
-                                if (response.torrentselectionnee) {
-                                    if (response.torrentselectionnee.files) {
-                                        Torrent1.model.trackersTorrent.hash = response.hashtorrent;
-                                        var t = Torrent1.model.listTorrent.changed && response.torrentselectionnee.files != [] && response.torrentselectionnee.detail != [];
-                                        Torrent1.controller.detailsTorrent.conversion(response.torrentselectionnee.detail, t);
-                                        Torrent1.controller.filesTorrent.conversion(response.torrentselectionnee.files, t);
-                                        Torrent1.controller.trackersTorrent.conversion(response.torrentselectionnee.trackers, t);
-                                        Torrent1.model.listTorrent.changed = false;
-                                    }
-
-                                } else {
-                                    var t = true;
-                                    Torrent1.controller.detailsTorrent.conversion([], t);
-                                    Torrent1.controller.filesTorrent.conversion([], t);
-                                }
-                            }
-                            Torrent1.view.detailsTorrent.affiche();
-                            Torrent1.view.filesTorrent.afficheArbre();
-                            Torrent1.view.trackersTorrent.afficheTrackers();
-                            Torrent1.model.seedbox.changed = false;
-                            setTimeout(function () {
-                                Torrent1.controller.seedbox.update(res[1]);
-                            }, 1000);
-                        } else {
-                            Torrent1.controller.listTorrent.resetSelectionne();
-                            Torrent1.controller.filesTorrent.reset();
-                            Torrent1.controller.detailsTorrent.reset();
-                            $("#btdetails").parent().children().removeClass('active');
-                            $("#btdetails").addClass('active');
-                            $("#panel2-1").parent().children().removeClass('active');
-                            $("#panel2-1").addClass('active');
-                            Torrent1.model.container.listtorrent.empty();
-                            Torrent1.model.seedbox.changed = false;
-                            Torrent1.view.detailsTorrent.affiche();
-                            Torrent1.view.filesTorrent.afficheArbre();
-
-                            Base.view.noty.generate("error", "Impossible de se connecter à rtorrent");
-                            setTimeout(function () {
-                                Torrent1.controller.seedbox.update("");
-                            }, 10000);
-                        }
-                    } else {
-                        setTimeout(function () {
-                            Torrent1.controller.seedbox.update("");
-                        }, 100);
-                        }
-                    }
-                    //response = null;*/
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    Torrent1.view.loaders.hideListeTorrent();
-                    Torrent1.controller.listTorrent.resetSelectionne();
-                    Torrent1.controller.filesTorrent.reset();
-                    Torrent1.controller.detailsTorrent.reset();
-                    $("#btdetails").parent().children().removeClass('active');
-                    $("#btdetails").addClass('active');
-                    $("#panel2-1").parent().children().removeClass('active');
-                    $("#panel2-1").addClass('active');
-                    Torrent1.model.container.listtorrent.empty();
-                    Torrent1.model.seedbox.changed = false;
-                    Torrent1.view.detailsTorrent.affiche();
-                    Torrent1.view.filesTorrent.afficheArbre();
-                    Torrent1.model.errorServer = true;
-                    Base.view.noty.generate("error", "Impossible de se connecter à " + Torrent1.model.nomseedbox);
+            if (Torrent1.model.up) {
+                var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/liste/' + Base.model.utilisateur.keyconnexion + "/" + cid;
+                if (Torrent1.model.listTorrent.selectionne.length == 1) {
+                    url += "/" + Torrent1.model.listTorrent.selectionne[0];
+                    $("#listefile").attr("href", Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/getListeFile/' + Torrent1.model.listTorrent.selectionne[0] + "/" + Base.model.utilisateur.keyconnexion);
                 }
-            });
+
+                $.ajax({
+                    url: url + ".json",
+                    dataType: "json",
+                    //contentType: "application/json",
+                    success: function (response, textStatus, jqXHR) {
+                        if (Torrent1.model.reboot) {
+
+                        } else {
+                            if (response.host === Torrent1.model.baseUrl) {
+                                Torrent1.view.loaders.hideListeTorrent();
+                                if (response.showdebugger === "ok") {
+                                    var res = response.torrent;
+                                    var torrent = res[0];
+                                    Torrent1.view.listTorrent.stats(res[2], res[3], res[4]);
+                                    Torrent1.controller.listTorrent.conversion(torrent);
+                                    if ($("#recherche").val().length > 1) {
+                                        Torrent1.controller.listTorrent.recherche();
+                                    } else {
+                                        Torrent1.controller.listTorrent.resetRecherche();
+                                    }
+                                    Torrent1.controller.listTorrent.affiche();
+                                    if (Torrent1.model.listTorrent.selectionne.length > 0) {
+                                        if (response.hashtorrent == Torrent1.model.listTorrent.selectionne[0]) {
+                                            if (response.torrentselectionnee) {
+                                                if (response.torrentselectionnee.files) {
+                                                    Torrent1.model.trackersTorrent.hash = response.hashtorrent;
+                                                    var t = Torrent1.model.listTorrent.changed && response.torrentselectionnee.files != [] && response.torrentselectionnee.detail != [];
+                                                    Torrent1.controller.detailsTorrent.conversion(response.torrentselectionnee.detail, t);
+                                                    Torrent1.controller.filesTorrent.conversion(response.torrentselectionnee.files, t);
+                                                    Torrent1.controller.trackersTorrent.conversion(response.torrentselectionnee.trackers, t);
+                                                    Torrent1.model.listTorrent.changed = false;
+                                                }
+
+                                            } else {
+                                                var t = true;
+                                                Torrent1.controller.detailsTorrent.conversion([], t);
+                                                Torrent1.controller.filesTorrent.conversion([], t);
+                                                Torrent1.controller.trackersTorrent.conversion([], t);
+
+                                            }
+                                        }
+                                    } else {
+                                        Torrent1.controller.detailsTorrent.conversion([], true);
+                                        Torrent1.controller.filesTorrent.conversion([], true);
+                                        Torrent1.controller.trackersTorrent.conversion([], true);
+                                    }
+                                    Torrent1.view.detailsTorrent.affiche();
+                                    Torrent1.view.filesTorrent.afficheArbre();
+                                    Torrent1.view.trackersTorrent.afficheTrackers();
+                                    Torrent1.model.seedbox.changed = false;
+                                    setTimeout(function () {
+                                        Torrent1.controller.seedbox.update(res[1]);
+                                    }, 1000);
+                                } else {
+                                    Torrent1.controller.listTorrent.resetSelectionne();
+                                    Torrent1.controller.filesTorrent.reset();
+                                    Torrent1.controller.detailsTorrent.reset();
+                                    $("#btdetails").parent().children().removeClass('active');
+                                    $("#btdetails").addClass('active');
+                                    $("#panel2-1").parent().children().removeClass('active');
+                                    $("#panel2-1").addClass('active');
+                                    Torrent1.model.container.listtorrent.empty();
+                                    Torrent1.model.seedbox.changed = false;
+                                    Torrent1.view.detailsTorrent.affiche();
+                                    Torrent1.view.filesTorrent.afficheArbre();
+
+                                    Base.view.noty.generate("error", "Impossible de se connecter à rtorrent");
+                                    setTimeout(function () {
+                                        Torrent1.controller.seedbox.update("");
+                                    }, 10000);
+                                }
+                            } else {
+                                setTimeout(function () {
+                                    Torrent1.controller.seedbox.update("");
+                                }, 100);
+                            }
+                        }
+                        //response = null;*/
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        Torrent1.view.loaders.hideListeTorrent();
+                        Torrent1.controller.listTorrent.resetSelectionne();
+                        Torrent1.controller.filesTorrent.reset();
+                        Torrent1.controller.detailsTorrent.reset();
+                        $("#btdetails").parent().children().removeClass('active');
+                        $("#btdetails").addClass('active');
+                        $("#panel2-1").parent().children().removeClass('active');
+                        $("#panel2-1").addClass('active');
+                        Torrent1.model.container.listtorrent.empty();
+                        Torrent1.model.seedbox.changed = false;
+                        Torrent1.view.detailsTorrent.affiche();
+                        Torrent1.view.filesTorrent.afficheArbre();
+                        Torrent1.model.errorServer = true;
+                        Base.view.noty.generate("error", "Impossible de se connecter à " + Torrent1.model.nomseedbox);
+                    }
+                });
+            }
         }
     },
     listTorrent: {
@@ -350,6 +361,39 @@ Torrent1.controller = {
                 var delta = e.originalEvent.detail;
                 if (e.originalEvent.wheelDelta)
                     delta = e.originalEvent.wheelDelta * -1;
+                if (delta < 0) {
+                    Torrent1.model.listTorrent.cpt--;
+                    if (Torrent1.model.listTorrent.cpt < 0)
+                        Torrent1.model.listTorrent.cpt = 0;
+                } else {
+                    Torrent1.model.listTorrent.cpt++;
+
+                    if (Torrent1.model.listTorrent.cpt + Torrent1.model.listTorrent.nbtorrents > liste.length) {
+                        Torrent1.model.listTorrent.cpt = liste.length - Torrent1.model.listTorrent.nbtorrents;
+                    }
+                    if (Torrent1.model.listTorrent.cpt < 0)
+                        Torrent1.model.listTorrent.cpt = 0;
+                }
+                Torrent1.controller.listTorrent.affiche();
+            });
+            //Ajout de la roulette sur la liste des torrents
+            $('fieldset.torrent').bind('touchstart', function(e) {
+                lastY = e.originalEvent.touches[0].clientY;
+            });
+            $('fieldset.torrent').bind('touchmove', function (e) {
+                e.preventDefault();
+                var currentY = e.originalEvent.touches[0].clientY;
+                var delta = 0;
+                if(currentY > lastY){
+                    // moved down
+                    delta = -1;
+                }else if(currentY < lastY){
+                    // moved up
+                    delta = 1;
+
+                }
+                lastY = currentY;
+                //alert(e.originalEvent.detail);
                 if (delta < 0) {
                     Torrent1.model.listTorrent.cpt--;
                     if (Torrent1.model.listTorrent.cpt < 0)
@@ -1001,6 +1045,21 @@ Torrent1.controller = {
                 processData: false,
                 data: formData,
                 success: function (response, textStatus, jqXHR) {
+                    console.info(response);
+                    if ( response.erreur == 0){
+                         var i = response.torrents.length-1;
+                        for (i ; i>= 0;i--){
+                            Base.view.noty.generate((response.torrents[i].erreur == 0 ? "success":"error"),response.torrents[i].nom)
+                        }
+
+                    }else{
+                        Base.view.noty.generate("error",response.status)
+                    }
+                    $("#addTorrentDetails").empty();
+
+                    $("#repertoireaddTorrent").val(Torrent1.model.addTorrent.folder.makerDirectory("/"));
+                    $("#torrentfile").val("");
+                    Torrent1.controller.addTorrent.hide();
                     //afficheResultat(container,response);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -1200,9 +1259,13 @@ Torrent1.controller = {
 
                 },
                 serie: {
-                    recherche: function (id) {
-                        var recherche = $("#torrent" + id + "suggestrecherche").val();
-                        var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'film/recherche/' + Base.model.utilisateur.keyconnexion;
+                    showPanel: function (id, nom) {
+                        Base.view.boxmodal.make("Infos films ", Torrent1.view.addTorrent.files.file.serie.recherche.recherche(nom, id));
+                        $("#details").height($("#modalc").height() - $("#modaltitre").height() - $("#modalcontenu").height())
+                    },
+                    recherche: function () {
+                        var recherche = $("#suggestrecherche").val();
+                        var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'serie/recherche/' + Base.model.utilisateur.keyconnexion;
 
                         $.ajax({
                             url: url + ".json",
@@ -1213,15 +1276,15 @@ Torrent1.controller = {
                             //contentType: "application/json",
                             success: function (response, textStatus, jqXHR) {
                                 //console.log(response);
-                                Torrent1.view.addTorrent.files.file.movie.recherche.results(id, response);
+                                Torrent1.view.addTorrent.files.file.serie.recherche.results( response);
                             },
                             error: function (jqXHR, textStatus, errorThrown) {
                                 Base.view.noty.generate("error", "Impossible de se connecter à " + Torrent1.model.nomseedbox);
                             }
                         });
                     },
-                    allrecherche: function (id, code, type) {
-                        var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'film/getInfosFilm/' + code + "/" + Base.model.utilisateur.keyconnexion;
+                    allrecherche: function ( code, type) {
+                        var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'serie/getInfos/' + code + "/" + Base.model.utilisateur.keyconnexion;
                         if (type) {
                             url += "/all";
                         }
@@ -1233,7 +1296,7 @@ Torrent1.controller = {
                             //contentType: "application/json",
                             success: function (response, textStatus, jqXHR) {
                                 //console.log(response);
-                                Torrent1.view.addTorrent.files.file.movie.recherche.allrecherche(id, response.film);
+                                Torrent1.view.addTorrent.files.file.serie.recherche.allrecherche(response.film);
                                 //Torrent1.view.addTorrent.files.file.movie.recherche.results(id,response.film);
                             },
                             error: function (jqXHR, textStatus, errorThrown) {

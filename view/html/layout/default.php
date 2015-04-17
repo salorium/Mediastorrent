@@ -41,7 +41,7 @@
     <?= isset($debug_performance_for_layout) ? $debug_performance_for_layout : ""; ?>
 
 </center>
-<div style="position			: fixed;
+<div class="show-for-medium-up" style="position			: fixed;
 			bottom				: 0;
 			left				: 0;
 			right				: 0;

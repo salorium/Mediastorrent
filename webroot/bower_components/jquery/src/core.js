@@ -7,9 +7,8 @@ define([
     "./var/class2type",
     "./var/toString",
     "./var/hasOwn",
-    "./var/trim",
     "./var/support"
-], function (arr, slice, concat, push, indexOf, class2type, toString, hasOwn, trim, support) {
+], function (arr, slice, concat, push, indexOf, class2type, toString, hasOwn, support) {
 
     var
     // Use the correct document accordingly with window argument (sandbox)
@@ -23,6 +22,10 @@ define([
             // Need init if jQuery is called (just allow error to be thrown if not included)
             return new jQuery.fn.init(selector, context);
         },
+
+    // Support: Android<4.1
+    // Make sure we trim BOM and NBSP
+        rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,
 
     // Matches dashed string for camelizing
         rmsPrefix = /^-ms-/,
@@ -54,10 +57,10 @@ define([
         get: function (num) {
             return num != null ?
 
-                // Return a 'clean' array
-                ( num < 0 ? this[ num + this.length ] : this[ num ] ) :
+                // Return just the one element from the set
+                ( num < 0 ? this[num + this.length] : this[num] ) :
 
-                // Return just the object
+                // Return all the elements in a clean array
                 slice.call(this);
         },
 
@@ -104,7 +107,7 @@ define([
         eq: function (i) {
             var len = this.length,
                 j = +i + ( i < 0 ? len : 0 );
-            return this.pushStack(j >= 0 && j < len ? [ this[j] ] : []);
+            return this.pushStack(j >= 0 && j < len ? [this[j]] : []);
         },
 
         end: function () {
@@ -129,8 +132,8 @@ define([
         if (typeof target === "boolean") {
             deep = target;
 
-            // skip the boolean and the target
-            target = arguments[ i ] || {};
+            // Skip the boolean and the target
+            target = arguments[i] || {};
             i++;
         }
 
@@ -139,7 +142,7 @@ define([
             target = {};
         }
 
-        // extend jQuery itself if only one argument is passed
+        // Extend jQuery itself if only one argument is passed
         if (i === length) {
             target = this;
             i--;
@@ -147,11 +150,11 @@ define([
 
         for (; i < length; i++) {
             // Only deal with non-null/undefined values
-            if ((options = arguments[ i ]) != null) {
+            if ((options = arguments[i]) != null) {
                 // Extend the base object
                 for (name in options) {
-                    src = target[ name ];
-                    copy = options[ name ];
+                    src = target[name];
+                    copy = options[name];
 
                     // Prevent never-ending loop
                     if (target === copy) {
@@ -169,11 +172,11 @@ define([
                         }
 
                         // Never move original objects, clone them
-                        target[ name ] = jQuery.extend(deep, clone, copy);
+                        target[name] = jQuery.extend(deep, clone, copy);
 
                         // Don't bring in undefined values
                     } else if (copy !== undefined) {
-                        target[ name ] = copy;
+                        target[name] = copy;
                     }
                 }
             }
@@ -197,9 +200,6 @@ define([
         noop: function () {
         },
 
-        // See test/unit/core.js for details concerning isFunction.
-        // Since version 1.3, DOM methods and functions like alert
-        // aren't supported. They return false on IE (#2968).
         isFunction: function (obj) {
             return jQuery.type(obj) === "function";
         },
@@ -214,7 +214,8 @@ define([
             // parseFloat NaNs numeric-cast false positives (null|true|false|"")
             // ...but misinterprets leading-number strings, particularly hex literals ("0x...")
             // subtraction forces infinities to NaN
-            return obj - parseFloat(obj) >= 0;
+            // adding 1 corrects loss of precision from parseFloat (#15100)
+            return !jQuery.isArray(obj) && (obj - parseFloat(obj) + 1) >= 0;
         },
 
         isPlainObject: function (obj) {
@@ -226,15 +227,7 @@ define([
                 return false;
             }
 
-            // Support: Firefox <20
-            // The try/catch suppresses exceptions thrown when attempting to access
-            // the "constructor" property of certain host objects, ie. |window.location|
-            // https://bugzilla.mozilla.org/show_bug.cgi?id=814622
-            try {
-                if (obj.constructor && !hasOwn.call(obj.constructor.prototype, "isPrototypeOf")) {
-                    return false;
-                }
-            } catch (e) {
+            if (obj.constructor && !hasOwn.call(obj.constructor.prototype, "isPrototypeOf")) {
                 return false;
             }
 
@@ -255,9 +248,9 @@ define([
             if (obj == null) {
                 return obj + "";
             }
-            // Support: Android < 4.0, iOS < 6 (functionish RegExp)
+            // Support: Android<4.0, iOS<6 (functionish RegExp)
             return typeof obj === "object" || typeof obj === "function" ?
-                class2type[ toString.call(obj) ] || "object" :
+            class2type[toString.call(obj)] || "object" :
                 typeof obj;
         },
 
@@ -285,6 +278,7 @@ define([
         },
 
         // Convert dashed to camelCase; used by the css and data modules
+        // Support: IE9-11+
         // Microsoft forgot to hump their vendor prefix (#9572)
         camelCase: function (string) {
             return string.replace(rmsPrefix, "ms-").replace(rdashAlpha, fcamelCase);
@@ -304,7 +298,7 @@ define([
             if (args) {
                 if (isArray) {
                     for (; i < length; i++) {
-                        value = callback.apply(obj[ i ], args);
+                        value = callback.apply(obj[i], args);
 
                         if (value === false) {
                             break;
@@ -312,7 +306,7 @@ define([
                     }
                 } else {
                     for (i in obj) {
-                        value = callback.apply(obj[ i ], args);
+                        value = callback.apply(obj[i], args);
 
                         if (value === false) {
                             break;
@@ -324,7 +318,7 @@ define([
             } else {
                 if (isArray) {
                     for (; i < length; i++) {
-                        value = callback.call(obj[ i ], i, obj[ i ]);
+                        value = callback.call(obj[i], i, obj[i]);
 
                         if (value === false) {
                             break;
@@ -332,7 +326,7 @@ define([
                     }
                 } else {
                     for (i in obj) {
-                        value = callback.call(obj[ i ], i, obj[ i ]);
+                        value = callback.call(obj[i], i, obj[i]);
 
                         if (value === false) {
                             break;
@@ -344,8 +338,11 @@ define([
             return obj;
         },
 
+        // Support: Android<4.1
         trim: function (text) {
-            return text == null ? "" : trim.call(text);
+            return text == null ?
+                "" :
+                ( text + "" ).replace(rtrim, "");
         },
 
         // results is for internal usage only
@@ -356,7 +353,7 @@ define([
                 if (isArraylike(Object(arr))) {
                     jQuery.merge(ret,
                         typeof arr === "string" ?
-                            [ arr ] : arr
+                            [arr] : arr
                     );
                 } else {
                     push.call(ret, arr);
@@ -376,7 +373,7 @@ define([
                 i = first.length;
 
             for (; j < len; j++) {
-                first[ i++ ] = second[ j ];
+                first[i++] = second[j];
             }
 
             first.length = i;
@@ -394,9 +391,9 @@ define([
             // Go through the array, only saving the items
             // that pass the validator function
             for (; i < length; i++) {
-                callbackInverse = !callback(elems[ i ], i);
+                callbackInverse = !callback(elems[i], i);
                 if (callbackInverse !== callbackExpect) {
-                    matches.push(elems[ i ]);
+                    matches.push(elems[i]);
                 }
             }
 
@@ -414,7 +411,7 @@ define([
             // Go through the array, translating each of the items to their new values
             if (isArray) {
                 for (; i < length; i++) {
-                    value = callback(elems[ i ], i, arg);
+                    value = callback(elems[i], i, arg);
 
                     if (value != null) {
                         ret.push(value);
@@ -424,7 +421,7 @@ define([
                 // Go through every key on the object,
             } else {
                 for (i in elems) {
-                    value = callback(elems[ i ], i, arg);
+                    value = callback(elems[i], i, arg);
 
                     if (value != null) {
                         ret.push(value);
@@ -445,7 +442,7 @@ define([
             var tmp, args, proxy;
 
             if (typeof context === "string") {
-                tmp = fn[ context ];
+                tmp = fn[context];
                 context = fn;
                 fn = tmp;
             }
@@ -477,7 +474,7 @@ define([
 
 // Populate the class2type map
     jQuery.each("Boolean Number String Function Array Date RegExp Object Error".split(" "), function (i, name) {
-        class2type[ "[object " + name + "]" ] = name.toLowerCase();
+        class2type["[object " + name + "]"] = name.toLowerCase();
     });
 
     function isArraylike(obj) {

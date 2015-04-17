@@ -9,7 +9,7 @@
 namespace controller;
 
 
-class Film extends \core\Controller
+class Serie extends \core\Controller
 {
     function getTime($keyconnexion, $idtorrentfilm)
     {
@@ -52,7 +52,7 @@ class Film extends \core\Controller
         $all = new \model\simple\Allocine($re);
         $this->set(array(
             "localfilm" => \model\mysql\Film::rechercheFormat($re),
-            "film" => $all->retourneResMoviesFormat()
+            "film" => $all->retourneResSeriesFormat()
         ));
     }
 
@@ -60,13 +60,7 @@ class Film extends \core\Controller
     {
         \model\simple\Utilisateur::authentificationDistante($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
-        if ( is_string(\config\Conf::$user["user"])){
-            //Traitement du ticket
-            $torrentf = \model\mysql\Torrentfilm::getFilmDuServeur($id);
-        }else{
-            $torrentf = \model\mysql\Torrentfilm::getFilmUserDuServeur($id);
-        }
-        if ($torrentf ) {
+        if ($torrentf = \model\mysql\Torrentfilm::getFilmUserDuServeur($id)) {
             \config\Conf::$portscgi = $torrentf->portscgi;
             $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
                 new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.frozen_path", array($torrentf->hash . ":f" . $torrentf->numfile)));
@@ -124,16 +118,16 @@ class Film extends \core\Controller
         }
     }
 
-    function getInfosFilm($code, $keyconnexion, $all = "")
+    function getInfos($code, $keyconnexion, $all = "")
     {
         \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         if ($all === "") {
             $res = \model\mysql\Film::getByIdFormat($code);
         } else {
-            $o["typesearch"] = "movie";
+            $o["typesearch"] = "tvseries";
             $all = new \model\simple\Allocine($code, $o);
-            $res = $all->retourneResMovieFormat();
+            $res = $all->retourneResSerieFormat();
         }
 
         $this->set(array(

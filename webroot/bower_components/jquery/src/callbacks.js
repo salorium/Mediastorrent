@@ -8,9 +8,9 @@ define([
 
 // Convert String-formatted options into Object-formatted ones and store in cache
     function createOptions(options) {
-        var object = optionsCache[ options ] = {};
+        var object = optionsCache[options] = {};
         jQuery.each(options.match(rnotwhite) || [], function (_, flag) {
-            object[ flag ] = true;
+            object[flag] = true;
         });
         return object;
     }
@@ -42,7 +42,7 @@ define([
         // Convert options from String-formatted to Object-formatted if needed
         // (we check in cache first)
         options = typeof options === "string" ?
-            ( optionsCache[ options ] || createOptions(options) ) :
+            ( optionsCache[options] || createOptions(options) ) :
             jQuery.extend({}, options);
 
         var // Last fire value (for non-forgettable lists)
@@ -70,7 +70,7 @@ define([
                 firingLength = list.length;
                 firing = true;
                 for (; list && firingIndex < firingLength; firingIndex++) {
-                    if (list[ firingIndex ].apply(data[ 0 ], data[ 1 ]) === false && options.stopOnFalse) {
+                    if (list[firingIndex].apply(data[0], data[1]) === false && options.stopOnFalse) {
                         memory = false; // To prevent further calls using add
                         break;
                     }
@@ -178,7 +178,7 @@ define([
                 fireWith: function (context, args) {
                     if (list && ( !fired || stack )) {
                         args = args || [];
-                        args = [ context, args.slice ? args.slice() : args ];
+                        args = [context, args.slice ? args.slice() : args];
                         if (firing) {
                             stack.push(args);
                         } else {

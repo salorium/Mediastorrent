@@ -29,7 +29,8 @@ define([
 
     var docElem = window.document.documentElement,
         selector_hasDuplicate,
-        matches = docElem.webkitMatchesSelector ||
+        matches = docElem.matches ||
+            docElem.webkitMatchesSelector ||
             docElem.mozMatchesSelector ||
             docElem.oMatchesSelector ||
             docElem.msMatchesSelector,
@@ -106,12 +107,12 @@ define([
 
             if (selector_hasDuplicate) {
                 while ((elem = results[i++])) {
-                    if (elem === results[ i ]) {
+                    if (elem === results[i]) {
                         j = duplicates.push(i);
                     }
                 }
                 while (j--) {
-                    results.splice(duplicates[ j ], 1);
+                    results.splice(duplicates[j], 1);
                 }
             }
 

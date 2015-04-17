@@ -740,6 +740,7 @@ class Torrent extends Controller
         $torrents = null;
         $clefunique = null;
         $typemedias = null;
+        $status="ok";
         if (isset($_REQUEST["mediastorrent"])) {
             $tmpclefunique = null;
             for ($idtorrent = 0; $idtorrent < $_REQUEST["nbtorrents"]; $idtorrent++) {
@@ -817,7 +818,7 @@ class Torrent extends Controller
                 }
             }
         }
-        if (isset ($_FILES ['torrentfile'])) {
+        if (isset ($_FILES ['torrentfile']) && !(count( $_FILES['torrentfile']) == 1 && $_FILES ['torrentfile'] ['error'][0] != 4)) {
             if (is_array($_FILES['torrentfile']['name'])) {
 
                 for ($i = 0; $i < count($_FILES['torrentfile']['name']); ++$i) {
@@ -852,15 +853,18 @@ class Torrent extends Controller
                     if ($to->errors()) {
                         $torrent['status'] = "Erreur du fichier torrent";
                     } else {
-                        $torrent['erreur'] = 0;
-                        $torrent["status"] = \model\xmlrpc\rTorrent::sendTorrent($to, !isset($_REQUEST['autostart']));
+                        $torrent["status"] = \model\xmlrpc\rTorrent::sendTorrent($to, !isset($_REQUEST['autostart']),$_REQUEST['repertoire']);
                         $torrent["clefunique"] = \model\simple\String::random(10);
                         usleep(40000);
+                        if ( $torrent['status'][0] === '0'){
                         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, array(
                             new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.custom.set", array($to->hash_info(), "clefunique", $clefunique[$to->hash_info()])),
                             new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.custom.set", array($to->hash_info(), "typemedias", (isset($typemedias[$to->hash_info()]) ? $typemedias[$to->hash_info()] : "aucun")))));
                         $torrent["clefuniqueres"] = ($req->success() ? $req->val : $req->val);
-
+                            if ($torrent["clefuniqueres"][0] === "0" && $torrent["clefuniqueres"][1] === "0"  ){
+                                $torrent['erreur'] = 0;
+                            }
+                        }
                     }
                     unlink($des);
                 } else {
@@ -873,11 +877,12 @@ class Torrent extends Controller
         }
 
         $this->set(array(
-            "torrent" => $torrents,
+            "torrents" => $torrents,
             "erreur" => $erreur,
             "status" => $status,
 
             "post" => $_REQUEST,
+            "FILE"=> $_FILES,
             "seedbox" => \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
         ));
     }

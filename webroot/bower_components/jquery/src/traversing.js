@@ -8,7 +8,7 @@ define([
 ], function (jQuery, indexOf, rneedsContext) {
 
     var rparentsprev = /^(?:parents|prev(?:Until|All))/,
-    // methods guaranteed to produce a unique set when starting from a unique set
+    // Methods guaranteed to produce a unique set when starting from a unique set
         guaranteedUnique = {
             children: true,
             contents: true,
@@ -21,7 +21,7 @@ define([
             var matched = [],
                 truncate = until !== undefined;
 
-            while ((elem = elem[ dir ]) && elem.nodeType !== 9) {
+            while ((elem = elem[dir]) && elem.nodeType !== 9) {
                 if (elem.nodeType === 1) {
                     if (truncate && jQuery(elem).is(until)) {
                         break;
@@ -75,9 +75,9 @@ define([
                     if (cur.nodeType < 11 && (pos ?
                         pos.index(cur) > -1 :
 
-                        // Don't pass non-elements to Sizzle
+                            // Don't pass non-elements to Sizzle
                         cur.nodeType === 1 &&
-                            jQuery.find.matchesSelector(cur, selectors))) {
+                        jQuery.find.matchesSelector(cur, selectors))) {
 
                         matched.push(cur);
                         break;
@@ -88,25 +88,24 @@ define([
             return this.pushStack(matched.length > 1 ? jQuery.unique(matched) : matched);
         },
 
-        // Determine the position of an element within
-        // the matched set of elements
+        // Determine the position of an element within the set
         index: function (elem) {
 
             // No argument, return index in parent
             if (!elem) {
-                return ( this[ 0 ] && this[ 0 ].parentNode ) ? this.first().prevAll().length : -1;
+                return ( this[0] && this[0].parentNode ) ? this.first().prevAll().length : -1;
             }
 
-            // index in selector
+            // Index in selector
             if (typeof elem === "string") {
-                return indexOf.call(jQuery(elem), this[ 0 ]);
+                return indexOf.call(jQuery(elem), this[0]);
             }
 
             // Locate the position of the desired element
             return indexOf.call(this,
 
                 // If it receives a jQuery object, the first element is used
-                elem.jquery ? elem[ 0 ] : elem
+                elem.jquery ? elem[0] : elem
             );
         },
 
@@ -120,7 +119,7 @@ define([
 
         addBack: function (selector) {
             return this.add(selector == null ?
-                this.prevObject : this.prevObject.filter(selector)
+                    this.prevObject : this.prevObject.filter(selector)
             );
         }
     });
@@ -170,7 +169,7 @@ define([
             return elem.contentDocument || jQuery.merge([], elem.childNodes);
         }
     }, function (name, fn) {
-        jQuery.fn[ name ] = function (until, selector) {
+        jQuery.fn[name] = function (until, selector) {
             var matched = jQuery.map(this, fn, until);
 
             if (name.slice(-5) !== "Until") {
@@ -183,7 +182,7 @@ define([
 
             if (this.length > 1) {
                 // Remove duplicates
-                if (!guaranteedUnique[ name ]) {
+                if (!guaranteedUnique[name]) {
                     jQuery.unique(matched);
                 }
 

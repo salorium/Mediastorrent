@@ -1,6 +1,7 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
+
 @import "global";
 @import "buttons";
 @import "dropdown-buttons";
@@ -49,6 +50,7 @@ $split-button-span-width-lrg: $button-pip-lrg * 5 !default;
 $split-button-pip-size-lrg: $button-pip-lrg - rem-calc(6) !default;
 $split-button-pip-top-lrg: $button-pip-lrg + rem-calc(5) !default;
 $split-button-pip-default-float-lrg: rem-calc(-6) !default;
+
 
 //
 // @mixins
@@ -210,6 +212,22 @@ $base-style: true) {
       }
       &.round span {
         @include side-radius($opposite-direction, 1000px);
+      }
+      &.no-pip {
+        span:before {
+          border-style: none;
+        }
+        span:after {
+          border-style: none;
+        }
+        span > i {
+          top: 50%;
+          display: block;
+          position: absolute;
+          left: 50%;
+          margin-left: -0.28889em;
+          margin-top: -0.48889em;
+        }
       }
     }
 

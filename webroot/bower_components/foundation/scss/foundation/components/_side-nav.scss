@@ -1,6 +1,7 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
+
 @import "global";
 
 //
@@ -41,9 +42,11 @@ $side-nav-divider-size: 1px !default;
 $side-nav-divider-style: solid !default;
 $side-nav-divider-color: scale-color($white, $lightness: 10%) !default;
 
+
 //
 // @mixins
 //
+
 
 // We use this to style the side-nav
 //
@@ -51,11 +54,12 @@ $side-nav-divider-color: scale-color($white, $lightness: 10%) !default;
 // $font-size - Font size of nav items. Default: $side-nav-font-size.
 // $link-color - Color of navigation links. Default: $side-nav-link-color.
 // $link-color-hover - Color of navigation links when hovered. Default: $side-nav-link-color-hover.
-@mixin side-nav($divider-color: $side-nav-divider-color,
-$font-size: $side-nav-font-size,
-$link-color: $side-nav-link-color,
-$link-color-hover: $side-nav-link-color-hover,
-$link-bg-hover: $side-nav-link-bg-hover) {
+@mixin side-nav(
+  $divider-color:$side-nav-divider-color,
+  $font-size:$side-nav-font-size,
+  $link-color:$side-nav-link-color,
+  $link-color-hover:$side-nav-link-color-hover,
+  $link-bg-hover:$side-nav-link-bg-hover) {
   display: block;
   margin: 0;
   padding: $side-nav-padding;
@@ -107,8 +111,6 @@ $link-bg-hover: $side-nav-link-bg-hover) {
 
 @include exports("side-nav") {
   @if $include-html-nav-classes {
-    .side-nav {
-      @include side-nav;
-    }
+    .side-nav { @include side-nav; }
   }
 }

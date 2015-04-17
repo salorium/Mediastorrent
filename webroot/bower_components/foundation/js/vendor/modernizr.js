@@ -1,5 +1,5 @@
 /*!
- * Modernizr v2.7.2
+ * Modernizr v2.8.3
  * www.modernizr.com
  *
  * Copyright (c) Faruk Ates, Paul Irish, Alex Sexton
@@ -19,15 +19,15 @@ window.Modernizr = function (a, b, c) {
     }
 
     function g(a, b) {
-        return!!~("" + a).indexOf(b)
+        return !!~("" + a).indexOf(b)
     }
 
     function h(a, b) {
         for (var d in a) {
             var e = a[d];
-            if (!g(e, "-") && t[e] !== c)return"pfx" == b ? e : !0
+            if (!g(e, "-") && t[e] !== c)return "pfx" == b ? e : !0
         }
-        return!1
+        return !1
     }
 
     function i(a, b, d) {
@@ -35,7 +35,7 @@ window.Modernizr = function (a, b, c) {
             var g = b[a[e]];
             if (g !== c)return d === !1 ? a[e] : f(g, "function") ? g.bind(d || b) : g
         }
-        return!1
+        return !1
     }
 
     function j(a, b, c) {
@@ -53,13 +53,13 @@ window.Modernizr = function (a, b, c) {
         }("search tel url email datetime date month week time datetime-local number range color".split(" "))
     }
 
-    var l, m, n = "2.7.2", o = {}, p = !0, q = b.documentElement, r = "modernizr", s = b.createElement(r), t = s.style, u = b.createElement("input"), v = ":)", w = {}.toString, x = " -webkit- -moz- -o- -ms- ".split(" "), y = "Webkit Moz O ms", z = y.split(" "), A = y.toLowerCase().split(" "), B = {svg: "http://www.w3.org/2000/svg"}, C = {}, D = {}, E = {}, F = [], G = F.slice, H = function (a, c, d, e) {
+    var l, m, n = "2.8.3", o = {}, p = !0, q = b.documentElement, r = "modernizr", s = b.createElement(r), t = s.style, u = b.createElement("input"), v = ":)", w = {}.toString, x = " -webkit- -moz- -o- -ms- ".split(" "), y = "Webkit Moz O ms", z = y.split(" "), A = y.toLowerCase().split(" "), B = {svg: "http://www.w3.org/2000/svg"}, C = {}, D = {}, E = {}, F = [], G = F.slice, H = function (a, c, d, e) {
         var f, g, h, i, j = b.createElement("div"), k = b.body, l = k || b.createElement("body");
         if (parseInt(d, 10))for (; d--;)h = b.createElement("div"), h.id = e ? e[d] : r + (d + 1), j.appendChild(h);
         return f = ["&#173;", '<style id="s', r, '">', a, "</style>"].join(""), j.id = r, (k ? j : l).innerHTML += f, l.appendChild(j), k || (l.style.background = "", l.style.overflow = "hidden", i = q.style.overflow, q.style.overflow = "hidden", q.appendChild(l)), g = c(j, a), k ? j.parentNode.removeChild(j) : (l.parentNode.removeChild(l), q.style.overflow = i), !!g
     }, I = function (b) {
         var c = a.matchMedia || a.msMatchMedia;
-        if (c)return c(b).matches;
+        if (c)return c(b) && c(b).matches || !1;
         var d;
         return H("@media " + b + " { #" + r + " { position: absolute; } }", function (b) {
             d = "absolute" == (a.getComputedStyle ? getComputedStyle(b, null) : b.currentStyle).position
@@ -71,7 +71,15 @@ window.Modernizr = function (a, b, c) {
             return g || (e.setAttribute || (e = b.createElement("div")), e.setAttribute && e.removeAttribute && (e.setAttribute(a, ""), g = f(e[a], "function"), f(e[a], "undefined") || (e[a] = c), e.removeAttribute(a))), e = null, g
         }
 
-        var d = {select: "input", change: "input", submit: "form", reset: "form", error: "img", load: "img", abort: "img"};
+        var d = {
+            select: "input",
+            change: "input",
+            submit: "form",
+            reset: "form",
+            error: "img",
+            load: "img",
+            abort: "img"
+        };
         return a
     }(), K = {}.hasOwnProperty;
     m = f(K, "undefined") || f(K.call, "undefined") ? function (a, b) {
@@ -98,33 +106,33 @@ window.Modernizr = function (a, b, c) {
         return j("boxDirection")
     }, C.canvas = function () {
         var a = b.createElement("canvas");
-        return!(!a.getContext || !a.getContext("2d"))
+        return !(!a.getContext || !a.getContext("2d"))
     }, C.canvastext = function () {
-        return!(!o.canvas || !f(b.createElement("canvas").getContext("2d").fillText, "function"))
+        return !(!o.canvas || !f(b.createElement("canvas").getContext("2d").fillText, "function"))
     }, C.webgl = function () {
-        return!!a.WebGLRenderingContext
+        return !!a.WebGLRenderingContext
     }, C.touch = function () {
         var c;
-        return"ontouchstart"in a || a.DocumentTouch && b instanceof DocumentTouch ? c = !0 : H(["@media (", x.join("touch-enabled),("), r, ")", "{#modernizr{top:9px;position:absolute}}"].join(""), function (a) {
+        return "ontouchstart"in a || a.DocumentTouch && b instanceof DocumentTouch ? c = !0 : H(["@media (", x.join("touch-enabled),("), r, ")", "{#modernizr{top:9px;position:absolute}}"].join(""), function (a) {
             c = 9 === a.offsetTop
         }), c
     }, C.geolocation = function () {
-        return"geolocation"in navigator
+        return "geolocation"in navigator
     }, C.postmessage = function () {
-        return!!a.postMessage
+        return !!a.postMessage
     }, C.websqldatabase = function () {
-        return!!a.openDatabase
+        return !!a.openDatabase
     }, C.indexedDB = function () {
-        return!!j("indexedDB", a)
+        return !!j("indexedDB", a)
     }, C.hashchange = function () {
         return J("hashchange", a) && (b.documentMode === c || b.documentMode > 7)
     }, C.history = function () {
-        return!(!a.history || !history.pushState)
+        return !(!a.history || !history.pushState)
     }, C.draganddrop = function () {
         var a = b.createElement("div");
-        return"draggable"in a || "ondragstart"in a && "ondrop"in a
+        return "draggable"in a || "ondragstart"in a && "ondrop"in a
     }, C.websockets = function () {
-        return"WebSocket"in a || "MozWebSocket"in a
+        return "WebSocket"in a || "MozWebSocket"in a
     }, C.rgba = function () {
         return d("background-color:rgba(150,255,150,.5)"), g(t.backgroundColor, "rgba")
     }, C.hsla = function () {
@@ -140,7 +148,7 @@ window.Modernizr = function (a, b, c) {
     }, C.boxshadow = function () {
         return j("boxShadow")
     }, C.textshadow = function () {
-        return"" === b.createElement("div").style.textShadow
+        return "" === b.createElement("div").style.textShadow
     }, C.opacity = function () {
         return e("opacity:.55"), /^0.55$/.test(t.opacity)
     }, C.cssanimations = function () {
@@ -153,7 +161,7 @@ window.Modernizr = function (a, b, c) {
     }, C.cssreflections = function () {
         return j("boxReflect")
     }, C.csstransforms = function () {
-        return!!j("transform")
+        return !!j("transform")
     }, C.csstransforms3d = function () {
         var a = !!j("perspective");
         return a && "webkitPerspective"in q.style && H("@media (transform-3d),(-webkit-transform-3d){#modernizr{left:9px;position:absolute;height:3px;}}", function (b) {
@@ -190,27 +198,27 @@ window.Modernizr = function (a, b, c) {
         try {
             return localStorage.setItem(r, r), localStorage.removeItem(r), !0
         } catch (a) {
-            return!1
+            return !1
         }
     }, C.sessionstorage = function () {
         try {
             return sessionStorage.setItem(r, r), sessionStorage.removeItem(r), !0
         } catch (a) {
-            return!1
+            return !1
         }
     }, C.webworkers = function () {
-        return!!a.Worker
+        return !!a.Worker
     }, C.applicationcache = function () {
-        return!!a.applicationCache
+        return !!a.applicationCache
     }, C.svg = function () {
-        return!!b.createElementNS && !!b.createElementNS(B.svg, "svg").createSVGRect
+        return !!b.createElementNS && !!b.createElementNS(B.svg, "svg").createSVGRect
     }, C.inlinesvg = function () {
         var a = b.createElement("div");
         return a.innerHTML = "<svg/>", (a.firstChild && a.firstChild.namespaceURI) == B.svg
     }, C.smil = function () {
-        return!!b.createElementNS && /SVGAnimate/.test(w.call(b.createElementNS(B.svg, "animate")))
+        return !!b.createElementNS && /SVGAnimate/.test(w.call(b.createElementNS(B.svg, "animate")))
     }, C.svgclippaths = function () {
-        return!!b.createElementNS && /SVGClipPath/.test(w.call(b.createElementNS(B.svg, "clipPath")))
+        return !!b.createElementNS && /SVGClipPath/.test(w.call(b.createElementNS(B.svg, "clipPath")))
     };
     for (var L in C)m(C, L) && (l = L.toLowerCase(), o[l] = C[L](), F.push((o[l] ? "" : "no-") + l));
     return o.input || k(), o.addTest = function (a, b) {
@@ -227,7 +235,7 @@ window.Modernizr = function (a, b, c) {
 
         function d() {
             var a = s.elements;
-            return"string" == typeof a ? a.split(" ") : a
+            return "string" == typeof a ? a.split(" ") : a
         }
 
         function e(a) {
@@ -260,7 +268,7 @@ window.Modernizr = function (a, b, c) {
         function i(a) {
             a || (a = b);
             var d = e(a);
-            return!s.shivCSS || j || d.hasCSS || (d.hasCSS = !!c(a, "article,aside,dialog,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}mark{background:#FF0;color:#000}template{display:none}")), k || h(a, d), a
+            return !s.shivCSS || j || d.hasCSS || (d.hasCSS = !!c(a, "article,aside,dialog,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}mark{background:#FF0;color:#000}template{display:none}")), k || h(a, d), a
         }
 
         var j, k, l = "3.7.0", m = a.html5 || {}, n = /^<|^(?:button|map|select|textarea|object|iframe|option|optgroup)$/i, o = /^(?:a|b|code|div|fieldset|h1|h2|h3|h4|h5|h6|i|label|li|ol|p|q|span|strong|style|table|tbody|td|th|tr|ul)$/i, p = "_html5shiv", q = 0, r = {};
@@ -270,13 +278,23 @@ window.Modernizr = function (a, b, c) {
                 a.innerHTML = "<xyz></xyz>", j = "hidden"in a, k = 1 == a.childNodes.length || function () {
                     b.createElement("a");
                     var a = b.createDocumentFragment();
-                    return"undefined" == typeof a.cloneNode || "undefined" == typeof a.createDocumentFragment || "undefined" == typeof a.createElement
+                    return "undefined" == typeof a.cloneNode || "undefined" == typeof a.createDocumentFragment || "undefined" == typeof a.createElement
                 }()
             } catch (c) {
                 j = !0, k = !0
             }
         }();
-        var s = {elements: m.elements || "abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video", version: l, shivCSS: m.shivCSS !== !1, supportsUnknownElements: k, shivMethods: m.shivMethods !== !1, type: "default", shivDocument: i, createElement: f, createDocumentFragment: g};
+        var s = {
+            elements: m.elements || "abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video",
+            version: l,
+            shivCSS: m.shivCSS !== !1,
+            supportsUnknownElements: k,
+            shivMethods: m.shivMethods !== !1,
+            type: "default",
+            shivDocument: i,
+            createElement: f,
+            createDocumentFragment: g
+        };
         a.html5 = s, i(b)
     }(this, b), o._version = n, o._prefixes = x, o._domPrefixes = A, o._cssomPrefixes = z, o.mq = I, o.hasEvent = J, o.testProp = function (a) {
         return h([a])

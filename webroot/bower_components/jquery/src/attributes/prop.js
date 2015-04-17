@@ -13,7 +13,7 @@ define([
 
         removeProp: function (name) {
             return this.each(function () {
-                delete this[ jQuery.propFix[ name ] || name ];
+                delete this[jQuery.propFix[name] || name];
             });
         }
     });
@@ -28,7 +28,7 @@ define([
             var ret, hooks, notxml,
                 nType = elem.nodeType;
 
-            // don't get/set properties on text, comment and attribute nodes
+            // Don't get/set properties on text, comment and attribute nodes
             if (!elem || nType === 3 || nType === 8 || nType === 2) {
                 return;
             }
@@ -37,19 +37,19 @@ define([
 
             if (notxml) {
                 // Fix name and attach hooks
-                name = jQuery.propFix[ name ] || name;
-                hooks = jQuery.propHooks[ name ];
+                name = jQuery.propFix[name] || name;
+                hooks = jQuery.propHooks[name];
             }
 
             if (value !== undefined) {
                 return hooks && "set" in hooks && (ret = hooks.set(elem, value, name)) !== undefined ?
                     ret :
-                    ( elem[ name ] = value );
+                    ( elem[name] = value );
 
             } else {
                 return hooks && "get" in hooks && (ret = hooks.get(elem, name)) !== null ?
                     ret :
-                    elem[ name ];
+                    elem[name];
             }
         },
 
@@ -64,8 +64,6 @@ define([
         }
     });
 
-// Support: IE9+
-// Selectedness for an option in an optgroup can be inaccurate
     if (!support.optSelected) {
         jQuery.propHooks.selected = {
             get: function (elem) {
@@ -90,7 +88,7 @@ define([
         "frameBorder",
         "contentEditable"
     ], function () {
-        jQuery.propFix[ this.toLowerCase() ] = this;
+        jQuery.propFix[this.toLowerCase()] = this;
     });
 
 });

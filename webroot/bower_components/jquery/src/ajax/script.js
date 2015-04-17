@@ -41,16 +41,16 @@ define([
                         charset: s.scriptCharset,
                         src: s.url
                     }).on(
-                            "load error",
-                            callback = function (evt) {
-                                script.remove();
-                                callback = null;
-                                if (evt) {
-                                    complete(evt.type === "error" ? 404 : 200, evt.type);
-                                }
+                        "load error",
+                        callback = function (evt) {
+                            script.remove();
+                            callback = null;
+                            if (evt) {
+                                complete(evt.type === "error" ? 404 : 200, evt.type);
                             }
-                        );
-                    document.head.appendChild(script[ 0 ]);
+                        }
+                    );
+                    document.head.appendChild(script[0]);
                 },
                 abort: function () {
                     if (callback) {

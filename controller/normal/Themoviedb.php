@@ -45,6 +45,13 @@ class Themoviedb extends Controller
         ));
     }
 
+    function getImageSerie($id){
+        $all = new \model\simple\TheMovieDb();
+        $this->set(array(
+            "i"=> $all->getSerieImage(48866)
+        ));
+    }
+
     function getInfosFilm($id)
     {
         $all = new \model\simple\TheMovieDb();

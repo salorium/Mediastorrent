@@ -1,6 +1,7 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
+
 @import "global";
 
 //
@@ -48,6 +49,7 @@ $box-shadow-hover: $thumb-box-shadow-hover) {
     box-shadow: $box-shadow-hover;
   }
 }
+
 
 @include exports("thumb") {
   @if $include-html-media-classes {

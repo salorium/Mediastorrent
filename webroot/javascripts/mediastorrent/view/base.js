@@ -10,7 +10,7 @@ Base.view = {
     },
     fixedHeightContainer: function () {
         this.hauteurWindows = $(window).height();
-        Base.view.fixedHeight(".container", this.hauteurWindows - 75);
+        Base.view.fixedHeight(".container", this.hauteurWindows - (Foundation.utils.is_medium_up() == true ? 75:45));
     },
     fixedHeight: function (container, hauteur) {
         $(container).css("height", hauteur);
