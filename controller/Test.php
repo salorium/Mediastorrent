@@ -26,7 +26,7 @@ class Test extends Controller
 {
     function brantest()
     {
-
+//exemple
     }
     function linux()
     {
