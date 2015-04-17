@@ -87,7 +87,7 @@ window.caniusecb = function (scriptdata) {
         if (o.ciuresult == 'a') {
             return ok(true,
                 o.browser + o.version + ': Caniuse reported partial support for ' + o.ciufeature +
-                    '. So.. Modernizr\'s ' + o.result + ' is good enough...'
+                '. So.. Modernizr\'s ' + o.result + ' is good enough...'
             );
         }
 
@@ -95,14 +95,14 @@ window.caniusecb = function (scriptdata) {
         // change the *documented* false positives
         if ((o.feature == 'textshadow' && o.browser == 'firefox' && o.version == 3)
             && ciubool == false
-            ) {
+        ) {
             ciubool = o.fp = true;
-        }
+    }
 
         // where we actually do most our assertions
         equal(o.result, ciubool,
             o.browser + o.version + ': Caniuse result for ' + o.ciufeature +
-                ' matches Modernizr\'s ' + (o.fp ? '*false positive*' : 'result') + ' for ' + o.feature
+            ' matches Modernizr\'s ' + (o.fp ? '*false positive*' : 'result') + ' for ' + o.feature
         );
     }
 
@@ -150,7 +150,13 @@ window.caniusecb = function (scriptdata) {
                 mmResult = mmResult.replace(' x', '');
 
                 // match it against our data.
-                testify({ feature: feature, ciufeature: ciufeatname, result: Modernizr[feature], ciuresult: mmResult, browser: currBrowser, version: majorminor
+                testify({
+                    feature: feature
+                    , ciufeature: ciufeatname
+                    , result: Modernizr[feature]
+                    , ciuresult: mmResult
+                    , browser: currBrowser
+                    , version: majorminor
                 });
 
                 continue; // don't check the major version
@@ -165,7 +171,13 @@ window.caniusecb = function (scriptdata) {
                 // data ends w/ ` x` if its still prefixed in the imp
                 mResult = mResult.replace(' x', '');
 
-                testify({ feature: feature, ciufeature: ciufeatname, result: Modernizr[feature], ciuresult: mResult, browser: currBrowser, version: ua.major
+                testify({
+                    feature: feature
+                    , ciufeature: ciufeatname
+                    , result: Modernizr[feature]
+                    , ciuresult: mResult
+                    , browser: currBrowser
+                    , version: ua.major
                 });
 
 

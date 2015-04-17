@@ -89,7 +89,14 @@ class Film extends Controller
     function streaming($id)
     {
         $this->layout = "streaming";
-        if ($torrentf = \model\mysql\Torrentfilm::getTorrentFilmParIdForStreamingDeUtilisateur($id)) {
+
+        if (is_string(\config\Conf::$user["user"])) {
+            //Traitement du ticket
+            $torrentf = \model\mysql\Torrentfilm::getTorrentFilmParIdForStreaming($id);
+        } else {
+            $torrentf = \model\mysql\Torrentfilm::getTorrentFilmParIdForStreamingDeUtilisateur($id);
+        }
+        if ($torrentf) {
             \config\Conf::$portscgi = $torrentf->portscgi;
             $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
                 new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.frozen_path", array($torrentf->hash.":f".$torrentf->numfile)));
@@ -144,10 +151,12 @@ class Film extends Controller
                 $str = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $str);
 // Supprimer tout le reste
                 $str = preg_replace('#&[^;]+;#', '', $str);
-
+                if (is_string(\config\Conf::$user["user"])) {
+                    $idticket = \model\mysql\Ticket::savTicket("controller\\Film", "download", [$id], 60 * 60 * 6);
+                }
                 $this->set(array(
                     "titre" => $torrentf->titre . " " . $compfile,
-                    "src" => "http://" . $torrentf->hostname . "/film/download/" . $id . "/" . \config\Conf::$user["user"]->keyconnexion . "/" . ($str)
+                    "src" => (is_string(\config\Conf::$user["user"]) == true ? "http://" . $torrentf->hostname . "/ticket/traite/" . $idticket . "/" . ($str) : "http://" . $torrentf->hostname . "/film/download/" . $id . "/" . \config\Conf::$user["user"]->keyconnexion . "/" . ($str))
                 ));
             }
         }

@@ -19,6 +19,6 @@ class Repertoire extends \core\Model
             $recmd[1][] = '';
         }
         $liste = "[" . implode(",", $recmd[1]) . "]";
-        return json_decode($liste, true);
+        return json_decode(utf8_encode($liste), true);
     }
 } 

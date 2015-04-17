@@ -163,7 +163,7 @@
 
     function isArray(o) {
         return Array.isArray ? Array.isArray(o) :
-            toString.call(o) === "[object Array]";
+        toString.call(o) === "[object Array]";
     }
 
     function mytypeof(o) {

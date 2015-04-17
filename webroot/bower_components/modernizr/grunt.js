@@ -4,12 +4,12 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         meta: {
-            version: '2.7.2',
+            version: '2.8.3',
             banner: '/*!\n' +
-                ' * Modernizr v<%= meta.version %>\n' +
-                ' * www.modernizr.com\n *\n' +
-                ' * Copyright (c) Faruk Ates, Paul Irish, Alex Sexton\n' +
-                ' * Available under the BSD and MIT licenses: www.modernizr.com/license/\n */'
+            ' * Modernizr v<%= meta.version %>\n' +
+            ' * www.modernizr.com\n *\n' +
+            ' * Copyright (c) Faruk Ates, Paul Irish, Alex Sexton\n' +
+            ' * Available under the BSD and MIT licenses: www.modernizr.com/license/\n */'
         },
         qunit: {
             files: ['test/index.html']

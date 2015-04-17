@@ -23,9 +23,9 @@ define([
 
             // Handle HTML strings
             if (typeof selector === "string") {
-                if (selector[0] === "<" && selector[ selector.length - 1 ] === ">" && selector.length >= 3) {
+                if (selector[0] === "<" && selector[selector.length - 1] === ">" && selector.length >= 3) {
                     // Assume that strings that start and end with <> are HTML and skip the regex check
-                    match = [ null, selector, null ];
+                    match = [null, selector, null];
 
                 } else {
                     match = rquickExpr.exec(selector);
@@ -38,7 +38,7 @@ define([
                     if (match[1]) {
                         context = context instanceof jQuery ? context[0] : context;
 
-                        // scripts is true for back-compat
+                        // Option to run scripts is true for back-compat
                         // Intentionally let the error be thrown if parseHTML is not present
                         jQuery.merge(this, jQuery.parseHTML(
                             match[1],
@@ -50,12 +50,12 @@ define([
                         if (rsingleTag.test(match[1]) && jQuery.isPlainObject(context)) {
                             for (match in context) {
                                 // Properties of context are called as methods if possible
-                                if (jQuery.isFunction(this[ match ])) {
-                                    this[ match ](context[ match ]);
+                                if (jQuery.isFunction(this[match])) {
+                                    this[match](context[match]);
 
                                     // ...and otherwise set as attributes
                                 } else {
-                                    this.attr(match, context[ match ]);
+                                    this.attr(match, context[match]);
                                 }
                             }
                         }
@@ -66,8 +66,8 @@ define([
                     } else {
                         elem = document.getElementById(match[2]);
 
-                        // Check parentNode to catch when Blackberry 4.6 returns
-                        // nodes that are no longer in the document #6963
+                        // Support: Blackberry 4.6
+                        // gEBID returns nodes no longer in the document (#6963)
                         if (elem && elem.parentNode) {
                             // Inject the element directly into the jQuery object
                             this.length = 1;

@@ -18,7 +18,7 @@ Modernizr.addTest('ruby', function () {
 
     // browsers that support <ruby> hide the <rp> via "display:none"
     if (getStyle(rp, displayStyleProperty) == 'none' ||                                                       // for non-IE browsers
-        // but in IE browsers <rp> has "display:inline" so, the test needs other conditions:
+            // but in IE browsers <rp> has "display:inline" so, the test needs other conditions:
         getStyle(ruby, displayStyleProperty) == 'ruby' && getStyle(rt, displayStyleProperty) == 'ruby-text' || // for IE8 & IE9
         getStyle(rp, fontSizeStyleProperty) == '6pt' && getStyle(rt, fontSizeStyleProperty) == '6pt') {       // for IE6 & IE7
 

@@ -1,6 +1,7 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
+
 @import "global";
 
 //
@@ -28,6 +29,7 @@ $sub-nav-padding: rem-calc(3 16) !default;
 $sub-nav-border-radius: 3px !default;
 $sub-nav-font-color-hover: scale-color($sub-nav-font-color, $lightness: -25%) !default;
 
+
 // We use these to control the active item styles
 
 $sub-nav-active-font-weight: $font-weight-normal !default;
@@ -44,6 +46,7 @@ $sub-nav-item-divider-margin: rem-calc(12) !default;
 // @mixins
 //
 
+
 // Create a sub-nav item
 //
 // $font-color - Font color. Default: $sub-nav-font-color.
@@ -57,10 +60,8 @@ $active-bg-hover: $sub-nav-active-bg-hover) {
   display: block;
   width: auto;
   overflow: hidden;
-  margin: $sub-nav-list-margin;
+  margin-bottom: $sub-nav-list-margin;
   padding-top: $sub-nav-list-padding-top;
-  margin-#{$opposite-direction}: 0;
-  margin-#{$default-float}: rem-calc(-12);
 
   dt {
     text-transform: uppercase;
@@ -70,9 +71,8 @@ $active-bg-hover: $sub-nav-active-bg-hover) {
   dd,
   li {
     float: $default-float;
-    display: inline;
     margin-#{$default-float}: rem-calc(16);
-    margin-bottom: rem-calc(10);
+    margin-bottom: 0;
     font-family: $sub-nav-font-family;
     font-weight: $sub-nav-font-weight;
     font-size: $font-size;

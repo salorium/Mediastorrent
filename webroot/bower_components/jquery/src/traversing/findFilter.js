@@ -38,14 +38,14 @@ define([
     }
 
     jQuery.filter = function (expr, elems, not) {
-        var elem = elems[ 0 ];
+        var elem = elems[0];
 
         if (not) {
             expr = ":not(" + expr + ")";
         }
 
         return elems.length === 1 && elem.nodeType === 1 ?
-            jQuery.find.matchesSelector(elem, expr) ? [ elem ] : [] :
+            jQuery.find.matchesSelector(elem, expr) ? [elem] : [] :
             jQuery.find.matches(expr, jQuery.grep(elems, function (elem) {
                 return elem.nodeType === 1;
             }));
@@ -61,7 +61,7 @@ define([
             if (typeof selector !== "string") {
                 return this.pushStack(jQuery(selector).filter(function () {
                     for (i = 0; i < len; i++) {
-                        if (jQuery.contains(self[ i ], this)) {
+                        if (jQuery.contains(self[i], this)) {
                             return true;
                         }
                     }
@@ -69,7 +69,7 @@ define([
             }
 
             for (i = 0; i < len; i++) {
-                jQuery.find(selector, self[ i ], ret);
+                jQuery.find(selector, self[i], ret);
             }
 
             // Needed because $( selector, context ) becomes $( context ).find( selector )
@@ -91,7 +91,7 @@ define([
                 // so $("p:first").is("p:last") won't return true for a doc with two "p".
                 typeof selector === "string" && rneedsContext.test(selector) ?
                     jQuery(selector) :
-                    selector || [],
+                selector || [],
                 false
             ).length;
         }

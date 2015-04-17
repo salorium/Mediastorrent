@@ -1,6 +1,7 @@
 define([
     "./core",
     "./core/init",
+    "./manipulation", // clone
     "./traversing" // parent, contents
 ], function (jQuery) {
 
@@ -14,13 +15,13 @@ define([
                 });
             }
 
-            if (this[ 0 ]) {
+            if (this[0]) {
 
                 // The elements to wrap the target around
-                wrap = jQuery(html, this[ 0 ].ownerDocument).eq(0).clone(true);
+                wrap = jQuery(html, this[0].ownerDocument).eq(0).clone(true);
 
-                if (this[ 0 ].parentNode) {
-                    wrap.insertBefore(this[ 0 ]);
+                if (this[0].parentNode) {
+                    wrap.insertBefore(this[0]);
                 }
 
                 wrap.map(function () {

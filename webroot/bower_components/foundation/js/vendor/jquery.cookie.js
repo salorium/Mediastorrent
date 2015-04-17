@@ -1,12 +1,12 @@
 /*!
- * jQuery Cookie Plugin v1.4.0
+ * jQuery Cookie Plugin v1.4.1
  * https://github.com/carhartl/jquery-cookie
  *
  * Copyright 2013 Klaus Hartl
  * Released under the MIT license
  */
 !function (a) {
-    "function" == typeof define && define.amd ? define(["jquery"], a) : a(jQuery)
+    "function" == typeof define && define.amd ? define(["jquery"], a) : a("object" == typeof exports ? require("jquery") : jQuery)
 }(function (a) {
     function b(a) {
         return h.raw ? a : encodeURIComponent(a)
@@ -23,12 +23,7 @@
     function e(a) {
         0 === a.indexOf('"') && (a = a.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, "\\"));
         try {
-            a = decodeURIComponent(a.replace(g, " "))
-        } catch (b) {
-            return
-        }
-        try {
-            return h.json ? JSON.parse(a) : a
+            return a = decodeURIComponent(a.replace(g, " ")), h.json ? JSON.parse(a) : a
         } catch (b) {
         }
     }
@@ -42,7 +37,7 @@
         if (void 0 !== g && !a.isFunction(g)) {
             if (i = a.extend({}, h.defaults, i), "number" == typeof i.expires) {
                 var j = i.expires, k = i.expires = new Date;
-                k.setDate(k.getDate() + j)
+                k.setTime(+k + 864e5 * j)
             }
             return document.cookie = [b(e), "=", d(g), i.expires ? "; expires=" + i.expires.toUTCString() : "", i.path ? "; path=" + i.path : "", i.domain ? "; domain=" + i.domain : "", i.secure ? "; secure" : ""].join("")
         }
@@ -57,6 +52,6 @@
         return l
     };
     h.defaults = {}, a.removeCookie = function (b, c) {
-        return void 0 !== a.cookie(b) ? (a.cookie(b, "", a.extend({}, c, {expires: -1})), !0) : !1
+        return void 0 === a.cookie(b) ? !1 : (a.cookie(b, "", a.extend({}, c, {expires: -1})), !a.cookie(b))
     }
 });

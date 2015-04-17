@@ -19,23 +19,23 @@ define([
         rfxtypes = /^(?:toggle|show|hide)$/,
         rfxnum = new RegExp("^(?:([+-])=|)(" + pnum + ")([a-z%]*)$", "i"),
         rrun = /queueHooks$/,
-        animationPrefilters = [ defaultPrefilter ],
+        animationPrefilters = [defaultPrefilter],
         tweeners = {
-            "*": [ function (prop, value) {
+            "*": [function (prop, value) {
                 var tween = this.createTween(prop, value),
                     target = tween.cur(),
                     parts = rfxnum.exec(value),
-                    unit = parts && parts[ 3 ] || ( jQuery.cssNumber[ prop ] ? "" : "px" ),
+                    unit = parts && parts[3] || ( jQuery.cssNumber[prop] ? "" : "px" ),
 
                 // Starting value computation is required for potential unit mismatches
-                    start = ( jQuery.cssNumber[ prop ] || unit !== "px" && +target ) &&
+                    start = ( jQuery.cssNumber[prop] || unit !== "px" && +target ) &&
                         rfxnum.exec(jQuery.css(tween.elem, prop)),
                     scale = 1,
                     maxIterations = 20;
 
-                if (start && start[ 3 ] !== unit) {
+                if (start && start[3] !== unit) {
                     // Trust units reported by jQuery.css
-                    unit = unit || start[ 3 ];
+                    unit = unit || start[3];
 
                     // Make sure we update the tween properties later on
                     parts = parts || [];
@@ -44,16 +44,16 @@ define([
                     start = +target || 1;
 
                     do {
-                        // If previous iteration zeroed out, double until we get *something*
-                        // Use a string for doubling factor so we don't accidentally see scale as unchanged below
+                        // If previous iteration zeroed out, double until we get *something*.
+                        // Use string for doubling so we don't accidentally see scale as unchanged below
                         scale = scale || ".5";
 
                         // Adjust and apply
                         start = start / scale;
                         jQuery.style(tween.elem, prop, start + unit);
 
-                        // Update scale, tolerating zero or NaN from tween.cur()
-                        // And breaking the loop if scale is unchanged or perfect, or if we've just had enough
+                        // Update scale, tolerating zero or NaN from tween.cur(),
+                        // break the loop if scale is unchanged or perfect, or if we've just had enough
                     } while (scale !== (scale = tween.cur() / target) && scale !== 1 && --maxIterations);
                 }
 
@@ -62,13 +62,13 @@ define([
                     start = tween.start = +start || +target || 0;
                     tween.unit = unit;
                     // If a +=/-= token was provided, we're doing a relative animation
-                    tween.end = parts[ 1 ] ?
-                        start + ( parts[ 1 ] + 1 ) * parts[ 2 ] :
-                        +parts[ 2 ];
+                    tween.end = parts[1] ?
+                    start + ( parts[1] + 1 ) * parts[2] :
+                        +parts[2];
                 }
 
                 return tween;
-            } ]
+            }]
         };
 
 // Animations created synchronously will run synchronously
@@ -83,14 +83,14 @@ define([
     function genFx(type, includeWidth) {
         var which,
             i = 0,
-            attrs = { height: type };
+            attrs = {height: type};
 
-        // if we include width, step value is 1 to do all cssExpand values,
-        // if we don't include width, step value is 2 to skip over Left and Right
+        // If we include width, step value is 1 to do all cssExpand values,
+        // otherwise step value is 2 to skip over Left and Right
         includeWidth = includeWidth ? 1 : 0;
         for (; i < 4; i += 2 - includeWidth) {
-            which = cssExpand[ i ];
-            attrs[ "margin" + which ] = attrs[ "padding" + which ] = type;
+            which = cssExpand[i];
+            attrs["margin" + which] = attrs["padding" + which] = type;
         }
 
         if (includeWidth) {
@@ -102,13 +102,13 @@ define([
 
     function createTween(value, prop, animation) {
         var tween,
-            collection = ( tweeners[ prop ] || [] ).concat(tweeners[ "*" ]),
+            collection = ( tweeners[prop] || [] ).concat(tweeners["*"]),
             index = 0,
             length = collection.length;
         for (; index < length; index++) {
-            if ((tween = collection[ index ].call(animation, prop, value))) {
+            if ((tween = collection[index].call(animation, prop, value))) {
 
-                // we're done with this property
+                // We're done with this property
                 return tween;
             }
         }
@@ -116,14 +116,14 @@ define([
 
     function defaultPrefilter(elem, props, opts) {
         /* jshint validthis: true */
-        var prop, value, toggle, tween, hooks, oldfire, display,
+        var prop, value, toggle, tween, hooks, oldfire, display, checkDisplay,
             anim = this,
             orig = {},
             style = elem.style,
             hidden = elem.nodeType && isHidden(elem),
             dataShow = data_priv.get(elem, "fxshow");
 
-        // handle queue: false promises
+        // Handle queue: false promises
         if (!opts.queue) {
             hooks = jQuery._queueHooks(elem, "fx");
             if (hooks.unqueued == null) {
@@ -138,8 +138,7 @@ define([
             hooks.unqueued++;
 
             anim.always(function () {
-                // doing this makes sure that the complete handler will be called
-                // before this completes
+                // Ensure the complete handler is called before this completes
                 anim.always(function () {
                     hooks.unqueued--;
                     if (!jQuery.queue(elem, "fx").length) {
@@ -149,24 +148,23 @@ define([
             });
         }
 
-        // height/width overflow pass
+        // Height/width overflow pass
         if (elem.nodeType === 1 && ( "height" in props || "width" in props )) {
             // Make sure that nothing sneaks out
             // Record all 3 overflow attributes because IE9-10 do not
             // change the overflow attribute when overflowX and
             // overflowY are set to the same value
-            opts.overflow = [ style.overflow, style.overflowX, style.overflowY ];
+            opts.overflow = [style.overflow, style.overflowX, style.overflowY];
 
             // Set display property to inline-block for height/width
             // animations on inline elements that are having width/height animated
             display = jQuery.css(elem, "display");
-            // Get default display if display is currently "none"
-            if (display === "none") {
-                display = defaultDisplay(elem.nodeName);
-            }
-            if (display === "inline" &&
-                jQuery.css(elem, "float") === "none") {
 
+            // Test default display if display is currently "none"
+            checkDisplay = display === "none" ?
+            data_priv.get(elem, "olddisplay") || defaultDisplay(elem.nodeName) : display;
+
+            if (checkDisplay === "inline" && jQuery.css(elem, "float") === "none") {
                 style.display = "inline-block";
             }
         }
@@ -174,28 +172,32 @@ define([
         if (opts.overflow) {
             style.overflow = "hidden";
             anim.always(function () {
-                style.overflow = opts.overflow[ 0 ];
-                style.overflowX = opts.overflow[ 1 ];
-                style.overflowY = opts.overflow[ 2 ];
+                style.overflow = opts.overflow[0];
+                style.overflowX = opts.overflow[1];
+                style.overflowY = opts.overflow[2];
             });
         }
 
         // show/hide pass
         for (prop in props) {
-            value = props[ prop ];
+            value = props[prop];
             if (rfxtypes.exec(value)) {
-                delete props[ prop ];
+                delete props[prop];
                 toggle = toggle || value === "toggle";
                 if (value === ( hidden ? "hide" : "show" )) {
 
                     // If there is dataShow left over from a stopped hide or show and we are going to proceed with show, we should pretend to be hidden
-                    if (value === "show" && dataShow && dataShow[ prop ] !== undefined) {
+                    if (value === "show" && dataShow && dataShow[prop] !== undefined) {
                         hidden = true;
                     } else {
                         continue;
                     }
                 }
-                orig[ prop ] = dataShow && dataShow[ prop ] || jQuery.style(elem, prop);
+                orig[prop] = dataShow && dataShow[prop] || jQuery.style(elem, prop);
+
+                // Any non-fx value stops us from restoring the original display value
+            } else {
+                display = undefined;
             }
         }
 
@@ -208,7 +210,7 @@ define([
                 dataShow = data_priv.access(elem, "fxshow", {});
             }
 
-            // store state if its toggle - enables .stop().toggle() to "reverse"
+            // Store state if its toggle - enables .stop().toggle() to "reverse"
             if (toggle) {
                 dataShow.hidden = !hidden;
             }
@@ -224,20 +226,24 @@ define([
 
                 data_priv.remove(elem, "fxshow");
                 for (prop in orig) {
-                    jQuery.style(elem, prop, orig[ prop ]);
+                    jQuery.style(elem, prop, orig[prop]);
                 }
             });
             for (prop in orig) {
-                tween = createTween(hidden ? dataShow[ prop ] : 0, prop, anim);
+                tween = createTween(hidden ? dataShow[prop] : 0, prop, anim);
 
                 if (!( prop in dataShow )) {
-                    dataShow[ prop ] = tween.start;
+                    dataShow[prop] = tween.start;
                     if (hidden) {
                         tween.end = tween.start;
                         tween.start = prop === "width" || prop === "height" ? 1 : 0;
                     }
                 }
             }
+
+            // If this is a noop like .hide().hide(), restore an overwritten display value
+        } else if ((display === "none" ? defaultDisplay(elem.nodeName) : display) === "inline") {
+            style.display = display;
         }
     }
 
@@ -247,33 +253,33 @@ define([
         // camelCase, specialEasing and expand cssHook pass
         for (index in props) {
             name = jQuery.camelCase(index);
-            easing = specialEasing[ name ];
-            value = props[ index ];
+            easing = specialEasing[name];
+            value = props[index];
             if (jQuery.isArray(value)) {
-                easing = value[ 1 ];
-                value = props[ index ] = value[ 0 ];
+                easing = value[1];
+                value = props[index] = value[0];
             }
 
             if (index !== name) {
-                props[ name ] = value;
-                delete props[ index ];
+                props[name] = value;
+                delete props[index];
             }
 
-            hooks = jQuery.cssHooks[ name ];
+            hooks = jQuery.cssHooks[name];
             if (hooks && "expand" in hooks) {
                 value = hooks.expand(value);
-                delete props[ name ];
+                delete props[name];
 
-                // not quite $.extend, this wont overwrite keys already present.
-                // also - reusing 'index' from above because we have the correct "name"
+                // Not quite $.extend, this won't overwrite existing keys.
+                // Reusing 'index' because we have the correct "name"
                 for (index in value) {
                     if (!( index in props )) {
-                        props[ index ] = value[ index ];
-                        specialEasing[ index ] = easing;
+                        props[index] = value[index];
+                        specialEasing[index] = easing;
                     }
                 }
             } else {
-                specialEasing[ name ] = easing;
+                specialEasing[name] = easing;
             }
         }
     }
@@ -284,7 +290,7 @@ define([
             index = 0,
             length = animationPrefilters.length,
             deferred = jQuery.Deferred().always(function () {
-                // don't match elem in the :animated selector
+                // Don't match elem in the :animated selector
                 delete tick.elem;
             }),
             tick = function () {
@@ -293,29 +299,30 @@ define([
                 }
                 var currentTime = fxNow || createFxNow(),
                     remaining = Math.max(0, animation.startTime + animation.duration - currentTime),
-                // archaic crash bug won't allow us to use 1 - ( 0.5 || 0 ) (#12497)
+                // Support: Android 2.3
+                // Archaic crash bug won't allow us to use `1 - ( 0.5 || 0 )` (#12497)
                     temp = remaining / animation.duration || 0,
                     percent = 1 - temp,
                     index = 0,
                     length = animation.tweens.length;
 
                 for (; index < length; index++) {
-                    animation.tweens[ index ].run(percent);
+                    animation.tweens[index].run(percent);
                 }
 
-                deferred.notifyWith(elem, [ animation, percent, remaining ]);
+                deferred.notifyWith(elem, [animation, percent, remaining]);
 
                 if (percent < 1 && length) {
                     return remaining;
                 } else {
-                    deferred.resolveWith(elem, [ animation ]);
+                    deferred.resolveWith(elem, [animation]);
                     return false;
                 }
             },
             animation = deferred.promise({
                 elem: elem,
                 props: jQuery.extend({}, properties),
-                opts: jQuery.extend(true, { specialEasing: {} }, options),
+                opts: jQuery.extend(true, {specialEasing: {}}, options),
                 originalProperties: properties,
                 originalOptions: options,
                 startTime: fxNow || createFxNow(),
@@ -323,13 +330,13 @@ define([
                 tweens: [],
                 createTween: function (prop, end) {
                     var tween = jQuery.Tween(elem, animation.opts, prop, end,
-                        animation.opts.specialEasing[ prop ] || animation.opts.easing);
+                        animation.opts.specialEasing[prop] || animation.opts.easing);
                     animation.tweens.push(tween);
                     return tween;
                 },
                 stop: function (gotoEnd) {
                     var index = 0,
-                    // if we are going to the end, we want to run all the tweens
+                    // If we are going to the end, we want to run all the tweens
                     // otherwise we skip this part
                         length = gotoEnd ? animation.tweens.length : 0;
                     if (stopped) {
@@ -337,15 +344,14 @@ define([
                     }
                     stopped = true;
                     for (; index < length; index++) {
-                        animation.tweens[ index ].run(1);
+                        animation.tweens[index].run(1);
                     }
 
-                    // resolve when we played the last frame
-                    // otherwise, reject
+                    // Resolve when we played the last frame; otherwise, reject
                     if (gotoEnd) {
-                        deferred.resolveWith(elem, [ animation, gotoEnd ]);
+                        deferred.resolveWith(elem, [animation, gotoEnd]);
                     } else {
-                        deferred.rejectWith(elem, [ animation, gotoEnd ]);
+                        deferred.rejectWith(elem, [animation, gotoEnd]);
                     }
                     return this;
                 }
@@ -355,7 +361,7 @@ define([
         propFilter(props, animation.opts.specialEasing);
 
         for (; index < length; index++) {
-            result = animationPrefilters[ index ].call(animation, elem, props, animation.opts);
+            result = animationPrefilters[index].call(animation, elem, props, animation.opts);
             if (result) {
                 return result;
             }
@@ -387,7 +393,7 @@ define([
         tweener: function (props, callback) {
             if (jQuery.isFunction(props)) {
                 callback = props;
-                props = [ "*" ];
+                props = ["*"];
             } else {
                 props = props.split(" ");
             }
@@ -397,9 +403,9 @@ define([
                 length = props.length;
 
             for (; index < length; index++) {
-                prop = props[ index ];
-                tweeners[ prop ] = tweeners[ prop ] || [];
-                tweeners[ prop ].unshift(callback);
+                prop = props[index];
+                tweeners[prop] = tweeners[prop] || [];
+                tweeners[prop].unshift(callback);
             }
         },
 
@@ -415,15 +421,15 @@ define([
     jQuery.speed = function (speed, easing, fn) {
         var opt = speed && typeof speed === "object" ? jQuery.extend({}, speed) : {
             complete: fn || !fn && easing ||
-                jQuery.isFunction(speed) && speed,
+            jQuery.isFunction(speed) && speed,
             duration: speed,
             easing: fn && easing || easing && !jQuery.isFunction(easing) && easing
         };
 
         opt.duration = jQuery.fx.off ? 0 : typeof opt.duration === "number" ? opt.duration :
-            opt.duration in jQuery.fx.speeds ? jQuery.fx.speeds[ opt.duration ] : jQuery.fx.speeds._default;
+            opt.duration in jQuery.fx.speeds ? jQuery.fx.speeds[opt.duration] : jQuery.fx.speeds._default;
 
-        // normalize opt.queue - true/undefined/null -> "fx"
+        // Normalize opt.queue - true/undefined/null -> "fx"
         if (opt.queue == null || opt.queue === true) {
             opt.queue = "fx";
         }
@@ -447,11 +453,11 @@ define([
     jQuery.fn.extend({
         fadeTo: function (speed, to, easing, callback) {
 
-            // show any hidden elements after setting opacity to 0
+            // Show any hidden elements after setting opacity to 0
             return this.filter(isHidden).css("opacity", 0).show()
 
-                // animate to the value specified
-                .end().animate({ opacity: to }, speed, easing, callback);
+                // Animate to the value specified
+                .end().animate({opacity: to}, speed, easing, callback);
         },
         animate: function (prop, speed, easing, callback) {
             var empty = jQuery.isEmptyObject(prop),
@@ -494,28 +500,28 @@ define([
                     data = data_priv.get(this);
 
                 if (index) {
-                    if (data[ index ] && data[ index ].stop) {
-                        stopQueue(data[ index ]);
+                    if (data[index] && data[index].stop) {
+                        stopQueue(data[index]);
                     }
                 } else {
                     for (index in data) {
-                        if (data[ index ] && data[ index ].stop && rrun.test(index)) {
-                            stopQueue(data[ index ]);
+                        if (data[index] && data[index].stop && rrun.test(index)) {
+                            stopQueue(data[index]);
                         }
                     }
                 }
 
                 for (index = timers.length; index--;) {
-                    if (timers[ index ].elem === this && (type == null || timers[ index ].queue === type)) {
-                        timers[ index ].anim.stop(gotoEnd);
+                    if (timers[index].elem === this && (type == null || timers[index].queue === type)) {
+                        timers[index].anim.stop(gotoEnd);
                         dequeue = false;
                         timers.splice(index, 1);
                     }
                 }
 
-                // start the next in the queue if the last step wasn't forced
-                // timers currently will call their complete callbacks, which will dequeue
-                // but only if they were gotoEnd
+                // Start the next in the queue if the last step wasn't forced.
+                // Timers currently will call their complete callbacks, which
+                // will dequeue but only if they were gotoEnd.
                 if (dequeue || !gotoEnd) {
                     jQuery.dequeue(this, type);
                 }
@@ -528,45 +534,45 @@ define([
             return this.each(function () {
                 var index,
                     data = data_priv.get(this),
-                    queue = data[ type + "queue" ],
-                    hooks = data[ type + "queueHooks" ],
+                    queue = data[type + "queue"],
+                    hooks = data[type + "queueHooks"],
                     timers = jQuery.timers,
                     length = queue ? queue.length : 0;
 
-                // enable finishing flag on private data
+                // Enable finishing flag on private data
                 data.finish = true;
 
-                // empty the queue first
+                // Empty the queue first
                 jQuery.queue(this, type, []);
 
                 if (hooks && hooks.stop) {
                     hooks.stop.call(this, true);
                 }
 
-                // look for any active animations, and finish them
+                // Look for any active animations, and finish them
                 for (index = timers.length; index--;) {
-                    if (timers[ index ].elem === this && timers[ index ].queue === type) {
-                        timers[ index ].anim.stop(true);
+                    if (timers[index].elem === this && timers[index].queue === type) {
+                        timers[index].anim.stop(true);
                         timers.splice(index, 1);
                     }
                 }
 
-                // look for any animations in the old queue and finish them
+                // Look for any animations in the old queue and finish them
                 for (index = 0; index < length; index++) {
-                    if (queue[ index ] && queue[ index ].finish) {
-                        queue[ index ].finish.call(this);
+                    if (queue[index] && queue[index].finish) {
+                        queue[index].finish.call(this);
                     }
                 }
 
-                // turn off finishing flag
+                // Turn off finishing flag
                 delete data.finish;
             });
         }
     });
 
-    jQuery.each([ "toggle", "show", "hide" ], function (i, name) {
-        var cssFn = jQuery.fn[ name ];
-        jQuery.fn[ name ] = function (speed, easing, callback) {
+    jQuery.each(["toggle", "show", "hide"], function (i, name) {
+        var cssFn = jQuery.fn[name];
+        jQuery.fn[name] = function (speed, easing, callback) {
             return speed == null || typeof speed === "boolean" ?
                 cssFn.apply(this, arguments) :
                 this.animate(genFx(name, true), speed, easing, callback);
@@ -578,11 +584,11 @@ define([
         slideDown: genFx("show"),
         slideUp: genFx("hide"),
         slideToggle: genFx("toggle"),
-        fadeIn: { opacity: "show" },
-        fadeOut: { opacity: "hide" },
-        fadeToggle: { opacity: "toggle" }
+        fadeIn: {opacity: "show"},
+        fadeOut: {opacity: "hide"},
+        fadeToggle: {opacity: "toggle"}
     }, function (name, props) {
-        jQuery.fn[ name ] = function (speed, easing, callback) {
+        jQuery.fn[name] = function (speed, easing, callback) {
             return this.animate(props, speed, easing, callback);
         };
     });
@@ -596,9 +602,9 @@ define([
         fxNow = jQuery.now();
 
         for (; i < timers.length; i++) {
-            timer = timers[ i ];
+            timer = timers[i];
             // Checks the timer has not already been removed
-            if (!timer() && timers[ i ] === timer) {
+            if (!timer() && timers[i] === timer) {
                 timers.splice(i--, 1);
             }
         }

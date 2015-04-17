@@ -6,7 +6,6 @@ body {
 a {
     text-decoration: none;
 }
-
 a:hover {
     text-decoration: underline;
 }
@@ -95,6 +94,7 @@ div.info {
 div.test_wrap:hover > div.info {
     display: block;
 }
+
 
 div.vis_test {
     display: -moz-inline-stack;

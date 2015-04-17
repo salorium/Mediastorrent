@@ -25,7 +25,7 @@ define([
             off = url.indexOf(" ");
 
         if (off >= 0) {
-            selector = url.slice(off);
+            selector = jQuery.trim(url.slice(off));
             url = url.slice(0, off);
         }
 
@@ -65,8 +65,8 @@ define([
                     responseText);
 
             }).complete(callback && function (jqXHR, status) {
-                    self.each(callback, response || [ jqXHR.responseText, status, jqXHR ]);
-                });
+                self.each(callback, response || [jqXHR.responseText, status, jqXHR]);
+            });
         }
 
         return this;

@@ -16,7 +16,7 @@ class Mail extends \core\Model
         $headers = 'MIME-Version: 1.0' . "\r\n";
         $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
         $headers .= 'From: no-reply@' . $_SERVER["HTTP_HOST"] . '' . "\r\n";
-        return mail($destinataire, $objet, $content, $headers);
+        return mail($destinataire, mb_encode_mimeheader($objet, "UTF-8"), $content, $headers);
     }
 
     static function activationMotDePasse($mail, $login, $mdp, $ticket)

@@ -24,6 +24,7 @@ class Mediainfo extends \core\Model
             \model\simple\Console::println("Impossible de charger le mediainfos");
             throw new \Exception("Impossible de charger le mediainfos");
         }
+        $output=preg_replace('#_*>#','>',$output);
         file_put_contents(ROOT . DS . "log" . DS . "test1.xml", implode("", $output));
         $this->mediainfo = json_decode(json_encode(simplexml_load_string(implode("", $output))), true);
         foreach ($this->mediainfo["File"]["track"] as $v) {

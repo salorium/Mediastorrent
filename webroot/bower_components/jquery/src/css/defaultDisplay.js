@@ -13,14 +13,15 @@ define([
      */
 // Called only from within defaultDisplay
     function actualDisplay(name, doc) {
-        var elem = jQuery(doc.createElement(name)).appendTo(doc.body),
+        var style,
+            elem = jQuery(doc.createElement(name)).appendTo(doc.body),
 
         // getDefaultComputedStyle might be reliably used only on attached element
-            display = window.getDefaultComputedStyle ?
+            display = window.getDefaultComputedStyle && ( style = window.getDefaultComputedStyle(elem[0]) ) ?
 
-                // Use of this method is a temporary fix (more like optmization) until something better comes along,
+                // Use of this method is a temporary fix (more like optimization) until something better comes along,
                 // since it was removed from specification and supported only in FF
-                window.getDefaultComputedStyle(elem[ 0 ]).display : jQuery.css(elem[ 0 ], "display");
+                style.display : jQuery.css(elem[0], "display");
 
         // We don't have any data stored on the element,
         // so use "detach" method as fast way to get rid of the element
@@ -35,7 +36,7 @@ define([
      */
     function defaultDisplay(nodeName) {
         var doc = document,
-            display = elemdisplay[ nodeName ];
+            display = elemdisplay[nodeName];
 
         if (!display) {
             display = actualDisplay(nodeName, doc);
@@ -47,7 +48,7 @@ define([
                 iframe = (iframe || jQuery("<iframe frameborder='0' width='0' height='0'/>")).appendTo(doc.documentElement);
 
                 // Always write a new HTML skeleton so Webkit and Firefox don't choke on reuse
-                doc = iframe[ 0 ].contentDocument;
+                doc = iframe[0].contentDocument;
 
                 // Support: IE
                 doc.write();
@@ -58,7 +59,7 @@ define([
             }
 
             // Store the correct default display
-            elemdisplay[ nodeName ] = display;
+            elemdisplay[nodeName] = display;
         }
 
         return display;

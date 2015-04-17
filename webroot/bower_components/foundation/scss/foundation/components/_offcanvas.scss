@@ -1,6 +1,7 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
+
 @import "global";
 @import "type";
 
@@ -17,6 +18,7 @@ $tabbar-middle-padding: 0 rem-calc(10) !default;
 // Off Canvas Divider Styles
 $tabbar-left-section-border: solid 1px scale-color($tabbar-bg, $lightness: -50%) !default;
 $tabbar-right-section-border: $tabbar-left-section-border;
+
 
 // Off Canvas Tab Bar Headers
 $tabbar-header-color: $white !default;
@@ -74,6 +76,7 @@ $off-canvas-overlay-background-hover: rgba($white, 0.05) !default;
 // Transition Variables
 $menu-slide: "transform 500ms ease" !default;
 
+
 // MIXINS
 // Remove transition flicker on phones
 @mixin kill-flicker {
@@ -116,11 +119,11 @@ $menu-slide: "transform 500ms ease" !default;
   -ms-overflow-style: -ms-autohiding-scrollbar;
 
   @if $position == left {
-    @include translate3d(-100.5%, 0, 0);
+    @include translate3d(-100%, 0, 0);
     left: 0;
   }
   @if $position == right {
-    @include translate3d(100.5%, 0, 0);
+    @include translate3d(100%, 0, 0);
     right: 0;
   }
 }
@@ -141,7 +144,8 @@ $menu-slide: "transform 500ms ease" !default;
 // INNER WRAP
 // Main content area that moves to reveal the off-canvas nav
 @mixin inner-wrap {
-  @include kill-flicker;
+  // @include kill-flicker;
+  // removed for now till chrome fixes backface issue
   @include wrap-base;
   @include clearfix;
   -webkit-transition: -webkit-#{$menu-slide};
@@ -204,8 +208,11 @@ $menu-slide: "transform 500ms ease" !default;
   height: $tabbar-height;
   top: 0;
   @media #{$medium-up} {
-    &.left, &.right {
+    &.left {
       text-align: left;
+    }
+    &.right {
+      text-align: right;
     }
   }
 
@@ -282,7 +289,7 @@ $menu-slide: "transform 500ms ease" !default;
     &:hover {
       background: $off-canvas-overlay-background-hover;
     }
-  }
+    }
 }
 
 //
@@ -349,6 +356,7 @@ $menu-slide: "transform 500ms ease" !default;
     ul.off-canvas-list {
       @include off-canvas-list;
     }
+
 
     // ANIMATION CLASSES
     // These classes are added with JS and trigger the actual animation.
@@ -502,7 +510,6 @@ $menu-slide: "transform 500ms ease" !default;
     }
   }
 }
-
 //Left double angle quote or Right double angle quote chars
 @mixin icon-double-arrows($position) {
   @if $position == left {
@@ -527,14 +534,14 @@ $menu-slide: "transform 500ms ease" !default;
 @if $include-html-off-canvas-classes {
   .left-submenu {
     @include off-canvas-submenu($position: left);
-    &.move-right {
+    &.move-right, &.offcanvas-overlap-right, &.offcanvas-overlap {
       @include translate3d(0%, 0, 0);
     }
   }
 
   .right-submenu {
     @include off-canvas-submenu($position: right);
-    &.move-left {
+    &.move-left, &.offcanvas-overlap-left, &.offcanvas-overlap {
       @include translate3d(0%, 0, 0);
     }
   }

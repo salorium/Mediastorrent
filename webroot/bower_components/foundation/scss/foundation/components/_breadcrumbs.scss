@@ -1,6 +1,7 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
+
 @import "global";
 
 //
@@ -100,7 +101,7 @@ $crumb-slash: "/" !default;
     a:focus {
       text-decoration: none;
       color: $crumb-font-color-unavailable;
-      cursor: $cursor-default-value;
+      cursor: $cursor-disabled-value;
     }
   }
 

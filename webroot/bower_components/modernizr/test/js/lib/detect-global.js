@@ -4,7 +4,7 @@
 
 (function () {
     function getPropertyDescriptors(object) {
-        var props = { };
+        var props = {};
         for (var prop in object) {
 
             // nerfing for firefox who goes crazy over some objects like sessionStorage
@@ -17,7 +17,7 @@
 
             } catch (e) {
                 props[prop] = {};
-            }
+        }
         }
         return props;
     }
@@ -77,8 +77,8 @@
         var el = document.createElement('div');
 
         el.style.cssText = 'position:fixed; left:10px; top:10px; width:300px; background:rgba(50,50,50,0.9);' +
-            '-moz-border-radius:10px; padding:1em; color: #eee; text-align: left;' +
-            'font-family: "Helvetica Neue", Verdana, Arial, sans serif; z-index: 99999;';
+        '-moz-border-radius:10px; padding:1em; color: #eee; text-align: left;' +
+        'font-family: "Helvetica Neue", Verdana, Arial, sans serif; z-index: 99999;';
 
         for (var prop in propSets) {
             appendControl(el, prop);
@@ -105,7 +105,7 @@
             var isPropInSet = propSets[prop].indexOf(propToCheck) > -1;
             if (isPropInSet && (elCheckbox ? elCheckbox.checked : true)) {
                 return true;
-            }
+        }
         }
     }
 
@@ -119,12 +119,12 @@
         for (var prop in cleanWindow) {
             if (globalProps[prop]) {
                 delete globalProps[prop];
-            }
+        }
         }
         for (var prop in globalProps) {
             if (shouldDeleteProperty(prop)) {
                 delete globalProps[prop];
-            }
+        }
         }
 
         window.__globalsCount = getPropsCount(globalProps);
@@ -136,7 +136,7 @@
 
     var propSets = {
         'Prototype': '$$ $A $F $H $R $break $continue $w Abstract Ajax Class Enumerable Element Field Form ' +
-            'Hash Insertion ObjectRange PeriodicalExecuter Position Prototype Selector Template Toggle Try'.split(' '),
+        'Hash Insertion ObjectRange PeriodicalExecuter Position Prototype Selector Template Toggle Try'.split(' '),
 
         'Scriptaculous': 'Autocompleter Builder Control Draggable Draggables Droppables Effect Sortable SortableObserver Sound Scriptaculous'.split(' '),
         'Firebug': 'loadFirebugConsole console _getFirebugConsoleElement _FirebugConsole _FirebugCommandLine _firebug'.split(' '),

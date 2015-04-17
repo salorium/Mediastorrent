@@ -1,6 +1,7 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
+
 @import "global";
 
 //
@@ -36,6 +37,7 @@ $joyride-tip-close-weight: $font-weight-normal !default;
 
 // When Joyride is filling the screen, we use this style for the bg
 $joyride-screenfill: rgba(0, 0, 0, 0.5) !default;
+
 
 // We decided not to make a mixin for this because it relies on
 // predefined classes to work properly.

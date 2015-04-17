@@ -52,10 +52,19 @@ class Allocine extends Controller
         $o["typesearch"] = "tvseries";
         $all = new \model\simple\Allocine($id, $o);
         $this->set(array(
+            "serie" => $all->retourneResSerie()
+        ));
+    }
+    function getInfosSerieF($id = null)
+    {
+        if (is_null($id))
+            $id = $_REQUEST["id"];
+        $o["typesearch"] = "tvseries";
+        $all = new \model\simple\Allocine($id, $o);
+        $this->set(array(
             "serie" => $all->retourneResSerieFormat()
         ));
     }
-
     function getInfosFilm($id = null)
     {
         if (is_null($id))

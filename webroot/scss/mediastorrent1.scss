@@ -31,12 +31,20 @@
   }
 }
 
+#background {
+  @media #{$medium-up} {
+    padding-top: 10px;
+  }
+}
 h1, h2, h3, h4, h5, h6 {
   text-align: center;
 }
 
 div.connexion {
-  width: 600px;
+  @media #{$medium-up} {
+    width: 600px;
+  }
+  //width: 600px;
   margin: auto auto;
   padding: 5px;
 }
@@ -273,7 +281,12 @@ a.button {
 
 div.container {
   //background-color: purple;
-  width: 98%;
+  /*position: absolute;
+  top: 45px;
+  bottom: 0px;*/
+  @media #{$medium-up} {
+    width: 98%;
+  }
   margin: auto;
   //margin-top: 10px;
 }
@@ -405,7 +418,19 @@ table.noneventrowbg {
 }
 
 fieldset.torrent {
+  legend {
+    table {
+      width: 100%;
+      table-layout: fixed;
+    }
+    table tr td {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
   table {
+    //width: 100%;
     border: none;
     //color: #ffffff;
     margin-bottom: 0px;
