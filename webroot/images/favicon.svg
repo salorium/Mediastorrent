@@ -1,0 +1,79 @@
+<?php
+header('Content-type: image/svg+xml');
+echo '<?xml version="1.0" encoding="utf-8"?>';
+?>
+<!-- The icon can be used freely in both personal and commercial projects with no attribution required, but always appreciated.
+You may NOT sub-license, resell, rent, redistribute or otherwise transfer the icon without express written permission from iconmonstr.com -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   x="0px"
+   y="0px"
+   width="512px"
+   height="512px"
+   viewBox="0 0 512 512"
+   enable-background="new 0 0 512 512"
+   xml:space="preserve"
+   id="svg2994"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="iconmonstr-cloud-icon.svg"
+   inkscape:export-filename="C:\Users\salorium\Downloads\iconmonstr-cloud-icon3.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90"><metadata
+   id="metadata3001"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+   id="defs2999"><linearGradient
+     id="linearGradient3885"><stop
+       style="stop-color:#333333;stop-opacity:1;"
+       offset="0"
+       id="stop3895" /><stop
+       id="stop3897"
+       offset="0.5"
+       style="stop-color:#003700;stop-opacity:1;" /><stop
+       style="stop-color:#cccccc;stop-opacity:1;"
+       offset="1"
+       id="stop3889" /></linearGradient><linearGradient
+     id="linearGradient3819"><stop
+       id="stop3825"
+       offset="0"
+       style="stop-color:#ff0d00;stop-opacity:1;" /><stop
+       style="stop-color:#333333;stop-opacity:0;"
+       offset="1"
+       id="stop3823" /></linearGradient></defs><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1920"
+   inkscape:window-height="1017"
+   id="namedview2997"
+   showgrid="false"
+   inkscape:zoom="1.6210938"
+   inkscape:cx="153.6"
+   inkscape:cy="317.1133"
+   inkscape:window-x="-8"
+   inkscape:window-y="-8"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="svg2994" />
+<path
+   id="cloud-icon"
+   d="M 370.08108,184.54859 C 363.52177,51.967665 254.7488,8.2814297 210.29055,121.80911 c -28.83706,-26.168001 -65.61382,4.61909 -67.91795,58.71136 -31.6154,6.21423 -56.106409,49.42844 -56.106409,101.85141 0,56.69028 28.634619,102.64833 63.956059,102.64833 h 200.45188 c 35.32145,0 63.95606,-45.95805 63.95606,-102.64833 0,-45.83013 -18.71675,-84.6325 -44.54911,-97.82329 z"
+   style="fill:#333333;fill-opacity:1;stroke:none"
+   inkscape:connector-curvature="0" />
+<path
+   inkscape:connector-curvature="0"
+   id="video-5-icon"
+   d="m 244.93341,217.85358 110.21091,-21.84622 -0.074,-0.37138 -7.37436,-37.20949 -185.63628,36.79777 c -9.23992,1.83133 -15.91649,9.93567 -15.91649,19.35489 0,8.33269 0,123.82918 0,123.82918 0,16.52592 13.44406,29.96999 29.96947,29.96999 h 150.52368 c 16.52541,0 29.96947,-13.44407 29.96947,-29.96999 v -120.17622 -0.37853 h -111.6724 z m 91.23914,120.55475 c 0,5.25851 -4.27771,9.53671 -9.53621,9.53671 H 176.11263 c -5.2585,0 -9.53621,-4.2782 -9.53621,-9.53671 v -72.06098 h 169.59613 v 72.06098 z m -42.12932,-110.33812 -17.84386,17.84388 h -26.78086 l 17.84386,-17.84388 h 26.78086 z m 28.4518,-54.23295 21.0151,14.06268 -26.2547,5.21764 -21.03094,-14.07341 26.27054,-5.20691 z m -51.71865,10.25137 21.04576,14.0826 -26.25368,5.21713 -21.06109,-14.09283 26.26901,-5.2069 z m -51.77585,10.26312 21.07538,14.10304 -26.2542,5.21712 -21.0907,-14.11275 26.26952,-5.20741 z m -4.52342,33.71846 h 26.78086 l -17.84386,17.84388 h -26.78086 l 17.84386,-17.84388 z m 87.66639,17.84388 17.84385,-17.84388 h 26.78086 l -17.84385,17.84388 H 302.1435 z m -62.55748,87.63061 v -55.55652 l 45.3072,27.77903 -45.3072,27.77749 z"
+   style="fill:#ff1300;fill-opacity:1;stroke:none" /></svg>

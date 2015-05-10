@@ -7,10 +7,14 @@
  */
 ?>
 <div id="debugger" class="debugger">
-        <div class="debugger-title"><a class="titre"><?= preg_replace("#([A-Z]+)#",'<span class="secondary">$1</span>',"Debugger");?></a><a onclick="Debug.view.close();">
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;float: right;top:0px"x="0px" y="0px"
+    <div class="debugger-title"><a
+            class="titre"><?= preg_replace("#([A-Z]+)#", '<span class="secondary">$1</span>', "Debugger"); ?></a><a
+            onclick="Debug.view.close();">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                 style="display: block;float: right;top:0px" x="0px" y="0px"
 
-                     width="50px" height="50px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+                 width="50px" height="50px" viewBox="0 0 512 512" enable-background="new 0 0 512 512"
+                 xml:space="preserve">
 
 <path style="fill: red" id="x-mark-4-icon" d="M462,256c0,113.771-92.229,206-206,206S50,369.771,50,256S142.229,50,256,50S462,142.229,462,256z
 
@@ -22,11 +26,11 @@
 
 </svg>
 
-            </a></div>
-        <div id="debugger-data" class="debugger-data">
-            <div id="debugger-php">
-            <?=$debug_contenu_for_layout;?>
-</div>
-<div id="debugger-js"></div>
-</div>
+        </a></div>
+    <div id="debugger-data" class="debugger-data">
+        <div id="debugger-php">
+            <?= $debug_contenu_for_layout; ?>
+        </div>
+        <div id="debugger-js"></div>
+    </div>
 </div>

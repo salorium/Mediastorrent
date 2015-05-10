@@ -9,29 +9,42 @@
 namespace model\simple;
 
 
-class Ssh extends \core\Model {
-    static function execute ($user,$cmd){
+class Ssh extends \core\Model
+{
+    static function execute($user, $mdp, $cmd)
+    {
         $connection = \ssh2_connect('localhost', 22);
-        \ssh2_auth_password($connection, 'root', 'azerty');
-
-        $stream = \ssh2_exec($connection, "su -l ".$user." -c '".$cmd."'");
+        \ssh2_auth_password($connection, $user, $mdp);
+        $table = array();
+        $stream = \ssh2_exec($connection, $cmd);
         sleep(1);
-        $stderr_stream = ssh2_fetch_stream($stream, SSH2_STREAM_STDERR);
-        $table=array();
+        stream_set_blocking($stream, true);
+        $stderr_stream = \ssh2_fetch_stream($stream, SSH2_STREAM_STDERR);
         $res = "";
-        while($line = fgets($stderr_stream)) { flush(); $res.= $line."\n"; }
-        $table["error"] = $res;
-        $res= "";
-
-        while($line = fgets($stream)) { flush(); $res.= $line."\n";}
-        $table["sortie"]= $res;
+        while ($line = fgets($stream)) { /*echo $line; flush();*/
+            $res .= $line . "\n";
+        }
+        $table["sortie"] = $res;
         fclose($stream);
+        $res = "";
+        while ($line = fgets($stderr_stream)) {
+            $res .= $line . "\n";
+        }
+        $table["error"] = $res;
+
+        fclose($stderr_stream);
         return $table;
     }
 
-    static function supprime($user,$directory){
-        $cmd = "rm -R ".$directory;
-        return self::execute($user,$cmd);
-
+    static function execute1($user, $mdp, $cmd)
+    {
+        $connection = \ssh2_connect('localhost', 22);
+        \ssh2_auth_password($connection, $user, $mdp);
+        $table = array();
+        $shell = ssh2_shell($connection, 'xterm');
+        fwrite($shell, $cmd . PHP_EOL);
+        sleep(10);
+        return $table;
     }
+
 } 

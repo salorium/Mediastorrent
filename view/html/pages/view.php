@@ -9,6 +9,7 @@
 ?>
 <div>
     <h1>Login</h1>
+
     <p><?php echo $phrase; ?></p>
     <span style="color: red;"><?php echo $nom; ?></span>
 </div>

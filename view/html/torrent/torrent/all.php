@@ -7,10 +7,15 @@
  */
 
 
-
-\core\LoaderJavascript::add("base","controller.fixeHeightContainer");
-\core\LoaderJavascript::add("torrent","controller.init",$seedbox);
+\core\LoaderJavascript::add("base", "controller.fixeHeightContainer");
+\core\LoaderJavascript::add("base", "controller.tableScroll");
+\core\LoaderJavascript::add("torrent1", "controller.init", $seedbox);
+\core\LoaderJavascript::add("base", "controller.setHost", array(substr($_SERVER["HTTP_HOST"] . dirname(dirname($_SERVER["SCRIPT_NAME"])) . ($_SERVER["SCRIPT_NAME"] !== "/index.php" ? "/" : ""), 0, -1), $_SERVER["SERVER_PORT"] == 443));
 ?>
+<script>
+    document.oncontextmenu = new Function("return false");
+</script>
+<div class="container">
 <nav class="top-bar" data-topbar>
     <!-- Title -->
     <ul class="title-area">
@@ -21,7 +26,7 @@
     </ul>
 
     <!-- Top Bar Section -->
-<!--</a><a href="#ADD"><img width="40px"  title="Démarrer un Torrent" src="images/play.svg"/></a><a href="#ADD"><img width="40px"  title="Mettre en pause un Torrent" src="images/pause.svg"/></a><a href="#ADD"><img width="40px"  title="Arrêter un Torrent" src="images/stop.svg"/></a>-->
+    <!--</a><a href="#ADD"><img width="40px"  title="Démarrer un Torrent" src="images/play.svg"/></a><a href="#ADD"><img width="40px"  title="Mettre en pause un Torrent" src="images/pause.svg"/></a><a href="#ADD"><img width="40px"  title="Arrêter un Torrent" src="images/stop.svg"/></a>-->
     <section class="top-bar-section">
         <!--<img src="images/disk.svg" title="Disque dur">
         <!-- Top Bar Left Nav Elements -->
@@ -34,21 +39,39 @@
                 </ul>
             </li>
             <li class="divider"></li>
-            <li><a onclick="Torrent.controller.addTorrent.addTorrentShow();" title="Ajouter un Torrent"><img width="40px"   src="<?=BASE_URL?>images/world.svg"/></a></li>
+            <li><a onclick="Torrent1.controller.seedbox.reboot();" title="Redémarrer rtorrent"><img width="40px"
+                                                                                                    src="<?= BASE_URL ?>images/power.svg"/></a>
+            </li>
             <li class="divider"></li>
-            <li><a onclick="Torrent.controller.startTorrent();" title="Démarrer un Torrent"><img width="40px"   src="<?=BASE_URL?>images/play.svg"/></a></li>
             <li class="divider"></li>
-            <li><a onclick="Torrent.controller.pauseTorrent();" title="Mettre en pause un Torrent"><img width="40px"   src="<?=BASE_URL?>images/pause.svg"/></a></li>
+            <li><a onclick="Torrent1.controller.createTorrent.show();" title="Créer un Torrent"><img width="40px"
+                                                                                                     src="<?= BASE_URL ?>images/star.svg"/></a>
+            </li>
             <li class="divider"></li>
-            <li><a onclick="Torrent.controller.stopTorrent();" title="Arrêter un Torrent"><img width="40px"   src="<?=BASE_URL?>images/stop.svg"/></a></li>
+            <li><a onclick="Torrent1.controller.addTorrent.show();" title="Ajouter un Torrent"><img width="40px"
+                                                                                                    src="<?= BASE_URL ?>images/world.svg"/></a>
+            </li>
             <li class="divider"></li>
-            <li><a onclick="Torrent.controller.recheckTorrent();" title="Revérification"><img width="40px"   src="<?=BASE_URL?>images/verify.svg"/></a></li>
+            <li><a onclick="Torrent1.controller.listTorrent.start();" title="Démarrer un Torrent"><img width="40px"
+                                                                                                       src="<?= BASE_URL ?>images/play.svg"/></a>
+            </li>
             <li class="divider"></li>
-            <li class="has-dropdown not-click"><a><img width="40px"   src="<?=BASE_URL?>images/poubelle.svg"/></a>
+            <li><a onclick="Torrent1.controller.listTorrent.pause();" title="Mettre en pause un Torrent"><img
+                        width="40px" src="<?= BASE_URL ?>images/pause.svg"/></a></li>
+            <li class="divider"></li>
+            <li><a onclick="Torrent1.controller.listTorrent.stop();" title="Arrêter un Torrent"><img width="40px"
+                                                                                                     src="<?= BASE_URL ?>images/stop.svg"/></a>
+            </li>
+            <li class="divider"></li>
+            <li><a onclick="Torrent1.controller.listTorrent.recheck();" title="Revérification"><img width="40px"
+                                                                                                    src="<?= BASE_URL ?>images/verify.svg"/></a>
+            </li>
+            <li class="divider"></li>
+            <li class="has-dropdown not-click"><a><img width="40px" src="<?= BASE_URL ?>images/poubelle.svg"/></a>
 
                 <ul class="dropdown">
-                    <li><a onclick="Torrent.controller.deleteTorrent();">Supprimer</a></li>
-                    <li><a onclick="Torrent.controller.deleteAllTorrent();">Supprimer tout</a></li>
+                    <li><a onclick="Torrent1.controller.listTorrent.delete();">Supprimer</a></li>
+                    <li><a onclick="Torrent1.controller.listTorrent.deleteAll();">Supprimer les données</a></li>
                 </ul>
             </li>
             <li class="divider"></li>
@@ -60,85 +83,375 @@
             <li class="divider hide-for-small"></li>
             <li class="divider"></li>
             <li class="has-form">
-                <table id="infoserver" class="infoserver"><tr><td><img width="30px" src="<?=BASE_URL?>images/disk.svg" title="Disque dur"/></td><td><progress title="6.08 Go / 11.05 Go" id="storage" style="width: 150px;" class="diskspace" value="6528540672" max="11873247232"></progress></td></tr></table>
+                <table id="infoserver" class="infoserver">
+                    <tr>
+                        <td><img width="30px" src="<?= BASE_URL ?>images/disk.svg" title="Disque dur"/></td>
+                        <td>
+                            <progress title="6.08 Go / 11.05 Go" id="storage" style="width: 150px;" class="diskspace"
+                                      value="6528540672" max="11873247232"></progress>
+                        </td>
+                    </tr>
+                </table>
 
             </li>
             <!-- Divider <img src="images/upload.svg"></td><td>Vitesse <span id="vup">0.1 Ko/s</span> Limite <span id="vupl">2.9 Mo/s</span> Total <span id="vupt">9.22 Ko</span></td><td>|</td><td><img src="images/download.svg"></td><td>Vitesse <span id="vdl">0.1 Ko/s</span> Limite <span id="vdll">Non</span> Total <span id="vdlt">8.31 Ko</span> -->
             <li class="divider"></li>
             <li class="has-form">
-                <table id="infoserver" class="infoserver"><tr><td><img width="30px" src="<?=BASE_URL?>images/upload.svg"/></td><td><span id="vup">0.1 Ko/s</span> / <span id="vupl">2.9 Mo/s</span> | <span id="vupt">9.22 Ko</span></td></tr></table>
+                <table id="infoserver" class="infoserver">
+                    <tr>
+                        <td><img width="30px" src="<?= BASE_URL ?>images/upload.svg"/></td>
+                        <td><span id="vup">0.1 Ko/s</span><span><span class="show-for-xlarge-up"> / <span id="vupl">2.9 Mo/s</span> | <span
+                                id="vupt">9.22 Ko</span></span></span></td>
+                    </tr>
+                </table>
 
             </li>
             <li class="divider"></li>
             <li class="has-form">
-                <table id="infoserver" class="infoserver"><tr><td><img width="30px" src="<?=BASE_URL?>images/download.svg"/></td><td><span id="vdl">0.1 Ko/s</span> / <span id="vdll">2.9 Mo/s</span> | <span id="vdlt">9.22 Ko</span></td></tr></table>
+                <table id="infoserver" class="infoserver">
+                    <tr>
+                        <td><img width="30px" src="<?= BASE_URL ?>images/download.svg"/></td>
+                        <td><span id="vdl">0.1 Ko/s</span><span><span class="show-for-xlarge-up"> / <span id="vdll">2.9 Mo/s</span> | <span
+                                id="vdlt">9.22 Ko</span></span></span></td>
+                    </tr>
+                </table>
 
             </li>
 
             <!-- Dropdown -->
-            </ul>
-    </section></nav>
+        </ul>
+    </section>
+</nav>
 <div id="contenu">
-        <div id="moitiegauche" class="large-6 columns panel heightfixed">
+    <div id="souscontenu" class="heightfixed">
+        <div id="moitiegauche" class="large-5 columns panel heightfixed">
 
-            <dl class="sub-nav"> <dt>Tri:</dt> <dd class=""><a onclick="Torrent.controller.tri(this);" sort-colonne="0" >Status <span></span></a></dd><dd><a onclick="Torrent.controller.tri(this);" sort-colonne="1">Nom <span></span></a></dd><dd><a onclick="Torrent.controller.tri(this);" sort-colonne="25">Ajouté <span></span></a></dd></dl>
+            <dl class="show-for-medium-up sub-nav">
+                <dt>Tri:</dt>
+                <dd class=""><a onclick="Torrent1.controller.listTorrent.tri(this);" sort-colonne="0">Status
+                        <span></span></a></dd>
+                <dd><a onclick="Torrent1.controller.listTorrent.tri(this);" sort-colonne="1">Nom <span></span></a></dd>
+                <dd><a onclick="Torrent1.controller.listTorrent.tri(this);" sort-colonne="25">Ajouté <span></span></a>
+                </dd>
+                <dd><a onclick="Torrent1.controller.listTorrent.tri(this);" sort-colonne="6">Ratio <span></span></a>
+                </dd>
+            </dl>
             <div id="listorrent">
-                <fieldset idcpt="0" class="torrent torrentselect" id="0C84BFFEF05094633E6D0668D27B472906449086">
-                    <legend><table>
-                            <tr><td><svg xml:space="preserve" enable-background="new 0 0 512 512" viewBox="0 0 512 512" height="60px" width="60px" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1" title="Arrêté"><path d="M409.338,166.521c-10.416-54.961-58.666-95.777-115.781-95.777c-35.098,0-67.631,15.285-89.871,41.584c-37.148-9.906-76.079,11.781-86.933,48.779C78.16,172.442,50.6,208.161,50.6,249.569c0,50.852,41.37,92.221,93.222,92.221H369.18c50.85,0,92.221-41.369,92.221-92.221C461.4,213.655,440.941,181.724,409.338,166.521z M369.18,301.79H143.821c-29.795,0-53.222-23.426-53.222-52.221c0-34.078,27.65-60.078,62.186-53.816c-11.536-39.596,44.131-61.93,64.641-32.348c5.157-14.582,25.823-52.662,76.131-52.662c38.027,0,77.361,26.08,78.664,84.982c25.363,0.098,49.18,18.432,49.18,53.844C421.4,278.364,397.975,301.79,369.18,301.79z M278.591,363.455h-45.182v37.802h-33.888v0.463v39.537h112.957V401.72v-0.463h-33.888V363.455z M414.7,401.257h-79.631v40H414.7V401.257z M176.931,401.257H97.3v40h79.631V401.257z" style="fill: gray;"/></svg></td><td>Les.Octonauts.1x42.FRENCH.HDTV.x264-TDPG.mp4</td></tr></tbody></table></legend><table style="width: 100%"><tbody><tr><td width="100%"><progress max="100" value="0" id="p" class="noncomplet"></progress></td><td width="70px" style="text-align:center;min-width:70px; "><span class="pcr">0</span>%</td></tr></tbody></table><table style="width: 100%"><tbody><tr><td width="80px;" style="vertical-align: bottom;">Ajouté</td><td width="170px">: </td><td width="60px;">Seedtime</td><td>: </td><td align="right">Ratio : 0</td></tr><tr><td style="vertical-align: bottom;">Sources</td><td>: 4(0)</td><td>Clients</td><td>: 0(0)</td><td align="right">Upload : - Download : -</td></tr><tr><td style="vertical-align: bottom;">Télécharger</td><td>: 0.00 Ko/73.04 Mo</td><td>Envoyé</td><td>: 0.00 Ko</td><td align="right">Temps restant : ∞</td></tr></tbody></table></fieldset><fieldset idcpt="1" class="torrent " id="844149127AC38370F03C7A0402FCBCE064067B6D"><legend><table><tbody><tr><td><svg xml:space="preserve" enable-background="new 0 0 512 512" viewBox="0 0 512 512" height="60px" width="60px" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1" title="Arrêté"><path d="M409.338,166.521c-10.416-54.961-58.666-95.777-115.781-95.777c-35.098,0-67.631,15.285-89.871,41.584c-37.148-9.906-76.079,11.781-86.933,48.779C78.16,172.442,50.6,208.161,50.6,249.569c0,50.852,41.37,92.221,93.222,92.221H369.18c50.85,0,92.221-41.369,92.221-92.221C461.4,213.655,440.941,181.724,409.338,166.521z M369.18,301.79H143.821c-29.795,0-53.222-23.426-53.222-52.221c0-34.078,27.65-60.078,62.186-53.816c-11.536-39.596,44.131-61.93,64.641-32.348c5.157-14.582,25.823-52.662,76.131-52.662c38.027,0,77.361,26.08,78.664,84.982c25.363,0.098,49.18,18.432,49.18,53.844C421.4,278.364,397.975,301.79,369.18,301.79z M278.591,363.455h-45.182v37.802h-33.888v0.463v39.537h112.957V401.72v-0.463h-33.888V363.455z M414.7,401.257h-79.631v40H414.7V401.257z M176.931,401.257H97.3v40h79.631V401.257z" style="fill: gray;"/></svg></td><td>Les.Octonauts.1x40.FRENCH.HDTV.x264-TDPG.mp4</td></tr></tbody></table></legend><table style="width: 100%"><tbody><tr><td width="100%"><progress max="100" value="0" id="p" class="noncomplet"></progress></td><td width="70px" style="text-align:center;min-width:70px; "><span class="pcr">0</span>%</td></tr></tbody></table><table style="width: 100%"><tbody><tr><td width="80px;" style="vertical-align: bottom;">Ajouté</td><td width="170px">: </td><td width="60px;">Seedtime</td><td>: </td><td align="right">Ratio : 0</td></tr><tr><td style="vertical-align: bottom;">Sources</td><td>: 5(0)</td><td>Clients</td><td>: 0(0)</td><td align="right">Upload : - Download : -</td></tr><tr><td style="vertical-align: bottom;">Télécharger</td><td>: 0.00 Ko/58.72 Mo</td><td>Envoyé</td><td>: 0.00 Ko</td><td align="right">Temps restant : ∞</td></tr></tbody></table></fieldset><fieldset idcpt="2" class="torrent " id="AB28F7819ADEC3C0732B4C4F03442E63D9835066"><legend><table><tbody><tr><td><svg xml:space="preserve" enable-background="new 0 0 512 512" viewBox="0 0 512 512" height="60px" width="60px" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1" title="Arrêté"><path d="M409.338,166.521c-10.416-54.961-58.666-95.777-115.781-95.777c-35.098,0-67.631,15.285-89.871,41.584c-37.148-9.906-76.079,11.781-86.933,48.779C78.16,172.442,50.6,208.161,50.6,249.569c0,50.852,41.37,92.221,93.222,92.221H369.18c50.85,0,92.221-41.369,92.221-92.221C461.4,213.655,440.941,181.724,409.338,166.521z M369.18,301.79H143.821c-29.795,0-53.222-23.426-53.222-52.221c0-34.078,27.65-60.078,62.186-53.816c-11.536-39.596,44.131-61.93,64.641-32.348c5.157-14.582,25.823-52.662,76.131-52.662c38.027,0,77.361,26.08,78.664,84.982c25.363,0.098,49.18,18.432,49.18,53.844C421.4,278.364,397.975,301.79,369.18,301.79z M278.591,363.455h-45.182v37.802h-33.888v0.463v39.537h112.957V401.72v-0.463h-33.888V363.455z M414.7,401.257h-79.631v40H414.7V401.257z M176.931,401.257H97.3v40h79.631V401.257z" style="fill: gray;"/></svg></td><td>Les.Octonauts.1x41.FRENCH.HDTV.x264-TDPG.mp4</td></tr></tbody></table></legend><table style="width: 100%"><tbody><tr><td width="100%"><progress max="100" value="0" id="p" class="noncomplet"></progress></td><td width="70px" style="text-align:center;min-width:70px; "><span class="pcr">0</span>%</td></tr></tbody></table><table style="width: 100%"><tbody><tr><td width="80px;" style="vertical-align: bottom;">Ajouté</td><td width="170px">: </td><td width="60px;">Seedtime</td><td>: </td><td align="right">Ratio : 0</td></tr><tr><td style="vertical-align: bottom;">Sources</td><td>: 4(0)</td><td>Clients</td><td>: 0(0)</td><td align="right">Upload : - Download : -</td></tr><tr><td style="vertical-align: bottom;">Télécharger</td><td>: 0.00 Ko/73.70 Mo</td><td>Envoyé</td><td>: 0.00 Ko</td><td align="right">Temps restant : ∞</td></tr></tbody></table></fieldset><fieldset idcpt="3" class="torrent " id="504A51DBDA63E07FC1E13B9C666900D12087A5E3"><legend><table><tbody><tr><td><svg xml:space="preserve" enable-background="new 0 0 512 512" viewBox="0 0 512 512" height="60px" width="60px" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1" title="Envoi"><path d="m 409.338,216.254 c -10.416,-54.961 -58.666,-95.777 -115.781,-95.777 -35.098,0 -67.631,15.285 -89.871,41.584 -37.148,-9.906 -76.079,11.781 -86.933,48.779 C 78.16,222.176 50.6,257.895 50.6,299.303 c 0,50.852 41.37,92.221 93.222,92.221 l 225.358,0 c 50.85,0 92.221,-41.369 92.221,-92.221 -0.001,-35.914 -20.46,-67.846 -52.063,-83.049 z m -40.158,135.269 -225.359,0 c -29.795,0 -53.222,-23.426 -53.222,-52.221 0,-34.078 27.65,-60.078 62.186,-53.816 -11.536,-39.596 44.131,-61.93 64.641,-32.348 5.157,-14.582 25.823,-52.662 76.131,-52.662 38.027,0 77.361,26.08 78.664,84.982 25.363,0.098 49.18,18.432 49.18,53.844 -0.001,28.796 -23.426,52.221 -52.221,52.221 z m -133.90703,-77.57749 -28.75689,0.11871 59.23404,-59.82071 59.72327,59.32967 -28.75602,0.1187 0.25445,61.64094 -61.44441,0.25364 z" style="fill: #18C72F;"/></svg></td><td>Les.Octonauts.1x44.FRENCH.HDTV.x264-TDPG.mp4</td></tr></tbody></table></legend><table style="width: 100%"><tbody><tr><td width="100%"><progress max="100" value="100" id="p" class="ul"></progress></td><td width="70px" style="text-align:center;min-width:70px; "><span class="pcr">100</span>%</td></tr></tbody></table><table style="width: 100%"><tbody><tr><td width="80px;" style="vertical-align: bottom;">Ajouté</td><td width="170px">: </td><td width="60px;">Seedtime</td><td>: </td><td align="right">Ratio : 0</td></tr><tr><td style="vertical-align: bottom;">Sources</td><td>: 5(0)</td><td>Clients</td><td>: 0(0)</td><td align="right">Upload : - Download : -</td></tr><tr><td style="vertical-align: bottom;">Télécharger</td><td>: 57.09 Mo/57.09 Mo</td><td>Envoyé</td><td>: 0.00 Ko</td><td align="right">Temps restant : ∞</td></tr></tbody></table></fieldset><span onclick="Torrent.next(1)" style="display: block;text-align: center;padding: 2px;">▼</span></div>
+            </div>
 
         </div>
-        <div class="large-6 columns panel heightfixed"><dl class="tabs" data-tab> <dd class="active"><a href="#panel2-1">Détails</a></dd> <dd><a href="#panel2-2">Fichier</a></dd> <dd><a href="#panel2-3">Tracker</a></dd> <dd><a href="#panel2-4">Tab 4</a></dd> </dl> <div class="tabs-content"> <div class="content active" id="panel2-1"> <p>First panel content goes here... Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur enim fuga fugiat laboriosam sapiente voluptate voluptatum. Adipisci animi itaque ullam vitae? Accusantium alias aspernatur, atque dolorum hic odit quas tempore.</p> </div> <div class="content" id="panel2-2"> <p>Second panel content goes here...</p> </div> <div class="content" id="panel2-3"> <p>Third panel content goes here...</p> </div> <div class="content" id="panel2-4"> <p>Fourth panel content goes here...</p> </div> </div></div>
+        <div id="moitiedroite" class="large-7 columns panel heightfixed show-for-medium-up">
+            <dl class="tabs" data-tab>
+                <dd id="btdetails" class="active"><a href="#panel2-1">Détails</a></dd>
+                <dd><a href="#panel2-2">Fichier</a></dd>
+                <dd><a class="disabled" href="#panel2-3">Tracker</a></dd>
+                <dd><a href="#panel2-4">Tab 4</a></dd>
+            </dl>
+            <div class="tabs-content">
+                <div class="content active" id="panel2-1">
+                    <fieldset>
+                        <legend>Général</legend>
+                        <table class="noneventrowbg" style="width: 100%;border: none;">
+                            <tr>
+                                <td>Nom:</td>
+                                <td id="torrentdetailnom"></td>
+                            </tr>
+                            <tr>
+                                <td>Date:</td>
+                                <td id="torrentdetaildateaj"></td>
+                            </tr>
+                            <tr>
+                                <td>Répertoire:</td>
+                                <td id="torrentdetailrep"></td>
+                            </tr>
+                            <tr>
+                                <td>Hash:</td>
+                                <td id="torrentdetailhash"></td>
+                            </tr>
+                            <tr>
+                                <td>Infos:</td>
+                                <td id="torrentdetailinfos" class="red"></td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Transfert</legend>
+                        <table class="noneventrowbg" style="width: 100%;border: none;">
+                            <tr>
+                                <td>Temps écoulé:</td>
+                                <td id="torrentdetailtempsecoule"></td>
+                                <td>Restant:</td>
+                                <td id="torrentdetailrestant"></td>
+                                <td>Ratio:</td>
+                                <td id="torrentdetailratio"></td>
+                            </tr>
+                            <tr>
+                                <td>Téléchargé:</td>
+                                <td id="torrentdetaildl"></td>
+                                <td>Vitesse de réception:</td>
+                                <td id="torrentdetailvdl"></td>
+                                <td>Rejeté:</td>
+                                <td id="torrentdetailrejete"></td>
+                            </tr>
+                            <tr>
+                                <td>Envoyé:</td>
+                                <td id="torrentdetailul"></td>
+                                <td>Vitesse de d'émission:</td>
+                                <td id="torrentdetailvul"></td>
+                            </tr>
+                            <tr>
+                                <td>Sources:</td>
+                                <td id="torrentdetailsource"></td>
+                                <td>Clients:</td>
+                                <td id="torrentdetailclient"></td>
+                            </tr>
+                        </table>
+                    </fieldset>
+
+                </div>
+                <div class="content" id="panel2-2">
+                    <!--<table class="scroll">
+                        <thead style="width: inherit;"><tr><th style='width: 60%;'>Nom</th><th style='width: 20%;'>Taille</th><th style='width: 20%;'>Reçus</th><th style='width: 20%;'>%</th><th style='width: 20%;'>Priorité</th></tr></thead>
+                        <tbody id="torrentdetailsfiles">
+
+                        </tbody>
+                    </table>-->
+
+                    <a id="listefile" target="_blank" class="button tiny">Version Liste</a>
+
+
+                    <div style="overflow-y: auto;position: relative;">
+                        <table style="width: 100%;">
+                            <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Taille</th>
+                                <th>Reçus</th>
+                                <th style='width: 150px;'>%</th>
+                                <th>Priorité</th>
+                            </tr>
+                            </thead>
+                            <tbody id="torrentdetailsfiles">
+                            </tbody>
+                        </table>
+                        <iframe name='datafrm' id='datafrm'
+                                style="height: 0px;width: 0px;border: none;display: none;"></iframe>
+                        <form action="" id="getdata" method="get" target="datafrm">
+                        </form>
+                    </div>
+                </div>
+                <div class="content" id="panel2-3">
+                    <div style="overflow-y: auto;position: relative;">
+                        <table style="width: 100%;">
+                            <thead>
+                            <tr>
+                                <th style='width: 200px;'>Nom</th>
+                                <th>Type</th>
+                                <th>Activé</th>
+                                <th>Groupe</th>
+                                <th>Sources</th>
+                                <th>Clients</th>
+                                <th>Téléchargé</th>
+                                <th>A été mis à jour</th>
+                                <th>Intervalle</th>
+                                <th>Privé</th>
+                            </tr>
+                            </thead>
+                            <tbody id="torrentdetailstrackers">
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="content" id="panel2-4"><p>Fourth panel content goes here...</p></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div id="addTorrent" class="addTorrent">
 
-    <div class="addTorrentTitle"><a><?= preg_replace("#([A-Z]+)#",'<span class="secondary">$1</span>',"Ajouter un torrent");?></a><a class="close" onclick="Torrent.controller.addTorrent.addTorrentHide();">&times;</a></div>
+    <div id="addTorrentTitle" class="addTorrentTitle">
+        <a><?= preg_replace("#([A-Z]+)#", '<span class="secondary">$1</span>', "Ajouter un torrent"); ?></a><a
+            class="close" onclick="Torrent1.controller.addTorrent.hide();">&times;</a></div>
     <div id="addTorrentContenu" class="addTorrentContenu">
-        <form id="addtorrent" method="post" enctype="multipart/form-data" onsubmit="Torrent.controller.addTorrent.upload(event);" >
+        <form id="addtorrent" method="post" enctype="multipart/form-data"
+              onsubmit="Torrent1.controller.addTorrent.upload(event);">
+            <div id="baseaddTorrent">
+                <div class="row expansion">
+                    <div class="small-6 columns">
+                        <label for="repertoireaddTorrent" class="right inline">Répertoire</label>
+                    </div>
+                    <div class="small-6 columns">
+                        <ul style="list-style: none;margin: 0;">
+                            <li>
+                                <div class="row expansion">
+                                    <div class="small-11 columns">
+                                        <input onclick="Torrent1.controller.addTorrent.folder.loader();" type="text"
+                                               id="repertoireaddTorrent"
+                                               name="repertoire"
+                                               value=""
+                                               readonly>
+                                    </div>
+                                    <div class="small-1 columns">
+                                        <a class="close" onclick="Torrent1.controller.addTorrent.folder.hide();"
+                                           style="font-size: 20px;">&times;</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div onmouseleave="Torrent1.controller.addTorrent.folder.hide();" id="folderaddTorrent"
+                                     style="overflow-y: auto;overflow-x: hidden;height: 500px; display: none;">
+                                </div>
+                            </li>
+                        </ul>
 
-        <div class="row expansion">
+
+                    </div>
+                </div>
+                <div class="row expansion">
                     <div class="small-6 columns">
                         <label for="torrentfile" class="right inline">Torrent</label>
                     </div>
                     <div class="small-6 columns">
-                        <input type="file" name="torrentfile" multiple onchange="Torrent.controller.addTorrent.checkTorrentFile($('#mediastorrent').is(':checked'));">
+                        <input type="file" name="torrentfile[]" multiple id="torrentfile"
+                               onchange="Torrent1.controller.addTorrent.files.check($('#mediastorrent').is(':checked'));">
                     </div>
-            </div>
-            <div class="row expansion">
-                <div class="small-6 columns">
-                    <input class="right" name="autostart" id="autostart" type="checkbox">
                 </div>
-                <div class="small-6 columns">
-                    <label for="autostart">Lancement automatique</label>
+                <div class="row expansion">
+                    <div class="small-6 columns">
+                        <input class="right" name="autostart" id="autostart" type="checkbox">
+                    </div>
+                    <div class="small-6 columns">
+                        <label for="autostart">Ne pas démarrer le téléchargement</label>
+                    </div>
+                </div>
+                <div class="row expansion">
+                    <div class="small-6 columns">
+                        <input class="right" name="mediastorrent" id="mediastorrent" type="checkbox"
+                               onchange="Torrent1.controller.addTorrent.files.check($('#mediastorrent').is(':checked'));">
+                    </div>
+                    <div class="small-6 columns">
+                        <label for="mediastorrent">Ajouter à la bibliothèque</label>
+                    </div>
                 </div>
             </div>
-            <hr />
+            <center>
+                <div id="addTorrentDetails" class="addTorrentDetails">
 
-        <div class="row expansion">
-            <div class="small-6 columns">
-                <input class="right" name="mediastorrent" id="mediastorrent" type="checkbox" onchange="Torrent.controller.addTorrent.checkTorrentFile($('#mediastorrent').is(':checked'));">
+                </div>
+            </center>
+            <div id="divbouttonaddtorrent" class="row">
+                <div class="small-2 small-centered columns">
+                    <button class="button small secondary expand" value="ajouter" type="submit">Ajouter</button>
+                </div>
             </div>
-            <div class="small-6 columns">
-                <label for="mediastorrent">Mettre sur mediastorrent</label>
-            </div>
-        </div>
-
-        <div id="addTorrentDetails" class="addTorrentDetails">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum facilis perferendis possimus rerum
-                velit! Adipisci blanditiis delectus deserunt enim exercitationem ipsam iste laudantium libero nesciunt
-                repudiandae, rerum sequi vel voluptas?
-            </p>
-            <p>Aperiam aspernatur doloribus ex, fugit, hic impedit in libero nesciunt nobis perferendis possimus
-                provident qui, reiciendis sunt temporibus velit veritatis. A distinctio dolor dolore doloremque fugiat
-                odio odit officia voluptate?
-            </p>
-        </div>
-        <div class="row">
-        <div class="small-2 small-centered columns">
-        <button class="button small secondary expand" value="ajouter" type="submit" >Ajouter</button>
-        </div>
-        </div>
-    </form>
+        </form>
     </div>
 </div>
+<div id="createTorrent" class="addTorrent">
+
+    <div id="createTorrentTitle" class="addTorrentTitle">
+        <a><?= preg_replace("#([A-Z]+)#", '<span class="secondary">$1</span>', "Créer un torrent"); ?></a><a
+            class="close" onclick="Torrent1.controller.createTorrent.hide();">&times;</a></div>
+    <div id="createTorrentContenu" class="addTorrentContenu">
+        <form id="createtorrent" method="post" enctype="multipart/form-data"
+              onsubmit="Torrent1.controller.createTorrent.create(event);">
+
+            <div id="divrepcreatetorrent" class="row">
+                <fieldset>
+                    <legend>Répertoire</legend>
+                    <div class="row expansion">
+                        <div class="large-10 columns large-centered">
+                            <input type="text" id="repertoire" name="repertoire" value="/home/salorium/rtorrent/data"
+                                   readonly>
+                        </div>
+                    </div>
+                    <div id="folder" style="overflow-y: auto;overflow-x: hidden;" class="row expansion">
+
+                    </div>
+                </fieldset>
+            </div>
+
+            <div id="divpropcreatetorrent" class="row">
+                <fieldset>
+                    <legend>Propriétés du torrent</legend>
+                    <div class="row expansion">
+                        <div class="large-6 columns">
+                            <label for="trackers" class="text-center inline">Trackers : </label>
+                        </div>
+                        <div class="large-6 columns">
+                            <textarea name="trackers" id="trackers"></textarea>
+                        </div>
+                    </div>
+                    <div class="row expansion">
+                        <div class="large-6 columns">
+                            <label for="piece" class="text-center inline">Pièces : </label>
+                        </div>
+                        <div class="large-6 columns">
+                            <select name="piece" id="piece">
+                                <option value="32">32 Ko</option>
+                                <option value="64">64 Ko</option>
+                                <option value="128">128 Ko</option>
+                                <option value="256" selected="selected">256 Ko</option>
+                                <option value="512">512 Ko</option>
+                                <option value="1024">1 Mo</option>
+                                <option value="2048">2 Mo</option>
+                                <option value="4096">4 Mo</option>
+                                <option value="8192">8 Mo</option>
+                                <option value="16384">16 Mo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row expansion">
+                        <div class="large-1 columns">
+                            <input name="seed" id="seed" type="checkbox">
+                        </div>
+                        <div class="large-5 columns">
+                            <label for="seed">Mettre en seed</label>
+                        </div>
+                        <div class="large-1 columns">
+                            <input name="private" id="private" type="checkbox">
+                        </div>
+                        <div class="large-5 columns">
+                            <label for="private">Tracker privé</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div id="divbouttoncreatetorrent" class="row">
+                <div class="small-2 small-centered columns">
+                    <button class="button small secondary expand" value="create" type="submit">Créer</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="createToto" style="display: none;">
+        <div class="row">
+            <fieldset>
+                <legend>Log</legend>
+                <div id="logcreate" class="large-12 columns" style="overflow-y: auto;overflow-x: hidden;">
+                </div>
+            </fieldset>
+
+        </div>
+        <div class="row">
+            <fieldset>
+                <legend>Erreur</legend>
+                <div id="erreurcreate" class="large-12 columns" style="overflow-y: auto;overflow-x: hidden;">
+                </div>
+            </fieldset>
+        </div>
+        <div class="row">
+            <div class="small-2 small-centered columns">
+                <button class="button small secondary expand" onclick="Torrent1.controller.createTorrent.get();"
+                        type="button">
+                    Enregistrer
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div id="cliquedroit" style="background-color: darkslategray;width: 150px;display: none;"></div>
+</div>-->

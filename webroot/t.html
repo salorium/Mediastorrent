@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+</head>
+<body class="codec">
+<style>
+    input[type="range"] {
+        -webkit-appearance: none;
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+        width: 500px;
+        height: 20px;
+        margin: 0;
+        border: none;
+        padding: 1px 2px;
+        /*border-radius: 14px;
+*/
+        box-shadow: inset 0 1px 0 0 #0d0e0f, inset 0 -1px 0 0 #3a3d42;
+        -webkit-box-shadow: inset 0 1px 0 0 #0d0e0f, inset 0 -1px 0 0 #3a3d42;
+        outline: none; /* no focus outline */
+
+        outline: none; /* no focus outline */
+    }
+
+    input[type="range"]::-moz-range-track {
+        border: inherit;
+        position: absolute;
+        width: 100%;
+        background: transparent;
+        height: 18px;
+        /*border-radius: 12px;*/
+    }
+
+    input[type="range"]::-ms-track {
+        border: inherit;
+        color: transparent; /* don't drawn vertical reference line */
+        background: transparent;
+    }
+
+    input[type="range"]::-ms-fill-lower,
+    input[type="range"]::-ms-fill-upper {
+        background: transparent;
+    }
+
+    input[type="range"]::-ms-tooltip {
+        /*splay:none;*/
+    }
+
+    /* thumb */
+
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 40px;
+        height: 18px;
+        border: none;
+        /* border-radius: 12px;*/
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #529de1), color-stop(100%, #245e8f)); /* android <= 2.2 */
+        background-image: -webkit-linear-gradient(top, #529de1 0, #245e8f 100%); /* older mobile safari and android > 2.2 */;
+        background-image: linear-gradient(to bottom, #529de1 0, #245e8f 100%); /* W3C */
+    }
+
+    input[type="range"]::-moz-range-thumb {
+        width: 18px;
+        height: 18px;
+        border: none;
+        border-radius: 0px;
+        background-image: linear-gradient(to bottom, #529de1 0, #245e8f 100%); /* W3C */
+    }
+
+    input[type="range"]::-ms-thumb {
+        width: 18px;
+        height: 18px;
+        border-radius: 12px;
+        border: 0;
+        background-image: linear-gradient(to bottom, #529de1 0, #245e8f 100%); /* W3C */
+    }
+
+    input[type="range"]::-moz-range-progress {
+        /* Thumb progress styles: display, background */
+        background-color: blue;
+        height: 18px;
+
+    }
+
+    #second input[type="range"]::-moz-range-progress {
+        background-color: #0F0;
+    }
+
+    #second input[type="range"]::-moz-range-thumb {
+        width: 0px;
+        height: 18px;
+        border: none;
+        border-radius: 0px;
+        background-image: linear-gradient(to bottom, #529de1 0, #245e8f 100%); /* W3C */
+    }
+
+    #second input[type="range"] {
+        background: #232528;
+    }
+</style>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="js/aurora.js"></script>
+            <script src="js/flac.js"></script>
+            <script src="js/mp3.js"></script>
+<audio style="position: absolute; top: -50px;" id="a" preload="auto"
+       src="https://www.salorium.com/torrent/download/B3BA648309CE4C4E17D2920E82A9FB3F91C3B592/0/ZwBMAsWK4ZmXVT9AKGuE6Ma5pgHRb5EErqbOAXgl"></audio>
+<script>
+    $('#a').parent().append('<div style="position:relative;"><input id="cur" style="position:absolute;z-index:10;display: block;" type="range" value="0" min="0" max="100" step="1"><div id="second">  <input id="load" style="display: block" type="range" value="0" min="0" max="100" step="1"></div></div><div><a id="time"></a>-><a id="timeFin"></a><br><input type="range" id="vol" value="100" min="0" max="100" step="5" style="-webkit-appearance: slider-vertical;"><a id="flacl">FLAC</a><a id="flac2">FLACDJJ</a></div>');
+
+    $("#flacl").click(function () {
+        var pa = AV.Player.fromURL("https://www.salorium.com/torrent/download/656A2C7195CF848B6C4041359CCC078427432A77/1/ZwBMAsWK4ZmXVT9AKGuE6Ma5pgHRb5EErqbOAXgl");
+        pa.on("error", function (e) {
+            console.log(e);
+        });
+        pa.on('progress', onprogress = function (time) {
+            $("#cur").val(time);
+            $("#time").html(time);
+        });
+        pa.on('duration', onduration = function (duration) {
+            $("#cur").attr("max", duration);
+            $("#timeFin").html(duration);
+        });
+        $("#vol").on("change mousemove", function () {
+            //play.volume = $(this).val() / 100;
+            pa.volume = $(this).val();
+        });
+        $("#cur").on("change", function () {
+
+            pa.seek($(this).val());
+
+        });
+        pa.play();
+    });
+
+    $("#flac2").click(function () {
+        var pa = AV.Player.fromURL("https://www.salorium.com/torrent/download/2E871D9F8CFE4688C3683572F7D47FA498598AB1/0/ZwBMAsWK4ZmXVT9AKGuE6Ma5pgHRb5EErqbOAXgl");
+        pa.on("error", function (e) {
+            console.log(e);
+        });
+        pa.on('progress', onprogress = function (time) {
+            $("#cur").val(time);
+            $("#time").html(time);
+        });
+        pa.on('duration', onduration = function (duration) {
+            $("#cur").attr("max", duration);
+            $("#timeFin").html(duration);
+        });
+        $("#vol").on("change mousemove", function () {
+            //play.volume = $(this).val() / 100;
+            pa.volume = $(this).val();
+        });
+        $("#cur").on("change", function () {
+
+            pa.seek($(this).val());
+
+        });
+        pa.play();
+    });
+
+    var play = $('#a')[0];
+    $("#cur").on("change", function () {
+        if (play.ended)
+            play.play()
+        play.currentTime = $(this).val();
+
+    });
+
+    $("#vol").on("change mousemove", function () {
+        play.volume = $(this).val() / 100;
+        //pa.volume = $(this).val();
+    });
+
+    play.onloadedmetadata = function (e) {
+        $("#load").attr("max", e.target.duration);
+        $("#load").val(0);
+        $("#cur").attr("max", e.target.duration);
+        $("#cur").val(e.target.currentTime);
+        $("#timeFin").html(e.target.duration);
+        $("#time").html(e.target.currentTime);
+        //$("#console-log").html(e.target.currentTime);
+    }
+
+    play.onprogress = function (e) {
+        if (e.target.buffered.length > 0) {
+            //console.log(e.target.duration);
+            $("#load").val(e.target.buffered.end(0));
+        }
+    }
+
+
+    play.ontimeupdate = function (e) {
+        $("#cur").val(e.target.currentTime);
+        $("#time").html(e.target.currentTime);
+    }
+
+
+    setTimeout(function () {
+        $.ajax({
+            url: 'https://www.salorium.com/torrent/download/B3BA648309CE4C4E17D2920E82A9FB3F91C3B592/0/ZwBMAsWK4ZmXVT9AKGuE6Ma5pgHRb5EErqbOAXgl',
+            type: 'HEAD',
+            success: function (message, text, response) {
+                console.log("AAA");
+                console.log(response.getResponseHeader('Content-Disposition'));
+                play.src = 'https://www.salorium.com/torrent/download/B3BA648309CE4C4E17D2920E82A9FB3F91C3B592/0/ZwBMAsWK4ZmXVT9AKGuE6Ma5pgHRb5EErqbOAXgl';
+                play.play();
+            }
+        });
+    }, 1000);
+</script>
+
+</body>
+</html>

@@ -6,7 +6,10 @@
  * Time: 16:32
  */
 ?>
-<fieldset class="violet" ><legend class="debugger-deroule" data-id="d3">Requête(s) Mysql(<?=count($data)?>) <?= \number_format($time,3)?> ms</legend>
+<fieldset class="violet">
+    <legend class="debugger-deroule" data-id="d3">Requête(s) Mysql(<?= count($data) ?>) <?= \number_format($time, 3) ?>
+        ms
+    </legend>
     <div id="d3" class="debugger-auto">
         <table class="debugger">
             <thead>
@@ -22,22 +25,22 @@
 
 
             <?
-            foreach ($data as $v){
+            foreach ($data as $v) {
                 ?>
                 <tr>
-                    <td><?= \number_format($v[1],3)?> ms</td>
-                    <td><?= $v[0]?></td>
+                    <td><?= \number_format($v[1], 3) ?> ms</td>
+                    <td><?= $v[0] ?></td>
                     <td><?php
-                        if ( is_array($v[2])){
-                            foreach ($v[2] as $k=>$vv){
+                        if (is_array($v[2])) {
+                            foreach ($v[2] as $k => $vv) {
                                 echo nl2br($vv);
                             }
-                        }else{
-                           echo nl2br($v[2]);
+                        } else {
+                            echo nl2br($v[2]);
                         }
                         ?></td>
-                    <td><?=($v[3]);?></td>
-                    <td><?=($v[4]);?></td>
+                    <td><?= ($v[3]); ?></td>
+                    <td><?= ($v[4]); ?></td>
                 </tr>
             <?
             }

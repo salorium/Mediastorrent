@@ -6,9 +6,9 @@
  * Time: 17:47
  */
 ?>
-<? if (isset($js["fonction"])){
-?>
-    <?= ucfirst($js["name"]);?>.<?= $js["fonction"]?>(<?= isset($js["args"]) ? json_encode($js["args"]):"" ?>);
+<? if (isset($js["fonction"])) {
+    ?>
+    <?= ucfirst($js["name"]); ?>.<?= $js["fonction"] ?>(<?= isset($js["args"]) ? json_encode($js["args"]) : "" ?>);
 <?
 }
 ?>

@@ -9,52 +9,52 @@
 namespace model\xmlrpc;
 
 
-class rXMLRPCCommand extends \core\Model{
+class rXMLRPCCommand extends \core\Model
+{
     public $command;
     public $params;
     public $portscgi;
-    public function __construct($portscgi, $cmd, $args = null )
+
+    public function __construct($portscgi, $cmd, $args = null)
     {
         //\trigger_error("ddd");
         //throw new \Exception("ddd");
         $this->portscgi = $portscgi;
-        $this->command = rTorrentSettings::getCmd($this->portscgi,$cmd);
+        $this->command = rTorrentSettings::getCmd($this->portscgi, $cmd);
         $this->params = array();
-        if($args!==null)
-        {
-            if(is_array($args))
-                foreach($args as $prm)
+        if ($args !== null) {
+            if (is_array($args))
+                foreach ($args as $prm)
                     $this->addParameter($prm);
             else
                 $this->addParameter($args);
         }
     }
 
-    public function addParameters( $args )
+    public function addParameters($args)
     {
-        if($args!==null)
-        {
-            if(is_array($args))
-                foreach($args as $prm)
+        if ($args !== null) {
+            if (is_array($args))
+                foreach ($args as $prm)
                     $this->addParameter($prm);
             else
                 $this->addParameter($args);
         }
     }
 
-    public function addParameter( $aValue, $aType = null )
+    public function addParameter($aValue, $aType = null)
     {
-        if($aType===null)
-            $aType = self::getPrmType( $aValue );
-        $this->params[] = new rXMLRPCParam( $aType, $aValue );
+        if ($aType === null)
+            $aType = self::getPrmType($aValue);
+        $this->params[] = new rXMLRPCParam($aType, $aValue);
     }
 
-    static protected function getPrmType( $prm )
+    static protected function getPrmType($prm)
     {
-        if(is_int($prm))
-            return('i4');
-        if(is_double($prm))
-            return('i8');
-        return('string');
+        if (is_int($prm))
+            return ('i4');
+        if (is_double($prm))
+            return ('i8');
+        return ('string');
     }
 } 

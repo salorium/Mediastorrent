@@ -10,59 +10,539 @@ namespace controller;
 
 
 use core\Controller;
+use model\mysql\Film;
+use model\mysql\Torrentfilm;
+use model\mysql\Torrents_files;
+use model\mysql\Utilisateur;
+use model\ocelot\Requete;
+use model\simple\Mail;
+use model\simple\Repertoire;
+use model\simple\String;
+use model\simple\Torrent;
+use model\xmlrpc\rTorrentSettings;
 
 
+class Test extends Controller
+{
+    function gget()
+    {
+        var_dump($_GET);
+    }
+    function brantest()
+    {
+//exemple
+    }
+    function linux()
+    {
 
-class Test extends Controller {
+    }
+    function trackerUptorrent($user)
+    {
+        \core\Mysqli::$default = "gazelle";
+        $u = Utilisateur::getUtilisteur($user);
+        if ($u) {
+            \config\Conf::$torrentpass = $u->torrentpass;
+            if (isset($_FILES["torrent"])) {
+                if ($_FILES["torrent"]["error"] > 0) {
 
-    function accerole($role){
+                } else {
+                    $torrent = new Torrent(file_get_contents($_FILES["torrent"]["tmp_name"]));
+                    if (!$torrent->errors()) {
+                        $torrent->is_private(true);
+                        $torrent->announce("");
+                        $hash = pack("H*", $torrent->hash_info());
+                        $a = \model\mysql\Torrents::insertTorrent($hash, $torrent->__toString());
+                        if (!is_bool($a)) {
+                            $az = \model\ocelot\Requete::addTorrent($a, $hash, "0");
+                        }
+                    }
+                }
+
+
+            }
+        } else {
+            throw new \Exception("Pas d'utilisateur");
+        }
+    }
+
+    function getTorrent($user = null)
+    {
+        \core\Mysqli::$default = "gazelle";
+        \config\Conf::$torrentpass = $user;
+        if (is_null($user)) {
+            $user = String::random(5);
+            $pass = String::random(32);
+            \config\Conf::$torrentpass = $pass;
+            Requete::addUser($user, $pass, "1");
+        }
+
+        $a = Torrents_files::getFile(12);
+        $to = new Torrent($a->file);
+        $to->announce(Torrent::getAnnounceUser());
+        $to->send();
+    }
+
+    function wbb()
+    {
+        $enjson = null;
+        $frjson = null;
+        $xml = simplexml_load_file(ROOT . DS . "cache" . DS . "en.xml");
+        $en = json_decode(json_encode($xml), true);
+        $xml = simplexml_load_file(ROOT . DS . "cache" . DS . "WoltLab.Burning.Board.4.0.5-French.xml");
+        $fr = json_decode(json_encode($xml), true);
+        foreach ($en["category"] as $k => $v) {
+            //var_dump($v["@attributes"]["name"]);
+            $item = null;
+            foreach ($v["item"] as $kk => $vv) {
+                $enjson[$v["@attributes"]["name"]][$vv["@attributes"]["name"]] = $vv["@attributes"]["name"];
+
+            }
+            //var_dump($item);
+            // = $item;
+            //var_dump($v["item"]);
+            //die();
+        }
+        foreach ($fr["category"] as $k => $v) {
+            //var_dump($v["@attributes"]["name"]);
+            $item = null;
+            foreach ($v["item"] as $kk => $vv) {
+                $frjson[$v["@attributes"]["name"]][$vv["@attributes"]["name"]] = $vv["@attributes"]["name"];
+
+            }
+
+            //var_dump($v["item"]);
+            //die();
+        }
+        //var_dump($frjson["wbb.acp.board"]);
+        //var_dump($frjson);
+        foreach ($enjson as $k => $v) {
+            if (isset($frjson[$k])) {
+                //var_dump($frjson[$k]);
+                echo "=" . $k . "<br>";
+                foreach ($v as $kk => $vv) {
+                    if (isset($frjson[$k][$vv])) {
+
+                    } else {
+                        echo "[" . $k . "]" . $kk . "<br>";
+                    }
+                }
+            } else {
+                echo "<span style='color: red'>" . $k . "</span><br>";
+            }
+            //die();
+        }
+        //var_dump(($en["category"][0]["@attributes"]["name"]));
+        //var_dump(($fr->category));
+        die();
+
+    }
+
+    function iti()
+    {
+        $c = file_get_contents("https://api.dailymotion.com/videos?fields=id,thumbnail_480_url%2Ctitle%2C&owners=x4ak7b&limit=100");
+        $this->set("data", json_decode($c));
+        $c = file_get_contents("https://api.dailymotion.com/videos?fields=id,thumbnail_480_url%2Ctitle%2C&owners=x8yhwu,x5if3,xi4txd&limit=100");
+        $this->set("dataamis", json_decode($c));
+    }
+    function ca()
+    {
+        date_default_timezone_set("UTC");
+        echo "UTC:" . time();
+        echo "<br>";
+
+        date_default_timezone_set("Europe/Helsinki");
+        echo "Europe/Helsinki:" . time();
+        echo "<br>";
+        $erre = false;
+        try {
+            //throw new \Exception("dd");
+        } catch (\Exception $e) {
+            $erre = true;
+        }
+        var_dump(\date_timezone_get());
+        die();
+    }
+
+    function infofichier()
+    {
+
+        if (isset ($_FILES ['torrentfile'])) {
+            if (is_array($_FILES['torrentfile']['name'])) {
+
+                for ($i = 0; $i < count($_FILES['torrentfile']['name']); ++$i) {
+                    $files[] = array
+                    (
+                        'name' => $_FILES['torrentfile']['name'][$i],
+                        'tmp_name' => $_FILES['torrentfile']['tmp_name'][$i],
+                        'error' => $_FILES ['torrentfile'] ['error'][$i]
+                    );
+                }
+
+            } else {
+                $files[] = $_FILES['torrentfile'];
+
+            }
+            $torrents = null;
+            foreach ($files as $file) {
+                $torrent = null;
+                $torrent['erreur'] = -1;
+                $torrent['nom'] = $file["name"];
+                if (pathinfo($file["name"], PATHINFO_EXTENSION) != "torrent")
+                    $file["name"] .= ".torrent";
+                $des = DS . "tmp" . DS . $file["name"];
+                $torrent['nom'] = $file["name"];
+                $ok = move_uploaded_file($file['tmp_name'], $des);
+                if ($ok) {
+                    $to = new \model\simple\Torrent($des);
+                    //$torrents[]= array($to->getFileName(),$to->info["name"]);
+                    if ($to->errors()) {
+                        $torrent['status'] = "ErreurFichier";
+                    } else {
+                        $info = $to->info;
+                        $f = null;
+                        $torrent['hash'] = $to->hash_info();
+                        if (isset ($info ['files'])) {
+                            $numfile = 0;
+                            foreach ($info ['files'] as $key => $tfile) {
+                                $nom = $info ['name'] . DS . implode(DS, $tfile ['path']);
+                                if (in_array(strtolower(pathinfo($nom, PATHINFO_EXTENSION)), \config\Conf::$videoExtensions)) {
+                                    $torrent["erreur"] = 0;
+                                    $fi ["nom"] = $nom;
+                                    $fi ["numfile"] = $numfile;
+                                    $torrent['type'] = "movie";
+                                    $f [] = $fi;
+                                } else if (in_array(strtolower(pathinfo($nom, PATHINFO_EXTENSION)), \config\Conf::$musicExtensions)) {
+                                    $torrent["erreur"] = 0;
+                                    $fi ["nom"] = $nom;
+                                    $fi ["numfile"] = $numfile;
+                                    $torrent['type'] = "music";
+                                    $f [] = $fi;
+                                }
+                                $numfile++;
+                            }
+                        } else if (in_array(strtolower(pathinfo($info ['name'], PATHINFO_EXTENSION)), \config\Conf::$videoExtensions)) {
+                            $torrent["erreur"] = 0;
+                            $fi ["nom"] = $info ['name'];
+                            $fi["numfile"] = 0;
+                            //$fi ["ext"] = pathinfo ( $info ['name'], PATHINFO_EXTENSION );
+                            $torrent['type'] = "movie";
+                            //$fi ["nomaff"] = formatNomAff ( $fi ["nom"] );
+                            $f [] = $fi;
+                        } else if (in_array(strtolower(pathinfo($info ['name'], PATHINFO_EXTENSION)), \config\Conf::$musicExtensions)) {
+                            $torrent["erreur"] = 0;
+                            $fi["numfile"] = 0;
+                            $fi ["nom"] = $info ['name'];
+                            //$fi ["ext"] = pathinfo ( $info ['name'], PATHINFO_EXTENSION );
+                            $torrent['type'] = "music";
+                            //$fi ["nomaff"] = formatNomAff ( $fi ["nom"] );
+                            $f [] = $fi;
+                        }
+                        if (is_null($f)) {
+                            $torrent["status"] = "Aucun fichier compatible avec la bibliothèque (" . /* Thumbnailers::getStringExtension () .*/
+                                ")";
+                        } else {
+                            $torrent["files"] = $f;
+                        }
+                    }
+                    unlink($des);
+                }
+                $torrents[] = $torrent;
+            }
+            /*$tor = null;
+            foreach( $files as $file )
+            {
+                $ufile = $file['name'];
+                if(pathinfo($ufile,PATHINFO_EXTENSION)!="torrent")
+                    $ufile.=".torrent";
+                $nomm = md5(uniqid(rand(), true));
+                $to = null;
+                $to["name"]=$file['name'];
+                $to["erreur"] = -1;
+                $ok = move_uploaded_file($file['tmp_name'],"/home/admin/salorium/log/".$nomm.".torrent");
+                if ($ok ){
+                    $torrent = new Torrent ( "/home/admin/salorium/log/".$nomm.".torrent" );
+                    if ($torrent->errors ()) {
+                        $to["status"] = "FailedFile";
+                    }else{
+
+                        $info = $torrent->info;
+                        $f = null;
+
+                        if (isset ( $info ['files'] )){
+                            foreach ( $info ['files'] as $key => $tfile ) {
+                                $nom = $topDirectory.$info ['name']."/" .implode ( '/', $tfile ['path'] );
+                                if (in_array ( strtolower ( pathinfo ( $nom, PATHINFO_EXTENSION ) ), Thumbnailers::$videoExtensions )) {
+                                    $to["erreur"] = 0;
+                                    $fi ["nom"] = basename($nom);
+                                    $fi ["ext"] = pathinfo ( $nom, PATHINFO_EXTENSION );
+                                    $fi ["nomaff"] = formatNomAff ( $fi ["nom"] );
+                                    $f [] = $fi;
+                                }
+                            }
+                        }
+                        else if (in_array ( strtolower ( pathinfo ( $info ['name'], PATHINFO_EXTENSION ) ), Thumbnailers::$videoExtensions )) {
+                            $to["erreur"] = 0;
+                            $fi ["nom"] = basename($topDirectory.$info ['name']."/".$info ['name']);
+                            $fi ["ext"] = pathinfo ( $info ['name'], PATHINFO_EXTENSION );
+                            $fi ["nomaff"] = formatNomAff ( $fi ["nom"] );
+                            $f [] = $fi;
+                        }
+                        if (is_null($f)){
+                            $to["status"] = "Aucun fichier compatible avec le site (" . Thumbnailers::getStringExtension () . ")";
+                        }else{
+                            $to["file"] = $f;
+                        }
+
+                    }
+                    unlink("/home/admin/salorium/log/".$nomm.".torrent");
+
+                }else{
+                    $to["status"] = "Erreur de déplacement ou upload code erreur =>".$file['error'];
+                }
+                $tor[]=$to;
+            }
+            $t ["torrent"] = $tor;
+            $t ["rep"] = parCourBdd ( 0, "/" );
+            $j ["data"] = $t;*/
+        } else {
+            /*$j['status'] = "NoFichier";
+            $j['erreur'] = -1;*/
+        }
+        $this->set(array(
+            "post" => $_POST,
+            "file" => $_FILES,
+            "torrent" => $torrents
+        ));
+    }
+
+    function post()
+    {
+        $this->set(array(
+            "post" => $_POST,
+            "file" => $_FILES
+        ));
+    }
+
+    function get()
+    {
+        $this->set(array(
+            "post" => $_POST,
+            "file" => $_FILES,
+            "SCRIPT_NAME" => $_SERVER["SCRIPT_NAME"],
+            "DOCUMENT_ROOT" => $_SERVER["DOCUMENT_ROOT"],
+            "PATH_INFO" => $_SERVER["PATH_INFO"]
+        ));
+    }
+
+    function delT()
+    {
+        //Torrentfilm::deleteByClefunique("43NW5URHgH");
+    }
+
+    function getT()
+    {
+        $to = \core\Memcached::value("salorium", "torrentfile1404853105");
+        $tott = new Torrent($to);
+        $tott->send();
+    }
+
+    function tfind()
+    {
+        $vv = Repertoire::getFindAll();
+        $this->set("rep", $vv);
+    }
+
+    function ct()
+    {
+        $path_edit = "/home/salorium/rtorrent/data/Alaska.La.ruee.vers.l.or.S04E03.avi";
+        $piece_size = "512";
+        $callback_log = create_function('$msg', 'echo $msg');
+        $callback_err = create_function('$msg', 'echo $msg;');
+
+
+        $torrent = new \model\simple\Torrent($path_edit, array(), $piece_size, $callback_log, $callback_err);
+        $torrent->is_private(true);
+        var_dump($torrent->info['name']);
+        var_dump($torrent);
+    }
+
+    function rt($ports)
+    {
+        \config\Conf::$portscgi = $ports;
+        var_dump(\model\xmlrpc\rTorrentSettings::get(\config\Conf::$portscgi, true));
+    }
+
+    function addFilm($id)
+    {
+        $o["typesearch"] = "movie";
+        $allo = new \model\simple\Allocine($id, $o);
+        $infos = $allo->retourneResMovieFormatForBD();
+        $genre = $infos["Genre"];
+        $infos["Genre"] = implode(", ", $genre);
+        $titre = (isset($infos["Titre"]) ? $infos["Titre"] : $infos["Titre original"]);
+        $otitre = $infos["Titre original"];
+        $urlposter = "";
+        $urlbackdrop = "";
+        $realisateurs = $infos["Réalisateur(s)"];
+        $acteurs = "";
+        if (isset($infos["Acteur(s)"]))
+            $acteurs = $infos["Acteur(s)"];
+        $anneeprod = $infos["Année de production"];
+        $film = \model\mysql\Film::ajouteFilm($titre, $otitre, json_encode($infos), $urlposter, $urlbackdrop, $anneeprod, $acteurs, $realisateurs, $id);
+        $film->addGenre($genre);
+        $film->addGenre("Comédiatation");
+    }
+
+    function isql()
+    {
+        $querys = file_get_contents(ROOT . DS . "mysql" . DS . "mediastorrent.sql");
+        $t = \core\Mysqli::multiquery($querys);
+        \core\Mysqli::getObjectAndClose(false);
+    }
+
+    function portrtorrent($portscgi)
+    {
+        //\config\Conf::$portscgi = $portscgi;
+        $this->set("rtorrent", rTorrentSettings::get($portscgi)->port);
+    }
+
+    function tfilm()
+    {
+        \model\mysql\Torrentfilm::rechercheParNumFileHashClefunique(0, 'FA0C487D79DD07DB1BE85E9639D9E5B112DD39EE', '9JkOBaF1Hs');
+        //\model\mysql\Torrentfilm::addTorrentFilm("wHOXNvBDDy", "0", "ddd", "salorium", "BigTerra2", "dd", "a", false);
+    }
+
+    function clefunique()
+    {
+        echo "FIN => " . \model\mysql\Torrentfilm::getClefUnique();
+    }
+    /*function addFilm(){
+        $f = Film::ajouteFilm("Titi","Titi","az","az","dd");
+        echo $f->id;
+        die();
+    }*/
+    /*function mailo($login,$mail,$mdp){
+        $this->set(array(
+            "mail"=>Mail::activationMotDePasse($mdp,$login,$mail)
+        ));
+    }*/
+    function mail($mail)
+    {
+        // Plusieurs destinataires
+        $to = "" . $mail . "";
+
+        // Sujet
+        $subject = 'Calendrier des anniversaires pour Août';
+
+        // message
+        $message = '
+     <html>
+      <head>
+       <title>Calendrier des anniversaires pour Août</title>
+      </head>
+      <body>
+       <p>Voici les anniversaires à venir au mois d\'Août !</p>
+       <table>
+        <tr>
+         <th>Personne</th><th>Jour</th><th>Mois</th><th>Année</th>
+        </tr>
+        <tr>
+         <td>Josiane</td><td>3</td><td>Août</td><td>1970</td>
+        </tr>
+        <tr>
+         <td>Emma</td><td>26</td><td>Août</td><td>1973</td>
+        </tr>
+       </table>
+      </body>
+     </html>
+     ';
+
+        // Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
+        $headers = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+
+        // En-têtes additionnels
+        // $headers .= 'To: Mary <mary@example.com>, Kelly <kelly@example.com>' . "\r\n";
+        $headers .= 'From: admin@' . $_SERVER["HTTP_HOST"] . '' . "\r\n";
+        //$headers .= 'Cc: anniversaire_archive@example.com' . "\r\n";
+        //$headers .= 'Bcc: anniversaire_verif@example.com' . "\r\n";
+
+        // Envoi
+        $this->set(array(
+            "mail" => mail($to, $subject, $message, $headers)
+        ));
+    }
+
+    function allocine($re)
+    {
+        $o["typesearch"] = "movie";
+        $all = new \model\simple\Allocine($re, $o);
+        $this->set(array(
+            "film" => $all->retourneResMovie()
+        ));
+    }
+
+    function iso3166()
+    {
+        \model\simple\Iso31::getIso3166();
+    }
+
+    function tmdb($re)
+    {
+        $tmdb = new \model\simple\TheMovieDb();
+        $this->set(array(
+            "film" => $tmdb->getMovieFormat($re)
+        ));
+    }
+
+    function accerole($role)
+    {
         $num = \config\Conf::$rolenumero[$role];
         $compteurarray = null;
         $tass = null;
-        do{
+        do {
             $role = \config\Conf::$numerorole[$num];
-            if ( is_array($role)){
-                if ( is_null($compteurarray)){
+            if (is_array($role)) {
+                if (is_null($compteurarray)) {
                     $compteurarray = 0;
                 }
                 $r = $role;
                 $role = $role[$compteurarray];
                 $compteurarray++;
-                if ( $compteurarray == count($r))
-                {
-                    $compteurarray=null;
+                if ($compteurarray == count($r)) {
+                    $compteurarray = null;
                     $num--;
                 }
 
-            }else{
+            } else {
                 $num--;
             }
 
-            if ($role === \config\Conf::$numerorole[0]){
-                $repertoire = ROOT.DS."controller";
-            }else{
-                $repertoire = ROOT.DS."controller".DS.\strtolower($role);
+            if ($role === \config\Conf::$numerorole[0]) {
+                $repertoire = ROOT . DS . "controller";
+            } else {
+                $repertoire = ROOT . DS . "controller" . DS . \strtolower($role);
 
             }
 
 
-            if (\file_exists($repertoire)){
+            if (\file_exists($repertoire)) {
                 $MyDirectory = \opendir($repertoire);
-                while($Entry = @\readdir($MyDirectory)) {
-                    if( !is_dir($repertoire.DS.$Entry) && $Entry != '.' && $Entry != '..') {
-                        if ($role === \config\Conf::$numerorole[0]){
-                            $cname = '\controller\\'.pathinfo ($Entry,PATHINFO_FILENAME);
-                        }else{
-                            $cname = '\controller\\'.strtolower($role).'\\'.pathinfo ($Entry,PATHINFO_FILENAME);
+                while ($Entry = @\readdir($MyDirectory)) {
+                    if (!is_dir($repertoire . DS . $Entry) && $Entry != '.' && $Entry != '..') {
+                        if ($role === \config\Conf::$numerorole[0]) {
+                            $cname = '\controller\\' . pathinfo($Entry, PATHINFO_FILENAME);
+                        } else {
+                            $cname = '\controller\\' . strtolower($role) . '\\' . pathinfo($Entry, PATHINFO_FILENAME);
                         }
-                        $c = new $cname($this->request,$this->debug);
-                        $cn = explode("\\",$cname);
-                        $cn = $cn[count($cn)-1];
+                        $c = new $cname($this->request, $this->debug);
+                        $cn = explode("\\", $cname);
+                        $cn = $cn[count($cn) - 1];
                         $v = get_class_methods($c);
-                        if ( ! isset ($tass[$cn]))
+                        if (!isset ($tass[$cn]))
                             $tass[$cn] = array();
-                        foreach ( $v as $k=>$vv){
-                            if ( !in_array($vv, $tass[$cn]))
+                        foreach ($v as $k => $vv) {
+                            if (!in_array($vv, $tass[$cn]))
                                 $tass[$cn][] = $vv;
                         }
                     }
@@ -71,36 +551,40 @@ class Test extends Controller {
                 \closedir($MyDirectory);
 
             }
-        }while ( $num > -1);
+        } while ($num > -1);
         $this->set(array(
-            "droits"=> $tass
+            "droits" => $tass
         ));
     }
 
-    function getAllMemcached(){
+    function getAllMemcached()
+    {
         $n = \core\Memcached::getInstance();
         //var_dump($n->getAllKeys());
         $tab = null;
         $a = $n->getAllKeys();
-        foreach ($a  as $k=>$v){
-            $tab[$v]= $n->get($v);
+        foreach ($a as $k => $v) {
+            $tab[$v] = $n->get($v);
         }
         //\core\Memcached::value(\config\Conf::$user["user"]->login,"user");
-       // \core\Memcached::value(\config\Conf::$user["user"]->login,"user");
+        // \core\Memcached::value(\config\Conf::$user["user"]->login,"user");
 
         $this->set(array(
-            "memcached"=>   $tab
+            "memcached" => $tab
         ));
     }
-    function genereCache(){
-        for ( $i=0 ;$i < 100;$i++){
+
+    function genereCache()
+    {
+        for ($i = 0; $i < 100; $i++) {
             $login = \model\simple\String::random(5);
-            \core\Memcached::value($login,"user",\model\simple\String::random(105,true),60*60);
+            \core\Memcached::value($login, "user", \model\simple\String::random(105, true), 60 * 60);
         }
 
     }
 
-    function xmlrpcrxmlrpcrequestall (){
+    function xmlrpcrxmlrpcrequestall()
+    {
         $cmds = array(
             "d.get_hash=", "d.is_open=", "d.is_hash_checking=", "d.is_hash_checked=", "d.get_state=",
             "d.get_name=", "d.get_size_bytes=", "d.get_completed_chunks=", "d.get_size_chunks=", "d.get_bytes_done=",
@@ -108,96 +592,95 @@ class Test extends Controller {
             "d.get_custom1=", "d.get_peers_accounted=", "d.get_peers_not_connected=", "d.get_peers_connected=", "d.get_peers_complete=",
             "d.get_left_bytes=", "d.get_priority=", "d.get_state_changed=", "d.get_skip_total=", "d.get_hashing=",
             "d.get_chunks_hashed=", "d.get_base_path=", "d.get_creation_date=", "d.get_tracker_focus=", "d.is_active=",
-            "d.get_message=", "d.get_custom2=", "d.get_free_diskspace=", "d.is_private=", "d.is_multi_file=","d.get_throttle_name=","d.get_custom=chk-state",
-            "d.get_custom=chk-time","d.get_custom=sch_ignore",'cat="$t.multicall=d.get_hash=,t.get_scrape_complete=,cat={#}"','cat="$t.multicall=d.get_hash=,t.get_scrape_incomplete=,cat={#}"',
-            'cat=$d.views=',"d.get_custom=seedingtime","d.get_custom=addtime"
+            "d.get_message=", "d.get_custom2=", "d.get_free_diskspace=", "d.is_private=", "d.is_multi_file=", "d.get_throttle_name=", "d.get_custom=chk-state",
+            "d.get_custom=chk-time", "d.get_custom=sch_ignore", 'cat="$t.multicall=d.get_hash=,t.get_scrape_complete=,cat={#}"', 'cat="$t.multicall=d.get_hash=,t.get_scrape_incomplete=,cat={#}"',
+            'cat=$d.views=', "d.get_custom=seedingtime", "d.get_custom=addtime"
         );
-        $cmd = new \model\xmlrpc\rXMLRPCCommand( "d.multicall", "main" );
-        $cmd->addParameters( array_map("\\model\\xmlrpc\\rTorrentSettings::getCmd", $cmds) );
-        $cnt = count($cmd->params)-1;
-        $req = new \model\xmlrpc\rXMLRPCRequest(5001,$cmd);
-        $t= null;
-        if ($req->success()){
+        $cmd = new \model\xmlrpc\rXMLRPCCommand("d.multicall", "main");
+        $cmd->addParameters(array_map("\\model\\xmlrpc\\rTorrentSettings::getCmd", $cmds));
+        $cnt = count($cmd->params) - 1;
+        $req = new \model\xmlrpc\rXMLRPCRequest(5001, $cmd);
+        $t = null;
+        if ($req->success()) {
             $i = 0;
-            $tmp=array();
-            $status = array( 'started'=>1,'paused'=>2, 'checking'=>4,'hashing'=>8,'error'=>16);
+            $tmp = array();
+            $status = array('started' => 1, 'paused' => 2, 'checking' => 4, 'hashing' => 8, 'error' => 16);
 
-            while ($i < count($req->val)){
-                $torrent=null;
+            while ($i < count($req->val)) {
+                $torrent = null;
                 $state = 0;
-                $is_open = $req->val[$i+1];
-                $is_hash_checking  = $req->val[$i+2];
-                $is_hash_checked  = $req->val[$i+3];
-                $get_state = $req->val[$i+4];
-                $get_hashing  = $req->val[$i+24];
-                $is_active  = $req->val[$i+29];
-                $msg  = $req->val[$i+30];
-                if($is_open!=0)
-                {
-                    $state|=$status["started"];
-                    if(($get_state==0) || ($is_active==0))
-                        $state|=$status["paused"];
+                $is_open = $req->val[$i + 1];
+                $is_hash_checking = $req->val[$i + 2];
+                $is_hash_checked = $req->val[$i + 3];
+                $get_state = $req->val[$i + 4];
+                $get_hashing = $req->val[$i + 24];
+                $is_active = $req->val[$i + 29];
+                $msg = $req->val[$i + 30];
+                if ($is_open != 0) {
+                    $state |= $status["started"];
+                    if (($get_state == 0) || ($is_active == 0))
+                        $state |= $status["paused"];
                 }
-                if($get_hashing!=0)
-                    $state|=$status["hashing"];
-                if($is_hash_checking!=0)
-                    $state|=$status["checking"];
-                if($msg!="" && $msg!="Tracker: [Tried all trackers.]")
-                    $state|=$status["error"];
-                $torrent[]=$state;   //state 0
-                $torrent[]=$req->val[$i+5];//nom 1
-                $torrent[]=$req->val[$i+6];//taille 2
-                $get_completed_chunks = $req->val[$i+7];
-                $get_hashed_chunks = $req->val[$i+25];
-                $get_size_chunks = $req->val[$i+8];
-                $chunks_processing = ($is_hash_checking==0) ? $get_completed_chunks : $get_hashed_chunks;
-                $done = floor($chunks_processing/$get_size_chunks*1000);
-                $torrent[]=$done;// 3
-                $torrent[]=$req->val[$i+9];//downloaded 4
-                $torrent[]=$req->val[$i+10];//Uploaded 5
-                $torrent[]=$req->val[$i+11];//ratio 6
-                $torrent[]=$req->val[$i+12];//UL 7
-                $torrent[]=$req->val[$i+13];//DL 8
-                $get_chunk_size = $req->val[$i+14];
-                $torrent[]= ($req->val[$i+13] >0 ? floor(($get_size_chunks-$get_completed_chunks)*$get_chunk_size/$req->val[$i+13]):-1);//Eta 9 (Temps restant en seconde)
+                if ($get_hashing != 0)
+                    $state |= $status["hashing"];
+                if ($is_hash_checking != 0)
+                    $state |= $status["checking"];
+                if ($msg != "" && $msg != "Tracker: [Tried all trackers.]")
+                    $state |= $status["error"];
+                $torrent[] = $state; //state 0
+                $torrent[] = $req->val[$i + 5]; //nom 1
+                $torrent[] = $req->val[$i + 6]; //taille 2
+                $get_completed_chunks = $req->val[$i + 7];
+                $get_hashed_chunks = $req->val[$i + 25];
+                $get_size_chunks = $req->val[$i + 8];
+                $chunks_processing = ($is_hash_checking == 0) ? $get_completed_chunks : $get_hashed_chunks;
+                $done = floor($chunks_processing / $get_size_chunks * 1000);
+                $torrent[] = $done; // 3
+                $torrent[] = $req->val[$i + 9]; //downloaded 4
+                $torrent[] = $req->val[$i + 10]; //Uploaded 5
+                $torrent[] = $req->val[$i + 11]; //ratio 6
+                $torrent[] = $req->val[$i + 12]; //UL 7
+                $torrent[] = $req->val[$i + 13]; //DL 8
+                $get_chunk_size = $req->val[$i + 14];
+                $torrent[] = ($req->val[$i + 13] > 0 ? floor(($get_size_chunks - $get_completed_chunks) * $get_chunk_size / $req->val[$i + 13]) : -1); //Eta 9 (Temps restant en seconde)
                 /*$get_peers_not_connected = $req->val[$i+17];
                 $get_peers_connected = $req->val[$i+18];
                 $get_peers_all = $get_peers_not_connected+$get_peers_connected;*/
-                $torrent[] = $req->val[$i+16]; //Peer Actual 10
-                $torrent[] = $req->val[$i+19]; //Seed Actual 11
-                $seeds=0;
-                foreach(explode("#",$req->val[$i+39]) as $k=> $v){
+                $torrent[] = $req->val[$i + 16]; //Peer Actual 10
+                $torrent[] = $req->val[$i + 19]; //Seed Actual 11
+                $seeds = 0;
+                foreach (explode("#", $req->val[$i + 39]) as $k => $v) {
                     $seeds += $v;
                 }
-                $peers=0;
-                foreach(explode("#",$req->val[$i+40]) as $k=> $v){
+                $peers = 0;
+                foreach (explode("#", $req->val[$i + 40]) as $k => $v) {
                     $peers += $v;
                 }
                 $torrent[] = $peers; //Peer total 12
                 $torrent[] = $seeds; //Seed tota 13
 
 
-                $torrent[] = $req->val[$i+20];//Taille restant 14
-                $torrent[] = $req->val[$i+21];//Priority 15 (0 ne pas télécharger, 1 basse, 2 moyenne, 3 haute)
-                $torrent[] = $req->val[$i+22];//State change 16 (dernière date de change d'état)
-                $torrent[] = $req->val[$i+23];//Skip total 17
-                $torrent[] = $req->val[$i+26];//Base Path 18
-                $torrent[] = $req->val[$i+27];//Date create 19
-                $torrent[] = $req->val[$i+28];//Focus tracker 20
+                $torrent[] = $req->val[$i + 20]; //Taille restant 14
+                $torrent[] = $req->val[$i + 21]; //Priority 15 (0 ne pas télécharger, 1 basse, 2 moyenne, 3 haute)
+                $torrent[] = $req->val[$i + 22]; //State change 16 (dernière date de change d'état)
+                $torrent[] = $req->val[$i + 23]; //Skip total 17
+                $torrent[] = $req->val[$i + 26]; //Base Path 18
+                $torrent[] = $req->val[$i + 27]; //Date create 19
+                $torrent[] = $req->val[$i + 28]; //Focus tracker 20
                 /*try {
                     torrent.comment = this.getValue(values,31);
                     if(torrent.comment.search("VRS24mrker")==0)
                         torrent.comment = decodeURIComponent(torrent.comment.substr(10));
                 } catch(e) { torrent.comment = ''; }*/
-                $torrent[] = $req->val[$i+32];//Torrent free diskspace 21
-                $torrent[] = $req->val[$i+33];//Torrent is private 22
-                $torrent[] = $req->val[$i+34];//Torrent is multifile 23
-                $torrent[] = preg_replace("#\n#","",$req->val[$i+42]);//Torrent seed time 24
-                $torrent[] = preg_replace("#\n#","",$req->val[$i+43]);//Torrent add time 25
-                $torrent[] = $msg;//Message tracker 26
-                $torrent[] =$req->val[$i];//Hash 27
-                $tmp[$req->val[$i]]= $torrent;
-                $i=$i+44;
+                $torrent[] = $req->val[$i + 32]; //Torrent free diskspace 21
+                $torrent[] = $req->val[$i + 33]; //Torrent is private 22
+                $torrent[] = $req->val[$i + 34]; //Torrent is multifile 23
+                $torrent[] = preg_replace("#\n#", "", $req->val[$i + 42]); //Torrent seed time 24
+                $torrent[] = preg_replace("#\n#", "", $req->val[$i + 43]); //Torrent add time 25
+                $torrent[] = $msg; //Message tracker 26
+                $torrent[] = $req->val[$i]; //Hash 27
+                $tmp[$req->val[$i]] = $torrent;
+                $i = $i + 44;
 
             }
             $data = $tmp;
@@ -220,29 +703,30 @@ class Test extends Controller {
             $cid = uniqid(sha1(time()).$_COOKIE["login"]);
             if (!(MyMemcache::value("listrt".$cid,$data,60*5)))
                 trigger_error("Impossible de mettre des données dans le cache");*/
-            $t[]= $tmp;
+            $t[] = $tmp;
             //$t[]= $cid;
             //$t[]= $_SERVER["HTTP_HOST"];
             //$t[]= disk_total_space(Variable::$documentroot."../rtorrent/data/salorium");
             //$t[]= disk_total_space(Variable::$documentroot."../rtorrent/data/salorium")-disk_free_space(Variable::$documentroot."../rtorrent/data/salorium");
 
             $cmds = array(
-                "get_up_rate","get_upload_rate", "get_up_total","get_down_rate","get_download_rate", "get_down_total"
+                "get_up_rate", "get_upload_rate", "get_up_total", "get_down_rate", "get_download_rate", "get_down_total"
             );
             $req = new \model\xmlrpc\rXMLRPCRequest(5001);
 
-            foreach( $cmds as $cmd )
-                $req->addCommand( new \model\xmlrpc\rXMLRPCCommand(5001, $cmd ) );
-            if($req->success())
-                $t[]= $req->val;
+            foreach ($cmds as $cmd)
+                $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(5001, $cmd));
+            if ($req->success())
+                $t[] = $req->val;
 
         }
-        if(is_null($t)) trigger_error("Impossible de se connecter à rtorrent :(");
+        if (is_null($t)) trigger_error("Impossible de se connecter à rtorrent :(");
         var_dump($t);
     }
 
-    function ssh(){
-        \model\simple\Ssh::supprime("salorium","/home/salorium/test");
+    function ssh()
+    {
+        \model\simple\Ssh::supprime("salorium", "/home/salorium/test");
     }
 
 } 

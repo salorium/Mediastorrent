@@ -1,18 +1,18 @@
 /**
  * Created by salorium on 15/03/14.
  */
-Accueil.controller =  {
+Accueil.controller = {
 
     init: function () {
         Accueil.model.inilistener = false;
         console.info("init");
-        if (Accueil.model.backup == null){
+        if (Accueil.model.backup == null) {
             $(".carrousel")
                 .wrap('<div class="carrousel-conteneur"></div>');
             Accueil.model.backup = $("div.carrousel-conteneur").html();
             Accueil.model.inilistener = true;
 
-        }else{
+        } else {
             $("div.carrousel-conteneur").empty();
             $("div.carrousel-conteneur").html(Accueil.model.backup);
         }
@@ -54,9 +54,9 @@ Accueil.controller =  {
             // Application de la hauteur d'une seule diapositive
             .height(Accueil.model.largeurcentralimg)
             // Blocage des débordements
-            .css("overflow", "hidden").css({"top": $(window).height()/2 - Accueil.model.largeurcentralimg /2+ "px", "position": "relative"});
+            .css("overflow", "hidden").css({"top": $(window).height() / 2 - Accueil.model.largeurcentralimg / 2 + "px", "position": "relative"});
         Accueil.controller.listener();
-        if (Accueil.model.inilistener){
+        if (Accueil.model.inilistener) {
 
             Accueil.controller.resize();
         }
@@ -77,7 +77,7 @@ Accueil.controller =  {
                 o.model.cpt--;
                 annimate = true;
             }
-            if (annimate){
+            if (annimate) {
                 $(".carrousel img").animate({
                     opacity: 0
 
@@ -109,11 +109,10 @@ Accueil.controller =  {
             }
 
 
-
         });
     },
 
-    resize : function () {
+    resize: function () {
         var o = Accueil;
         $(window).resize(function () {
             o.controller.init();

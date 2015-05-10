@@ -7,6 +7,6 @@
  */
 ?>
 <td>
-<span  style="cursor: pointer;display: block;text-align: center;" onclick="Debugger.show();">
+<span style="cursor: pointer;display: block;text-align: center;" onclick="Debugger.show();">
 <img title="Debugger" src="images/debuggerfatal.svg">
 </span></td>

@@ -6,7 +6,10 @@
  * Time: 20:03
  */
 ?>
-<fieldset class="vert" ><legend class="debugger-deroule" data-id="d4">Requête(s) Memcached(<?=count($data)?>) <?= \number_format($time,3)?> ms</legend>
+<fieldset class="vert">
+    <legend class="debugger-deroule" data-id="d4">Requête(s) Memcached(<?= count($data) ?>
+        ) <?= \number_format($time, 3) ?> ms
+    </legend>
     <div id="d4" class="debugger-auto">
         <table class="debugger">
             <thead>
@@ -24,29 +27,29 @@
 
 
             <?
-            foreach ($data as $v){
+            foreach ($data as $v) {
                 ?>
                 <tr>
-                    <td><?= \number_format($v[1],3)?> ms</td>
-                    <td><?= $v[0]?></td>
-                    <td><?=($v[2]);?></td>
-                    <td><?=($v[3]);?></td>
+                    <td><?= \number_format($v[1], 3) ?> ms</td>
+                    <td><?= $v[0] ?></td>
+                    <td><?= ($v[2]); ?></td>
+                    <td><?= ($v[3]); ?></td>
                     <td><?php
-                        if ( is_array($v[4])){
-                            foreach ($v[4] as $k=>$vv){
-                                echo $k." => ".nl2br($vv)."<br>";
+                        if (is_array($v[4])) {
+                            foreach ($v[4] as $k => $vv) {
+                                echo $k . " => " . nl2br($vv) . "<br>";
                             }
-                        }else{
-                            if ( is_null($v[4])){
+                        } else {
+                            if (is_null($v[4])) {
                                 echo '<span class="secondary">NULL</span>';
-                            }else{
+                            } else {
                                 echo nl2br($v[4]);
                             }
 
                         }
                         ?></td>
-                    <td><?=($v[5]);?></td>
-                    <td><?=($v[6]);?></td>
+                    <td><?= ($v[5]); ?></td>
+                    <td><?= ($v[6]); ?></td>
                 </tr>
             <?
             }
