@@ -12,6 +12,7 @@ namespace controller;
 use core\Controller;
 use core\Debug;
 use model\mysql\Torrentfilm;
+use model\mysql\Torrentserie;
 use model\xmlrpc\rXMLRPCCommand;
 use model\xmlrpc\rXMLRPCRequest;
 
@@ -564,6 +565,9 @@ class Torrent extends Controller
                     case "film":
                         Torrentfilm::deleteByClefunique($r[$i + 2]);
                         break;
+                    case "serie":
+                        Torrentserie::deleteByClefunique($r[$i + 2]);
+                        break;
                 }
             }
             if ($r[$i] !== "" && $r[$i + 1] == 1 && $r[$i + 4] == 0) {
@@ -741,6 +745,11 @@ class Torrent extends Controller
         $clefunique = null;
         $typemedias = null;
         $status="ok";
+        /*
+         * =================================================
+         * Traitement Mediastorrent !!!!
+         * =================================================
+         */
         if (isset($_REQUEST["mediastorrent"])) {
             $tmpclefunique = null;
             for ($idtorrent = 0; $idtorrent < $_REQUEST["nbtorrents"]; $idtorrent++) {
@@ -814,10 +823,81 @@ class Torrent extends Controller
                                 }
                             }
                             break;
+                        case 'serie':
+                            $clef = \model\mysql\Torrentserie::getClefUnique();
+                            $clefunique[$_REQUEST["torrent" . $idtorrent . "hash"]] = $clef;
+                            for ($idfile = 0; $idfile < $_REQUEST["torrent" . $idtorrent . "nbfiles"]; $idfile++) {
+                                if (isset($_REQUEST["torrent" . $idtorrent . "ajoutecheckfile" . $idfile]) && isset($_REQUEST["torrent" . $idtorrent . "filerecherche"])) {
+                                    if ($_REQUEST["torrent" . $idtorrent . "filerecherche"] === "manuel") {
+                                        //Manuel
+                                        /**
+                                         * Todo check $idfile, une série == un torrent, pareil pour les différents fichier le contenant différent du film
+                                         */
+                                        $titre = trim($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "titre"]);
+                                        $otitre = trim($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "titreoriginal"]);
+                                        $synopsis = trim($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "synopsis"]);
+                                        $genre = explode(",", $_REQUEST["torrent" . $idtorrent . "file" . $idfile . "genre"]);
+                                        array_walk($genre, create_function('&$val', '$val = trim($val);'));
+                                        array_walk($genre, create_function('&$val', '$val = strtolower($val);'));
+                                        array_walk($genre, create_function('&$val', '$val = ucfirst($val);'));
+                                        $acteurs = explode(",", $_REQUEST["torrent" . $idtorrent . "file" . $idfile . "acteur"]);
+                                        array_walk($acteurs, create_function('&$val', '$val = trim($val);'));
+                                        array_walk($acteurs, create_function('&$val', '$val = strtolower($val);'));
+                                        array_walk($acteurs, create_function('&$val', '$val = ucwords($val);'));
+                                        $acteurs = implode(", ", $acteurs);
+                                        $realisateurs = explode(",", $_REQUEST["torrent" . $idtorrent . "file" . $idfile . "realisateur"]);
+                                        array_walk($realisateurs, create_function('&$val', '$val = trim($val);'));
+                                        array_walk($realisateurs, create_function('&$val', '$val = strtolower($val);'));
+                                        array_walk($realisateurs, create_function('&$val', '$val = ucwords($val);'));
+                                        $realisateurs = implode(", ", $realisateurs);
+                                        $anneeprod = trim($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "anneeprod"]);
+                                        $urlposter = trim($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "poster"]);
+                                        $urlbackdrop = trim($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "backdrop"]);
+                                        $infos["Titre"] = $titre;
+                                        $infos["Titre original"] = $otitre;
+                                        $infos["Genre"] = implode(", ", $genre);
+                                        $infos["Réalisateur(s)"] = $realisateurs;
+                                        $infos["Acteur(s)"] = $acteurs;
+                                        $infos["Année de production"] = $anneeprod;
+                                        $infos["Synopsis"] = $synopsis;
+                                        $serie = \model\mysql\Serie::ajouteSerie($titre, $otitre, json_encode($infos), $urlposter, $urlbackdrop, $anneeprod, $acteurs, $realisateurs);
+                                        $idserie = $serie->id;
+                                        $serie->addGenre($genre);
+                                    } else {
+                                        //Auto
+                                        if ($_REQUEST["torrent" . $idtorrent . "filetyperecherche"] === "local") {
+                                            //Local
+                                            $idserie = $_REQUEST["torrent" . $idtorrent . "filecode"];
+                                        } else {
+                                            //Allo
+                                            $o["typesearch"] = "tvseries";
+                                            $allo = new \model\simple\Allocine($_REQUEST["torrent" . $idtorrent . "filecode"], $o);
+                                            $infos = $allo->retourneResSerieFormatForBD();
+                                            $genre = $infos["Genre"];
+                                            $infos["Genre"] = implode(", ", $genre);
+                                            $titre = (isset($infos["Titre"]) ? $infos["Titre"] : $infos["Titre original"]);
+                                            $otitre = $infos["Titre original"];
+                                            $urlposter = trim($_REQUEST["torrent" . $idtorrent . "fileposter"]);
+                                            $urlbackdrop = trim($_REQUEST["torrent" . $idtorrent . "filebackdrop"]);
+                                            $realisateurs = $infos["Réalisateur(s)"];
+                                            $acteurs = "";
+                                            if (isset($infos["Acteur(s)"]))
+                                                $acteurs = $infos["Acteur(s)"];
+                                            $anneeprod = $infos["Lancement"];
+                                            $serie = \model\mysql\Serie::ajouteSerie($titre, $otitre, json_encode($infos), $urlposter, $urlbackdrop, $anneeprod, $acteurs, $realisateurs, $_REQUEST["torrent" . $idtorrent . "filecode"]);
+                                            $idserie = $serie->id;
+                                            $serie->addGenre($genre);
+                                        }
+                                    }
+                                    \model\mysql\Torrentserie::addTorrentSerie($idserie, $_REQUEST["torrent" . $idtorrent . "numfile" . $idfile], $_REQUEST["torrent" . $idtorrent . "filecomplement" . $idfile], \config\Conf::$user["user"]->login, $_REQUEST["torrent" . $idtorrent . "filesaison" . $idfile], $_REQUEST["torrent" . $idtorrent . "fileepisode" . $idfile], \config\Conf::$nomrtorrent, $_REQUEST["torrent" . $idtorrent . "hash"], $clef, (isset($_REQUEST["torrent" . $idtorrent . "partagecheckfile" . $idfile])));
+                                }
+                            }
+                            break;
                     }
                 }
             }
         }
+
         if (isset ($_FILES ['torrentfile']) && !(count( $_FILES['torrentfile']) == 1 && $_FILES ['torrentfile'] ['error'][0] != 4)) {
             if (is_array($_FILES['torrentfile']['name'])) {
 

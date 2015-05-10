@@ -5,7 +5,7 @@
  * Date: 20/03/14
  * Time: 15:53
  */
-$genre = \model\mysql\Genre::getAllGenre();
+$genre = \model\mysql\Genrefilm::getAllGenre();
 ?>
 
 <nav class="top-bar" data-topbar="">
