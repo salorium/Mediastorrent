@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Sam 09 Mai 2015 à 13:34
+-- Généré le :  Dim 10 Mai 2015 à 03:45
 -- Version du serveur :  10.0.17-MariaDB-log
 -- Version de PHP :  5.6.8
 
@@ -97,37 +97,13 @@ CREATE TABLE IF NOT EXISTS `film` (
   DEFAULT CHARSET = utf8
   COLLATE = utf8_unicode_ci;
 
+-- --------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS `serie` (
-  `id`            VARCHAR(10)
-                  COLLATE utf8_unicode_ci NOT NULL,
-  `titre`         VARCHAR(200)
-                  COLLATE utf8_unicode_ci NOT NULL,
-  `titreoriginal` VARCHAR(200)
-                  COLLATE utf8_unicode_ci NOT NULL,
-  `acteurs`       VARCHAR(1000)
-                  COLLATE utf8_unicode_ci NOT NULL,
-  `realisateurs`  VARCHAR(1000)
-                  COLLATE utf8_unicode_ci NOT NULL,
-  `anneeprod`     VARCHAR(4)
-                  COLLATE utf8_unicode_ci NOT NULL,
-  `urlposter`     VARCHAR(1000)
-                  COLLATE utf8_unicode_ci DEFAULT NULL,
-  `urlbackdrop`   VARCHAR(1000)
-                  COLLATE utf8_unicode_ci DEFAULT NULL,
-  `infos`         TEXT
-                  COLLATE utf8_unicode_ci NOT NULL,
-  `idallocine`    VARCHAR(50)
-                  COLLATE utf8_unicode_ci DEFAULT NULL,
-  `idthemoviedb`  VARCHAR(50)
-                  COLLATE utf8_unicode_ci DEFAULT NULL
-)
-  ENGINE = InnoDB
-  DEFAULT CHARSET = utf8
-  COLLATE = utf8_unicode_ci;
+--
+-- Structure de la table `genrefilm`
+--
 
-
-CREATE TABLE IF NOT EXISTS `genreserie` (
+CREATE TABLE IF NOT EXISTS `genrefilm` (
   `id`    VARCHAR(10)
           COLLATE utf8_unicode_ci NOT NULL,
   `label` VARCHAR(200)
@@ -136,13 +112,14 @@ CREATE TABLE IF NOT EXISTS `genreserie` (
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_unicode_ci;
+
 -- --------------------------------------------------------
 
 --
--- Structure de la table `genrefilm`
+-- Structure de la table `genreserie`
 --
 
-CREATE TABLE IF NOT EXISTS `genrefilm` (
+CREATE TABLE IF NOT EXISTS `genreserie` (
   `id`    VARCHAR(10)
           COLLATE utf8_unicode_ci NOT NULL,
   `label` VARCHAR(200)
@@ -197,6 +174,40 @@ CREATE TABLE IF NOT EXISTS `savpass` (
              COLLATE utf8_unicode_ci NOT NULL,
   `password` TEXT
              COLLATE utf8_unicode_ci
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `serie`
+--
+
+CREATE TABLE IF NOT EXISTS `serie` (
+  `id`            VARCHAR(10)
+                  COLLATE utf8_unicode_ci NOT NULL,
+  `titre`         VARCHAR(200)
+                  COLLATE utf8_unicode_ci NOT NULL,
+  `titreoriginal` VARCHAR(200)
+                  COLLATE utf8_unicode_ci NOT NULL,
+  `acteurs`       VARCHAR(1000)
+                  COLLATE utf8_unicode_ci NOT NULL,
+  `realisateurs`  VARCHAR(1000)
+                  COLLATE utf8_unicode_ci NOT NULL,
+  `anneeprod`     VARCHAR(4)
+                  COLLATE utf8_unicode_ci NOT NULL,
+  `urlposter`     VARCHAR(1000)
+                  COLLATE utf8_unicode_ci DEFAULT NULL,
+  `urlbackdrop`   VARCHAR(1000)
+                  COLLATE utf8_unicode_ci DEFAULT NULL,
+  `infos`         TEXT
+                  COLLATE utf8_unicode_ci NOT NULL,
+  `idallocine`    VARCHAR(50)
+                  COLLATE utf8_unicode_ci DEFAULT NULL,
+  `idthemoviedb`  VARCHAR(50)
+                  COLLATE utf8_unicode_ci DEFAULT NULL
 )
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8
@@ -266,6 +277,11 @@ CREATE TABLE IF NOT EXISTS `torrentfilm` (
   DEFAULT CHARSET = utf8
   COLLATE = utf8_unicode_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `torrentserie`
+--
 
 CREATE TABLE IF NOT EXISTS `torrentserie` (
   `id`                VARCHAR(10)
@@ -351,16 +367,11 @@ ADD PRIMARY KEY (`id`), ADD KEY `titre` (`titre`), ADD KEY `idallocine` (`idallo
 ALTER TABLE `genrefilm`
 ADD PRIMARY KEY (`id`, `label`), ADD KEY `id` (`id`), ADD KEY `label` (`label`);
 
-
-ALTER TABLE `serie`
-ADD PRIMARY KEY (`id`), ADD KEY `titre` (`titre`), ADD KEY `idallocine` (`idallocine`);
-
 --
--- Index pour la table `genrefilm`
+-- Index pour la table `genreserie`
 --
 ALTER TABLE `genreserie`
 ADD PRIMARY KEY (`id`, `label`), ADD KEY `id` (`id`), ADD KEY `label` (`label`);
-
 
 --
 -- Index pour la table `rtorrent`
@@ -381,6 +392,12 @@ ALTER TABLE `savpass`
 ADD PRIMARY KEY (`login`);
 
 --
+-- Index pour la table `serie`
+--
+ALTER TABLE `serie`
+ADD PRIMARY KEY (`id`), ADD KEY `titre` (`titre`), ADD KEY `idallocine` (`idallocine`);
+
+--
 -- Index pour la table `ticket`
 --
 ALTER TABLE `ticket`
@@ -392,6 +409,9 @@ ADD PRIMARY KEY (`id`);
 ALTER TABLE `torrentfilm`
 ADD PRIMARY KEY (`id`), ADD KEY `idfilm` (`idfilm`), ADD KEY `login` (`login`), ADD KEY `hashtorrent` (`hashtorrent`), ADD KEY `nomrtorrent` (`nomrtorrent`), ADD KEY `qualite` (`qualite`);
 
+--
+-- Index pour la table `torrentserie`
+--
 ALTER TABLE `torrentserie`
 ADD PRIMARY KEY (`id`), ADD KEY `idserie` (`idserie`), ADD KEY `login` (`login`), ADD KEY `hashtorrent` (`hashtorrent`), ADD KEY `nomrtorrent` (`nomrtorrent`), ADD KEY `qualite` (`qualite`);
 
@@ -432,14 +452,14 @@ ADD CONSTRAINT `genrefilm_ibfk_1` FOREIGN KEY (`id`) REFERENCES `film` (`id`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
-
 --
--- Contraintes pour la table `genrefilm`
+-- Contraintes pour la table `genreserie`
 --
 ALTER TABLE `genreserie`
 ADD CONSTRAINT `genreserie_ibfk_1` FOREIGN KEY (`id`) REFERENCES `serie` (`id`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
+
 --
 -- Contraintes pour la table `rtorrents`
 --
@@ -473,7 +493,9 @@ ADD CONSTRAINT `torrentfilm_ibfk_3` FOREIGN KEY (`nomrtorrent`) REFERENCES `rtor
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
-
+--
+-- Contraintes pour la table `torrentserie`
+--
 ALTER TABLE `torrentserie`
 ADD CONSTRAINT `torrentserie_ibfk_1` FOREIGN KEY (`idserie`) REFERENCES `serie` (`id`)
   ON DELETE CASCADE
@@ -484,7 +506,6 @@ ADD CONSTRAINT `torrentserie_ibfk_2` FOREIGN KEY (`login`) REFERENCES `utilisate
 ADD CONSTRAINT `torrentserie_ibfk_3` FOREIGN KEY (`nomrtorrent`) REFERENCES `rtorrent` (`nom`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
-
 
 /*!40101 SET CHARACTER_SET_CLIENT = @OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS = @OLD_CHARACTER_SET_RESULTS */;
