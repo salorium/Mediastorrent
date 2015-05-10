@@ -15,7 +15,7 @@ class Serie extends \core\Controller
     {
         \model\simple\Utilisateur::authentificationDistante($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
-        $tf = \model\mysql\Torrentfilm::getTorrentFilmParId($idtorrentfilm);
+        $tf = \model\mysql\Torrentserie::getTorrentSerieParId($idtorrentfilm);
         $tf->mediainfo = json_decode($tf->mediainfo);
         if (is_null($tf)) throw new \Exception("Id incorrect");
 
@@ -60,7 +60,7 @@ class Serie extends \core\Controller
     {
         \model\simple\Utilisateur::authentificationDistante($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
-        if ($torrentf = \model\mysql\Torrentfilm::getFilmUserDuServeur($id)) {
+        if ($torrentf = \model\mysql\Torrentserie::getSerieUserDuServeur($id)) {
             \config\Conf::$portscgi = $torrentf->portscgi;
             $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
                 new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.frozen_path", array($torrentf->hash . ":f" . $torrentf->numfile)));
@@ -107,7 +107,7 @@ class Serie extends \core\Controller
             }
 
         } else {
-            if ($torrentf = \model\mysql\Torrentfilm::getAdresseServeurFilmUser($id)) {
+            if ($torrentf = \model\mysql\Torrentserie::getAdresseServeurSerieUser($id)) {
                 //echo ('Location: http'.($_SERVER["SERVER_PORT"] == 80 ? "" : "s") . "://" . $torrentf->hostname."/film/download/".$id."/".\config\Conf::$user["user"]->login."/".\config\Conf::$user["user"]->keyconnexion);
                 //die();
                 header('Location: http' . ($_SERVER["SERVER_PORT"] == 80 ? "" : "s") . "://" . $torrentf->hostname . "/film/download/" . $id . "/" . \config\Conf::$user["user"]->login . "/" . \config\Conf::$user["user"]->keyconnexion);

@@ -45,7 +45,7 @@ class Mediainfo extends \core\Model
         }
     }
 
-    function getFormatFilm()
+    function getFormatVideo()
     {
         $res["duree"] = $this->general["Duration"][1];
         if (isset($this->videos["Codec"][1])) {

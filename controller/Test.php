@@ -24,6 +24,10 @@ use model\xmlrpc\rTorrentSettings;
 
 class Test extends Controller
 {
+    function gget()
+    {
+        var_dump($_GET);
+    }
     function brantest()
     {
 //exemple

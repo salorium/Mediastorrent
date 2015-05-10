@@ -585,6 +585,60 @@ class Allocine extends Model
         return null;
     }
 
+    function retourneResSerieFormatForBD()
+    {
+        $v = $this->retourneResSerie();
+        if ($v != null) {
+            $tmp["codeall"] = $v->code;
+            if (isset($v->originalTitle))
+                $tmp["Titre original"] = $v->originalTitle;
+            if (isset($v->title))
+                $tmp["Titre"] = $v->title;
+            if (isset($v->yearStart))
+                $tmp["Lancement"] = $v->yearStart;
+            if (isset($v->seasonCount))
+                $tmp["Nombre de saison"] = $v->seasonCount;
+            if (isset($v->episodeCount))
+                $tmp["Nombre d'épisode"] = $v->episodeCount;
+            if (isset($v->formatTime))
+                $tmp["Durée"] = $this->dateFormat($v->formatTime * 60);
+            if (isset($v->productionStatus->_))
+                $tmp["Status"] = $v->productionStatus->_;
+            if (isset($v->originalBroadcast->dateStart))
+                $tmp["Date de diffusion"] = preg_replace("#(\d+)\-(\d+)\-(\d+)#", "$3/$2/$1", $v->originalBroadcast->dateStart);
+            if (isset($v->castingShort->creators))
+                $tmp["Réalisateur(s)"] = $v->castingShort->creators;
+            if (isset($v->castingShort->actors))
+                $tmp["Acteur(s)"] = $v->castingShort->actors;
+            if (isset($v->media))
+                foreach ($v->media AS $k => $vv) {
+                    if ($vv->class === "video" && $vv->type->_ === "Bande-annonce" && strpos($vv->title, 'VF') !== false) {
+                        $tmp["ba"] = $vv->code;
+                    }
+                }
+            if (isset($v->statistics->userRating))
+                $tmp["Note des spectacteurs"] = $v->statistics->userRating;
+            if (isset($v->statistics->pressRating))
+                $tmp["Note de la presse"] = $v->statistics->pressRating;
+            if (isset($v->nationality)) {
+                $tmp["Origine"] = "";
+                foreach ($v->nationality as $k => $vs)
+                    $tmp["Origine"] .= $vs->_ . ", ";
+                $tmp["Origine"] = substr($tmp["Origine"], 0, -2);
+            }
+
+            if (isset($v->genre)) {
+                $tmp["Genre"] = array();
+                foreach ($v->genre as $k => $vs)
+                    $tmp["Genre"][] = ucfirst(strtolower(trim($vs->_)));
+            }
+            if (isset($v->synopsis))
+                $tmp["Synopsis"] = $v->synopsis;
+            return $tmp;
+        }
+        return null;
+
+    }
     function affiche($a)
     {
         var_dump($a);

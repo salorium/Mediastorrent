@@ -9,7 +9,7 @@
 namespace model\mysql;
 
 
-class Film extends \core\ModelMysql
+class Serie extends \core\ModelMysql
 {
     public $titre;
     public $titreoriginal;
@@ -27,7 +27,7 @@ class Film extends \core\ModelMysql
     {
         if (is_null($this->titre) || is_null($this->titreoriginal) || is_null($this->id) || is_null($this->infos) || is_null($this->urlbackdrop) || is_null($this->urlposter) || is_null($this->acteurs) || is_null($this->realisateurs) || is_null($this->anneeprod))
             return false;
-        $query = "insert into film (titre,titreoriginal,id,infos,idallocine,idthemoviedb,urlposter,urlbackdrop,acteurs,realisateurs,anneeprod) values(";
+        $query = "insert into serie (titre,titreoriginal,id,infos,idallocine,idthemoviedb,urlposter,urlbackdrop,acteurs,realisateurs,anneeprod) values(";
         $query .= \core\Mysqli::real_escape_string_html($this->titre) . ",";
         $query .= \core\Mysqli::real_escape_string_html($this->titreoriginal) . ",";
         $query .= \core\Mysqli::real_escape_string_html($this->id) . ",";
@@ -48,7 +48,7 @@ class Film extends \core\ModelMysql
 
     public function addGenre($genre)
     {
-        $g = new Genrefilm();
+        $g = new Genreserie();
         $g->id = $this->id;
         if (is_array($genre)) {
             foreach ($genre as $k => $v) {
@@ -63,7 +63,7 @@ class Film extends \core\ModelMysql
 
     static function delete($id)
     {
-        $query = "delete  from film ";
+        $query = "delete  from serie ";
         $query .= "where id=" . \core\Mysqli::real_escape_string_html($id);
         \core\Mysqli::query($query);
         $res = (\core\Mysqli::nombreDeLigneAffecte() > 1);
@@ -71,34 +71,34 @@ class Film extends \core\ModelMysql
         return $res;
     }
 
-    static function ajouteFilm($titre, $titreoriginal, $infos, $urlposter, $urlbackdrop, $anneeprod, $acteurs, $realisateurs, $idallocine = null, $idthemoviedb = null)
+    static function ajouteSerie($titre, $titreoriginal, $infos, $urlposter, $urlbackdrop, $anneeprod, $acteurs, $realisateurs, $idallocine = null, $idthemoviedb = null)
     {
 
-        if ($f = Film::checkIdallocine($idallocine)) {
+        if ($f = Serie::checkIdallocine($idallocine)) {
             return $f;
         } else {
-            $film = new Film();
-            $film->titre = $titre;
-            $film->titreoriginal = $titreoriginal;
-            $film->infos = $infos;
-            $film->idallocine = $idallocine;
-            $film->idthemoviedb = $idthemoviedb;
-            $film->urlbackdrop = $urlbackdrop;
-            $film->urlposter = $urlposter;
-            $film->acteurs = $acteurs;
-            $film->anneeprod = $anneeprod;
-            $film->realisateurs = $realisateurs;
+            $serie = new Serie();
+            $serie->titre = $titre;
+            $serie->titreoriginal = $titreoriginal;
+            $serie->infos = $infos;
+            $serie->idallocine = $idallocine;
+            $serie->idthemoviedb = $idthemoviedb;
+            $serie->urlbackdrop = $urlbackdrop;
+            $serie->urlposter = $urlposter;
+            $serie->acteurs = $acteurs;
+            $serie->anneeprod = $anneeprod;
+            $serie->realisateurs = $realisateurs;
             do {
-                $film->id = \model\simple\String::random(10);
-            } while (!$film->insert());
-            return $film;
+                $serie->id = \model\simple\String::random(10);
+            } while (!$serie->insert());
+            return $serie;
         }
 
     }
 
     static function rechercheFormat($titre)
     {
-        $query = "select titre, titreoriginal as originaltitre, id as code, urlposter as image, realisateurs as realisateur, acteurs as acteur, anneeprod from film ";
+        $query = "select titre, titreoriginal as originaltitre, id as code, urlposter as image, realisateurs as realisateur, acteurs as acteur, anneeprod from serie ";
         $query .= "where titre like " . \core\Mysqli::real_escape_stringlike($titre) . " or titreoriginal like " . \core\Mysqli::real_escape_stringlike($titre);
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(true, __CLASS__);
@@ -106,7 +106,7 @@ class Film extends \core\ModelMysql
 
     static function  getByIdFormat($id)
     {
-        $query = "select infos, id as code, urlposter as imageposter, urlbackdrop as imagebackdrop from film ";
+        $query = "select infos, id as code, urlposter as imageposter, urlbackdrop as imagebackdrop from serie ";
         $query .= "where id=" . \core\Mysqli::real_escape_string_html($id);
         \core\Mysqli::query($query);
         $obj = \core\Mysqli::getObjectAndClose(false, __CLASS__);
@@ -119,7 +119,7 @@ class Film extends \core\ModelMysql
 
     static function checkIdallocine($idallocine)
     {
-        $query = "select * from film ";
+        $query = "select * from serie ";
         $query .= "where idallocine=" . \core\Mysqli::real_escape_string_html($idallocine);
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(false, __CLASS__);
@@ -128,7 +128,7 @@ class Film extends \core\ModelMysql
 
     static function getBackdrop($id)
     {
-        $query = "select urlbackdrop, titre from film ";
+        $query = "select urlbackdrop, titre from serie ";
         $query .= "where id=" . \core\Mysqli::real_escape_string_html($id);
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(false);
@@ -136,18 +136,18 @@ class Film extends \core\ModelMysql
 
     static function getPoster($id)
     {
-        $query = "select urlposter, titre from film ";
+        $query = "select urlposter, titre from serie ";
         $query .= "where id=" . \core\Mysqli::real_escape_string_html($id);
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(false);
     }
 
-    static function getAllFilmUserDateDesc($genre)
+    static function getAllSerieUserDateDesc($genre)
     {
         $query = "select tf.date as date, f.id as id, f.urlposter as poster, f.urlbackdrop as backdrop , f.infos as infos ";
-        $query .= "from torrentfilm tf, film f , genrefilm g ";
+        $query .= "from torrentserie tf, serie f , genreserie g ";
         $query .= "where ( ";
-        $query .= "tf.idfilm = f.id ";
+        $query .= "tf.idserie = f.id ";
         $query .= "and f.id = g.id ";
         if (!is_null($genre))
             $query .= "and g.label = " . \core\Mysqli::real_escape_string_html($genre);
@@ -155,19 +155,19 @@ class Film extends \core\ModelMysql
         $query .= " and tf.login = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login);
         //$query .= " and rs.nomrtorrent = r.nom ";
         $query .= "and tf.date = (
-            select max(tf1.date) from torrentfilm tf1 where tf1.idfilm = tf.idfilm
+            select max(tf1.date) from torrentserie tf1 where tf1.idserie = tf.idserie
         )";
         $query .= " ) or ( ";
         //$query .= "tf.fini = true ";
         $query .= "tf.partageamis = true ";
-        $query .= "and tf.idfilm = f.id ";
+        $query .= "and tf.idserie = f.id ";
         $query .= "and f.id = g.id ";
         if (!is_null($genre))
             $query .= "and g.label = " . \core\Mysqli::real_escape_string_html($genre);
         //$query .= "and r.nom = tf.nomrtorrent ";
         //$query .= "and rs.nomrtorrent = r.nom ";
         $query .= "and tf.date = (
-            select max(tf1.date) from torrentfilm tf1 where tf1.idfilm = tf.idfilm
+            select max(tf1.date) from torrentserie tf1 where tf1.idserie = tf.idserie
         )";
         $query .= " and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
         $query .= ") GROUP BY id ORDER BY date DESC";
@@ -175,12 +175,12 @@ class Film extends \core\ModelMysql
         return \core\Mysqli::getObjectAndClose(true);
     }
 
-    static function getAllFilmUserTitreAsc($genre)
+    static function getAllSerieUserTitreAsc($genre)
     {
         $query = "select distinct * from ( select f.titre as titre, f.id as id, f.urlposter as poster, f.urlbackdrop as backdrop , f.infos as infos ";
-        $query .= "from torrentfilm tf, film f , genrefilm g ";
+        $query .= "from torrentserie tf, serie f , genreserie g ";
         $query .= "where ( ";
-        $query .= "tf.idfilm = f.id ";
+        $query .= "tf.idserie = f.id ";
         $query .= "and f.id = g.id ";
         if (!is_null($genre))
             $query .= "and g.label = " . \core\Mysqli::real_escape_string_html($genre);
@@ -190,7 +190,7 @@ class Film extends \core\ModelMysql
         $query .= " ) or ( ";
         //$query .= "tf.fini = true ";
         $query .= "tf.partageamis = true ";
-        $query .= "and tf.idfilm = f.id ";
+        $query .= "and tf.idserie = f.id ";
         $query .= "and f.id = g.id ";
         if (!is_null($genre))
             $query .= "and g.label = " . \core\Mysqli::real_escape_string_html($genre);

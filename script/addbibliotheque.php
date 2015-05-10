@@ -49,10 +49,21 @@ if (file_exists($filetorrent)) {
                         \model\simple\Console::println((is_bool($torrentf) ? "Non Présent" : "Présent"));
                         if (!is_bool($torrentf)) {
                             $mediainfo = new \model\simple\Mediainfo($file);
-                            $mediainfo = $mediainfo->getFormatFilm();
+                            $mediainfo = $mediainfo->getFormatVideo();
                             //$torrentf->mediainfo = json_encode($mediainfo);
 
                             \model\simple\Console::println($torrentf->fini($mediainfo) ? "Sav ok" : "Sav Non ok");
+                        }
+                        break;
+                    case "serie":
+                        $torrents = \model\mysql\Torrentserie::rechercheParNumFileHashClefunique($numfile, $hash, $clefunique);
+                        \model\simple\Console::println((is_bool($torrents) ? "Non Présent" : "Présent"));
+                        if (!is_bool($torrents)) {
+                            $mediainfo = new \model\simple\Mediainfo($file);
+                            $mediainfo = $mediainfo->getFormatVideo();
+                            //$torrentf->mediainfo = json_encode($mediainfo);
+
+                            \model\simple\Console::println($torrents->fini($mediainfo) ? "Sav ok" : "Sav Non ok");
                         }
                         break;
                 }
@@ -67,8 +78,19 @@ if (file_exists($filetorrent)) {
                     \model\simple\Console::println((is_bool($torrentf) ? "Non Présent" : "Présent"));
                     if (!is_bool($torrentf)) {
                         $mediainfo = new \model\simple\Mediainfo($file);
-                        $mediainfo = $mediainfo->getFormatFilm();
+                        $mediainfo = $mediainfo->getFormatVideo();
                         \model\simple\Console::println($torrentf->fini($mediainfo) ? "Sav ok" : "Sav Non ok");
+                    }
+                    break;
+                case "serie":
+                    $torrents = \model\mysql\Torrentserie::rechercheParNumFileHashClefunique($numfile, $hash, $clefunique);
+                    \model\simple\Console::println((is_bool($torrents) ? "Non Présent" : "Présent"));
+                    if (!is_bool($torrents)) {
+                        $mediainfo = new \model\simple\Mediainfo($file);
+                        $mediainfo = $mediainfo->getFormatVideo();
+                        //$torrentf->mediainfo = json_encode($mediainfo);
+
+                        \model\simple\Console::println($torrents->fini($mediainfo) ? "Sav ok" : "Sav Non ok");
                     }
                     break;
             }

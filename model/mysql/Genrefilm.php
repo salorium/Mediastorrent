@@ -9,7 +9,7 @@
 namespace model\mysql;
 
 
-class Genre extends \core\ModelMysql
+class Genrefilm extends \core\ModelMysql
 {
     public $id;
     public $label;
@@ -18,7 +18,7 @@ class Genre extends \core\ModelMysql
     {
         if (is_null($this->id) || is_null($this->label))
             return false;
-        $query = "insert into genre (id,label) values(";
+        $query = "insert into genrefilm (id,label) values(";
         $query .= \core\Mysqli::real_escape_string_html($this->id) . ",";
         $query .= \core\Mysqli::real_escape_string_html($this->label) . ")";
         \core\Mysqli::query($query);
@@ -30,7 +30,7 @@ class Genre extends \core\ModelMysql
     public static function getAllGenre()
     {
         $query = "select distinct g.label as label ";
-        $query .= "from torrentfilm tf, film f, genre g ";
+        $query .= "from torrentfilm tf, film f, genrefilm g ";
         $query .= "where ( ";
         $query .= "tf.idfilm = f.id ";
         $query .= "and g.id = f.id ";

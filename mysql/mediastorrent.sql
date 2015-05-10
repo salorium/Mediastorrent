@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.2
+-- version 4.3.4
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Ven 21 Novembre 2014 à 12:28
--- Version du serveur :  10.0.13-MariaDB-log
--- Version de PHP :  5.6.1
+-- Généré le :  Sam 09 Mai 2015 à 13:34
+-- Version du serveur :  10.0.17-MariaDB-log
+-- Version de PHP :  5.6.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -37,9 +37,9 @@ CREATE TABLE IF NOT EXISTS `amis` (
               COLLATE utf8_unicode_ci NOT NULL,
   `ok`        TINYINT(1)              NOT NULL
 )
-  ENGINE =InnoDB
-  DEFAULT CHARSET =utf8
-  COLLATE =utf8_unicode_ci;
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -59,9 +59,9 @@ CREATE TABLE IF NOT EXISTS `cronroot` (
   `encour`      TINYINT(1)              NOT NULL,
   `fini`        TINYINT(1)              NOT NULL
 )
-  ENGINE =InnoDB
-  DEFAULT CHARSET =utf8
-  COLLATE =utf8_unicode_ci;
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -93,25 +93,64 @@ CREATE TABLE IF NOT EXISTS `film` (
   `idthemoviedb`  VARCHAR(50)
                   COLLATE utf8_unicode_ci DEFAULT NULL
 )
-  ENGINE =InnoDB
-  DEFAULT CHARSET =utf8
-  COLLATE =utf8_unicode_ci;
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
 
--- --------------------------------------------------------
 
---
--- Structure de la table `genre`
---
+CREATE TABLE IF NOT EXISTS `serie` (
+  `id`            VARCHAR(10)
+                  COLLATE utf8_unicode_ci NOT NULL,
+  `titre`         VARCHAR(200)
+                  COLLATE utf8_unicode_ci NOT NULL,
+  `titreoriginal` VARCHAR(200)
+                  COLLATE utf8_unicode_ci NOT NULL,
+  `acteurs`       VARCHAR(1000)
+                  COLLATE utf8_unicode_ci NOT NULL,
+  `realisateurs`  VARCHAR(1000)
+                  COLLATE utf8_unicode_ci NOT NULL,
+  `anneeprod`     VARCHAR(4)
+                  COLLATE utf8_unicode_ci NOT NULL,
+  `urlposter`     VARCHAR(1000)
+                  COLLATE utf8_unicode_ci DEFAULT NULL,
+  `urlbackdrop`   VARCHAR(1000)
+                  COLLATE utf8_unicode_ci DEFAULT NULL,
+  `infos`         TEXT
+                  COLLATE utf8_unicode_ci NOT NULL,
+  `idallocine`    VARCHAR(50)
+                  COLLATE utf8_unicode_ci DEFAULT NULL,
+  `idthemoviedb`  VARCHAR(50)
+                  COLLATE utf8_unicode_ci DEFAULT NULL
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS `genre` (
+
+CREATE TABLE IF NOT EXISTS `genreserie` (
   `id`    VARCHAR(10)
           COLLATE utf8_unicode_ci NOT NULL,
   `label` VARCHAR(200)
           COLLATE utf8_unicode_ci NOT NULL
 )
-  ENGINE =InnoDB
-  DEFAULT CHARSET =utf8
-  COLLATE =utf8_unicode_ci;
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `genrefilm`
+--
+
+CREATE TABLE IF NOT EXISTS `genrefilm` (
+  `id`    VARCHAR(10)
+          COLLATE utf8_unicode_ci NOT NULL,
+  `label` VARCHAR(200)
+          COLLATE utf8_unicode_ci NOT NULL
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -125,9 +164,9 @@ CREATE TABLE IF NOT EXISTS `rtorrent` (
   `nom`      VARCHAR(200)
              COLLATE utf8_unicode_ci NOT NULL
 )
-  ENGINE =InnoDB
-  DEFAULT CHARSET =utf8
-  COLLATE =utf8_unicode_ci;
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -143,9 +182,9 @@ CREATE TABLE IF NOT EXISTS `rtorrents` (
   `portscgi`    VARCHAR(10)
                 COLLATE utf8_unicode_ci NOT NULL
 )
-  ENGINE =InnoDB
-  DEFAULT CHARSET =utf8
-  COLLATE =utf8_unicode_ci;
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -159,9 +198,9 @@ CREATE TABLE IF NOT EXISTS `savpass` (
   `password` TEXT
              COLLATE utf8_unicode_ci
 )
-  ENGINE =InnoDB
-  DEFAULT CHARSET =utf8
-  COLLATE =utf8_unicode_ci;
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -172,9 +211,9 @@ CREATE TABLE IF NOT EXISTS `savpass` (
 CREATE TABLE IF NOT EXISTS `test` (
   `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 )
-  ENGINE =InnoDB
-  DEFAULT CHARSET =utf8
-  COLLATE =utf8_unicode_ci;
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -189,9 +228,9 @@ CREATE TABLE IF NOT EXISTS `ticket` (
            COLLATE utf8_unicode_ci NOT NULL,
   `expire` TIMESTAMP               NULL DEFAULT NULL
 )
-  ENGINE =InnoDB
-  DEFAULT CHARSET =utf8
-  COLLATE =utf8_unicode_ci;
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -223,9 +262,42 @@ CREATE TABLE IF NOT EXISTS `torrentfilm` (
   `qualite`           INT(1)                           DEFAULT NULL,
   `partageamis`       TINYINT(1)              NOT NULL
 )
-  ENGINE =InnoDB
-  DEFAULT CHARSET =utf8
-  COLLATE =utf8_unicode_ci;
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `torrentserie` (
+  `id`                VARCHAR(10)
+                      COLLATE utf8_unicode_ci NOT NULL,
+  `date`              TIMESTAMP               NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `numfile`           VARCHAR(10)
+                      COLLATE utf8_unicode_ci NOT NULL,
+  `complementfichier` VARCHAR(1000)
+                      COLLATE utf8_unicode_ci          DEFAULT NULL,
+  `idserie`           VARCHAR(10)
+                      COLLATE utf8_unicode_ci NOT NULL,
+  `login`             VARCHAR(200)
+                      COLLATE utf8_unicode_ci NOT NULL,
+  `saison`            VARCHAR(10)
+                      COLLATE utf8_unicode_ci NOT NULL,
+  `episode`           VARCHAR(10)
+                      COLLATE utf8_unicode_ci NOT NULL,
+  `nomrtorrent`       VARCHAR(200)
+                      COLLATE utf8_unicode_ci NOT NULL,
+  `hashtorrent`       VARCHAR(40)
+                      COLLATE utf8_unicode_ci NOT NULL,
+  `clefunique`        VARCHAR(10)
+                      COLLATE utf8_unicode_ci NOT NULL,
+  `fini`              TINYINT(1)              NOT NULL,
+  `mediainfo`         TEXT
+                      COLLATE utf8_unicode_ci,
+  `qualite`           INT(1)                           DEFAULT NULL,
+  `partageamis`       TINYINT(1)              NOT NULL
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -247,9 +319,9 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `options`      LONGTEXT
                  COLLATE utf8_unicode_ci
 )
-  ENGINE =InnoDB
-  DEFAULT CHARSET =utf8
-  COLLATE =utf8_unicode_ci;
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_unicode_ci;
 
 --
 -- Index pour les tables exportées
@@ -274,10 +346,21 @@ ALTER TABLE `film`
 ADD PRIMARY KEY (`id`), ADD KEY `titre` (`titre`), ADD KEY `idallocine` (`idallocine`);
 
 --
--- Index pour la table `genre`
+-- Index pour la table `genrefilm`
 --
-ALTER TABLE `genre`
+ALTER TABLE `genrefilm`
 ADD PRIMARY KEY (`id`, `label`), ADD KEY `id` (`id`), ADD KEY `label` (`label`);
+
+
+ALTER TABLE `serie`
+ADD PRIMARY KEY (`id`), ADD KEY `titre` (`titre`), ADD KEY `idallocine` (`idallocine`);
+
+--
+-- Index pour la table `genrefilm`
+--
+ALTER TABLE `genreserie`
+ADD PRIMARY KEY (`id`, `label`), ADD KEY `id` (`id`), ADD KEY `label` (`label`);
+
 
 --
 -- Index pour la table `rtorrent`
@@ -309,6 +392,9 @@ ADD PRIMARY KEY (`id`);
 ALTER TABLE `torrentfilm`
 ADD PRIMARY KEY (`id`), ADD KEY `idfilm` (`idfilm`), ADD KEY `login` (`login`), ADD KEY `hashtorrent` (`hashtorrent`), ADD KEY `nomrtorrent` (`nomrtorrent`), ADD KEY `qualite` (`qualite`);
 
+ALTER TABLE `torrentserie`
+ADD PRIMARY KEY (`id`), ADD KEY `idserie` (`idserie`), ADD KEY `login` (`login`), ADD KEY `hashtorrent` (`hashtorrent`), ADD KEY `nomrtorrent` (`nomrtorrent`), ADD KEY `qualite` (`qualite`);
+
 --
 -- Index pour la table `utilisateur`
 --
@@ -339,13 +425,21 @@ ADD CONSTRAINT `cronroot_ibfk_1` FOREIGN KEY (`nomrtorrent`) REFERENCES `rtorren
   ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `genre`
+-- Contraintes pour la table `genrefilm`
 --
-ALTER TABLE `genre`
-ADD CONSTRAINT `genre_ibfk_1` FOREIGN KEY (`id`) REFERENCES `film` (`id`)
+ALTER TABLE `genrefilm`
+ADD CONSTRAINT `genrefilm_ibfk_1` FOREIGN KEY (`id`) REFERENCES `film` (`id`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
+
+--
+-- Contraintes pour la table `genrefilm`
+--
+ALTER TABLE `genreserie`
+ADD CONSTRAINT `genreserie_ibfk_1` FOREIGN KEY (`id`) REFERENCES `serie` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
 --
 -- Contraintes pour la table `rtorrents`
 --
@@ -378,6 +472,19 @@ ADD CONSTRAINT `torrentfilm_ibfk_2` FOREIGN KEY (`login`) REFERENCES `utilisateu
 ADD CONSTRAINT `torrentfilm_ibfk_3` FOREIGN KEY (`nomrtorrent`) REFERENCES `rtorrent` (`nom`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
+
+
+ALTER TABLE `torrentserie`
+ADD CONSTRAINT `torrentserie_ibfk_1` FOREIGN KEY (`idserie`) REFERENCES `serie` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE,
+ADD CONSTRAINT `torrentserie_ibfk_2` FOREIGN KEY (`login`) REFERENCES `utilisateur` (`login`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE,
+ADD CONSTRAINT `torrentserie_ibfk_3` FOREIGN KEY (`nomrtorrent`) REFERENCES `rtorrent` (`nom`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT = @OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS = @OLD_CHARACTER_SET_RESULTS */;
