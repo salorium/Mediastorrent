@@ -127,6 +127,7 @@ var Film = {
     CssModulable: "",
     zindex: 1,
     time: null,
+    time1: null,
     init: function (all) {
         console.log("INIT");
         if (this.tonObjet.length == 0) {
@@ -472,25 +473,28 @@ var Film = {
         //$divv.append($('<div style="height: 100px; overflow: auto;"></div> ').append($('<table style="width: 100%;"></table>').append($tbody)));
         if (this.time)this.time.abort();
         this.time = $.ajax({
-            url: Base.controller.makeUrlBase() + 'serie/getFile/' + film.id + ".json",
+            url: Base.controller.makeUrlBase() + 'serie/getSaison/' + film.id + ".json",
             dataType: "json",
             type: "GET",
             //data: {hash: listafaire},
             //contentType: "application/json",
             success: function (response, textStatus, jqXHR) {
-                $table = $("<tbody></tbody>");
-                $divv2.append($("<table></table>").append($table));
+                $table = $("<div></div>");
+                $divv2.append($table);
                 if (response.showdebugger == "ok") {
+                    //var id=response.idserie;
                     $.each(response.file, function (k, v) {
                         //console.log(v);
-                        if (v.fini == 1) {
+                        $table.append('<a onclick="Film.episode(\'' + film.id + "','" + v.saison + '\')" class="button">Saison ' + v.saison + '</a>');
+
+                        /*if (v.fini == 1) {
                             $table.append('<tr><td>' + v.mediainfo.typequalite + (v.mediainfo.qualite ? " " + v.mediainfo.qualite : "" ) + '</td><td>' + (v.mediainfo.codec ? v.mediainfo.codec : "" ) + '</td><td>' + (v.mediainfo.audios[0].type ? v.mediainfo.audios[0].type : "" ) + '</td><td>' + (v.complementfichier ? v.complementfichier : "" ) + '</td><td><a href="' + Base.controller.makeUrlBase(v.hostname) + 'serie/download/' + v.id + '/' + Base.model.utilisateur.keyconnexion + '"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dl.svg"></a></td><td><a onclick="Film.streaming(\'' + v.id + '\',\'' + v.hostname + '\')"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/streaming.svg"></a></td></tr>');
                         } else {
                             $tr = $("<tr></tr>").append("<td>Attente...</td>");
                             Film.tr.push($tr);
                             $table.append($tr);
                             Film.interval.push(setInterval(Film.test, 1000, Film.tr.length - 1, v.hostname, v.id));
-                        }
+                         }*/
                     });
                     /*for (var i = 0; i < 2; i++) {
                      if (i == 0) {
@@ -516,6 +520,67 @@ var Film = {
             }
         });
 
+    },
+    episode: function (idserie, saison) {
+        //if (this.time1)this.time1.abort();
+        $.ajax({
+            url: Base.controller.makeUrlBase() + 'serie/getFileParSaison/' + idserie + '/' + saison + ".json",
+            dataType: "json",
+            type: "GET",
+            //data: {hash: listafaire},
+            //contentType: "application/json",
+            success: function (response, textStatus, jqXHR) {
+                //$table = $("<div></div>");
+                //$divv2.append($table);
+                if (Base.model.boxmodal.modal == null) {
+                    Base.view.boxmodal.make("Saison " + saison, "<div id='episodecontenu' style='overflow: auto'><table><tbody id='episode'></tbody></table></div>", function () {
+                        clearTimeout(Film.time1);
+                    });
+                    $("#episodecontenu").height($("#modalc").height() - $("#modaltitre").height() - $("#modalcontenu").height())
+                }
+                $("#episode").empty();
+                if (response.showdebugger == "ok") {
+
+                    //var id=response.idserie;
+                    $.each(response.file, function (k, v) {
+                        //console.log(v);
+                        //    $table.append('<a onclick="Film.episode(\''+film.id+"','"+v.saison+'\')" class="button">Saison '+ v.saison+'</a>');
+
+                        if (v.fini == 1) {
+                            $("#episode").append('<tr><td>Épisode ' + v.episode + '</td><td>' + v.mediainfo.typequalite + (v.mediainfo.qualite ? " " + v.mediainfo.qualite : "" ) + '</td><td>' + (v.mediainfo.codec ? v.mediainfo.codec : "" ) + '</td><td>' + (v.mediainfo.audios[0].type ? v.mediainfo.audios[0].type : "" ) + '</td><td>' + (v.complementfichier ? v.complementfichier : "" ) + '</td><td><a href="' + Base.controller.makeUrlBase(v.hostname) + 'serie/download/' + v.id + '/' + Base.model.utilisateur.keyconnexion + '"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="30px" height="30px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="black" id="download-9-icon" d="M360.353,277.271L256.998,380.802L153.647,277.271h47.529v-38.77h111.646v38.77H360.353z M201.177,220.49h111.646v-31.318H201.177V220.49z M312.823,172.729v-25.53H201.177v25.53H312.823z M90,256c0,91.756,74.258,166,166,166c91.755,0,166-74.258,166-166c0-91.755-74.258-166-166-166C164.245,90,90,164.259,90,256z M462,256c0,113.771-92.229,206-206,206S50,369.771,50,256c0-113.771,92.229-206,206-206S462,142.229,462,256z"/></svg></a></td><td><a onclick="Film.streaming(\'' + v.id + '\',\'' + v.hostname + '\')"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"                            width="30px" height="30px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"> <path fill="black" id="video-play-3-icon" d="M256,92.481c44.433,0,86.18,17.068,117.553,48.064C404.794,171.411,422,212.413,422,255.999                            s-17.206,84.588-48.448,115.455c-31.372,30.994-73.12,48.064-117.552,48.064s-86.179-17.07-117.552-48.064                            C107.206,340.587,90,299.585,90,255.999s17.206-84.588,48.448-115.453C169.821,109.55,211.568,92.481,256,92.481 M256,52.481c-113.771,0-206,91.117-206,203.518c0,112.398,92.229,203.52,206,203.52c113.772,0,206-91.121,206-203.52C462,143.599,369.772,52.481,256,52.481L256,52.481z M206.544,357.161V159.833l160.919,98.666L206.544,357.161z"/> </svg></a></td></tr>');
+                        } else {
+                            $("#episode").append('<tr><td>Épisode ' + v.episode + '</td><td>' + (response.time[v.clefunique].timerestant != -1 ? Base.model.converter.time(response.time[v.clefunique].timerestant) : "∞") + '</td></tr>');
+
+                        }
+                    });
+                    if (!response.fini) {
+                        Film.time1 = setTimeout(function () {
+                            Film.episode(idserie, saison);
+                        }, 1000);
+                    }
+                    /*for (var i = 0; i < 2; i++) {
+                     if (i == 0) {
+                     Film.tr[i] = $("<tr></tr>").append("<td>0</td>");
+
+                     } else {
+                     Film.tr[i] = $("<tr></tr>").append("<td>100</td>");
+
+                     }
+                     $table.append(Film.tr[i]);
+                     Film.interval.push(setInterval(Film.test, 1000, i, i));
+                     }*/
+
+
+                } else {
+
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (textStatus != "abort")
+                    Base.view.noty.generate("error", textStatus + " " + jqXHR + " " + errorThrown);
+
+            }
+        });
     },
     test: function (element, host, id) {
         $.ajax({

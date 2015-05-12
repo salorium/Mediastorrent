@@ -113,7 +113,7 @@ class Torrentserie extends \core\ModelMysql
      */
     static function getSerieUserDuServeur($id)
     {
-        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre, tf.mediainfo as mediainfo ";
+        $query = "select tf.saison as saison, tf.episode as episode, tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre, tf.mediainfo as mediainfo ";
         $query .= "from torrentserie tf, serie f,rtorrent r,rtorrents rs ";
         $query .= "where( tf.fini = true ";
         $query .= "and tf.idserie = f.id ";
@@ -229,6 +229,90 @@ class Torrentserie extends \core\ModelMysql
         $query .= " and f.id = " . \core\Mysqli::real_escape_string_html($id);
         $query .= " and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
         $query .= ") order by qualite DESC";
+        \core\Mysqli::query($query);
+        return \core\Mysqli::getObjectAndClose(true);
+    }
+
+    static function getTorrentSerieParIdSerieEtParSaison($id, $saison)
+    {
+        $query = "select tf.clefunique as clefunique, tf.hashtorrent as hashtorrent, rs.portscgi as portscgi, tf.episode as episode, tf.id as id,r.hostname as hostname,tf.mediainfo as mediainfo, tf.qualite as qualite, tf.complementfichier as complementfichier, tf.fini as fini ";
+        $query .= "from torrentserie tf,serie f,rtorrent r,rtorrents rs ";
+        $query .= "where( tf.idserie = f.id ";
+        $query .= "and r.nom = tf.nomrtorrent ";
+        $query .= "and tf.login = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login);
+        $query .= " and rs.nomrtorrent = r.nom ";
+        $query .= " and rs.login = tf.login ";
+        //$query .= "and r.hostname = " . \core\Mysqli::real_escape_string_html(HOST);
+        $query .= " and f.id = " . \core\Mysqli::real_escape_string_html($id);
+        $query .= " and tf.saison = " . \core\Mysqli::real_escape_string_html($saison);
+        $query .= ") or (";
+        //$query .= "tf.fini = true ";
+        $query .= "tf.partageamis = true ";
+        $query .= "and tf.idserie = f.id ";
+        $query .= "and r.nom = tf.nomrtorrent ";
+        $query .= "and rs.login = tf.login ";
+        $query .= "and rs.nomrtorrent = r.nom ";
+        //$query .= "and r.hostname = " . \core\Mysqli::real_escape_string_html(HOST);
+        $query .= " and f.id = " . \core\Mysqli::real_escape_string_html($id);
+        $query .= " and tf.saison = " . \core\Mysqli::real_escape_string_html($saison);
+        $query .= " and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
+        $query .= ") order by episode ASC, qualite DESC";
+        \core\Mysqli::query($query);
+        return \core\Mysqli::getObjectAndClose(true);
+    }
+
+    static function getTorrentSerieNonFiniParIdSerieEtParSaisonDuServeur($id, $saison)
+    {
+        $query = "select distinct tf.hashtorrent as hashtorrent, rs.portscgi as portscgi ";
+        $query .= "from torrentserie tf,serie f,rtorrent r,rtorrents rs ";
+        $query .= "where( tf.idserie = f.id ";
+        $query .= "and r.nom = tf.nomrtorrent ";
+        $query .= "and tf.login = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login);
+        $query .= " and rs.nomrtorrent = r.nom ";
+        $query .= " and rs.login = tf.login ";
+        $query .= "and r.hostname = " . \core\Mysqli::real_escape_string_html(HOST);
+        $query .= " and f.id = " . \core\Mysqli::real_escape_string_html($id);
+        $query .= " and tf.saison = " . \core\Mysqli::real_escape_string_html($saison);
+        $query .= " and tf.fini = false ";
+        $query .= ") or (";
+        //$query .= "tf.fini = true ";
+        $query .= "tf.partageamis = true ";
+        $query .= " and tf.fini = false ";
+        $query .= "and tf.idserie = f.id ";
+        $query .= "and r.nom = tf.nomrtorrent ";
+        $query .= "and rs.login = tf.login ";
+        $query .= "and rs.nomrtorrent = r.nom ";
+        $query .= "and r.hostname = " . \core\Mysqli::real_escape_string_html(HOST);
+        $query .= " and f.id = " . \core\Mysqli::real_escape_string_html($id);
+        $query .= " and tf.saison = " . \core\Mysqli::real_escape_string_html($saison);
+        $query .= " and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
+        $query .= ") ";
+        \core\Mysqli::query($query);
+        return \core\Mysqli::getObjectAndClose(true);
+    }
+
+    static function getSaisonTorrentSerieParIdSerie($id)
+    {
+        $query = "select distinct tf.saison as saison ";
+        $query .= "from torrentserie tf,serie f,rtorrent r,rtorrents rs ";
+        $query .= "where( tf.idserie = f.id ";
+        $query .= "and r.nom = tf.nomrtorrent ";
+        $query .= "and tf.login = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login);
+        $query .= " and rs.nomrtorrent = r.nom ";
+        $query .= " and rs.login = tf.login ";
+        //$query .= "and r.hostname = " . \core\Mysqli::real_escape_string_html(HOST);
+        $query .= " and f.id = " . \core\Mysqli::real_escape_string_html($id);
+        $query .= ") or (";
+        //$query .= "tf.fini = true ";
+        $query .= "tf.partageamis = true ";
+        $query .= "and tf.idserie = f.id ";
+        $query .= "and r.nom = tf.nomrtorrent ";
+        $query .= "and rs.login = tf.login ";
+        $query .= "and rs.nomrtorrent = r.nom ";
+        //$query .= "and r.hostname = " . \core\Mysqli::real_escape_string_html(HOST);
+        $query .= " and f.id = " . \core\Mysqli::real_escape_string_html($id);
+        $query .= " and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
+        $query .= ") order by saison ASC";
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(true);
     }

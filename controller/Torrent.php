@@ -884,6 +884,7 @@ class Torrent extends Controller
                                             if (isset($infos["Acteur(s)"]))
                                                 $acteurs = $infos["Acteur(s)"];
                                             $anneeprod = $infos["Lancement"];
+                                            $this->set("ICI", "Ok");
                                             $serie = \model\mysql\Serie::ajouteSerie($titre, $otitre, json_encode($infos), $urlposter, $urlbackdrop, $anneeprod, $acteurs, $realisateurs, $_REQUEST["torrent" . $idtorrent . "filecode"]);
                                             $idserie = $serie->id;
                                             $serie->addGenre($genre);
@@ -961,8 +962,8 @@ class Torrent extends Controller
             "erreur" => $erreur,
             "status" => $status,
 
-            "post" => $_REQUEST,
-            "FILE"=> $_FILES,
+//            "post" => $_REQUEST,
+//            "FILE"=> $_FILES,
             "seedbox" => \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
         ));
     }
