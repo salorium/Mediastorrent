@@ -12,7 +12,7 @@ define('WEBROOT', __DIR__);
 define('ROOT', dirname(WEBROOT));
 define('DS', DIRECTORY_SEPARATOR);
 define('CORE', ROOT . DS . 'core');
-define('BASE_URL', "http" . ($_SERVER["SERVER_PORT"] == 80 ? "" : "s") . "://" . $_SERVER["HTTP_HOST"] . dirname(dirname($_SERVER["SCRIPT_NAME"])) . ($_SERVER["SCRIPT_NAME"] !== "/index.php" ? "/" : ""));
+define('BASE_URL', "http" . (isset($_SERVER["HTTPS"]) ? "s" : "") . "://" . $_SERVER["HTTP_HOST"] . dirname(dirname($_SERVER["SCRIPT_NAME"])) . ($_SERVER["SCRIPT_NAME"] !== "/index.php" ? "/" : ""));
 define('HOST', substr($_SERVER["HTTP_HOST"] . dirname(dirname($_SERVER["SCRIPT_NAME"])) . ($_SERVER["SCRIPT_NAME"] !== "/index.php" ? "/" : ""), 0, -1));
 function __autoload($class_name)
 {

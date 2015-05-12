@@ -69,7 +69,7 @@ class Download extends Model
 // Send standard headers
         header("Content-Type: " . mime_content_type($file));
         header("Content-Length: $length");
-        header('Content-Disposition: attachment; filename="' . basename($file) . '"');
+        header('Content-Disposition: attachment; filename*=UTF-8\'\'' . rawurlencode(basename($file)));
         header('Accept-Ranges: bytes');
 
 // if requested, send extra headers and part of file...
@@ -151,9 +151,9 @@ class Download extends Model
         } else $partial = false; // No range requested
 
 // Send standard headers
-        header("Content-Type: " . mime_content_type($file) . "; charset=utf-8");
+        header("Content-Type: " . mime_content_type($file) . ";");
         header("Content-Length: $filesize");
-        header('Content-Disposition: attachment; filename="' . (str_replace('"', '\"', str_replace("&lt;", "<", $name))) . '.' . pathinfo($file, PATHINFO_EXTENSION) . '"');
+        header('Content-Disposition: attachment; filename*=UTF-8\'\'' . rawurlencode((str_replace("&lt;", "<", $name))) . '.' . pathinfo($file, PATHINFO_EXTENSION));
         header('Accept-Ranges: bytes');
 
 // if requested, send extra headers and part of file...

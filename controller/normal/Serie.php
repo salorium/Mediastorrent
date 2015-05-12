@@ -180,15 +180,101 @@ class Serie extends Controller
     }
 
 
-    function getFile($id)
+    function getFileParSaison($id, $saison)
     {
-        $a = \model\mysql\Torrentserie::getTorrentSerieParIdSerie($id);
+        $a = \model\mysql\Torrentserie::getTorrentSerieParIdSerieEtParSaison($id, $saison);
         $tmp = array();
+        $tmp1 = array();
+        $fini = true;
         foreach ($a as $v) {
             $v->mediainfo = json_decode($v->mediainfo);
+            if ($v->fini == 0) {
+                $tmp1[$v->clefunique] = [$v->hashtorrent, $v->portscgi, $v->hostname];
+                $fini = false;
+            }
             $tmp[] = $v;
         }
+        $nbrequetelocal = 0;
+        $cmds = array(
+            "d.name" /*5*/, "d.down.rate" /*13*/, "d.size_chunks" /*8*/, "d.completed_chunks" /*7*/, "d.chunk_size" /*14*///"d.custom=clefunique"
+        );
+        $requetedistante = array();
+        //$this->set("tmp1",$tmp1);
+        $req = array();
+        foreach ($tmp1 as $k => $v) {
+            if ($v[2] === HOST) {
+                //Requête local
+                $nbrequetelocal++;
+                if (!isset ($req[$v[1]])) {
+
+                    $req[$v[1]][0] = new \model\xmlrpc\rXMLRPCRequest($v[1]);
+                    $req[$v[1]][1] = 0;
+                }
+                $req[$v[1]][1]++;
+                foreach ($cmds as $vv) {
+                    $req[$v[1]][0]->addCommand(new \model\xmlrpc\rXMLRPCCommand($v[1], $vv, $v[0]));
+                }
+                $req[$v[1]][0]->addCommand(new \model\xmlrpc\rXMLRPCCommand($v[1], "d.custom", array($v[0], "clefunique")));
+            } else {//*/
+                //Requête distante
+                //
+                $requetedistante[$v[2]] = $v[2];
+            }
+        }
+
+        $time = array();
+        if ($nbrequetelocal > 0) {
+            foreach ($req as $v) {
+                $vreq = $v[0];
+                if ($vreq->success()) {
+                    for ($i = 0; $i < $v[1]; $i++) {
+                        $tf = new \stdClass();
+                        $tf->nomtorrent = $vreq->val[0 + $i * 6];
+                        $get_completed_chunks = $vreq->val[3 + $i * 6];
+                        $get_size_chunks = $vreq->val[2 + $i * 6];
+                        $get_chunk_size = $vreq->val[4 + $i * 6];
+                        $tf->timerestant = ($vreq->val[1 + $i * 6] > 0 ? floor(($get_size_chunks - $get_completed_chunks) * $get_chunk_size / $vreq->val[1 + $i * 6]) : -1); //Eta 9 (Temps restant en seconde)
+                        $time[$vreq->val[5 + $i * 6]] = $tf;
+                    }
+                }
+            }
+            //$this->set("reqlocal",$req);
+        }
+        /*
+         * //////////////////////
+         * // Requête distante //
+         * //////////////////////
+         */
+        $urls = array();
+        $reqdistanteresponse = array();
+        $json = array();
+        foreach ($requetedistante as $v) {
+            $url = "http://" . $v . "/serie/getTimeSerie/" . \config\Conf::$user["user"]->keyconnexion . "/" . $id . "/" . $saison . ".json";
+            $urls[] = $url;
+            $jsonres = json_decode(file_get_contents($url), true);
+            if ($jsonres['showdebugger'] === "ok") {
+                $json[] = $jsonres['time'];
+                $time = array_merge($time, $jsonres['time']);
+            } else {
+                $reqdistanteresponse[] = $jsonres;
+            }
+        }
+        //$this->set('jsonres',$json);
+        //$this->set('requetedistantereponse',$reqdistanteresponse);
+        $this->set('time', $time);
+        $this->set("url", $urls);
         $this->set("file", $tmp);
+        $this->set("fini", $fini);
+        //$this->set("tmp1",$tmp1);
+
+    }
+
+    function getSaison($id)
+    {
+        $a = \model\mysql\Torrentserie::getSaisonTorrentSerieParIdSerie($id);
+
+        $this->set("file", $a);
+        $this->set('idserie', $id);
     }
 
 } 

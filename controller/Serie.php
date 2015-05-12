@@ -43,6 +43,50 @@ class Serie extends \core\Controller
         $this->set("file", $tf);
     }
 
+    function getTimeSerie($keyconnexion, $idserie, $saison)
+    {
+        \model\simple\Utilisateur::authentificationDistante($keyconnexion);
+        if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
+        $tfs = \model\mysql\Torrentserie::getTorrentSerieNonFiniParIdSerieEtParSaisonDuServeur($idserie, $saison);
+        $req = array();
+        $cmds = array(
+            "d.name" /*5*/, "d.down.rate" /*13*/, "d.size_chunks" /*8*/, "d.completed_chunks" /*7*/, "d.chunk_size" /*14*/
+        );
+        foreach ($tfs as $tf) {
+            if (!isset ($req[$tf->portscgi])) {
+
+                $req[$tf->portscgi][0] = new \model\xmlrpc\rXMLRPCRequest($tf->portscgi);
+                $req[$tf->portscgi][1] = 0;
+            }
+            $req[$tf->portscgi][1]++;
+            foreach ($cmds as $vv) {
+                $req[$tf->portscgi][0]->addCommand(new \model\xmlrpc\rXMLRPCCommand($tf->portscgi, $vv, $tf->hashtorrent));
+            }
+            $req[$tf->portscgi][0]->addCommand(new \model\xmlrpc\rXMLRPCCommand($tf->portscgi, "d.custom", array($tf->hashtorrent, "clefunique")));
+
+        }
+        $time = array();
+        if (count($tfs) > 0) {
+            foreach ($req as $v) {
+                $vreq = $v[0];
+                if ($vreq->success()) {
+                    for ($i = 0; $i < $v[1]; $i++) {
+                        $tf = new \stdClass();
+                        $tf->nomtorrent = $vreq->val[0 + $i * 6];
+                        $get_completed_chunks = $vreq->val[3 + $i * 6];
+                        $get_size_chunks = $vreq->val[2 + $i * 6];
+                        $get_chunk_size = $vreq->val[4 + $i * 6];
+                        $tf->timerestant = ($vreq->val[1 + $i * 6] > 0 ? floor(($get_size_chunks - $get_completed_chunks) * $get_chunk_size / $vreq->val[1 + $i * 6]) : -1); //Eta 9 (Temps restant en seconde)
+                        $time[$vreq->val[5 + $i * 6]] = $tf;
+                    }
+                }
+            }
+
+        }
+        $this->set('time', $time);
+    }
+
+
     function recherche($keyconnexion = null, $re = null)
     {
         \model\simple\Utilisateur::authentificationDistante($keyconnexion);
@@ -51,7 +95,7 @@ class Serie extends \core\Controller
             $re = $_REQUEST["recherche"];
         $all = new \model\simple\Allocine($re);
         $this->set(array(
-            "localfilm" => \model\mysql\Film::rechercheFormat($re),
+            "localfilm" => \model\mysql\Serie::rechercheFormat($re),
             "film" => $all->retourneResSeriesFormat()
         ));
     }
@@ -92,18 +136,21 @@ class Serie extends \core\Controller
                         $res .= $v["type"] . " " . $v["cannal"];
                         if (isset($v["lang"]))
                             $res .= " " . $v["lang"];
+                        $audios[] = $res;
 
                     }
-                    $audios[] = $res;
+
                 }
 
                 if (count($audios) > 1) {
                     $au = implode(".", $audios);
-                    $compfile .= "." . $au . "]";
+                    $compfile .= "." . $au;
                 } else {
-                    $compfile .= "." . $audios[0] . "]";
+                    //    $compfile .= "." . $audios[0] . "]";
                 }
-                $tmp = \model\simple\Download::sendFileName($filename, $torrentf->titre . " " . $compfile);
+                $compfile .= "]";
+
+                $tmp = \model\simple\Download::sendFileName($filename, $torrentf->titre . " Saison " . $torrentf->saison . " Épisode " . $torrentf->episode . " " . $compfile);
             }
 
         } else {
@@ -123,7 +170,7 @@ class Serie extends \core\Controller
         \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         if ($all === "") {
-            $res = \model\mysql\Film::getByIdFormat($code);
+            $res = \model\mysql\Serie::getByIdFormat($code);
         } else {
             $o["typesearch"] = "tvseries";
             $all = new \model\simple\Allocine($code, $o);

@@ -24,6 +24,15 @@ use model\xmlrpc\rTorrentSettings;
 
 class Test extends Controller
 {
+    function mysql($v)
+    {
+        var_dump(\core\Mysqli::real_escape_string_html($v));
+    }
+
+    function getTimeSerie()
+    {
+        $this->set("ffd", "ffdfd");
+    }
     function gget()
     {
         var_dump($_GET);
