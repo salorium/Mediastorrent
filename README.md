@@ -55,7 +55,7 @@ Mediastorrent un front-end pour rtorrent avec gestion multi-user, multi-seedbox 
     sudo apt-get install mysql-server
 
 ##Installation de Mediastorrent
-    sudo apt-get install apache2 libapache2-mod-php5 php5-mysqlnd php5-json php5-imagick php5-memcached php5-curl dtach libssh2-php git
+    sudo apt-get install apache2 libapache2-mod-php5 php5-mysqlnd php5-json php5-imagick php5-memcached php5-curl dtach libssh2-php git tmux mediainfo
     sudo a2enmod rewrite
     sudo service apache2 restart
     git clone https://github.com/salorium/Mediastorrent.git => dans un dossier <utilisateur> pas sur le root.
