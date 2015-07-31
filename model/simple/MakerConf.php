@@ -89,28 +89,28 @@ namespace config;
 
 class Conf
 {
-    static $debug = ' . var_export(\config\Conf::$debug) . ';
-    static $debuglocal = ' . var_export(\config\Conf::$debuglocal) . ';
-    static $debuglocalfile = ' . var_export(\config\Conf::$debuglocalfile) . ';
-    static $install = ' . var_export(\config\Conf::$install) . ';
-    static $nomdusite = ' . var_export(\config\Conf::$nomdusite) . ';
-    static $version = ' . var_export(\config\Conf::$version) . ';
-    static $anneefondation = ' . var_export(\config\Conf::$anneefondation) . ';
-    static $author = ' . var_export(\config\Conf::$author) . ';
-    static $nomrtorrent = ' . var_export(\config\Conf::$nomrtorrent) . ';
-    static $distribution = ' . var_export(\config\Conf::$distribution) . ';
-    static $nomvg = ' . var_export(\config\Conf::$nomvg) . ';
-    static $databases = ' . var_export(\config\Conf::$databases) . ';
-    static $memcachedserver = ' . var_export(\config\Conf::$memcachedserver) . ';
-    static $clefdecryptage = ' . var_export(\config\Conf::$clefdecryptage) . ';
+    static $debug = ' . var_export(\config\Conf::$debug, true) . ';
+    static $debuglocal = ' . var_export(\config\Conf::$debuglocal, true) . ';
+    static $debuglocalfile = ' . var_export(\config\Conf::$debuglocalfile, true) . ';
+    static $install = ' . var_export(\config\Conf::$install, true) . ';
+    static $nomdusite = ' . var_export(\config\Conf::$nomdusite, true) . ';
+    static $version = ' . var_export(\config\Conf::$version, true) . ';
+    static $anneefondation = ' . var_export(\config\Conf::$anneefondation, true) . ';
+    static $author = ' . var_export(\config\Conf::$author, true) . ';
+    static $nomrtorrent = ' . var_export(\config\Conf::$nomrtorrent, true) . ';
+    static $distribution = ' . var_export(\config\Conf::$distribution, true) . ';
+    static $nomvg = ' . var_export(\config\Conf::$nomvg, true) . ';
+    static $databases = ' . var_export(\config\Conf::$databases, true) . ';
+    static $memcachedserver = ' . var_export(\config\Conf::$memcachedserver, true) . ';
+    static $clefdecryptage = ' . var_export(\config\Conf::$clefdecryptage, true) . ';
     static $user = array("user" => null, "role" => 0, "roletxt" => "Install");
-    static $api_key_themoviedb = ' . var_export(\config\Conf::$api_key_themoviedb) . ';
-    static $numerorole = ' . var_export(\config\Conf::$numerorole) . ';
+    static $api_key_themoviedb = ' . var_export(\config\Conf::$api_key_themoviedb, true) . ';
+    static $numerorole = ' . var_export(\config\Conf::$numerorole, true) . ';
     static $rolenumero; // Ne pas modifier
     static $rolevue;
-    static $videoExtensions = ' . var_export(\config\Conf::$videoExtensions) . ';
-    static $musicExtensions = ' . var_export(\config\Conf::$musicExtensions) . ';
-    static $userscgi = ' . var_export(\config\Conf::$userscgi) . ';
+    static $videoExtensions = ' . var_export(\config\Conf::$videoExtensions, true) . ';
+    static $musicExtensions = ' . var_export(\config\Conf::$musicExtensions, true) . ';
+    static $userscgi = ' . var_export(\config\Conf::$userscgi, true) . ';
 }';
     }
 
