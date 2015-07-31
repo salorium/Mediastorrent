@@ -1,6 +1,6 @@
 Sans domaine
 ============
-
+    root   /usr/share/nginx/html;
     autoindex off;
     location /Mediastorrent/ {
         rewrite ^/Mediastorrent/(.*)$ /Mediastorrent/webroot/$1 break;
