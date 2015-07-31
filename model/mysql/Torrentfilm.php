@@ -107,7 +107,7 @@ class Torrentfilm extends \core\ModelMysql
      */
     static function getFilmUserDuServeur($id)
     {
-        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre, tf.mediainfo as mediainfo ";
+        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.login as userscgi,f.titre as titre, tf.mediainfo as mediainfo ";
         $query .= "from torrentfilm tf, film f,rtorrent r,rtorrents rs ";
         $query .= "where( tf.fini = true ";
         $query .= "and tf.idfilm = f.id ";
@@ -134,7 +134,7 @@ class Torrentfilm extends \core\ModelMysql
 
     static function getFilmDuServeur($id)
     {
-        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre, tf.mediainfo as mediainfo ";
+        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.login as userscgi,f.titre as titre, tf.mediainfo as mediainfo ";
         $query .= "from torrentfilm tf, film f,rtorrent r,rtorrents rs ";
         $query .= "where tf.fini = true ";
         $query .= "and tf.idfilm = f.id ";
@@ -203,7 +203,7 @@ class Torrentfilm extends \core\ModelMysql
 
     static function getTorrentFilmParIdFilm($id)
     {
-        $query = "select tf.id as id,r.hostname as hostname,tf.mediainfo as mediainfo, tf.qualite as qualite, tf.complementfichier as complementfichier, tf.fini as fini ";
+        $query = "select tf.id as id,r.hostname as hostname,tf.mediainfo as mediainfo, tf.qualite as qualite, tf.complementfichier as complementfichier, tf.fini as fini, tf.login = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login) . " as proprietaire, tf.partageamis as partageamis ";
         $query .= "from torrentfilm tf,film f,rtorrent r,rtorrents rs ";
         $query .= "where( tf.idfilm = f.id ";
         $query .= "and r.nom = tf.nomrtorrent ";
@@ -229,7 +229,7 @@ class Torrentfilm extends \core\ModelMysql
 
     static function getTorrentFilmParId($id)
     {
-        $query = "select tf.id as id,r.hostname as hostname,tf.mediainfo as mediainfo, tf.qualite as qualite, tf.complementfichier as complementfichier, tf.fini as fini, rs.portscgi as scgi, tf.hashtorrent as hash ";
+        $query = "select tf.id as id,r.hostname as hostname,tf.mediainfo as mediainfo, tf.qualite as qualite, tf.complementfichier as complementfichier, tf.fini as fini, rs.login as userscgi, tf.hashtorrent as hash ";
         $query .= "from torrentfilm tf,rtorrent r,rtorrents rs ";
         $query .= "where( tf.id = " . \core\Mysqli::real_escape_string_html($id);
         $query .= "and r.nom = tf.nomrtorrent ";
@@ -255,7 +255,7 @@ class Torrentfilm extends \core\ModelMysql
 
     static function getTorrentFilmParIdForStreamingDeUtilisateur($id)
     {
-        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre, r.hostname as hostname,tf.mediainfo as mediainfo ";
+        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.login as userscgi,f.titre as titre, r.hostname as hostname,tf.mediainfo as mediainfo ";
         $query .= "from torrentfilm tf,film f,rtorrent r,rtorrents rs ";
         $query .= "where( tf.fini = true ";
         $query .= "and tf.idfilm = f.id ";
@@ -282,7 +282,7 @@ class Torrentfilm extends \core\ModelMysql
 
     static function getTorrentFilmParIdForStreaming($id)
     {
-        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre, r.hostname as hostname,tf.mediainfo as mediainfo ";
+        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.login as userscgi,f.titre as titre, r.hostname as hostname,tf.mediainfo as mediainfo ";
         $query .= "from torrentfilm tf,film f,rtorrent r,rtorrents rs ";
         $query .= "where tf.fini = true ";
         $query .= "and tf.idfilm = f.id ";
@@ -316,6 +316,13 @@ class Torrentfilm extends \core\ModelMysql
         return $clefunique;
     }
 
+    static function getAll()
+    {
+        $query = "select * from torrentfilm ";
+        $query .= "where fini= true";
+        \core\Mysqli::query($query);
+        return \core\Mysqli::getObjectAndClose(true, __CLASS__);
+    }
     public function fini($mediainfo)
     {
         switch ($mediainfo["typequalite"]) {
@@ -341,5 +348,21 @@ class Torrentfilm extends \core\ModelMysql
         $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
         \core\Mysqli::close();
         return $res;
+    }
+
+    public function updateMediainfo($mediainfo)
+    {
+
+        $this->mediainfo = json_encode($mediainfo);
+
+        $query = "update torrentfilm set ";
+        $query .= "mediainfo=" . \core\Mysqli::real_escape_string_html($this->mediainfo);
+        $query .= " where id=" . \core\Mysqli::real_escape_string_html($this->id);
+        \core\Mysqli::query($query);
+        //echo $query;
+        $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
+        \core\Mysqli::close();
+        return $res;
+
     }
 } 

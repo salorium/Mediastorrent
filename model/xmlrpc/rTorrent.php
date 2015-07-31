@@ -22,22 +22,22 @@ class rTorrent extends \core\Model
             $raw_value = base64_encode($torrent->__toString());
             $filename = is_object($fname) ? $torrent->getFileName() : $fname;
             if ((strlen($raw_value) < self::RTORRENT_PACKET_LIMIT) || is_null($filename)) {
-                $cmd = new rXMLRPCCommand(\config\Conf::$portscgi, $isStart ? 'load.raw_start' : 'load.raw');
+                $cmd = new rXMLRPCCommand(\config\Conf::$userscgi, $isStart ? 'load.raw_start' : 'load.raw');
                 $cmd->addParameter("");
                 $cmd->addParameter($raw_value, "base64");
                 if (!is_null($filename) && !true)
                     @unlink($filename);
             } else {
-                $cmd = new rXMLRPCCommand(\config\Conf::$portscgi, $isStart ? 'load.start' : 'load.normal');
+                $cmd = new rXMLRPCCommand(\config\Conf::$userscgi, $isStart ? 'load.start' : 'load.normal');
                 $cmd->addParameter("");
                 $cmd->addParameter($filename);
             }
-            if (!is_null($filename) && (rTorrentSettings::get(\config\Conf::$portscgi)->iVersion >= 0x805))
-                $cmd->addParameter(rTorrentSettings::getCmd(\config\Conf::$portscgi, "d.custom.set") . "=x-filename," . rawurlencode(basename($filename)));
-            $req = new rXMLRPCRequest(\config\Conf::$portscgi);
+            if (!is_null($filename) && (rTorrentSettings::get(\config\Conf::$userscgi)->iVersion >= 0x805))
+                $cmd->addParameter(rTorrentSettings::getCmd(\config\Conf::$userscgi, "d.custom.set") . "=x-filename," . rawurlencode(basename($filename)));
+            $req = new rXMLRPCRequest(\config\Conf::$userscgi);
             $req->addCommand($cmd);
             if (!is_null($directory))
-                $cmd->addParameter(rTorrentSettings::getCmd(\config\Conf::$portscgi, "d.directory.set=") . "\"" . $directory . "\"");
+                $cmd->addParameter(rTorrentSettings::getCmd(\config\Conf::$userscgi, "d.directory.set=") . "\"" . $directory . "\"");
             if ($req->run() && !$req->fault)
                 $hash = $req->val;
         }
@@ -51,11 +51,11 @@ class rTorrent extends \core\Model
         $psize = intval($info['piece length']);
         $base = trim($base);
         if ($base == '') {
-            $req = new rXMLRPCRequest(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, 'get_directory'));
+            $req = new rXMLRPCRequest(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, 'get_directory'));
             if ($req->success())
                 $base = $req->val[0];
         }
-        if ($psize && \model\xmlrpc\rTorrentSettings::get(\config\Conf::$portscgi)->correctDirectory($base)) {
+        if ($psize && \model\xmlrpc\rTorrentSettings::get(\config\Conf::$userscgi)->correctDirectory($base)) {
             $base = addslash($base);
             $tsize = 0.0;
             if (isset($info['files'])) {

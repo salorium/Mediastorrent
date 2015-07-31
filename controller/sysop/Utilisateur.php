@@ -20,7 +20,7 @@ class Utilisateur extends \core\Controller
         if (isset($_REQUEST['action'])) {
             switch ($_REQUEST['action']) {
                 case 'addrtorrent':
-                    $a = \model\mysql\Cronroot::sav($_REQUEST["nomrtorrent"], "controller\\cronroot\\Utilisateur", "addRtorrent", array("login" => $_REQUEST["login"], "scgi" => $_REQUEST["scgi"], "taille" => (isset($_REQUEST["taille"]) ? $_REQUEST["taille"] : null)));
+                    $a = \model\mysql\Cronroot::sav($_REQUEST["nomrtorrent"], "controller\\cronroot\\Utilisateur", "addRtorrent", array("login" => $_REQUEST["login"], "taille" => (isset($_REQUEST["taille"]) ? $_REQUEST["taille"] : null)));
                     break;
                 case 'deluser':
                     $rts = \model\mysql\Rtorrents::getAllRtorrentUtilisateur($_REQUEST["login"]);

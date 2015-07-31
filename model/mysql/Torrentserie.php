@@ -113,7 +113,7 @@ class Torrentserie extends \core\ModelMysql
      */
     static function getSerieUserDuServeur($id)
     {
-        $query = "select tf.saison as saison, tf.episode as episode, tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre, tf.mediainfo as mediainfo ";
+        $query = "select tf.saison as saison, tf.episode as episode, tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.login as userscgi,f.titre as titre, tf.mediainfo as mediainfo ";
         $query .= "from torrentserie tf, serie f,rtorrent r,rtorrents rs ";
         $query .= "where( tf.fini = true ";
         $query .= "and tf.idserie = f.id ";
@@ -140,7 +140,7 @@ class Torrentserie extends \core\ModelMysql
 
     static function getSerieDuServeur($id)
     {
-        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre, tf.mediainfo as mediainfo ";
+        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.login as userscgi,f.titre as titre, tf.mediainfo as mediainfo ";
         $query .= "from torrentserie tf, serie f,rtorrent r,rtorrents rs ";
         $query .= "where tf.fini = true ";
         $query .= "and tf.idserie = f.id ";
@@ -235,7 +235,7 @@ class Torrentserie extends \core\ModelMysql
 
     static function getTorrentSerieParIdSerieEtParSaison($id, $saison)
     {
-        $query = "select tf.clefunique as clefunique, tf.hashtorrent as hashtorrent, rs.portscgi as portscgi, tf.episode as episode, tf.id as id,r.hostname as hostname,tf.mediainfo as mediainfo, tf.qualite as qualite, tf.complementfichier as complementfichier, tf.fini as fini ";
+        $query = "select tf.clefunique as clefunique, tf.hashtorrent as hashtorrent, rs.login as userscgi, tf.episode as episode, tf.id as id,r.hostname as hostname,tf.mediainfo as mediainfo, tf.qualite as qualite, tf.complementfichier as complementfichier, tf.fini as fini ";
         $query .= "from torrentserie tf,serie f,rtorrent r,rtorrents rs ";
         $query .= "where( tf.idserie = f.id ";
         $query .= "and r.nom = tf.nomrtorrent ";
@@ -263,7 +263,7 @@ class Torrentserie extends \core\ModelMysql
 
     static function getTorrentSerieNonFiniParIdSerieEtParSaisonDuServeur($id, $saison)
     {
-        $query = "select distinct tf.hashtorrent as hashtorrent, rs.portscgi as portscgi ";
+        $query = "select distinct tf.hashtorrent as hashtorrent, rs.login as userscgi ";
         $query .= "from torrentserie tf,serie f,rtorrent r,rtorrents rs ";
         $query .= "where( tf.idserie = f.id ";
         $query .= "and r.nom = tf.nomrtorrent ";
@@ -319,7 +319,7 @@ class Torrentserie extends \core\ModelMysql
 
     static function getTorrentSerieParId($id)
     {
-        $query = "select tf.id as id,r.hostname as hostname,tf.mediainfo as mediainfo, tf.qualite as qualite, tf.complementfichier as complementfichier, tf.fini as fini, rs.portscgi as scgi, tf.hashtorrent as hash ";
+        $query = "select tf.id as id,r.hostname as hostname,tf.mediainfo as mediainfo, tf.qualite as qualite, tf.complementfichier as complementfichier, tf.fini as fini, rs.login as scgi, tf.hashtorrent as hash ";
         $query .= "from torrentserie tf,rtorrent r,rtorrents rs ";
         $query .= "where( tf.id = " . \core\Mysqli::real_escape_string_html($id);
         $query .= "and r.nom = tf.nomrtorrent ";
@@ -345,7 +345,7 @@ class Torrentserie extends \core\ModelMysql
 
     static function getTorrentSerieParIdForStreamingDeUtilisateur($id)
     {
-        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre, r.hostname as hostname,tf.mediainfo as mediainfo ";
+        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.login as userscgi,f.titre as titre, r.hostname as hostname,tf.mediainfo as mediainfo ";
         $query .= "from torrentserie tf,serie f,rtorrent r,rtorrents rs ";
         $query .= "where( tf.fini = true ";
         $query .= "and tf.idserie = f.id ";
@@ -372,7 +372,7 @@ class Torrentserie extends \core\ModelMysql
 
     static function getTorrentSerieParIdForStreaming($id)
     {
-        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.portscgi as portscgi,f.titre as titre, r.hostname as hostname,tf.mediainfo as mediainfo ";
+        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.login as userscgi,f.titre as titre, r.hostname as hostname,tf.mediainfo as mediainfo ";
         $query .= "from torrentserie tf,serie f,rtorrent r,rtorrents rs ";
         $query .= "where tf.fini = true ";
         $query .= "and tf.idserie = f.id ";
@@ -406,6 +406,13 @@ class Torrentserie extends \core\ModelMysql
         return $clefunique;
     }
 
+    static function getAll()
+    {
+        $query = "select * from torrentserie ";
+        $query .= "where fini= true";
+        \core\Mysqli::query($query);
+        return \core\Mysqli::getObjectAndClose(true, __CLASS__);
+    }
     public function fini($mediainfo)
     {
         switch ($mediainfo["typequalite"]) {
@@ -431,5 +438,21 @@ class Torrentserie extends \core\ModelMysql
         $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
         \core\Mysqli::close();
         return $res;
+    }
+
+    public function updateMediainfo($mediainfo)
+    {
+
+        $this->mediainfo = json_encode($mediainfo);
+
+        $query = "update torrentserie set ";
+        $query .= "mediainfo=" . \core\Mysqli::real_escape_string_html($this->mediainfo);
+        $query .= " where id=" . \core\Mysqli::real_escape_string_html($this->id);
+        \core\Mysqli::query($query);
+        //echo $query;
+        $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
+        \core\Mysqli::close();
+        return $res;
+
     }
 } 

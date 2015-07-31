@@ -25,9 +25,9 @@ class Film extends \core\Controller
                 "d.name" /*5*/, "d.down.rate" /*13*/, "d.size_chunks" /*8*/, "d.completed_chunks" /*7*/, "d.chunk_size" /*14*/
             );
 
-            $req = new \model\xmlrpc\rXMLRPCRequest($tf->scgi);
+            $req = new \model\xmlrpc\rXMLRPCRequest($tf->userscgi);
             foreach ($cmds as $v) {
-                $req->addCommand(new \model\xmlrpc\rXMLRPCCommand($tf->scgi, $v, $tf->hash));
+                $req->addCommand(new \model\xmlrpc\rXMLRPCCommand($tf->userscgi, $v, $tf->hash));
             }
 
 
@@ -67,19 +67,23 @@ class Film extends \core\Controller
             $torrentf = \model\mysql\Torrentfilm::getFilmUserDuServeur($id);
         }
         if ($torrentf ) {
-            \config\Conf::$portscgi = $torrentf->portscgi;
-            $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
-                new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.frozen_path", array($torrentf->hash . ":f" . $torrentf->numfile)));
+            /*
+
+             \config\Conf::$userscgi = $torrentf->userscgi;
+            $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$userscgi,
+                new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "f.frozen_path", array($torrentf->hash . ":f" . $torrentf->numfile)));
             if ($req->success()) {
                 $filename = $req->val[0];
                 if ($filename == '') {
-                    $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, array(
-                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.open", $torrentf->hash),
-                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.frozen_path", array($torrentf->hash . ":f" . $torrentf->numfile)),
-                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.close", $torrentf->hash)));
+                    $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$userscgi, array(
+                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "d.open", $torrentf->hash),
+                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "f.frozen_path", array($torrentf->hash . ":f" . $torrentf->numfile)),
+                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "d.close", $torrentf->hash)));
                     if ($req->success())
                         $filename = $req->val[1];
                 }
+            */
+
                 $mediainfo = json_decode($torrentf->mediainfo, true);
                 $compfile = "[";
                 $compfile .= (strlen($torrentf->complementfichier) > 0 ? $torrentf->complementfichier . "." : "");
@@ -109,8 +113,8 @@ class Film extends \core\Controller
                 } else {
                     $compfile .= "." . $audios[0] . "]";
                 }
-                $tmp = \model\simple\Download::sendFileName($filename, $torrentf->titre . " " . $compfile);
-            }
+            $tmp = \model\simple\Download::sendFileName($mediainfo["filename"], $torrentf->titre . " " . $compfile);
+            //}
 
         } else {
             if ($torrentf = \model\mysql\Torrentfilm::getAdresseServeurFilmUser($id)) {
@@ -140,4 +144,4 @@ class Film extends \core\Controller
             "film" => $res
         ));
     }
-} 
+}

@@ -97,16 +97,16 @@ class Film extends Controller
             $torrentf = \model\mysql\Torrentfilm::getTorrentFilmParIdForStreamingDeUtilisateur($id);
         }
         if ($torrentf) {
-            \config\Conf::$portscgi = $torrentf->portscgi;
-            $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
-                new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.frozen_path", array($torrentf->hash.":f".$torrentf->numfile)));
+            \config\Conf::$userscgi = $torrentf->userscgi;
+            $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$userscgi,
+                new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "f.frozen_path", array($torrentf->hash . ":f" . $torrentf->numfile)));
             if ($req->success()) {
                 $filename = $req->val[0];
                 if ($filename == '') {
-                    $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, array(
-                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.open", $torrentf->hash),
-                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.frozen_path", array($torrentf->hash.":f".$torrentf->numfile)),
-                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.close", $torrentf->hash)));
+                    $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$userscgi, array(
+                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "d.open", $torrentf->hash),
+                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "f.frozen_path", array($torrentf->hash . ":f" . $torrentf->numfile)),
+                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "d.close", $torrentf->hash)));
                     if ($req->success())
                         $filename = $req->val[1];
                 }

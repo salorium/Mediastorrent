@@ -16,6 +16,8 @@ class Mediainfo extends \core\Model
     public $videos;
     public $audios = array();
     public $texts = array();
+    public $taille;
+    public $file;
 
     function __construct($file)
     {
@@ -43,10 +45,14 @@ class Mediainfo extends \core\Model
                     break;
             }
         }
+        $this->taille = filesize($file);
+        $this->file = $file;
     }
 
     function getFormatVideo()
     {
+        $res["taille"] = $this->taille;
+        $res["filename"] = $this->file;
         $res["duree"] = $this->general["Duration"][1];
         if (isset($this->videos["Codec"][1])) {
             switch ($this->videos["Codec"][1]) {

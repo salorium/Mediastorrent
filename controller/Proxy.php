@@ -15,13 +15,21 @@ class Proxy extends Controller
 {
     function image($url)
     {
-        $im = \imagecreatefromjpeg($url);
+        /*$im = \imagecreatefromjpeg($url);
         ob_start();
         imagejpeg($im, NULL, 100);
         $img = \ob_get_clean();
         $this->set(array(
             "url" => $url,
             "image" => $img
+        ));
+        $this->render("index");*/
+        $myimage = new \model\simple\MyImage($url);
+        //var_dump($url);
+        //die();//*/
+        $this->set(array(
+            "url" => $url,
+            "image" => $myimage->getImage()
         ));
         $this->render("index");
     }

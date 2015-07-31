@@ -90,6 +90,11 @@ class Memcached extends \Memcached
         return self::$instance[$database];
     }
 
+    public static function del($database, $clef)
+    {
+        $m = self::getInstance($database);
+        $m->delete($clef);
+    }
     public static function value($database, $clef, $valeur = null, $duree = 2592000)
     {
         $QueryStartTime = microtime(true);

@@ -13,10 +13,10 @@ use model\simple\MakerRtorrentLancer;
 
 class Utilisateur extends \core\Model
 {
-    static function addRtorrent($login, $scgi, $taille = null)
+    static function addRtorrent($login, $taille = null)
     {
 
-        \model\simple\Console::println("Ajout " . $login . " scgi : " . $scgi . (!is_null($taille) ? ' taille ' . $taille . 'Go' : ''));
+        \model\simple\Console::println("Ajout " . $login . (!is_null($taille) ? ' taille ' . $taille . 'Go' : ''));
         //Voir si l'utilisateur existe sur le system
         $sortie = \model\simple\Console::execute("id " . escapeshellarg($login));
 
@@ -60,7 +60,7 @@ class Utilisateur extends \core\Model
             }
             file_put_contents("/etc/fstab", "\n/dev/" . \config\Conf::$nomvg . "/" . $login . " /home/" . $login . " ext4 defaults,nofail 0 0\n", FILE_APPEND);
         }
-        \model\simple\MakerRtorrentConf::create($login, $scgi);
+        \model\simple\MakerRtorrentConf::create($login);
         $sortie = \model\simple\Console::execute('mkdir -p /home/' . $login . '/rtorrent/data');
         if ($sortie[0] !== 0) {
             throw new \Exception("Erreur création du /home/" . $login . "/rtorrent/data");

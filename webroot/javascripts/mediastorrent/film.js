@@ -484,9 +484,9 @@ var Film = {
                     $.each(response.file, function (k, v) {
                         //console.log(v);
                         if (v.fini == 1) {
-                            $table.append('<tr><td>' + v.mediainfo.typequalite + (v.mediainfo.qualite ? " " + v.mediainfo.qualite : "" ) + '</td><td>' + (v.mediainfo.codec ? v.mediainfo.codec : "" ) + '</td><td>' + (v.mediainfo.audios[0].type ? v.mediainfo.audios[0].type : "" ) + '</td><td>' + (v.complementfichier ? v.complementfichier : "" ) + '</td><td><a href="' + Base.controller.makeUrlBase(v.hostname) + 'film/download/' + v.id + '/' + Base.model.utilisateur.keyconnexion + '"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dl.svg"></a></td><td><a onclick="Film.streaming(\'' + v.id + '\',\'' + v.hostname + '\')"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/streaming.svg"></a></td></tr>');
+                            $table.append('<tr><td>' + v.mediainfo.typequalite + (v.mediainfo.qualite ? " " + v.mediainfo.qualite : "" ) + '</td><td>' + (v.mediainfo.codec ? v.mediainfo.codec : "" ) + '</td><td>' + (v.mediainfo.audios[0].type ? v.mediainfo.audios[0].type : "" ) + '</td><td>' + (v.complementfichier ? v.complementfichier : "" ) + '</td><td>' + Base.model.converter.bytes(v.mediainfo.taille, 2) + '</td><td><a href="' + Base.controller.makeUrlBase(v.hostname) + 'film/download/' + v.id + '/' + Base.model.utilisateur.keyconnexion + '"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dl.svg"></a></td><td><a onclick="Film.streaming(\'' + v.id + '\',\'' + v.hostname + '\')"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/streaming.svg"></a></td></tr>');
                         } else {
-                            $tr = $("<tr></tr>").append("<td>Attente...</td>");
+                            $tr = $("<tr></tr>").append('<td colspan="7">Attente...</td>');
                             Film.tr.push($tr);
                             $table.append($tr);
                             Film.interval.push(setInterval(Film.test, 1000, Film.tr.length - 1, v.hostname, v.id));
@@ -529,10 +529,10 @@ var Film = {
                     //response.file
                     //console.log(v);
                     if (response.file.fini == 1) {
-                        Film.tr[element].html('<td>' + response.file.mediainfo.typequalite + (response.file.mediainfo.qualite ? " " + response.file.mediainfo.qualite : "" ) + '</td><td>' + (response.file.mediainfo.codec ? response.file.mediainfo.codec : "" ) + '</td><td>' + (response.file.mediainfo.audios[0].type ? response.file.mediainfo.audios[0].type : "" ) + '</td><td>' + (response.file.complementfichier ? response.file.complementfichier : "" ) + '</td><td><a href="' + Base.controller.makeUrlBase(response.file.hostname) + 'film/download/' + response.file.id + '/' + Base.model.utilisateur.keyconnexion + '"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dl.svg"></a></td><td><a onclick="Film.streaming(\'' + response.file.id + '\',\'' + response.file.hostname + '\')"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/streaming.svg"></a></td>');
+                        Film.tr[element].html('<td>' + response.file.mediainfo.typequalite + (response.file.mediainfo.qualite ? " " + response.file.mediainfo.qualite : "" ) + '</td><td>' + (response.file.mediainfo.codec ? response.file.mediainfo.codec : "" ) + '</td><td>' + (response.file.mediainfo.audios[0].type ? response.file.mediainfo.audios[0].type : "" ) + '</td><td>' + (response.file.complementfichier ? response.file.complementfichier : "" ) + '</td><td>' + Base.model.converter.bytes(response.file.mediainfo.taille, 2) + '</td><td><a href="' + Base.controller.makeUrlBase(response.file.hostname) + 'film/download/' + response.file.id + '/' + Base.model.utilisateur.keyconnexion + '"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dl.svg"></a></td><td><a onclick="Film.streaming(\'' + response.file.id + '\',\'' + response.file.hostname + '\')"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/streaming.svg"></a></td>');
                         clearInterval(Film.interval[element]);
                     } else {
-                        Film.tr[element].html('<td colspan="4">' + response.file.nomtorrent + '</td><td colspan="2">' + (response.file.timerestant != -1 ? Base.model.converter.time(response.file.timerestant) : "∞") + '</td>');
+                        Film.tr[element].html('<td colspan="5">' + response.file.nomtorrent + '</td><td colspan="2">' + (response.file.timerestant != -1 ? Base.model.converter.time(response.file.timerestant) : "∞") + '</td>');
                     }
 
 
@@ -559,11 +559,11 @@ var Film = {
                     //response.file
                     //console.log(v);
                     if (response.file.fini == 1) {
-                        Film.tr[element].html('<td>' + response.file.mediainfo.typequalite + (response.file.mediainfo.qualite ? " " + response.file.mediainfo.qualite : "" ) + '</td><td>' + (response.file.mediainfo.codec ? response.file.mediainfo.codec : "" ) + '</td><td>' + (response.file.mediainfo.audios[0].type ? response.file.mediainfo.audios[0].type : "" ) + '</td><td>' + (response.file.complementfichier ? response.file.complementfichier : "" ) + '</td><td><a href="' + Base.controller.makeUrlBase(response.file.hostname) + 'film/download/' + response.file.id + '/' + Base.model.utilisateur.keyconnexion + '"><img width="60" src="' + Base.controller.makeUrlBase() + 'images/dl.svg"></a></td>');
+                        Film.tr[element].html('<td>' + response.file.mediainfo.typequalite + (response.file.mediainfo.qualite ? " " + response.file.mediainfo.qualite : "" ) + '</td><td>' + (response.file.mediainfo.codec ? response.file.mediainfo.codec : "" ) + '</td><td>' + (response.file.mediainfo.audios[0].type ? response.file.mediainfo.audios[0].type : "" ) + '</td><td>' + (response.file.complementfichier ? response.file.complementfichier : "" ) + '</td><td>' + Base.model.converter.bytes(response.file.mediainfo.taille, 2) + '</td><td><a href="' + Base.controller.makeUrlBase(response.file.hostname) + 'film/download/' + response.file.id + '/' + Base.model.utilisateur.keyconnexion + '"><img width="60" src="' + Base.controller.makeUrlBase() + 'images/dl.svg"></a></td>');
                         console.log('TEST1');
                         clearInterval(Film.interval[element]);
                     } else {
-                        Film.tr[element].html('<td colspan="4">' + response.file.nomtorrent + '</td><td colspan="2">' + (response.file.timerestant != -1 ? Base.model.converter.time(response.file.timerestant) : "∞") + '</td>');
+                        Film.tr[element].html('<td colspan="5">' + response.file.nomtorrent + '</td><td colspan="2">' + (response.file.timerestant != -1 ? Base.model.converter.time(response.file.timerestant) : "∞") + '</td>');
                     }
 
 

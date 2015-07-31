@@ -33,7 +33,7 @@ class Rtorrents extends \core\ModelMysql
 
     static function getRtorrentsDispoPourUtilisateur($login)
     {
-        $query = "select r.hostname as hostname, r.nom as nomrtorrent, rs.portscgi as portscgi ";
+        $query = "select distinct r.hostname as hostname, r.nom as nomrtorrent ";
         $query .= "from rtorrent r ";
         $query .= "LEFT JOIN rtorrents rs ";
         $query .= "ON rs.nomrtorrent = r.nom ";
@@ -43,16 +43,9 @@ class Rtorrents extends \core\ModelMysql
         $rtable = array();
         if (!is_bool($rtorrent))
             foreach ($rtorrent as $v) {
-                if (isset($rtable[$v->nomrtorrent . ""])) {
-                    if (!is_null($v->portscgi)) {
-                        $rtable[$v->nomrtorrent . ""]["scgi"][] = $v->portscgi;
-                    }
-                } else {
-                    $rtable[$v->nomrtorrent . ""] = array("host" => $v->hostname, "scgi" => array());
-                    if (!is_null($v->portscgi)) {
-                        $rtable[$v->nomrtorrent . ""]["scgi"][] = $v->portscgi;
-                    }
-                }
+
+                $rtable[$v->nomrtorrent . ""] = array("host" => $v->hostname);
+
             }
         return $rtable;
     }
@@ -67,12 +60,12 @@ class Rtorrents extends \core\ModelMysql
         return \core\Mysqli::getObjectAndClose(true);
     }
 
-    static function addRtorrentUtilisateurScgi($login, $nomrtorrent, $scgi)
+    static function addRtorrentUtilisateurScgi($login, $nomrtorrent)
     {
         $rtorrents = new Rtorrents();
         $rtorrents->login = $login;
         $rtorrents->nomrtorrent = $nomrtorrent;
-        $rtorrents->portscgi = $scgi;
+        $rtorrents->portscgi = 0;
         return $rtorrents->insert();
     }
 }

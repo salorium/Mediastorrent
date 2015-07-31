@@ -53,9 +53,9 @@ class Rtorrent extends \core\ModelMysql
         return \core\Mysqli::getObjectAndClose(true);
     }
 
-    public static function getPortscgiDeUtilisateur($login)
+    public static function getUserscgiDeUtilisateur($login)
     {
-        $query = "select portscgi from rtorrent, rtorrents ";
+        $query = "select login as userscgi from rtorrent, rtorrents ";
         $query .= "where login=" . \core\Mysqli::real_escape_string_html($login) . " and nom=nomrtorrent and hostname=" . \core\Mysqli::real_escape_string_html(HOST);
         \core\Mysqli::query($query);
         return \core\Mysqli::getObjectAndClose(true);

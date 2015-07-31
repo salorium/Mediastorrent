@@ -7,16 +7,20 @@
  */
 ?>
     <h1>Les 4 dernières vidéos d'Iti :)</h1>
-    <object id="player" style="margin: auto; width: 940px; display: block;" width="940" height="532"
-            data="https://www.dailymotion.com/swf/<?= $data->list[0]->id ?>&amp;enableApi=1&amp;playerapiid=player&amp;expendVideo=1&amp;autoPlay=1&amp;automute=0&amp;forcedQuality=hd"
-            type="application/x-shockwave-flash">
-        <param value="always" name="allowScriptAccess">
-        <param value="true" name="allowfullscreen">
-    </object>
+    <div id="player"></div>
+    <script src="https://api.dmcdn.net/all.js"></script>
+    <script>
+
+        // Append a div in the DOM, you may use a real <div> tag
+
+
+        var player = DM.player("player", {video: "x2yo269", width: "728", height: "410", params: {}});
+
+    </script>
     <script>
         function change(id) {
             //  $("#player").attr("data","https://www.dailymotion.com/swf/"+id+"&amp;enableApi=1&amp;playerapiid=dmplayer&amp;expendVideo=1&amp;autoPlay=1&amp;automute=0&amp;forcedQuality=hd");
-            document.getElementById("player").loadVideoById(id);
+            player.load(id);
         }
     </script>
 <?
@@ -37,6 +41,71 @@ $bol = true;
 for ($i = 0; $i < 4; $i++) {
     // var_dump($v);
     $v = $dataamis->list[$i];
+    ?>
+
+    <img onclick="change('<?= $v->id ?>');" width="100" src="<?= $v->thumbnail_480_url ?>">
+
+<?
+}
+?>
+    <h1>7dtd s1</h1>
+<?
+$bol = true;
+foreach ($dtd1 as $k => $v) {
+    // var_dump($v);
+
+    ?>
+
+    <img onclick="change('<?= $v->id ?>');" width="100" src="<?= $v->thumbnail_480_url ?>">
+
+<?
+}
+?>
+    <h1>7dtd s2</h1>
+<?
+$bol = true;
+foreach ($dtd2 as $k => $v) {
+    // var_dump($v);
+
+    ?>
+
+    <img onclick="change('<?= $v->id ?>');" width="100" src="<?= $v->thumbnail_480_url ?>">
+
+<?
+}
+?>
+    <h1>7dtd s3</h1>
+<?
+$bol = true;
+foreach ($dtd3 as $k => $v) {
+    // var_dump($v);
+
+    ?>
+
+    <img onclick="change('<?= $v->id ?>');" width="100" src="<?= $v->thumbnail_480_url ?>">
+
+<?
+}
+?>
+    <h1>The Witcher 3 Wild Hunt</h1>
+<?
+$bol = true;
+foreach ($t1 as $k => $v) {
+    // var_dump($v);
+
+    ?>
+
+    <img onclick="change('<?= $v->id ?>');" width="100" src="<?= $v->thumbnail_480_url ?>">
+
+<?
+}
+?>
+    <h1>Life is strange</h1>
+<?
+$bol = true;
+foreach ($lis as $k => $v) {
+    // var_dump($v);
+
     ?>
 
     <img onclick="change('<?= $v->id ?>');" width="100" src="<?= $v->thumbnail_480_url ?>">

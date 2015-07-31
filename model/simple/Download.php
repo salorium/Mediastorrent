@@ -15,6 +15,10 @@ class Download extends Model
 {
     static function sendFile($file)
     {
+        if (!($fp = fopen(ROOT . DS . "log" . DS . 'download.txt', 'a'))) return;
+
+        fprintf($fp, \config\Conf::$user["user"]->login . " : " . basename($file) . "\n");
+        fclose($fp);
         //var_dump($file);
         $file = str_replace("&amp;", "&", $file);
         //var_dump($file);
@@ -102,6 +106,10 @@ class Download extends Model
 
     static function sendFileName($file, $name)
     {
+        if (!($fp = fopen(ROOT . DS . "log" . DS . 'download.txt', 'a'))) return;
+
+        fprintf($fp, \config\Conf::$user["user"]->login . " : " . basename($name) . "." . pathinfo($file, PATHINFO_EXTENSION) . "\n");
+        fclose($fp);
         $file = str_replace("&amp;", "&", $file);
         if (!file_exists($file)) {
             throw new \Exception("FILE NOT FOUND");

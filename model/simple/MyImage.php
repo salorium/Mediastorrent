@@ -87,16 +87,7 @@ class MyImage extends \core\Model
             $draw->annotation(20, 100, "Not Found !");
             $this->image->drawImage($draw);
         }
-
-        switch (strtolower(pathinfo($chemin, PATHINFO_EXTENSION))) {
-            case "jpg":
-
-            case "png":
-            //$handle = fopen($chemin, 'rb');
-            $this->image = new \Imagick($chemin);
-            //$this->image->readimagefile($handle);
-            break;
-        }
+        $this->image = new \Imagick($chemin);
         $imageprops = $this->image->getImageGeometry();
         $this->width = $imageprops['width'];
         $this->height = $imageprops['height'];
@@ -114,6 +105,11 @@ class MyImage extends \core\Model
         return false;
     }
 
+    function getImage()
+    {
+        return $this->image->getImageBlob();
+        return false;
+    }
     function getImageHeightFixed($height)
     {
         $nwidth = $height / $this->height * $this->width;

@@ -53,16 +53,16 @@ class Serie extends \core\Controller
             "d.name" /*5*/, "d.down.rate" /*13*/, "d.size_chunks" /*8*/, "d.completed_chunks" /*7*/, "d.chunk_size" /*14*/
         );
         foreach ($tfs as $tf) {
-            if (!isset ($req[$tf->portscgi])) {
+            if (!isset ($req[$tf->userscgi])) {
 
-                $req[$tf->portscgi][0] = new \model\xmlrpc\rXMLRPCRequest($tf->portscgi);
-                $req[$tf->portscgi][1] = 0;
+                $req[$tf->userscgi][0] = new \model\xmlrpc\rXMLRPCRequest($tf->userscgi);
+                $req[$tf->userscgi][1] = 0;
             }
-            $req[$tf->portscgi][1]++;
+            $req[$tf->userscgi][1]++;
             foreach ($cmds as $vv) {
-                $req[$tf->portscgi][0]->addCommand(new \model\xmlrpc\rXMLRPCCommand($tf->portscgi, $vv, $tf->hashtorrent));
+                $req[$tf->userscgi][0]->addCommand(new \model\xmlrpc\rXMLRPCCommand($tf->userscgi, $vv, $tf->hashtorrent));
             }
-            $req[$tf->portscgi][0]->addCommand(new \model\xmlrpc\rXMLRPCCommand($tf->portscgi, "d.custom", array($tf->hashtorrent, "clefunique")));
+            $req[$tf->userscgi][0]->addCommand(new \model\xmlrpc\rXMLRPCCommand($tf->userscgi, "d.custom", array($tf->hashtorrent, "clefunique")));
 
         }
         $time = array();
@@ -105,19 +105,19 @@ class Serie extends \core\Controller
         \model\simple\Utilisateur::authentificationDistante($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
         if ($torrentf = \model\mysql\Torrentserie::getSerieUserDuServeur($id)) {
-            \config\Conf::$portscgi = $torrentf->portscgi;
-            $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
-                new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.frozen_path", array($torrentf->hash . ":f" . $torrentf->numfile)));
+            /*\config\Conf::$userscgi = $torrentf->userscgi;
+            $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$userscgi,
+                new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "f.frozen_path", array($torrentf->hash . ":f" . $torrentf->numfile)));
             if ($req->success()) {
                 $filename = $req->val[0];
                 if ($filename == '') {
-                    $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, array(
-                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.open", $torrentf->hash),
-                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.frozen_path", array($torrentf->hash . ":f" . $torrentf->numfile)),
-                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.close", $torrentf->hash)));
+                    $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$userscgi, array(
+                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "d.open", $torrentf->hash),
+                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "f.frozen_path", array($torrentf->hash . ":f" . $torrentf->numfile)),
+                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "d.close", $torrentf->hash)));
                     if ($req->success())
                         $filename = $req->val[1];
-                }
+                }*/
                 $mediainfo = json_decode($torrentf->mediainfo, true);
                 $compfile = "[";
                 $compfile .= (strlen($torrentf->complementfichier) > 0 ? $torrentf->complementfichier . "." : "");
@@ -149,9 +149,8 @@ class Serie extends \core\Controller
                     //    $compfile .= "." . $audios[0] . "]";
                 }
                 $compfile .= "]";
-
-                $tmp = \model\simple\Download::sendFileName($filename, $torrentf->titre . " Saison " . $torrentf->saison . " Épisode " . $torrentf->episode . " " . $compfile);
-            }
+            $tmp = \model\simple\Download::sendFileName($mediainfo["filename"], $torrentf->titre . " Saison " . $torrentf->saison . " Épisode " . $torrentf->episode . " " . $compfile);
+            //}
 
         } else {
             if ($torrentf = \model\mysql\Torrentserie::getAdresseServeurSerieUser($id)) {

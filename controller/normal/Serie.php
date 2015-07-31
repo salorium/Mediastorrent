@@ -97,16 +97,16 @@ class Serie extends Controller
             $torrentf = \model\mysql\Torrentserie::getTorrentSerieParIdForStreamingDeUtilisateur($id);
         }
         if ($torrentf) {
-            \config\Conf::$portscgi = $torrentf->portscgi;
-            $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi,
-                new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.frozen_path", array($torrentf->hash . ":f" . $torrentf->numfile)));
+            \config\Conf::$userscgi = $torrentf->userscgi;
+            $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$userscgi,
+                new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "f.frozen_path", array($torrentf->hash . ":f" . $torrentf->numfile)));
             if ($req->success()) {
                 $filename = $req->val[0];
                 if ($filename == '') {
-                    $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$portscgi, array(
-                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.open", $torrentf->hash),
-                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "f.frozen_path", array($torrentf->hash . ":f" . $torrentf->numfile)),
-                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$portscgi, "d.close", $torrentf->hash)));
+                    $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$userscgi, array(
+                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "d.open", $torrentf->hash),
+                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "f.frozen_path", array($torrentf->hash . ":f" . $torrentf->numfile)),
+                        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "d.close", $torrentf->hash)));
                     if ($req->success())
                         $filename = $req->val[1];
                 }
@@ -189,7 +189,7 @@ class Serie extends Controller
         foreach ($a as $v) {
             $v->mediainfo = json_decode($v->mediainfo);
             if ($v->fini == 0) {
-                $tmp1[$v->clefunique] = [$v->hashtorrent, $v->portscgi, $v->hostname];
+                $tmp1[$v->clefunique] = [$v->hashtorrent, $v->userscgi, $v->hostname];
                 $fini = false;
             }
             $tmp[] = $v;

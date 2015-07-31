@@ -11,9 +11,8 @@ namespace model\simple;
 
 class MakerRtorrentConf
 {
-    static function create($user, $scgi)
+    static function create($user)
     {
-        $scgi = (int)$scgi;
         $content = '# This is an example resource file for rTorrent. Copy to
 # ~/.rtorrent.rc and enable/modify the options as needed. Remember to
 # uncomment the options you wish to enable.
@@ -99,7 +98,7 @@ encryption = allow_incoming,require,require_rc4
 
 # UDP port to use for DHT.
 #
- dht_port = ' . ($scgi + 1100) . '
+# dht_port = 6881
 
 # Enable peer exchange (for torrents not marked private)
 #
@@ -122,7 +121,11 @@ encryption = allow_incoming,require,require_rc4
 # before forcing. Overworked systems might need lower values to get a
 # decent hash checking rate.
 #hash_max_tries = 10
-scgi_port = 127.0.0.1:' . $scgi . '
+#scgi_port = 127.0.0.1:5001
+scgi_local = ~/rtorrent/session/rpc.socket
+
+schedule = chmod,0,0,"execute={chmod,777,~/rtorrent/session/rpc.socket}"
+
 
 #Capture de la date d\'ajout et du temps de seed
 #system.method.set_key=event.download.inserted_new,addtime,"d.set_custom=addtime,\"$execute_capture={date,+%s}\""
@@ -133,7 +136,7 @@ scgi_port = 127.0.0.1:' . $scgi . '
 method.set_key = event.download.erased,erasedata,"branch=d.custom1=,\"execute={rm,-r,$d.base_path=}\""
 
 #Prise en charge de mediastorrent
-method.set_key = event.download.finished,addbibliotheque,"execute={php,' . ROOT . DS . 'script' . DS . 'addbibliotheque.php,' . $scgi . ',$d.hash=,$d.base_path=,$d.base_filename=,$d.is_multi_file=,$d.custom=clefunique,$d.custom=typemedias}"
+method.set_key = event.download.finished,addbibliotheque,"execute={php,' . ROOT . DS . 'script' . DS . 'addbibliotheque.php,' . $user . ',$d.hash=,$d.base_path=,$d.base_filename=,$d.is_multi_file=,$d.custom=clefunique,$d.custom=typemedias}"
 ';
         file_put_contents("/home/" . $user . "/.rtorrent.rc", $content);
     }

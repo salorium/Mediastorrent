@@ -59,6 +59,7 @@ class Utilisateur extends \core\Controller
 
     function getKeyconnexion()
     {
+        $u = null;
         if (isset($_COOKIE["keyconnexion"])) {
             $u = \core\Memcached::value($_COOKIE["keyconnexion"], "user");
             if (is_null($u)) {
@@ -68,7 +69,7 @@ class Utilisateur extends \core\Controller
             } else {
                 $u = $u->keyconnexion === $_COOKIE["keyconnexion"] ? $u : false;
             }
-            $this->set("seedbox", Rtorrent::getPortscgiDeUtilisateur(\config\Conf::$user["user"]->login));
+            $this->set("seedbox", Rtorrent::getUserscgiDeUtilisateur(\config\Conf::$user["user"]->login));
         }
 
         if ($u && !is_null($u)) {

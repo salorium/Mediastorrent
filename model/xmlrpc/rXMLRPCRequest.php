@@ -24,15 +24,16 @@ class rXMLRPCRequest extends \core\Model
     public $parseByTypes = false;
     public $important = true;
     public $portscgi;
+    public $userscgi;
     public static $query = null;
     public static $time = 0;
 
     /**
      * @param null $cmds
      */
-    public function __construct($portscgi, $cmds = null)
+    public function __construct($userscgi, $cmds = null)
     {
-        $this->portscgi = $portscgi;
+        $this->userscgi = $userscgi;
         if ($cmds) {
             if (is_array($cmds))
                 foreach ($cmds as $cmd)
@@ -42,18 +43,18 @@ class rXMLRPCRequest extends \core\Model
         }
     }
 
-    public static function send($data, $portscgi)
+    public static function send($data, $user)
     {
         /*if(Variable::$rpc_call)
             toLog($data);*/
         $QueryStartTime = \microtime(true);
-        $scgi_host = "127.0.0.1";
-        $scgi_port = $portscgi;
+        $scgi_host = "unix:///home/$user/rtorrent/session/rpc.socket";
+        //$scgi_port = $portscgi;
         $result = false;
         $contentlength = strlen($data);
         $d = $data;
         if ($contentlength > 0) {
-            $socket = @fsockopen($scgi_host, $scgi_port, $errno, $errstr, rXMLRPCRequest::$rpcTimout);
+            $socket = fsockopen($scgi_host, -1, $errno, $errstr, rXMLRPCRequest::$rpcTimout);
             if ($socket) {
                 $reqheader = "CONTENT_LENGTH\x0" . $contentlength . "\x0" . "SCGI\x0" . "1\x0";
                 $tosend = strlen($reqheader) . ":{$reqheader},{$data}";
@@ -125,7 +126,7 @@ class rXMLRPCRequest extends \core\Model
         if ($this->makeCall()) {
             Debug::endTimer("makecall");
             Debug::startTimer("send");
-            $answer = self::send($this->content, $this->portscgi);
+            $answer = self::send($this->content, $this->userscgi);
             Debug::endTimer("send");
 
             if (!empty($answer)) {

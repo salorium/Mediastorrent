@@ -238,6 +238,8 @@ class Controller
         if (\file_exists($view)) {
             \extract($this->vars);
             require $view;
+        } else if (isset($this->vars["txt"])) {
+            echo $this->vars["txt"];
         } else {
             \print_r($this->vars);
         }

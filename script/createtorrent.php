@@ -27,8 +27,8 @@ if (function_exists('ini_set')) {
 
 $taskNo = $argv[1];
 $utilisateur = $argv[2];
-$portscgi = $argv[3];
-\config\Conf::$portscgi = $portscgi;
+//$userscgi = $argv[3];
+\config\Conf::$userscgi = $utilisateur;
 $req = \core\Memcached::value($utilisateur, "task" . $taskNo);
 if (!is_null($req)) {
     $request = unserialize($req);

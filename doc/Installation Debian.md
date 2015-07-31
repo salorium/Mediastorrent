@@ -109,4 +109,4 @@ Dans le fichier /etc/php5/apache2/php.ini
 Mettre la directive short_open_tag à On
  
 ##Utilisation
-Développer sous firefox, mais devrait fonctionner sans problème sous chrome.
+Développé sous firefox, mais devrait fonctionner sans problème sous chrome.

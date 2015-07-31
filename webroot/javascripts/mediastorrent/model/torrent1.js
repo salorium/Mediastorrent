@@ -62,7 +62,8 @@ Torrent1.model = {
                     regexsaison: /(s(\d+)|(\d+)x(\d+))/img,
                     regexepisode: /e(\d+)/gi,
                     regexepisode1: /(\d+)/gi
-                }
+                },
+                rechercheReq: null
             }
         }
     },

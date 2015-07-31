@@ -14,13 +14,14 @@ class rXMLRPCCommand extends \core\Model
     public $command;
     public $params;
     public $portscgi;
+    public $user;
 
-    public function __construct($portscgi, $cmd, $args = null)
+    public function __construct($user, $cmd, $args = null)
     {
         //\trigger_error("ddd");
         //throw new \Exception("ddd");
-        $this->portscgi = $portscgi;
-        $this->command = rTorrentSettings::getCmd($this->portscgi, $cmd);
+        $this->user = $user;
+        $this->command = rTorrentSettings::getCmd($this->user, $cmd);
         $this->params = array();
         if ($args !== null) {
             if (is_array($args))

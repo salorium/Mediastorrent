@@ -13,14 +13,14 @@ use model\simple\Mail;
 
 class Utilisateur extends \core\Controller
 {
-    function addRtorrent($login, $scgi, $taille = null)
+    function addRtorrent($login, $taille = null)
     {
         $res = null;
         $err = false;
-        \model\simple\Console::println("Adj rtorrent " . $login . " " . $scgi . (!is_null($taille) ? " " . $taille . "Go" : ""));
+        \model\simple\Console::println("Adj rtorrent " . $login . (!is_null($taille) ? " " . $taille . "Go" : ""));
         try {
-            \model\bash\Utilisateur::addRtorrent($login, $scgi, $taille);
-            $res["rtorrentsadj"] = \model\mysql\Rtorrents::addRtorrentUtilisateurScgi($login, \config\Conf::$nomrtorrent, $scgi);
+            \model\bash\Utilisateur::addRtorrent($login, $taille);
+            $res["rtorrentsadj"] = \model\mysql\Rtorrents::addRtorrentUtilisateurScgi($login, \config\Conf::$nomrtorrent);
         } catch (\Exception $e) {
             \model\simple\Console::println($e->getMessage());
             $err = true;

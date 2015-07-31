@@ -320,7 +320,10 @@
                 </div>
                 <div class="row expansion">
                     <div class="small-6 columns">
+                        <div class="switch right small">
                         <input class="right" name="autostart" id="autostart" type="checkbox">
+                            <label for="autostart"></label>
+                        </div>
                     </div>
                     <div class="small-6 columns">
                         <label for="autostart">Ne pas démarrer le téléchargement</label>
@@ -328,11 +331,16 @@
                 </div>
                 <div class="row expansion">
                     <div class="small-6 columns">
-                        <input class="right" name="mediastorrent" id="mediastorrent" type="checkbox"
-                               onchange="Torrent1.controller.addTorrent.files.check($('#mediastorrent').is(':checked'));">
+                        <div class="switch right small">
+                            <input name="mediastorrent" id="mediastorrent" type="checkbox"
+                                   onchange="Torrent1.controller.addTorrent.files.check($('#mediastorrent').is(':checked'));">
+                            <label for="mediastorrent"></label>
+                        </div>
+                        <!--<input class="right" name="mediastorrent" id="mediastorrent" type="checkbox"
+                               onchange="Torrent1.controller.addTorrent.files.check($('#mediastorrent').is(':checked'));">-->
                     </div>
                     <div class="small-6 columns">
-                        <label for="mediastorrent">Ajouter à la bibliothèque</label>
+                        <label for="mediastorrent" class="left">Ajouter à la bibliothèque</label>
                     </div>
                 </div>
             </div>
@@ -405,13 +413,19 @@
                     </div>
                     <div class="row expansion">
                         <div class="large-1 columns">
-                            <input name="seed" id="seed" type="checkbox">
+                            <div class="switch small">
+                                <input name="seed" id="seed" type="checkbox">
+                                <label for="seed"></label>
+                            </div>
                         </div>
                         <div class="large-5 columns">
                             <label for="seed">Mettre en seed</label>
                         </div>
                         <div class="large-1 columns">
+                            <div class="switch small">
                             <input name="private" id="private" type="checkbox">
+                                <label for="private"></label>
+                            </div>
                         </div>
                         <div class="large-5 columns">
                             <label for="private">Tracker privé</label>

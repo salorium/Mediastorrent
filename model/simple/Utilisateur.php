@@ -80,11 +80,11 @@ class Utilisateur extends \core\Model
             \config\Conf::$user["user"] = $u;
             if ($u && !is_null($u)) {
                 setcookie("keyconnexion", $u->keyconnexion, strtotime('+1 days'), "/");
-                $portscgi = \model\mysql\Rtorrent::getPortscgiDeUtilisateur($u->login);
-                if (!$portscgi) {
+                $userscgi = \model\mysql\Rtorrent::getUserscgiDeUtilisateur($u->login);
+                if (!$userscgi) {
                     throw new \Exception("Aucun ports scgi sur " . HOST);
                 }
-                \config\Conf::$portscgi = $portscgi[0]->portscgi;
+                \config\Conf::$userscgi = $userscgi[0]->userscgi;
             }
         }
     }

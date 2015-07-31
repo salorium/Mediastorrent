@@ -6,6 +6,7 @@
  * Time: 15:53
  */
 $genre = \model\mysql\Genrefilm::getAllGenre();
+$genres = \model\mysql\Genreserie::getAllGenre();
 ?>
 <nav class="top-bar" data-topbar="">
     <!-- Title -->
@@ -85,27 +86,46 @@ $genre = \model\mysql\Genrefilm::getAllGenre();
                     <li class="has-dropdown"><a>Nouveauté</a>
 
                         <ul class="dropdown">
-                            <li><a href="#">Nouveauté</a></li>
-                            <li class="divider"></li>
-                            <li><label>Genre</label></li>
-                            <li><a href="#">Annimation</a></li>
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Horreur</a></li>
-                            <li><a href="#">Thriller</a></li>
-                            <li><a href="#">Comédie</a></li>
-                        </ul>
-                    </li>
-                    <li class="divider"></li>
-                    <li class="has-dropdown"><a>Genre</a>
+                            <li><a href="<?= \core\Router::url("serie/nouveau") ?>">Nouveauté</a></li>
+                            <?php
+                            /*
+                             * Génération du menu genre :)
+                             */
+                            if (count($genres) > 0) {
+                                ?>
+                                <li class="divider"></li>
+                                <li><label>Genre</label></li>
 
-                        <ul class="dropdown">
-                            <li><a href="#">Annimation</a></li>
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Horreur</a></li>
-                            <li><a href="#">Thriller</a></li>
-                            <li><a href="#">Comédie</a></li>
+                            <?
+                            }
+                            foreach ($genres as $v) {
+                                echo '<li><a href="' . \core\Router::url("serie/nouveau/" . rawurlencode($v->label)) . '">' . $v->label . '</a></li>';
+                            }
+                            ?>
                         </ul>
                     </li>
+                    <?php
+                    /*
+                     * Génération du menu genre :)
+                     */
+                    $res = "";
+                    foreach ($genres as $v) {
+                        $res .= '<li><a href="' . \core\Router::url("serie/genre/" . rawurlencode($v->label)) . '">' . $v->label . '</a></li>';
+                    }
+                    if (count($genres) > 0) {
+                        ?>
+                        <li class="divider"></li>
+                        <li class="has-dropdown"><a>Genre</a>
+
+                            <ul class="dropdown">
+                                <?= $res; ?>
+                            </ul>
+                        </li>
+
+                    <?
+                    }
+
+                    ?>
                 </ul>
             </li>
             <li class="divider"></li>

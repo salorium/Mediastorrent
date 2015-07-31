@@ -1236,11 +1236,13 @@ Torrent1.controller = {
                         });
                     },
                     allrecherche: function (code, type) {
+                        if (Torrent1.model.addTorrent.files.file.rechercheReq != null)
+                            Torrent1.model.addTorrent.files.file.rechercheReq.abort();
                         var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'film/getInfosFilm/' + code + "/" + Base.model.utilisateur.keyconnexion;
                         if (type) {
                             url += "/all";
                         }
-                        $.ajax({
+                        Torrent1.model.addTorrent.files.file.rechercheReq = $.ajax({
                             url: url + ".json",
                             dataType: "json",
                             type: "GET",
@@ -1264,10 +1266,11 @@ Torrent1.controller = {
                         $("#details").height($("#modalc").height() - $("#modaltitre").height() - $("#modalcontenu").height())
                     },
                     recherche: function () {
+                        if (Torrent1.model.addTorrent.files.file.rechercheReq != null)
+                            Torrent1.model.addTorrent.files.file.rechercheReq.abort();
                         var recherche = $("#suggestrecherche").val();
                         var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'serie/recherche/' + Base.model.utilisateur.keyconnexion;
-
-                        $.ajax({
+                        Torrent1.model.addTorrent.files.file.rechercheReq = $.ajax({
                             url: url + ".json",
                             dataType: "json",
                             type: "POST",
@@ -1279,16 +1282,19 @@ Torrent1.controller = {
                                 Torrent1.view.addTorrent.files.file.serie.recherche.results( response);
                             },
                             error: function (jqXHR, textStatus, errorThrown) {
+                                if (textStatus !== "abort")
                                 Base.view.noty.generate("error", "Impossible de se connecter à " + Torrent1.model.nomseedbox);
                             }
                         });
                     },
                     allrecherche: function ( code, type) {
+                        if (Torrent1.model.addTorrent.files.file.rechercheReq != null)
+                            Torrent1.model.addTorrent.files.file.rechercheReq.abort();
                         var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'serie/getInfos/' + code + "/" + Base.model.utilisateur.keyconnexion;
                         if (type) {
                             url += "/all";
                         }
-                        $.ajax({
+                        Torrent1.model.addTorrent.files.file.rechercheReq = $.ajax({
                             url: url + ".json",
                             dataType: "json",
                             type: "GET",
@@ -1300,6 +1306,7 @@ Torrent1.controller = {
                                 //Torrent1.view.addTorrent.files.file.movie.recherche.results(id,response.film);
                             },
                             error: function (jqXHR, textStatus, errorThrown) {
+                                if (textStatus !== "abort")
                                 Base.view.noty.generate("error", "Impossible de se connecter à " + Torrent1.model.nomseedbox);
                             }
                         });

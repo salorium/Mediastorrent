@@ -53,7 +53,7 @@ start() {
 
 stop() {
         echo -n $"Stopping $NAME: "
-	    su -l $USER -c "tmux send-keys -t rt:rtorrent C-q"
+	    su -l $USER -c "tmux send-keys -t rt:rtorrent C-q && while pgrep -u `id -u` rtorrent > /dev/null; do sleep 0.5; echo rtorrent still running...; done;"
 }
 case $1 in
         start)
@@ -78,23 +78,21 @@ fi';
 
     static function createForArchLinux()
     {
-        $content = '
-        [Unit]
+        $content = '[Unit]
 Description=rTorrent
 Requires=network.target local-fs.target
 
 [Service]
 Type=forking
-RemainAfterExit=yes
-KillMode=none
+#RemainAfterExit=yes
+#KillMode=none
 User=%I
 ExecStart=/usr/bin/tmux new-session -s rt -n rtorrent -d rtorrent
-ExecStop=/usr/bin/tmux send-keys -t rt:rtorrent C-q
+ExecStop=/usr/bin/bash -c "/usr/bin/tmux send-keys -t rt:rtorrent C-q && while pgrep -u `id -u` rtorrent > /dev/null; do sleep 0.5; echo rtorrent still running...; done;"
 WorkingDirectory=/home/%I/
-
+Restart=always
 [Install]
-WantedBy=multi-user.target
-';
+WantedBy=multi-user.target';
         file_put_contents("/etc/systemd/system/rt@.service", $content);
 
     }

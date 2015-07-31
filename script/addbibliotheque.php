@@ -20,7 +20,7 @@ function __autoload($class_name)
 
 }
 
-$portscgi = $argv[1];
+$userscgi = $argv[1];
 $hash = $argv[2];
 $base_path = $argv[3];
 $base_name = $argv[4];
@@ -28,12 +28,12 @@ $is_multi = $argv[5];
 $clefunique = $argv[6];
 $typemedias = $argv[7];
 
-define('LOG', ROOT . DS . "log" . DS . $portscgi . "_addbibli.log");
+define('LOG', ROOT . DS . "log" . DS . $userscgi . "_addbibli.log");
 \model\simple\Console::println("Début");
 \model\simple\Console::println($hash);
 \model\simple\Console::println($typemedias);
-file_put_contents(ROOT . DS . "log" . DS . $portscgi . "start_addblibli.log", $portscgi . " " . $hash . ' "' . $base_path . '" "' . $base_name . '" ' . $is_multi . " " . $clefunique . " " . $typemedias . "\n", FILE_APPEND);
-$filetorrent = \model\xmlrpc\rTorrentSettings::get($portscgi)->session . DS . $hash . ".torrent";
+file_put_contents(ROOT . DS . "log" . DS . $userscgi . "start_addblibli.log", $userscgi . " " . $hash . ' "' . $base_path . '" "' . $base_name . '" ' . $is_multi . " " . $clefunique . " " . $typemedias . "\n", FILE_APPEND);
+$filetorrent = \model\xmlrpc\rTorrentSettings::get($userscgi)->session . DS . $hash . ".torrent";
 if (file_exists($filetorrent)) {
     $torrent = new \model\simple\Torrent($filetorrent);
     if (!$torrent->errors()) {

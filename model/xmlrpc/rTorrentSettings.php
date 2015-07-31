@@ -34,12 +34,13 @@ class rTorrentSettings extends \core\Model
     public $idNotFound = false;
     public $home = '';
     public $portscgi;
+    public $user;
     public $pid = null;
     static private $theSettings = null;
 
-    function __construct($portscgi)
+    function __construct($user)
     {
-        $this->portscgi = $portscgi;
+        $this->user = $user;
     }
 
     private function __clone()
@@ -48,17 +49,17 @@ class rTorrentSettings extends \core\Model
 
     public function store()
     {
-        return (Memcached::value("rtorrent" . $this->portscgi, "rtorrentsetting", $this));
+        return (Memcached::value("rtorrent" . $this->user, "rtorrentsetting", $this));
     }
 
-    static public function get($portscgi, $create = false)
+    static public function get($user, $create = false)
     {
         if (is_null(self::$theSettings)) {
-            self::$theSettings = new rTorrentSettings($portscgi);
+            self::$theSettings = new rTorrentSettings($user);
             if ($create)
                 self::$theSettings->obtain();
             else {
-                $res = Memcached::value("rtorrent" . $portscgi, "rtorrentsetting");
+                $res = Memcached::value("rtorrent" . $user, "rtorrentsetting");
                 if (!$res) {
                     self::$theSettings->obtain();
                 } else {
@@ -72,7 +73,7 @@ class rTorrentSettings extends \core\Model
 
     public function obtain()
     {
-        $req = new rXMLRPCRequest($this->portscgi, new rXMLRPCCommand($this->portscgi, "system.client_version"));
+        $req = new rXMLRPCRequest($this->user, new rXMLRPCCommand($this->user, "system.client_version"));
         if ($req->run() && count($req->val)) {
             $this->linkExist = true;
             $this->version = $req->val[0];
@@ -89,31 +90,31 @@ class rTorrentSettings extends \core\Model
                 );
             }
             if ($this->iVersion == 0x808) {
-                $req = new rXMLRPCRequest($this->portscgi, new rXMLRPCCommand($this->portscgi, "file.prioritize_toc"));
+                $req = new rXMLRPCRequest($this->user, new rXMLRPCCommand($this->user, "file.prioritize_toc"));
                 $req->important = false;
                 if ($req->success())
                     $this->iVersion = 0x809;
             }
             $this->apiVersion = 0;
             if ($this->iVersion >= 0x901) {
-                $req = new rXMLRPCRequest($this->portscgi, new rXMLRPCCommand($this->portscgi, "system.api_version"));
+                $req = new rXMLRPCRequest($this->user, new rXMLRPCCommand($this->user, "system.api_version"));
                 $req->important = false;
                 if ($req->success())
                     $this->apiVersion = $req->val[0];
             }
 
-            $req = new rXMLRPCRequest($this->portscgi, new rXMLRPCCommand($this->portscgi, "to_kb", floatval(1024)));
+            $req = new rXMLRPCRequest($this->user, new rXMLRPCCommand($this->user, "to_kb", floatval(1024)));
             if ($req->run()) {
                 if (!$req->fault)
                     $this->badXMLRPCVersion = false;
-                $req = new rXMLRPCRequest($this->portscgi, array(
-                    new rXMLRPCCommand($this->portscgi, "directory.default"),
-                    new rXMLRPCCommand($this->portscgi, "session.path"),
-                    new rXMLRPCCommand($this->portscgi, "system.library_version"),
-                    new rXMLRPCCommand($this->portscgi, "network.xmlrpc.size_limit.set", array("", 67108863)),
-                    new rXMLRPCCommand($this->portscgi, "session.name"),
-                    new rXMLRPCCommand($this->portscgi, "network.port_range"),
-                    new rXMLRPCCommand($this->portscgi, "system.pid"),
+                $req = new rXMLRPCRequest($this->user, array(
+                    new rXMLRPCCommand($this->user, "directory.default"),
+                    new rXMLRPCCommand($this->user, "session.path"),
+                    new rXMLRPCCommand($this->user, "system.library_version"),
+                    new rXMLRPCCommand($this->user, "network.xmlrpc.size_limit.set", array("", 67108863)),
+                    new rXMLRPCCommand($this->user, "session.name"),
+                    new rXMLRPCCommand($this->user, "network.port_range"),
+                    new rXMLRPCCommand($this->user, "system.pid"),
                 ));
                 if ($req->run() && !$req->fault) {
                     $this->directory = $req->val[0];
@@ -125,7 +126,7 @@ class rTorrentSettings extends \core\Model
                     $this->port = intval($this->portRange);
 
                     if ($this->iVersion >= 0x809) {
-                        $req = new rXMLRPCRequest($this->portscgi, new rXMLRPCCommand($this->portscgi, "network.listen.port"));
+                        $req = new rXMLRPCRequest($this->user, new rXMLRPCCommand($this->user, "network.listen.port"));
                         $req->important = false;
                         if ($req->success())
                             $this->port = intval($req->val[0]);
@@ -140,8 +141,8 @@ class rTorrentSettings extends \core\Model
                                 $this->started = 0;
                         }
                     $id = "id"; //getExternal('id');
-                    $req = new rXMLRPCRequest($this->portscgi,
-                        new rXMLRPCCommand($this->portscgi, "execute.capture", array("", "sh", "-c", $id . " -u ; " . $id . " -G ; echo ~ ")));
+                    $req = new rXMLRPCRequest($this->user,
+                        new rXMLRPCCommand($this->user, "execute.capture", array("", "sh", "-c", $id . " -u ; " . $id . " -G ; echo ~ ")));
                     if ($req->run() && !$req->fault && (($line = explode("\n", $req->val[0])) !== false) && (count($line) > 2)) {
                         $this->uid = intval(trim($line[0]));
                             $this->gid = explode(' ',trim($line[1]));
@@ -173,12 +174,12 @@ class rTorrentSettings extends \core\Model
     public function getEventCommand($cmd1, $cmd2, $args)
     {
         if ($this->iVersion < 0x804)
-            $cmd = new rXMLRPCCommand($this->portscgi, $cmd1);
+            $cmd = new rXMLRPCCommand($this->user, $cmd1);
         else
 //		if($this->mostOfMethodsRenamed)
 //			$cmd = new rXMLRPCCommand('method.set_key','event.download.'.$cmd2);
 //		else
-            $cmd = new rXMLRPCCommand($this->portscgi, 'system.method.set_key', 'event.download.' . $cmd2);
+            $cmd = new rXMLRPCCommand($this->user, 'system.method.set_key', 'event.download.' . $cmd2);
         $cmd->addParameters($args);
         return ($cmd);
     }
@@ -208,9 +209,9 @@ class rTorrentSettings extends \core\Model
         return ($this->getEventCommand('on_hash_done', 'hash_done', $args));
     }
 
-    public static function getCmd($portscgi, $cmd)
+    public static function getCmd($user, $cmd)
     {
-        return rTorrentSettings::get($portscgi, true)->getCommand($cmd);
+        return rTorrentSettings::get($user, true)->getCommand($cmd);
     }
     /*
     public function getAbsScheduleCommand($name,$interval,$cmd)	// $interval in seconds
