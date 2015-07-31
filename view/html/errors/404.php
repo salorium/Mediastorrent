@@ -10,4 +10,4 @@
 ?>
 <div style="width: 600px;margin: auto;"><h2>Page introuvable</h2>
 
-    <p><?php echo $message; ?></p></div>
+    <p><?php echo $message; ?> <a class="button secondary" href="<?= \core\Router::url("") ?>">Retour</a></p></div>

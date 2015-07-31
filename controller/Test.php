@@ -24,6 +24,10 @@ use model\xmlrpc\rTorrentSettings;
 
 class Test extends Controller
 {
+    function f()
+    {
+        $this->set("res", true);
+    }
     function tconf()
     {
         \config\Conf::$numerorole["test"] = 1;

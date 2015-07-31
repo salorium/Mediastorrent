@@ -73,6 +73,10 @@ class Utilisateur extends \core\Model
         if ($sortie[0] !== 0) {
             throw new \Exception("Erreur changement de propriétaire /home/" . $login);
         }
+        $sortie = \model\simple\Console::execute('chmod a+xr /home/' . $login);
+        if ($sortie[0] !== 0) {
+            throw new \Exception("Modification des droits /home/" . $login);
+        }
         $sortie = MakerRtorrentLancer::start($login);
         if ($sortie[0] !== 0) {
             throw new \Exception("Impossible de lancer rtorrent");

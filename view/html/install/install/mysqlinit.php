@@ -46,21 +46,19 @@ if (!isset($res)) {
 } else {
     if ($res) {
         ?>
-        <div class="container">
             <div data-alert class="alert-box success radius connexion">
                 Enregistrement du compte sysop fait !
                 <a href="#" class="close">&times;</a>
             </div>
-        </div>
+
     <?
     } else {
         ?>
-        <div class="container">
             <div data-alert class="alert-box alert radius connexion">
                 Erreur lors du enregistrement du compte sysop !
                 <a href="#" class="close">&times;</a>
             </div>
-        </div>
+
     <?
     }
 

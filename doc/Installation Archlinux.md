@@ -82,13 +82,16 @@ Mediastorrent un front-end pour rtorrent avec gestion multi-user, multi-seedbox 
     systemctl enable mysqld.service
 
 ##Installation de Mediastorrent
-    sudo pacman -S nginx php-fpm php git cronie tmux php-memcached
+    sudo pacman -S nginx php-fpm php git cronie tmux php-memcached php-pear base-devel imagemagick postfix mediainfo
+    pecl install imagick
     systemctl start cronie.service
     systemctl enable cronie.service
+    systemctl start postfix.service
+    systemctl enable postfix.service
     git clone https://github.com/salorium/Mediastorrent.git => dans un dossier <utilisateur> pas sur le root.
     sudo ln -s /home/<utilisateur>/Mediastorrent /usr/share/nginx/html/Mediastorrent
     sudo chmod a+xr /home/<utilisateur>
-    sudo php /home/<utilisateur>/Mediastorrent/script/initroot.php
+
     
     
     
@@ -112,63 +115,29 @@ Dans /etc/php/php.ini modifier le fichier comme cela :
     short_open_tag = On
     open_basedir = /srv/http/:/home/:/tmp/:/usr/share/pear/:/usr/share/webapps/:/etc/:/usr/share/nginx/html/
     extension=mysqli.so
+    extension=imagick.so
     date.timezone =Europe/Paris
     
 Dans /etc/php/conf.d/memcached.ini modifier comme cela :
     
     extension=memcached.so
+    systemctl start php-fpm.service
+    systemctl enable php-fpm.service
+    
     
 ##Configuration de nginx
 Dans /etc/nginx/fastcgi.conf ajouter :
     
     fastcgi_param PATH_INFO $fastcgi_path_info;
     fastcgi_param   PATH_TRANSLATED         $document_root$fastcgi_path_info;
+    systemctl start nginx.service
+    systemctl enable nginx.service
+        
     
-##Configuration d'apache2
-Dans  /etc/apache2/sites-available/000-default.conf, il faut ajouter ce code dans le ```<VirtualHost *:80>``` :
+##Configuration de Mediastorrent
+    
+    sudo php /home/<utilisateur>/Mediastorrent/script/initroot.php
 
-    <Directory /var/www>
-        AllowOverride All
-    </Directory>
-
-Exemple :
-
-    <VirtualHost *:80>
-	    # The ServerName directive sets the request scheme, hostname and port that
-	    # the server uses to identify itself. This is used when creating
-	    # redirection URLs. In the context of virtual hosts, the ServerName
-	    # specifies what hostname must appear in the request's Host: header to
-	    # match this virtual host. For the default virtual host (this file) this
-	    # value is not decisive as it is used as a last resort host regardless.
-	    # However, you must set it for any further virtual host explicitly.
-	    #ServerName www.example.com
-
-	    ServerAdmin webmaster@localhost
-	    DocumentRoot /var/www
-
-	    # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
-	    # error, crit, alert, emerg.
-	    # It is also possible to configure the loglevel for particular
-	    # modules, e.g.
-	    #LogLevel info ssl:warn
-
-	    ErrorLog ${APACHE_LOG_DIR}/error.log
-	    CustomLog ${APACHE_LOG_DIR}/access.log combined
-        <Directory /var/www>
-            AllowOverride All
-        </Directory>
-
-        # For most configuration files from conf-available/, which are
-        # enabled or disabled at a global level, it is possible to
-        # include a line for only one particular virtual host. For example the
-        # following line enables the CGI configuration for this host only
-        # after it has been globally disabled with "a2disconf".
-        #Include conf-available/serve-cgi-bin.conf
-    </VirtualHost>
-
-##Configuration de php
-Dans le fichier /etc/php5/apache2/php.ini
-Mettre la directive short_open_tag à On
  
 ##Utilisation
 Développé sous firefox, mais devrait fonctionner sans problème sous chrome.
