@@ -22,6 +22,7 @@ class Conf
     static $author = "Salorium";
     static $nomrtorrent = "";
     static $distribution = "";
+    static $init = "";
     static $nomvg = null;
     static $databases = array(
         "default" => array(

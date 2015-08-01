@@ -424,6 +424,25 @@ var Film = {
     streaming: function (k, host) {
         window.open(Base.controller.makeUrlBase(host) + 'film/streaming/' + Base.model.converter.paramUrl(k) + ".html", "_blank", "menubar=no, status=no, scrollbars=no, toolbar=no,location=no,resizable=no, width=650, height=510");
     },
+    share: function (id, share) {
+        $.ajax({
+            url: Base.controller.makeUrlBase() + 'film/share/' + id + "/" + share + ".json",
+            dataType: "json",
+            type: "GET",
+            //data: {hash: listafaire},
+            //contentType: "application/json",
+            success: function (response, textStatus, jqXHR) {
+                if (response.res == null) {
+                    $('#partage' + id).prop('checked', !share);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (textStatus != "abort")
+                    Base.view.noty.generate("error", textStatus + " " + jqXHR + " " + errorThrown);
+
+            }
+        });
+    },
     afficheDetailsFilm: function (film) {
         this.clean();
         this.containerDetailsFilm.show();
@@ -484,7 +503,7 @@ var Film = {
                     $.each(response.file, function (k, v) {
                         //console.log(v);
                         if (v.fini == 1) {
-                            $table.append('<tr><td>' + v.mediainfo.typequalite + (v.mediainfo.qualite ? " " + v.mediainfo.qualite : "" ) + '</td><td>' + (v.mediainfo.codec ? v.mediainfo.codec : "" ) + '</td><td>' + (v.mediainfo.audios[0].type ? v.mediainfo.audios[0].type : "" ) + '</td><td>' + (v.complementfichier ? v.complementfichier : "" ) + '</td><td>' + Base.model.converter.bytes(v.mediainfo.taille, 2) + '</td><td><a href="' + Base.controller.makeUrlBase(v.hostname) + 'film/download/' + v.id + '/' + Base.model.utilisateur.keyconnexion + '"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dl.svg"></a></td><td><a onclick="Film.streaming(\'' + v.id + '\',\'' + v.hostname + '\')"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/streaming.svg"></a></td></tr>');
+                            $table.append('<tr><td>' + v.mediainfo.typequalite + (v.mediainfo.qualite ? " " + v.mediainfo.qualite : "" ) + '</td><td>' + (v.mediainfo.codec ? v.mediainfo.codec : "" ) + '</td><td>' + (v.mediainfo.audios[0].type ? v.mediainfo.audios[0].type : "" ) + '</td><td>' + (v.complementfichier ? v.complementfichier : "" ) + '</td><td>' + Base.model.converter.bytes(v.mediainfo.taille, 2) + '</td><td><a href="' + Base.controller.makeUrlBase(v.hostname) + 'film/download/' + v.id + '/' + Base.model.utilisateur.keyconnexion + '"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dl.svg"></a></td><td><a onclick="Film.streaming(\'' + v.id + '\',\'' + v.hostname + '\')"><img width="30" src="' + Base.controller.makeUrlBase() + 'images/streaming.svg"></a></td><td>' + (v.proprietaire == 1 ? '<div class="switch small"><input onchange="Film.share(\'' + v.id + '\',$(\'#partage' + v.id + '\').is(\':checked\'))" ' + (v.partageamis == 1 ? "checked" : "") + ' type="checkbox" id="partage' + v.id + '"  name="partage"><label for="partage' + v.id + '" title="Partage"></label></div></td>' : "") + '</tr>');
                         } else {
                             $tr = $("<tr></tr>").append('<td colspan="7">Attente...</td>');
                             Film.tr.push($tr);
@@ -559,7 +578,7 @@ var Film = {
                     //response.file
                     //console.log(v);
                     if (response.file.fini == 1) {
-                        Film.tr[element].html('<td>' + response.file.mediainfo.typequalite + (response.file.mediainfo.qualite ? " " + response.file.mediainfo.qualite : "" ) + '</td><td>' + (response.file.mediainfo.codec ? response.file.mediainfo.codec : "" ) + '</td><td>' + (response.file.mediainfo.audios[0].type ? response.file.mediainfo.audios[0].type : "" ) + '</td><td>' + (response.file.complementfichier ? response.file.complementfichier : "" ) + '</td><td>' + Base.model.converter.bytes(response.file.mediainfo.taille, 2) + '</td><td><a href="' + Base.controller.makeUrlBase(response.file.hostname) + 'film/download/' + response.file.id + '/' + Base.model.utilisateur.keyconnexion + '"><img width="60" src="' + Base.controller.makeUrlBase() + 'images/dl.svg"></a></td>');
+                        Film.tr[element].html('<td>' + response.file.mediainfo.typequalite + (response.file.mediainfo.qualite ? " " + response.file.mediainfo.qualite : "" ) + '</td><td>' + (response.file.mediainfo.codec ? response.file.mediainfo.codec : "" ) + '</td><td>' + (response.file.mediainfo.audios[0].type ? response.file.mediainfo.audios[0].type : "" ) + '</td><td>' + (response.file.complementfichier ? response.file.complementfichier : "" ) + '</td><td>' + Base.model.converter.bytes(response.file.mediainfo.taille, 2) + '</td><td><a href="' + Base.controller.makeUrlBase(response.file.hostname) + 'film/download/' + response.file.id + '/' + Base.model.utilisateur.keyconnexion + '"><img width="60" src="' + Base.controller.makeUrlBase() + 'images/dl.svg"></a></td><td><div class="switch small"><input type="checkbox" id="partage" name="partage"><label for="partage"></label></div></td>');
                         console.log('TEST1');
                         clearInterval(Film.interval[element]);
                     } else {

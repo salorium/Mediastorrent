@@ -51,15 +51,15 @@ Mediastorrent un front-end pour rtorrent avec gestion multi-user, multi-seedbox 
 ##Installation de Memcached
     sudo apt-get install memcached
 
-##Installation de mysql-server
-    sudo apt-get install mysql-server
+##Installation de mariadb-server
+    sudo apt-get install mariadb-server
 
 ##Installation de Mediastorrent
-    sudo apt-get install apache2 libapache2-mod-php5 php5-mysqlnd php5-json php5-imagick php5-memcached php5-curl dtach libssh2-php git tmux mediainfo
+    sudo apt-get install apache2 libapache2-mod-php5 php5-mysqlnd php5-json php5-imagick php5-memcached php5-curl git tmux mediainfo
     sudo a2enmod rewrite
     sudo service apache2 restart
     git clone https://github.com/salorium/Mediastorrent.git => dans un dossier <utilisateur> pas sur le root.
-    sudo ln -s /home/<utilisateur>/Mediastorrent /var/www/Mediastorrent
+    sudo ln -s /home/<utilisateur>/Mediastorrent /var/www/html/Mediastorrent
     sudo php /home/<utilisateur>/Mediastorrent/script/initroot.php
 
 ##Configuration d'apache2
@@ -107,6 +107,8 @@ Exemple :
 ##Configuration de php
 Dans le fichier /etc/php5/apache2/php.ini
 Mettre la directive short_open_tag à On
- 
+
+    sudo service apache2 restart
+    
 ##Utilisation
 Développé sous firefox, mais devrait fonctionner sans problème sous chrome.
