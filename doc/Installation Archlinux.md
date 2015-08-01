@@ -5,7 +5,7 @@ Mediastorrent un front-end pour rtorrent avec gestion multi-user, multi-seedbox 
 ##Mettre à jour la liste des paquets de votre système
     sudo pacman -Syu
 
-##Installation de rtorrent
+##Installation de Rtorrent
     sudo pacman -S rtorrent
 
 
@@ -14,10 +14,11 @@ Mediastorrent un front-end pour rtorrent avec gestion multi-user, multi-seedbox 
     systemctl enable memcached.service
     systemctl start memcached.service
 
-##Installation de maridb
+##Installation de Mariadb
     sudo pacman -S mariadb
     mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
     systemctl start mysqld.service
+    systemctl enable mysqld.service
     /usr/bin/mysql_secure_installation
     
     NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
@@ -79,7 +80,7 @@ Mediastorrent un front-end pour rtorrent avec gestion multi-user, multi-seedbox 
     installation should now be secure.
 
     Thanks for using MariaDB!
-    systemctl enable mysqld.service
+    
 
 ##Installation de Mediastorrent
     sudo pacman -S nginx php-fpm php git cronie tmux php-memcached php-pear base-devel imagemagick postfix mediainfo
@@ -104,12 +105,12 @@ Mediastorrent un front-end pour rtorrent avec gestion multi-user, multi-seedbox 
     sudo ln -s /home/<utilisateur>/Mediastorrent /var/www/Mediastorrent
     sudo php /home/<utilisateur>/Mediastorrent/script/initroot.php
 
-##Configuration de php-fpm 
+##Configuration de Php-fpm 
 Dans /etc/php/php-fpm.conf ajouter ```.svg``` à la ligne ```security.limit_extensions``` :
 
     security.limit_extensions = .php .php3 .php4 .php5 .svg
 
-##Configuration de php
+##Configuration de Php
 Dans /etc/php/php.ini modifier le fichier comme cela : 
     
     short_open_tag = On
@@ -121,15 +122,21 @@ Dans /etc/php/php.ini modifier le fichier comme cela :
 Dans /etc/php/conf.d/memcached.ini modifier comme cela :
     
     extension=memcached.so
+    
+Redémarage de php-fpm
+
     systemctl start php-fpm.service
     systemctl enable php-fpm.service
     
     
-##Configuration de nginx
+##Configuration de Nginx
 Dans /etc/nginx/fastcgi.conf ajouter :
     
     fastcgi_param PATH_INFO $fastcgi_path_info;
     fastcgi_param   PATH_TRANSLATED         $document_root$fastcgi_path_info;
+    
+Redémarage de nginx
+
     systemctl start nginx.service
     systemctl enable nginx.service
         

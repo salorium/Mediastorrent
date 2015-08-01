@@ -350,6 +350,17 @@ class Torrentfilm extends \core\ModelMysql
         return $res;
     }
 
+    static function share($id, $share)
+    {
+        $query = "update torrentfilm set ";
+        $query .= "partageamis=" . ($share == true ? "TRUE" : "FALSE");
+        $query .= " where id=" . \core\Mysqli::real_escape_string_html($id) . " and login=" . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login);
+        \core\Mysqli::query($query);
+        //echo $query;
+        $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
+        \core\Mysqli::close();
+        return $res;
+    }
     public function updateMediainfo($mediainfo)
     {
 

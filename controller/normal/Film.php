@@ -97,7 +97,7 @@ class Film extends Controller
             $torrentf = \model\mysql\Torrentfilm::getTorrentFilmParIdForStreamingDeUtilisateur($id);
         }
         if ($torrentf) {
-            \config\Conf::$userscgi = $torrentf->userscgi;
+            /*\config\Conf::$userscgi = $torrentf->userscgi;
             $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$userscgi,
                 new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "f.frozen_path", array($torrentf->hash . ":f" . $torrentf->numfile)));
             if ($req->success()) {
@@ -110,6 +110,7 @@ class Film extends Controller
                     if ($req->success())
                         $filename = $req->val[1];
                 }
+            */
                 $mediainfo = json_decode($torrentf->mediainfo, true);
                 $compfile = "[";
                 $compfile .= (strlen($torrentf->complementfichier) > 0 ? $torrentf->complementfichier . "." : "");
@@ -138,7 +139,7 @@ class Film extends Controller
                 } else {
                     $compfile .= "." . $audios[0] . "]";
                 }
-                $str = str_replace("'", "\'", str_replace("&lt;", "<", ($torrentf->titre . " " . $compfile . "." . pathinfo($filename, PATHINFO_EXTENSION))));
+                $str = str_replace("'", "\'", str_replace("&lt;", "<", ($torrentf->titre . " " . $compfile . "." . pathinfo($mediainfo["filename"], PATHINFO_EXTENSION))));
 
                 $str = htmlentities($str, ENT_NOQUOTES, "UTF-8");
 
@@ -158,7 +159,7 @@ class Film extends Controller
                     "titre" => $torrentf->titre . " " . $compfile,
                     "src" => (is_string(\config\Conf::$user["user"]) == true ? "http://" . $torrentf->hostname . "/ticket/traite/" . $idticket . "/" . ($str) : "http://" . $torrentf->hostname . "/film/download/" . $id . "/" . \config\Conf::$user["user"]->keyconnexion . "/" . ($str))
                 ));
-            }
+            //}
         }
     }
 

@@ -85,9 +85,15 @@ class Ticket extends \core\ModelMysql
 
     public static function traiteTicket($id)
     {
-        $query = "select * from ticket ";
+        $query = "select id, donnee, UNIX_TIMESTAMP(expire) as expire from ticket ";
         $query .= " where id=" . \core\Mysqli::real_escape_string_html($id);
         \core\Mysqli::query($query);
-        return \core\Mysqli::getObjectAndClose(false, __CLASS__);
+        $ticket = \core\Mysqli::getObjectAndClose(false, __CLASS__);
+        if ($ticket != null)
+            if ($ticket->expire <= time()) {
+                $ticket->delete();
+                $ticket = null;
+            }
+        return $ticket;
     }
 } 

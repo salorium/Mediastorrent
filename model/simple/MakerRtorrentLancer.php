@@ -13,9 +13,9 @@ class MakerRtorrentLancer extends \core\Model
 {
     static function create()
     {
-        switch (\config\Conf::$distribution) {
-            case 'arch':
-                return self::createForArchLinux();
+        switch (\config\Conf::$init) {
+            case '/lib/systemd/systemd':
+                self::createForSystemd();
                 break;
             case 'ubuntu':
             case 'debian':
@@ -24,7 +24,7 @@ class MakerRtorrentLancer extends \core\Model
         }
     }
 
-    static function createForDebian()
+    static function createForInit()
     {
         $content = '#!/bin/sh -e
 #
@@ -76,7 +76,7 @@ fi';
         exec("chmod a+x /etc/init.d/rtorrent");
     }
 
-    static function createForArchLinux()
+    static function createForSystemd()
     {
         $content = '[Unit]
 Description=rTorrent
@@ -99,9 +99,9 @@ WantedBy=multi-user.target';
 
     static function start($user)
     {
-        switch (\config\Conf::$distribution) {
-            case 'arch':
-                return self::startForArchLinux($user);
+        switch (\config\Conf::$init) {
+            case '/lib/systemd/systemd':
+                return self::startForSystemd($user);
                 break;
             case 'ubuntu':
             case 'debian':
@@ -110,21 +110,21 @@ WantedBy=multi-user.target';
         }
     }
 
-    static function startForDebian($user)
+    static function startForInit($user)
     {
         return \model\simple\Console::execute('/etc/init.d/rtorrent start ' . $user);
     }
 
-    static function startForArchLinux($user)
+    static function startForSystemd($user)
     {
         return \model\simple\Console::execute('systemctl start rt@' . $user);
     }
 
     static function stop($user)
     {
-        switch (\config\Conf::$distribution) {
-            case 'arch':
-                return self::stopForArchLinux($user);
+        switch (\config\Conf::$init) {
+            case '/lib/systemd/systemd':
+                return self::stopForSystemd($user);
                 break;
             case 'ubuntu':
             case 'debian':
@@ -133,12 +133,12 @@ WantedBy=multi-user.target';
         }
     }
 
-    static function stopForDebian($user)
+    static function stopForInit($user)
     {
         return \model\simple\Console::execute('/etc/init.d/rtorrent stop ' . $user);
     }
 
-    static function stopForArchLinux($user)
+    static function stopForSystemd($user)
     {
         return \model\simple\Console::execute('systemctl stop rt@' . $user);
     }

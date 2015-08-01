@@ -99,6 +99,7 @@ class Conf
     static $author = ' . var_export(\config\Conf::$author, true) . ';
     static $nomrtorrent = ' . var_export(\config\Conf::$nomrtorrent, true) . ';
     static $distribution = ' . var_export(\config\Conf::$distribution, true) . ';
+    static $init = ' . var_export(\config\Conf::$init, true) . ';
     static $nomvg = ' . var_export(\config\Conf::$nomvg, true) . ';
     static $databases = ' . var_export(\config\Conf::$databases, true) . ';
     static $memcachedserver = ' . var_export(\config\Conf::$memcachedserver, true) . ';

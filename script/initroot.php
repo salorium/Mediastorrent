@@ -34,6 +34,12 @@ if ($c[0] === 1) {
     throw new Exception("Impossible de trouver la distribution");
 }
 \config\Conf::$distribution = $c[1];
+$c = \model\simple\Console::execute("ls -l /proc/1/exe | awk '{ print $11 }'");
+if ($c[0] === 1) {
+    throw new Exception("Impossible de trouver l'init..");
+}
+\config\Conf::$init = $c[1];
+
 \model\simple\MakerRtorrentLancer::create();
 //\model\simple\MakerRtorrent::create();
 
