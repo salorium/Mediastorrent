@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Dim 10 Mai 2015 à 03:45
--- Version du serveur :  10.0.17-MariaDB-log
--- Version de PHP :  5.6.8
+-- Généré le :  Dim 02 Août 2015 à 00:59
+-- Version du serveur :  10.0.18-MariaDB-log
+-- Version de PHP :  5.6.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -166,22 +166,6 @@ CREATE TABLE IF NOT EXISTS `rtorrents` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `savpass`
---
-
-CREATE TABLE IF NOT EXISTS `savpass` (
-  `login`    VARCHAR(200)
-             COLLATE utf8_unicode_ci NOT NULL,
-  `password` TEXT
-             COLLATE utf8_unicode_ci
-)
-  ENGINE = InnoDB
-  DEFAULT CHARSET = utf8
-  COLLATE = utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `serie`
 --
 
@@ -208,19 +192,6 @@ CREATE TABLE IF NOT EXISTS `serie` (
                   COLLATE utf8_unicode_ci DEFAULT NULL,
   `idthemoviedb`  VARCHAR(50)
                   COLLATE utf8_unicode_ci DEFAULT NULL
-)
-  ENGINE = InnoDB
-  DEFAULT CHARSET = utf8
-  COLLATE = utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `test`
---
-
-CREATE TABLE IF NOT EXISTS `test` (
-  `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 )
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8
@@ -295,10 +266,8 @@ CREATE TABLE IF NOT EXISTS `torrentserie` (
                       COLLATE utf8_unicode_ci NOT NULL,
   `login`             VARCHAR(200)
                       COLLATE utf8_unicode_ci NOT NULL,
-  `saison`            VARCHAR(10)
-                      COLLATE utf8_unicode_ci NOT NULL,
-  `episode`           VARCHAR(10)
-                      COLLATE utf8_unicode_ci NOT NULL,
+  `saison`            INT(10)                 NOT NULL,
+  `episode`           INT(10)                 NOT NULL,
   `nomrtorrent`       VARCHAR(200)
                       COLLATE utf8_unicode_ci NOT NULL,
   `hashtorrent`       VARCHAR(40)
@@ -338,18 +307,6 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_unicode_ci;
-
-CREATE TABLE IF NOT EXISTS `savpass` (
-  `login`      VARCHAR(200)
-               COLLATE utf8_unicode_ci NOT NULL,
-  `motdepasse` TEXT
-               COLLATE utf8_unicode_ci
-
-)
-  ENGINE =InnoDB
-  DEFAULT CHARSET =utf8
-  COLLATE =utf8_unicode_ci;
-
 
 --
 -- Index pour les tables exportées
@@ -396,12 +353,6 @@ ADD PRIMARY KEY (`nom`);
 --
 ALTER TABLE `rtorrents`
 ADD PRIMARY KEY (`nomrtorrent`, `login`), ADD KEY `nomrtorrent` (`nomrtorrent`), ADD KEY `login` (`login`);
-
---
--- Index pour la table `savpass`
---
-ALTER TABLE `savpass`
-ADD PRIMARY KEY (`login`);
 
 --
 -- Index pour la table `serie`
@@ -480,14 +431,6 @@ ADD CONSTRAINT `rtorrents_ibfk_1` FOREIGN KEY (`nomrtorrent`) REFERENCES `rtorre
   ON DELETE CASCADE
   ON UPDATE CASCADE,
 ADD CONSTRAINT `rtorrents_ibfk_2` FOREIGN KEY (`login`) REFERENCES `utilisateur` (`login`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `savpass`
---
-ALTER TABLE `savpass`
-ADD CONSTRAINT `savpass_ibfk_1` FOREIGN KEY (`login`) REFERENCES `utilisateur` (`login`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
