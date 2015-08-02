@@ -17,9 +17,8 @@ class MakerRtorrentLancer extends \core\Model
             case 'systemd':
                 self::createForSystemd();
                 break;
-            case 'ubuntu':
-            case 'debian':
-                return self::createForDebian();
+            case 'init':
+                self::createForInit();
                 break;
         }
     }
@@ -103,9 +102,8 @@ WantedBy=multi-user.target';
             case 'systemd':
                 return self::startForSystemd($user);
                 break;
-            case 'ubuntu':
-            case 'debian':
-                return self::startForDebian($user);
+            case 'init':
+                return self::startForInit($user);
                 break;
         }
     }
@@ -126,9 +124,8 @@ WantedBy=multi-user.target';
             case 'systemd':
                 return self::stopForSystemd($user);
                 break;
-            case 'ubuntu':
-            case 'debian':
-                return self::stopForDebian($user);
+            case 'init':
+                return self::stopForInit($user);
                 break;
         }
     }
