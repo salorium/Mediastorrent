@@ -123,7 +123,7 @@ Dans /etc/nginx/fastcgi.conf ajouter :
     fastcgi_param PATH_INFO $fastcgi_path_info;
     fastcgi_param   PATH_TRANSLATED         $document_root$fastcgi_path_info;
 
-Configuration du virtualhost sous [https://github.com/salorium/Mediastorrent/blob/master/doc/Nginx.md](nginx)
+Configuration du virtualhost sous [Nginx](https://github.com/salorium/Mediastorrent/blob/master/doc/Nginx.md)
     
 Redémarage de nginx
 
