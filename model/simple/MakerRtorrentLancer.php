@@ -124,9 +124,8 @@ WantedBy=multi-user.target';
             case 'systemd':
                 return self::stopForSystemd($user);
                 break;
-            case 'ubuntu':
-            case 'debian':
-            return self::stopForInit($user);
+            case 'init':
+                return self::stopForInit($user);
                 break;
         }
     }
