@@ -52,7 +52,7 @@ start() {
 
 stop() {
         echo -n $"Stopping $NAME: "
-	    su -l $USER -c "tmux send-keys -t rt:rtorrent C-q && while pgrep -u `id -u` rtorrent > /dev/null; do sleep 0.5; echo rtorrent still running...; done;"
+	    su -l $USER -c "tmux send-keys -t rt:rtorrent C-q && w=$(tmux list-sessions 2> /dev/null | awk \'$1 ~ /^rt:$/ {print $1}\') && while [ "$w" == "rt:" ]; do sleep 0.5; echo rtorrent still running...; w=$(tmux list-sessions 2> /dev/null | awk \'$1 ~ /^rt:$/ {print $1}\'); done;"
 }
 case $1 in
         start)
@@ -87,7 +87,7 @@ Type=forking
 #KillMode=none
 User=%I
 ExecStart=/usr/bin/tmux new-session -s rt -n rtorrent -d rtorrent
-ExecStop=/usr/bin/bash -c "/usr/bin/tmux send-keys -t rt:rtorrent C-q && w=$(tmux list-sessions 2> /dev/null | awk \'$1 ~ /^rt:$/ {print $1}\'); while [ "$w" == "rt:" ]; do sleep 0.5; echo rtorrent still running...; w=$(tmux list-sessions 2> /dev/null | awk \'$1 ~ /^rt:$/ {print $1}\'); done;"
+ExecStop=/usr/bin/bash -c "/usr/bin/tmux send-keys -t rt:rtorrent C-q && w=$(tmux list-sessions 2> /dev/null | awk \'$1 ~ /^rt:$/ {print $1}\') && while [ "$w" == "rt:" ]; do sleep 0.5; echo rtorrent still running...; w=$(tmux list-sessions 2> /dev/null | awk \'$1 ~ /^rt:$/ {print $1}\'); done;"
 WorkingDirectory=/home/%I/
 Restart=always
 [Install]
