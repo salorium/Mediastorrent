@@ -14,7 +14,7 @@ class MakerRtorrentLancer extends \core\Model
     static function create()
     {
         switch (\config\Conf::$init) {
-            case '/lib/systemd/systemd':
+            case 'systemd':
                 self::createForSystemd();
                 break;
             case 'ubuntu':
@@ -100,7 +100,7 @@ WantedBy=multi-user.target';
     static function start($user)
     {
         switch (\config\Conf::$init) {
-            case '/lib/systemd/systemd':
+            case 'systemd':
                 return self::startForSystemd($user);
                 break;
             case 'ubuntu':
@@ -123,7 +123,7 @@ WantedBy=multi-user.target';
     static function stop($user)
     {
         switch (\config\Conf::$init) {
-            case '/lib/systemd/systemd':
+            case 'systemd':
                 return self::stopForSystemd($user);
                 break;
             case 'ubuntu':

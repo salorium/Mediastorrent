@@ -38,7 +38,7 @@ $c = \model\simple\Console::execute("ls -l /proc/1/exe | awk '{ print $11 }'");
 if ($c[0] === 1) {
     throw new Exception("Impossible de trouver l'init..");
 }
-\config\Conf::$init = $c[1];
+\config\Conf::$init = basename($c[1]);
 
 \model\simple\MakerRtorrentLancer::create();
 //\model\simple\MakerRtorrent::create();
