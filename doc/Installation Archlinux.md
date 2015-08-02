@@ -93,18 +93,6 @@ Mediastorrent un front-end pour rtorrent avec gestion multi-user, multi-seedbox 
     sudo ln -s /home/<utilisateur>/Mediastorrent /usr/share/nginx/html/Mediastorrent
     sudo chmod a+xr /home/<utilisateur>
 
-    
-    
-    
-    
-    
-    sudo apt-get install apache2 libapache2-mod-php5 php5-mysqlnd php5-json php5-imagick php5-memcached php5-curl dtach libssh2-php git tmux mediainfo
-    sudo a2enmod rewrite
-    sudo service apache2 restart
-    
-    sudo ln -s /home/<utilisateur>/Mediastorrent /var/www/Mediastorrent
-    sudo php /home/<utilisateur>/Mediastorrent/script/initroot.php
-
 ##Configuration de Php-fpm 
 Dans /etc/php/php-fpm.conf ajouter ```.svg``` à la ligne ```security.limit_extensions``` :
 
@@ -134,6 +122,8 @@ Dans /etc/nginx/fastcgi.conf ajouter :
     
     fastcgi_param PATH_INFO $fastcgi_path_info;
     fastcgi_param   PATH_TRANSLATED         $document_root$fastcgi_path_info;
+
+Configuration du virtualhost sous [https://github.com/salorium/Mediastorrent/blob/master/doc/Nginx.md](nginx)
     
 Redémarage de nginx
 
