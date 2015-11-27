@@ -116,6 +116,26 @@ class Film extends \core\ModelMysql
         $res['code'] = $obj->code;
         return $res;
     }
+    static function setBackdrop($id,$backdrop){
+        $query = "update film set ";
+        $query .= "urlbackdrop=" . \core\Mysqli::real_escape_string_html($backdrop) ;
+        $query .= " where id=" . \core\Mysqli::real_escape_string_html($id) ;
+        \core\Mysqli::query($query);
+        //echo $query;
+        $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
+        \core\Mysqli::close();
+        return $res;
+    }
+    static function setPoster($id,$poster){
+        $query = "update film set ";
+        $query .= "urlposter=" . \core\Mysqli::real_escape_string_html($poster) ;
+        $query .= " where id=" . \core\Mysqli::real_escape_string_html($id) ;
+        \core\Mysqli::query($query);
+        //echo $query;
+        $res = (\core\Mysqli::nombreDeLigneAffecte() == 1);
+        \core\Mysqli::close();
+        return $res;
+    }
 
     static function checkIdallocine($idallocine)
     {

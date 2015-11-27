@@ -140,7 +140,7 @@ class Torrentserie extends \core\ModelMysql
 
     static function getSerieDuServeur($id)
     {
-        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.login as userscgi,f.titre as titre, tf.mediainfo as mediainfo ";
+        $query = "select tf.saison as saison, tf.episode as episode, tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.login as userscgi,f.titre as titre, tf.mediainfo as mediainfo ";
         $query .= "from torrentserie tf, serie f,rtorrent r,rtorrents rs ";
         $query .= "where tf.fini = true ";
         $query .= "and tf.idserie = f.id ";
@@ -345,7 +345,7 @@ class Torrentserie extends \core\ModelMysql
 
     static function getTorrentSerieParIdForStreamingDeUtilisateur($id)
     {
-        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.login as userscgi,f.titre as titre, r.hostname as hostname,tf.mediainfo as mediainfo ";
+        $query = "select tf.saison as saison, tf.episode as episode, tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.login as userscgi,f.titre as titre, r.hostname as hostname,tf.mediainfo as mediainfo ";
         $query .= "from torrentserie tf,serie f,rtorrent r,rtorrents rs ";
         $query .= "where( tf.fini = true ";
         $query .= "and tf.idserie = f.id ";
@@ -372,7 +372,7 @@ class Torrentserie extends \core\ModelMysql
 
     static function getTorrentSerieParIdForStreaming($id)
     {
-        $query = "select tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.login as userscgi,f.titre as titre, r.hostname as hostname,tf.mediainfo as mediainfo ";
+        $query = "select tf.saison as saison, tf.episode as episode, tf.numfile as numfile, tf.complementfichier as complementfichier,tf.hashtorrent as hash,rs.login as userscgi,f.titre as titre, r.hostname as hostname,tf.mediainfo as mediainfo ";
         $query .= "from torrentserie tf,serie f,rtorrent r,rtorrents rs ";
         $query .= "where tf.fini = true ";
         $query .= "and tf.idserie = f.id ";

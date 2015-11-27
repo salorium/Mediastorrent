@@ -56,23 +56,43 @@ class Mediainfo extends \core\Model
         $res["duree"] = $this->general["Duration"][1];
         if (isset($this->videos["Codec"][1])) {
             switch ($this->videos["Codec"][1]) {
-                case "AVC":
-                    $res["codec"] = basename($this->videos["Internet_media_type"]);
+                case "XviD":
+                    $res["codec"] = $this->videos["Codec"][1];
                     break;
                 default:
-                    $res["codec"] = $this->videos["Codec"][1];
+                    $res["codec"] = basename($this->videos["Internet_media_type"]);
                     break;
             }
         }
-
+        //$res["codec"] = $this->videos["Encoded_Library_Name"];
         if (isset($this->videos["Width"])) {
             switch ($this->videos["Width"][0]) {
                 case 1280:
+                case 1280-1:
+                case 1280-2:
+                case 1280-3:
+                case 1280-4:
+                case 1280-5:
+                case 1280-6:
+                case 1280-7:
+                case 1280-8:
+                case 1280-9:
+                case 1280-10:
                     $res["typequalite"] = "HD";
                     $res["qualite"] = "720";
                     break;
                 case 1920:
-                    $res["typequalite"] = "HD";
+                case 1920-1:
+                case 1920-2:
+                case 1920-3:
+                case 1920-4:
+                case 1920-5:
+                case 1920-6:
+                case 1920-7:
+                case 1920-8:
+                case 1920-9:
+                case 1920-10:
+                $res["typequalite"] = "HD";
                     $res["qualite"] = "1080";
                     break;
                 default:
@@ -97,7 +117,7 @@ class Mediainfo extends \core\Model
                 }
 
             }
-            if (isset($v["Channel_positions"])) {
+            if (isset($v["Channel_positions"]) && is_array($v["Channel_positions"]) && isset($v["Channel_positions"][1])) {
                 $canal = explode("/", $v["Channel_positions"][1]);
                 $c = 0;
                 foreach ($canal as $vv) {
@@ -105,7 +125,15 @@ class Mediainfo extends \core\Model
                 }
 
                 $a["cannal"] = $c;
-            } else if (isset ($v["Channel_count"][0])) {
+            }else if (isset ($v["ChannelLayout"])){
+                $canal = count(explode(" ",$v["ChannelLayout"]));
+                if ($i = preg_match("#LFE#i",$v["ChannelLayout"]) === 1){
+                    $canal -=$i;
+                    $canal += ($i/10);
+                }
+                $a["cannal"] = $canal;
+
+            } else if (isset ($v["Channel_count"])&& is_array($v["Channel_count"]) && isset ($v["Channel_count"][0])) {
                 $a["cannal"] = $v["Channel_count"][0];
 
             }

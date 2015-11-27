@@ -113,7 +113,7 @@ class Film extends \core\Controller
                 } else {
                     $compfile .= "." . $audios[0] . "]";
                 }
-            $tmp = \model\simple\Download::sendFileName($mediainfo["filename"], $torrentf->titre . " " . $compfile);
+            $tmp = \model\simple\Download::sendFile($mediainfo["filename"], $torrentf->titre . " " . $compfile);
             //}
 
         } else {

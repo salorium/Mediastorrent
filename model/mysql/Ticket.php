@@ -90,6 +90,7 @@ class Ticket extends \core\ModelMysql
         \core\Mysqli::query($query);
         $ticket = \core\Mysqli::getObjectAndClose(false, __CLASS__);
         if ($ticket != null)
+            if ( $ticket->expire != null)
             if ($ticket->expire <= time()) {
                 $ticket->delete();
                 $ticket = null;

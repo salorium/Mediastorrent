@@ -104,7 +104,13 @@ class Serie extends \core\Controller
     {
         \model\simple\Utilisateur::authentificationDistante($keyconnexion);
         if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
-        if ($torrentf = \model\mysql\Torrentserie::getSerieUserDuServeur($id)) {
+        if (is_string(\config\Conf::$user["user"])) {
+            //Traitement du ticket
+            $torrentf = \model\mysql\Torrentserie::getSerieDuServeur($id);
+        } else {
+            $torrentf = \model\mysql\Torrentserie::getSerieUserDuServeur($id);
+        }
+        if ($torrentf) {
             /*\config\Conf::$userscgi = $torrentf->userscgi;
             $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$userscgi,
                 new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "f.frozen_path", array($torrentf->hash . ":f" . $torrentf->numfile)));
@@ -118,38 +124,8 @@ class Serie extends \core\Controller
                     if ($req->success())
                         $filename = $req->val[1];
                 }*/
-                $mediainfo = json_decode($torrentf->mediainfo, true);
-                $compfile = "[";
-                $compfile .= (strlen($torrentf->complementfichier) > 0 ? $torrentf->complementfichier . "." : "");
-                switch ($mediainfo["typequalite"]) {
-                    case "SD":
-                        $compfile .= $mediainfo["codec"];
-                        break;
-                    case "HD":
-                        $compfile .= $mediainfo["qualite"] . "." . $mediainfo["codec"];
-                        break;
-                }
-                $audios = array();
-                foreach ($mediainfo["audios"] as $v) {
-                    $res = "";
-                    if ($v["type"] !== "MP3") {
-                        $res .= $v["type"] . " " . $v["cannal"];
-                        if (isset($v["lang"]))
-                            $res .= " " . $v["lang"];
-                        $audios[] = $res;
-
-                    }
-
-                }
-
-                if (count($audios) > 1) {
-                    $au = implode(".", $audios);
-                    $compfile .= "." . $au;
-                } else {
-                    //    $compfile .= "." . $audios[0] . "]";
-                }
-                $compfile .= "]";
-            $tmp = \model\simple\Download::sendFileName($mediainfo["filename"], $torrentf->titre . " Saison " . $torrentf->saison . " Épisode " . $torrentf->episode . " " . $compfile);
+            $infos = \model\simple\Serie::getInfosPourDownload($torrentf);
+            $tmp = \model\simple\Download::sendFile($infos[0], $infos[1]);
             //}
 
         } else {

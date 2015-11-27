@@ -533,10 +533,10 @@ var Film = {
                 //$table = $("<div></div>");
                 //$divv2.append($table);
                 if (Base.model.boxmodal.modal == null) {
-                    Base.view.boxmodal.make("Saison " + saison, "<div id='episodecontenu' style='overflow: auto'><table><tbody id='episode'></tbody></table></div>", function () {
+                    Base.view.boxmodal.make("Saison " + saison, "<table><tbody id='episode'></tbody></table>", function () {
                         clearTimeout(Film.time1);
                     });
-                    $("#episodecontenu").height($("#modalc").height() - $("#modaltitre").height() - $("#modalcontenu").height())
+                    //$("#episodecontenu").height($("#modalc").height() - $("#modaltitre").height() - $("#modalcontenu").height())
                 }
                 $("#episode").empty();
                 if (response.showdebugger == "ok") {

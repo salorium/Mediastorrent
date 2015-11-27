@@ -22,34 +22,14 @@ function __autoload($class_name)
 use \model\mysql\Torrentserie as Torrentfilm;
 
 \config\Conf::$debuglocalfile = false; //retour visuel
-$torrentfilm = Torrentfilm::getAll();
+$torrentfilm = \model\mysql\Torrentserie::getAll();
 foreach ($torrentfilm as $v) {
     //var_dump($v);
-    \config\Conf::$userscgi = $v->login;
-    $hashtorrentselectionne = $v->hashtorrent;
-    $nofile = $v->numfile;
+    \model\simple\Console::println($v->id);
+
     $mediasinfo = json_decode($v->mediainfo, true);
-
-    $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$userscgi,
-        new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "f.frozen_path", array($hashtorrentselectionne . ":f" . $nofile)));
-    if ($req->success()) {
-        $filename = $req->val[0];
-        if ($filename == '') {
-            $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$userscgi, array(
-                new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "d.open", $hashtorrentselectionne),
-                new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "f.frozen_path", array($hashtorrentselectionne . ":f" . $nofile)),
-                new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "d.close", $hashtorrentselectionne)));
-            if ($req->success())
-                $filename = $req->val[1];
-        }
-        $mediasinfo["taille"] = filesize($filename);
-        $mediasinfo["filename"] = $filename;
-        \model\simple\Console::println($filename);
-        \model\simple\Console::println($v->updateMediainfo($mediasinfo));
-
-    }
-
-
+    $m = new \model\simple\Mediainfo($mediasinfo["filename"]);
+    \model\simple\Console::println($v->updateMediainfo($m->getFormatVideo()));
 }
 
 

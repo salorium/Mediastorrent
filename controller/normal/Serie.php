@@ -110,35 +110,8 @@ class Serie extends Controller
                     if ($req->success())
                         $filename = $req->val[1];
                 }*/
-                $mediainfo = json_decode($torrentf->mediainfo, true);
-                $compfile = "[";
-                $compfile .= (strlen($torrentf->complementfichier) > 0 ? $torrentf->complementfichier . "." : "");
-                switch ($mediainfo["typequalite"]) {
-                    case "SD":
-                        $compfile .= $mediainfo["codec"];
-                        break;
-                    case "HD":
-                        $compfile .= $mediainfo["qualite"] . "." . $mediainfo["codec"];
-                        break;
-                }
-                $audios = array();
-                foreach ($mediainfo["audios"] as $v) {
-                    $res = "";
-                    if ($v["type"] !== "MP3") {
-                        $res .= $v["type"] . " " . $v["cannal"];
-                        if (isset($v["lang"]))
-                            $res .= " " . $v["lang"];
-
-                    }
-                    $audios[] = $res;
-                }
-                if (count($audios) > 1) {
-                    $au = implode(".", $audios);
-                    $compfile .= "." . $au . "]";
-                } else {
-                    $compfile .= "." . $audios[0] . "]";
-                }
-            $str = str_replace("'", "\'", str_replace("&lt;", "<", ($torrentf->titre . " " . $compfile . "." . pathinfo($mediainfo["filename"], PATHINFO_EXTENSION))));
+                $infosDownloads = \model\simple\Serie::getInfosPourDownload($torrentf);
+            $str = str_replace("'", "\'", str_replace("&lt;", "<", ($infosDownloads[1]. "." . pathinfo($infosDownloads[0], PATHINFO_EXTENSION))));
 
                 $str = htmlentities($str, ENT_NOQUOTES, "UTF-8");
 
@@ -152,10 +125,10 @@ class Serie extends Controller
 // Supprimer tout le reste
                 $str = preg_replace('#&[^;]+;#', '', $str);
                 if (is_string(\config\Conf::$user["user"])) {
-                    $idticket = \model\mysql\Ticket::savTicket("controller\\Film", "download", [$id], 60 * 60 * 6);
+                    $idticket = \model\mysql\Ticket::savTicket("controller\\Serie", "download", [$id], 60 * 60 * 6);
                 }
                 $this->set(array(
-                    "titre" => $torrentf->titre . " " . $compfile,
+                    "titre" => $infosDownloads[1],
                     "src" => (is_string(\config\Conf::$user["user"]) == true ? "http://" . $torrentf->hostname . "/ticket/traite/" . $idticket . "/" . ($str) : "http://" . $torrentf->hostname . "/serie/download/" . $id . "/" . \config\Conf::$user["user"]->keyconnexion . "/" . ($str))
                 ));
             //}

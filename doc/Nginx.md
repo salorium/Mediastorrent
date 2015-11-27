@@ -42,12 +42,15 @@ Avec domaine
             root /usr/share/nginx/html/Mediastorrent/webroot;
             autoindex off;
     location /film/download {
+            fastcgi_buffering off;
             try_files $uri /index.php$request_uri;
     }
     location /serie/download {
+                fastcgi_buffering off;
                 try_files $uri /index.php$request_uri;
         }
     location /torrent/download {
+            fastcgi_buffering off;
             try_files $uri /index.php$request_uri;
     }
     

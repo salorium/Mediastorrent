@@ -68,6 +68,7 @@ class Allocine extends Model
                         'partner' => $this->partenaire_key,
                         'code' => $this->query,
                         'profile' => (isset($o["profile"]) ? $o["profile"] : "large"),
+                        'mediafmt'=> "mp4-hip",
                         'filter' => (isset($o["filter"]) ? $o["filter"] : "movie"),
                         'striptags' => (isset($o["striptags"]) ? $o["striptags"] : "synopsis,synopsisshort"),
                         'format' => 'json',
@@ -78,6 +79,15 @@ class Allocine extends Model
                     $this->option .= "&striptags=";
                     $this->option .= (isset($o["striptags"]) ? $o["striptags"] : "synopsis,synopsisshort");
                     $this->option .= "&code=" . $this->query;
+                    break;
+                case "media":
+                    $params = array(
+                        'partner' => $this->partenaire_key,
+                        'code' => $this->query,
+                        'profile' => (isset($o["profile"]) ? $o["profile"] : "large"),
+                        'mediafmt'=> "mp4-hip-raw",
+                    //    'format' => 'json',
+                    );
                     break;
                 case "tvseries":
                     $params = array(
@@ -108,6 +118,7 @@ class Allocine extends Model
         $response = curl_exec($ch);
         curl_close($ch);
         $contentbrut = $response;
+
         $contentcorrige = str_replace("$", "_", $contentbrut);
         $contentcorrige = str_replace("…", '...', $contentcorrige);
         $this->res = json_decode($contentcorrige);
@@ -142,6 +153,10 @@ class Allocine extends Model
     function autoriserMovie()
     {
         return $this->autoriser("movie");
+    }
+
+    function getMediaInfo(){
+        return $this->res;
     }
 
     function retourneResType($type)
@@ -420,8 +435,11 @@ class Allocine extends Model
                 $tmp["Réalisateur(s)"] = $v->castingShort->directors;
             if (isset($v->castingShort->actors))
                 $tmp["Acteur(s)"] = $v->castingShort->actors;
-            $maxratioposter = -1;
-            $maxratiobackdrop = -1;
+
+            $maxwidthposter = -1;
+            $posterwidth = array();
+            $maxwidthbackdrop = -1;
+            $backdropwidth = array();
             if (isset($v->media))
                 foreach ($v->media AS $k => $vv) {
                     if ($vv->class === "picture") {
@@ -435,15 +453,29 @@ class Allocine extends Model
                             $width = $info[0];
                             $height = $info[1];
                         }
+                        $ratio = $height / $width;
                         if ($width > $height) {
                             //Backdrop test
-                            if ($maxratiobackdrop < $height / $width)
-                                $maxratiobackdrop = $height / $width;
+                            if ($maxwidthbackdrop < $width)
+                                $maxwidthbackdrop = $width;
+                            $backdropwidth[$width]["img"][]=array($vv->thumbnail->href, $width, $height);
+                            if ( ! isset($backdropwidth[$width]["r"])){
+                                $backdropwidth[$width]["r"]=$ratio;
+                            }else if ($backdropwidth[$width]["r"] < $ratio){
+                                $backdropwidth[$width]["r"] = $ratio;
+                            }
                             $tmp["imagebackdrop"]["url"][] = array($vv->thumbnail->href, $width, $height);
                         } else {
                             //Poster
-                            if ($maxratioposter < $height / $width)
-                                $maxratioposter = $height / $width;
+                            if ($maxwidthposter < $width)
+                                $maxwidthposter = $width;
+                            $posterwidth[$width]["img"][] = array($vv->thumbnail->href, $width, $height);
+                            if ( ! isset($posterwidth[$width]["r"])){
+                                $posterwidth[$width]["r"]=$ratio;
+                            }else if ($posterwidth[$width]["r"] < $ratio){
+                                $posterwidth[$width]["r"] = $ratio;
+                            }
+
                             $tmp["imageposter"]["url"][] = array($vv->thumbnail->href, $width, $height);
                         }
                     }
@@ -465,13 +497,32 @@ class Allocine extends Model
                             foreach ($tmp1->backdrops as $k => $vv) {
                             //var_dump($vv);
                             //die();
-                            if ($maxratiobackdrop < $vv->height / $vv->width)
-                                $maxratiobackdrop = $vv->height / $vv->width;
+                                $height = $vv->height;
+                                $width = $vv->width;
+                                $ratio = $height / $width;
+                                if ($maxwidthbackdrop < $width)
+                                    $maxwidthbackdrop = $width;
+                                if ( ! isset($backdropwidth[$width]["r"])){
+                                    $backdropwidth[$width]["r"]=$ratio;
+                                }else if ($backdropwidth[$width]["r"] < $ratio){
+                                    $backdropwidth[$width]["r"] = $ratio;
+                                }
+                                $backdropwidth[$width]["img"][] = array("http://image.tmdb.org/t/p/original" . $vv->file_path, $width, $height);
                             $tmp["imagebackdrop"]["url"][] = array("http://image.tmdb.org/t/p/original" . $vv->file_path, $vv->width, $vv->height);
                         }
                         foreach ($tmp1->posters as $k => $vv) {
-                            if ($maxratioposter < $vv->height / $vv->width)
-                                $maxratioposter = $vv->height / $vv->width;
+                            $height = $vv->height;
+                            $width = $vv->width;
+                            $ratio = $height / $width;
+                            if ($maxwidthposter < $width)
+                                $maxwidthposter = $width;
+                            $posterwidth[$width]["img"][] = array("http://image.tmdb.org/t/p/original" . $vv->file_path, $width, $height);
+                            if ( ! isset($posterwidth[$width]["r"])){
+                                $posterwidth[$width]["r"]=$ratio;
+                            }else if ($posterwidth[$width]["r"] < $ratio){
+                                $posterwidth[$width]["r"] = $ratio;
+                            }
+                            //$posterwidth[$vv->width][] = array("http://image.tmdb.org/t/p/original" . $vv->file_path, $vv->width, $vv->height);
                             $tmp["imageposter"]["url"][] = array("http://image.tmdb.org/t/p/original" . $vv->file_path, $vv->width, $vv->height);
                         }
                         }
@@ -479,13 +530,52 @@ class Allocine extends Model
 
                 }
             }
+            $maxratioposter = -1;
+            $maxratiobackdrop = -1;
+            if ( $maxwidthposter >= 1200){
+                $tmpposter = array();
+                foreach ( $posterwidth as $k=>$v){
+                    if ( $k >= 1200){
+                        foreach($v["img"] as $vv){
+                            $tmpposter[]=$vv;
+                        }
+                        if ( $maxratioposter < $v["r"])
+                            $maxratioposter = $v["r"];
+                    }
+                }
+                $tmp["imageposter"]["url"]= $tmpposter;
+                $tmp["imageposter"]["ratio"] = $maxratioposter;
+            }else{
+                $tmp["imageposter"]["url"] = $posterwidth[$maxwidthposter]["img"];
+                $tmp["imageposter"]["ratio"] = $posterwidth[$maxwidthposter]["r"];
+            }
+
+            if ( $maxwidthbackdrop >= 1920){
+                $tmpposter = array();
+                foreach ( $backdropwidth as $k=>$v){
+                    if ( $k >= 1920){
+                        foreach($v["img"] as $vv){
+                            $tmpposter[]=$vv;
+                        }
+                        if ( $maxratiobackdrop < $v["r"])
+                            $maxratiobackdrop = $v["r"];
+                    }
+                }
+                $tmp["imagebackdrop"]["url"]= $tmpposter;
+                $tmp["imagebackdrop"]["ratio"]= $maxratiobackdrop;
+            }else{
+                $tmp["imagebackdrop"]["url"] = $backdropwidth[$maxwidthbackdrop]["img"];
+                $tmp["imagebackdrop"]["ratio"] = $backdropwidth[$maxwidthbackdrop]["r"];
+            }
+
             //die();
+            /*
             if ($maxratiobackdrop > -1) {
                 $tmp["imagebackdrop"]["ratio"] = $maxratiobackdrop;
             }
             if ($maxratioposter > -1) {
                 $tmp["imageposter"]["ratio"] = $maxratioposter;
-            }
+            }*/
 
             if (isset($v->movieCertificate->certificate->_))
                 $tmp["Interdiction"] = $v->movieCertificate->certificate->_;
@@ -505,6 +595,191 @@ class Allocine extends Model
                 $tmp["Synopsis"] = $v->synopsis;
             if (isset($v->synopsisShort))
                 $tmp["synopsiscourt"] = $v->synopsisShort;
+            return $tmp;
+        }
+        return null;
+    }
+
+    function retourneResMovieImagePoster()
+    {
+        $tmp= array();
+        $v = $this->retourneResMovie();
+        if ($v != null) {
+            $maxwidthposter = -1;
+            $posterwidth = array();
+            if (isset($v->media))
+                foreach ($v->media AS $k => $vv) {
+                    if ($vv->class === "picture") {
+                        $width = 0;
+                        $height = 0;
+                        if (isset($vv->width) && isset($vv->height)) {
+                            $width = $vv->width;
+                            $height = $vv->height;
+                        } else {
+                            $info = getimagesize($vv->thumbnail->href);
+                            $width = $info[0];
+                            $height = $info[1];
+                        }
+                        $ratio = $height / $width;
+                        if ($width < $height) {
+                            //Poster
+                            if ($maxwidthposter < $width)
+                                $maxwidthposter = $width;
+                            $posterwidth[$width]["img"][] = array($vv->thumbnail->href, $width, $height);
+                            if ( ! isset($posterwidth[$width]["r"])){
+                                $posterwidth[$width]["r"]=$ratio;
+                            }else if ($posterwidth[$width]["r"] < $ratio){
+                                $posterwidth[$width]["r"] = $ratio;
+                            }
+
+                            $tmp["imageposter"]["url"][] = array($vv->thumbnail->href, $width, $height);
+                        }
+                    }
+
+
+                }
+            $tmdb = new TheMovieDb();
+            $films = $tmdb->searchFilm($v->originalTitle, "en");
+            //var_dump($tmp1);
+            //die();
+            if (isset($films->results)) {
+                if (count($films->results) > 0) {
+                    foreach ($films->results as $vvv) {
+                        //var_dump(stripos($vvv->original_title, $v->originalTitle));
+                        if (stripos(String::remplaceAccent($vvv->original_title), String::remplaceAccent($v->originalTitle)) === 0) {
+                            $tmp1 = $tmdb->getMovieImage($vvv->id);
+                            foreach ($tmp1->posters as $k => $vv) {
+                                $height = $vv->height;
+                                $width = $vv->width;
+                                $ratio = $height / $width;
+                                if ($maxwidthposter < $width)
+                                    $maxwidthposter = $width;
+                                $posterwidth[$width]["img"][] = array("http://image.tmdb.org/t/p/original" . $vv->file_path, $width, $height);
+                                if ( ! isset($posterwidth[$width]["r"])){
+                                    $posterwidth[$width]["r"]=$ratio;
+                                }else if ($posterwidth[$width]["r"] < $ratio){
+                                    $posterwidth[$width]["r"] = $ratio;
+                                }
+                                //$posterwidth[$vv->width][] = array("http://image.tmdb.org/t/p/original" . $vv->file_path, $vv->width, $vv->height);
+                                $tmp["imageposter"]["url"][] = array("http://image.tmdb.org/t/p/original" . $vv->file_path, $vv->width, $vv->height);
+                            }
+                        }
+                    }
+
+                }
+            }
+            $maxratioposter = -1;
+            if ( $maxwidthposter >= 1200){
+                $tmpposter = array();
+                foreach ( $posterwidth as $k=>$v){
+                    if ( $k >= 1200){
+                        foreach($v["img"] as $vv){
+                            $tmpposter[]=$vv;
+                        }
+                        if ( $maxratioposter < $v["r"])
+                            $maxratioposter = $v["r"];
+                    }
+                }
+                $tmp["url"]= $tmpposter;
+                $tmp["ratio"] = $maxratioposter;
+            }else{
+                $tmp["url"] = $posterwidth[$maxwidthposter]["img"];
+                $tmp["ratio"] = $posterwidth[$maxwidthposter]["r"];
+            }
+
+
+
+            return $tmp;
+        }
+        return null;
+    }
+    function retourneResMovieImageBackdrop()
+    {
+        $tmp=array();
+        $v = $this->retourneResMovie();
+        if ($v != null) {
+            $maxwidthbackdrop = -1;
+            $backdropwidth = array();
+            if (isset($v->media))
+                foreach ($v->media AS $k => $vv) {
+                    if ($vv->class === "picture") {
+                        $width = 0;
+                        $height = 0;
+                        if (isset($vv->width) && isset($vv->height)) {
+                            $width = $vv->width;
+                            $height = $vv->height;
+                        } else {
+                            $info = getimagesize($vv->thumbnail->href);
+                            $width = $info[0];
+                            $height = $info[1];
+                        }
+                        $ratio = $height / $width;
+                        if ($width > $height) {
+                            //Backdrop test
+                            if ($maxwidthbackdrop < $width)
+                                $maxwidthbackdrop = $width;
+                            $backdropwidth[$width]["img"][]=array($vv->thumbnail->href, $width, $height);
+                            if ( ! isset($backdropwidth[$width]["r"])){
+                                $backdropwidth[$width]["r"]=$ratio;
+                            }else if ($backdropwidth[$width]["r"] < $ratio){
+                                $backdropwidth[$width]["r"] = $ratio;
+                            }
+                        }
+                    }
+
+                }
+            $tmdb = new TheMovieDb();
+            $films = $tmdb->searchFilm($v->originalTitle, "en");
+            //var_dump($tmp1);
+            //die();
+            if (isset($films->results)) {
+                if (count($films->results) > 0) {
+                    foreach ($films->results as $vvv) {
+                        //var_dump(stripos($vvv->original_title, $v->originalTitle));
+                        if (stripos(String::remplaceAccent($vvv->original_title), String::remplaceAccent($v->originalTitle)) === 0) {
+                            $tmp1 = $tmdb->getMovieImage($vvv->id);
+                            foreach ($tmp1->backdrops as $k => $vv) {
+                                //var_dump($vv);
+                                //die();
+                                $height = $vv->height;
+                                $width = $vv->width;
+                                $ratio = $height / $width;
+                                if ($maxwidthbackdrop < $width)
+                                    $maxwidthbackdrop = $width;
+                                if ( ! isset($backdropwidth[$width]["r"])){
+                                    $backdropwidth[$width]["r"]=$ratio;
+                                }else if ($backdropwidth[$width]["r"] < $ratio){
+                                    $backdropwidth[$width]["r"] = $ratio;
+                                }
+                                $backdropwidth[$width]["img"][] = array("http://image.tmdb.org/t/p/original" . $vv->file_path, $width, $height);
+
+                            }
+
+                        }
+                    }
+
+                }
+            }
+
+            $maxratiobackdrop = -1;
+            if ( $maxwidthbackdrop >= 1920){
+                $tmpposter = array();
+                foreach ( $backdropwidth as $k=>$v){
+                    if ( $k >= 1920){
+                        foreach($v["img"] as $vv){
+                            $tmpposter[]=$vv;
+                        }
+                        if ( $maxratiobackdrop < $v["r"])
+                            $maxratiobackdrop = $v["r"];
+                    }
+                }
+                $tmp["url"]= $tmpposter;
+                $tmp["ratio"]= $maxratiobackdrop;
+            }else{
+                $tmp["url"] = $backdropwidth[$maxwidthbackdrop]["img"];
+                $tmp["ratio"] = $backdropwidth[$maxwidthbackdrop]["r"];
+            }
+
             return $tmp;
         }
         return null;

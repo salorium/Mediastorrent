@@ -148,6 +148,128 @@ var Film = {
             this.initTopBar();
         }
     },
+    changeBackdrop: function () {
+        var $codeall = $("#changebackdrop").attr("mediastorrent-codeall");
+        var $id = $("#changebackdrop").attr("mediastorrent-id");
+        var url = Base.controller.makeUrlBase() + 'film/getBackdrops/' + $codeall;
+
+        $.ajax({
+            url: url + ".json",
+            dataType: "json",
+            type: "GET",
+
+            //contentType: "application/json",
+            success: function (response, textStatus, jqXHR) {
+                //console.log(response);
+                Base.view.boxmodal.make("Changer le Backdrop", function () {
+                    var $a = '<center id="details"></center>';
+                    return $a;
+                });
+                Base.view.image.chooser("details", "Backdrop", "detailsbackdrop", response.image, 400, 200);
+                $button = $('<button type="button" class="button small secondary expand">Ok</button>');
+                $button.click(function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    url = Base.controller.makeUrlBase() + 'film/setBackdrop/' + $id;
+                    $.ajax({
+                        url: url + ".json",
+                        dataType: "json",
+                        type: "POST",
+
+                        data: {url: $("#detailsbackdrop").val()},
+                        //contentType: "application/json",
+                        success: function (response, textStatus, jqXHR) {
+                            /*$("#background").css({
+                             "background": 'url("' + Base.controller.makeUrlBase() + "film/getBackdropSetWidth/" + Base.model.converter.paramUrl($id) + '/1920.jpg?='+Date.now()+'") center center fixed',
+                             "background-size": "cover"
+                             });*/
+                            Base.view.boxmodal.del();
+                            location.reload();
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            if (textStatus !== "abort" && textStatus !== "parsererror") {
+                                console.info(textStatus);
+
+                                Base.view.noty.generate("error", "Impossible de se connecter");
+                            }
+                        }
+                    });
+
+                });
+                $("#details").append($('<div class="small-2 small-centered"></div>').append($button));
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (textStatus !== "abort" && textStatus !== "parsererror") {
+                    console.info(textStatus);
+
+                    Base.view.noty.generate("error", "Impossible de se connecter");
+                }
+            }
+        });
+
+
+    },
+    changePoster: function () {
+        var $codeall = $("#changebackdrop").attr("mediastorrent-codeall");
+        var $id = $("#changebackdrop").attr("mediastorrent-id");
+        var url = Base.controller.makeUrlBase() + 'film/getPosters/' + $codeall;
+
+        $.ajax({
+            url: url + ".json",
+            dataType: "json",
+            type: "GET",
+
+            //contentType: "application/json",
+            success: function (response, textStatus, jqXHR) {
+                //console.log(response);
+                Base.view.boxmodal.make("Changer le Poster", function () {
+                    var $a = '<center id="details"></center>';
+                    return $a;
+                });
+                Base.view.image.chooser("details", "Poster", "detailsbackdrop", response.image, 400, 200);
+                $button = $('<button type="button" class="button small secondary expand">Ok</button>');
+                $button.click(function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    url = Base.controller.makeUrlBase() + 'film/setPoster/' + $id;
+                    $.ajax({
+                        url: url + ".json",
+                        dataType: "json",
+                        type: "POST",
+
+                        data: {url: $("#detailsbackdrop").val()},
+                        //contentType: "application/json",
+                        success: function (response, textStatus, jqXHR) {
+                            /*$("#background").css({
+                             "background": 'url("' + Base.controller.makeUrlBase() + "film/getBackdropSetWidth/" + Base.model.converter.paramUrl($id) + '/1920.jpg?='+Date.now()+'") center center fixed',
+                             "background-size": "cover"
+                             });*/
+                            Base.view.boxmodal.del();
+                            location.reload();
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            if (textStatus !== "abort" && textStatus !== "parsererror") {
+                                console.info(textStatus);
+
+                                Base.view.noty.generate("error", "Impossible de se connecter");
+                            }
+                        }
+                    });
+
+                });
+                $("#details").append($('<div class="small-2 small-centered"></div>').append($button));
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (textStatus !== "abort" && textStatus !== "parsererror") {
+                    console.info(textStatus);
+
+                    Base.view.noty.generate("error", "Impossible de se connecter");
+                }
+            }
+        });
+
+
+    },
     mobileAffiche:function(id){
         $(".container").empty();
         $img = $("<div></div>");
@@ -446,6 +568,13 @@ var Film = {
     afficheDetailsFilm: function (film) {
         this.clean();
         this.containerDetailsFilm.show();
+        if (film.codeall) {
+            $("#changebackdrop").show();
+            $("#changebackdrop").attr("mediastorrent-codeall", film.codeall);
+            $("#changebackdrop").attr("mediastorrent-id", film.id);
+        } else {
+            $("#changebackdrop").hide();
+        }
         $fieldset = $('<fieldset><legend>' + film.Titre + '</legend></fieldset>');
         this.containerDetailsFilm.empty();
         this.containerDetailsFilm.append($fieldset);
@@ -453,7 +582,7 @@ var Film = {
         /*if (film.poster) {
          urlimg = Base.controller.makeUrlBase() + "proxy/imageSetHeight/" + Base.model.converter.paramUrl(film.poster) + '/' + (this.topControl - 180) + '.jpg';
          }*/
-        $divimg = $('<div class="float" style="margin-right: 10px;width: 20%;"> <img style="height:' + (this.topControl - 180) + 'px;" src="' + urlimg + '" alt="' + film.Titre + '"></div>');
+        $divimg = $('<div class="float" style="margin-right: 10px;width: 20%;">' + (Base.model.utilisateur.role === "Sysop" ? '<span id="changeposter" onclick="Film.changePoster();" mediastorrent-id="" style="position: absolute; top: 0;left: 0;background-color: rgba(51,51,51,1);color: #ffffff; padding: 2px;"><img width="30px"title="Changer le poster" src="' + Base.controller.makeUrlBase() + 'images/paint.svg?color=white"></span>' : '') + ' <img style="height:' + (this.topControl - 180) + 'px;" src="' + urlimg + '" alt="' + film.Titre + '"></div>');
         $fieldset.append($divimg);
         console.log((this.containerDetailsFilm.width() - $divimg.width()));
         $divv = $('<div class="float" style="width: 78%;"></div>');
@@ -475,6 +604,7 @@ var Film = {
                     case "Réalisateur(s)":
                     case "Genre":
                     case "Durée":
+                    case "Année de production":
                         $divv1.append('<span>' + k + ' : ' + v + '</span><br><br>');
                         break;
                 }

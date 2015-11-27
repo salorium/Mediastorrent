@@ -180,7 +180,36 @@ class Film extends Controller
         $this->set("film", $tmp);
     }
 
+    function getPosters($id){
+        $o = array();
+        $o["typesearch"]="movie";
+        $a = new \model\simple\Allocine($id,$o);
+        $this->set("image",$a->retourneResMovieImagePoster());
+    }
+    function getBackdrops($id){
+        $o = array();
+        $o["typesearch"]="movie";
+        $a = new \model\simple\Allocine($id,$o);
+        $this->set("image",$a->retourneResMovieImageBackdrop());
 
+    }
+    function setBackdrop($id){
+        $film = \model\mysql\Film::setBackdrop($id,$_REQUEST["url"]);
+        $url = ROOT . DS . "cache" . DS . "film" . DS . "backdrop".DS . $id . ".jpg";
+         unlink($url);
+        $this->set("ok",$film);
+        $this->set("path",$url);
+
+    }
+
+    function setPoster($id){
+        $film = \model\mysql\Film::setPoster($id,$_REQUEST["url"]);
+        $url = ROOT . DS . "cache" . DS . "film" . DS . "poster".DS . $id . ".jpg";
+        unlink($url);
+        $this->set("ok",$film);
+        $this->set("path",$url);
+
+    }
     function getFile($id)
     {
         $a = \model\mysql\Torrentfilm::getTorrentFilmParIdFilm($id);

@@ -63,9 +63,15 @@ class Controller
             if (Conf::$rolevue === "visiteur") {
                 $view = ROOT . DS . "view" . DS . "html" . DS . $this->request->controller . DS . $view . ".php";
             } else {
-                $view = ROOT . DS . "view" . DS . "html" . DS . $this->request->controller . DS . Conf::$rolevue . DS . $view . ".php";
+                $i = \config\Conf::$user["role"];
+                do {
+                    $view1 = ROOT . DS . "view" . DS . "html" . DS . $this->request->controller . DS . strtolower(Conf::$numerorole[$i]) . DS . $view . ".php";
+                    if (file_exists($view1))
+                        break;
+                    $i--;
+                } while ($i > 0);
+                $view = $view1;
             }
-
         }
         //Affichage du contenu de la page !!!
         \ob_start();

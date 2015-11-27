@@ -34,7 +34,9 @@
 --><?= isset($loadjavascript_for_layout) ? $loadjavascript_for_layout : ""; ?>
 <?php
 require ROOT . DS . "view" . DS . "html" . DS . "layout" . DS . "control" . strtolower(DS . \config\Conf::$user["user"]->role) . ".php"; ?>
-<div id="background" style="padding-top: 10px;"><?php echo $content_for_layout; ?>
+<div id="background" style="padding-top: 10px;position: relative;">
+
+    <?php echo $content_for_layout; ?>
     <div class="show-for-medium-up" style="
     position			: fixed;
 			bottom				: 0;

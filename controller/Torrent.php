@@ -843,26 +843,26 @@ class Torrent extends Controller
                                         /**
                                          * Todo check $idfile, une série == un torrent, pareil pour les différents fichier le contenant différent du film
                                          */
-                                        $titre = trim($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "titre"]);
-                                        $otitre = trim($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "titreoriginal"]);
-                                        $synopsis = trim($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "synopsis"]);
-                                        $genre = explode(",", $_REQUEST["torrent" . $idtorrent . "file" . $idfile . "genre"]);
+                                        $titre = trim($_REQUEST["torrent" . $idtorrent . "file" . "titre"]);
+                                        $otitre = trim($_REQUEST["torrent" . $idtorrent . "file" . "titreoriginal"]);
+                                        $synopsis = trim($_REQUEST["torrent" . $idtorrent . "file" . "synopsis"]);
+                                        $genre = explode(",", $_REQUEST["torrent" . $idtorrent . "file" . "genre"]);
                                         array_walk($genre, create_function('&$val', '$val = trim($val);'));
                                         array_walk($genre, create_function('&$val', '$val = strtolower($val);'));
                                         array_walk($genre, create_function('&$val', '$val = ucfirst($val);'));
-                                        $acteurs = explode(",", $_REQUEST["torrent" . $idtorrent . "file" . $idfile . "acteur"]);
+                                        $acteurs = explode(",", $_REQUEST["torrent" . $idtorrent . "file" . "acteur"]);
                                         array_walk($acteurs, create_function('&$val', '$val = trim($val);'));
                                         array_walk($acteurs, create_function('&$val', '$val = strtolower($val);'));
                                         array_walk($acteurs, create_function('&$val', '$val = ucwords($val);'));
                                         $acteurs = implode(", ", $acteurs);
-                                        $realisateurs = explode(",", $_REQUEST["torrent" . $idtorrent . "file" . $idfile . "realisateur"]);
+                                        $realisateurs = explode(",", $_REQUEST["torrent" . $idtorrent . "file" . "realisateur"]);
                                         array_walk($realisateurs, create_function('&$val', '$val = trim($val);'));
                                         array_walk($realisateurs, create_function('&$val', '$val = strtolower($val);'));
                                         array_walk($realisateurs, create_function('&$val', '$val = ucwords($val);'));
                                         $realisateurs = implode(", ", $realisateurs);
-                                        $anneeprod = trim($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "anneeprod"]);
-                                        $urlposter = trim($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "poster"]);
-                                        $urlbackdrop = trim($_REQUEST["torrent" . $idtorrent . "file" . $idfile . "backdrop"]);
+                                        $anneeprod = trim($_REQUEST["torrent" . $idtorrent . "file" . "anneeprod"]);
+                                        $urlposter = trim($_REQUEST["torrent" . $idtorrent . "file" . "poster"]);
+                                        $urlbackdrop = trim($_REQUEST["torrent" . $idtorrent . "file" . "backdrop"]);
                                         $infos["Titre"] = $titre;
                                         $infos["Titre original"] = $otitre;
                                         $infos["Genre"] = implode(", ", $genre);
@@ -889,8 +889,8 @@ class Torrent extends Controller
                                             $otitre = $infos["Titre original"];
                                             $urlposter = trim($_REQUEST["torrent" . $idtorrent . "fileposter"]);
                                             $urlbackdrop = trim($_REQUEST["torrent" . $idtorrent . "filebackdrop"]);
-                                            $realisateurs = $infos["Réalisateur(s)"];
-                                            $acteurs = "";
+                                            $realisateurs = (isset($infos["Réalisateur(s)"]) ? $infos["Réalisateur(s)"] : "Inconnu");
+                                            $acteurs = "Inconnu";
                                             if (isset($infos["Acteur(s)"]))
                                                 $acteurs = $infos["Acteur(s)"];
                                             $anneeprod = $infos["Lancement"];

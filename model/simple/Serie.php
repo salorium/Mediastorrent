@@ -70,4 +70,39 @@ class Serie extends \core\Model
         $myimage = new \model\simple\MyImage(Serie::getPoster($id));
         return $myimage->getImageHeightFixed($height);
     }
+
+    static function getInfosPourDownload($torrents){
+        $mediainfo = json_decode($torrents->mediainfo, true);
+        $compfile = "[";
+        $compfile .= (strlen($torrents->complementfichier) > 0 ? $torrents->complementfichier . "." : "");
+        switch ($mediainfo["typequalite"]) {
+            case "SD":
+                $compfile .= $mediainfo["codec"];
+                break;
+            case "HD":
+                $compfile .= $mediainfo["qualite"] . "." . $mediainfo["codec"];
+                break;
+        }
+        $audios = array();
+        foreach ($mediainfo["audios"] as $v) {
+            $res = "";
+            if ($v["type"] !== "MP3") {
+                $res .= $v["type"] .(isset($v["cannal"]) ? " " . $v["cannal"]:"");
+                if (isset($v["lang"]))
+                    $res .= " " . $v["lang"];
+                $audios[] = $res;
+
+            }
+
+        }
+
+        if (count($audios) > 1) {
+            $au = implode(".", $audios);
+            $compfile .= "." . $au;
+        } else {
+            $compfile .= "." . $audios[0];
+        }
+        $compfile .= "]";
+        return [$mediainfo["filename"], $torrents->titre . " Saison " . $torrents->saison . " Épisode " . $torrents->episode . " " . $compfile];
+    }
 }

@@ -172,7 +172,44 @@ $genres = \model\mysql\Genreserie::getAllGenre();
                 </ul>
             </li>
             <li class="divider"></li>
+            <li class="has-dropdown"><a><img width="30px" title="Amis"
+                                             src="<?= BASE_URL ?>images/amis.svg?color=rgba(240,240,240,1)"/></a>
 
+                <ul class="dropdown">
+                    <li class="has-dropdown"><a>Nouveauté</a>
+
+                        <ul class="dropdown">
+                            <li><a href="#">Nouveauté</a></li>
+                            <li class="divider"></li>
+                            <li><label>Genre</label></li>
+                            <li><a href="#">Dance</a></li>
+                            <li><a href="#">Hip-hop</a></li>
+                            <li><a href="#">Horreur</a></li>
+                            <li><a href="#">Thriller</a></li>
+                            <li><a href="#">Comédie</a></li>
+                            <li class="divider"></li>
+                            <li><label>Genre</label></li>
+                            <li><a href="#">Dance</a></li>
+                            <li><a href="#">Hip-hop</a></li>
+                            <li><a href="#">Horreur</a></li>
+                            <li><a href="#">Thriller</a></li>
+                            <li><a href="#">Comédie</a></li>
+                        </ul>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="has-dropdown"><a>Genre</a>
+
+                        <ul class="dropdown">
+                            <li><a href="#">Annimation</a></li>
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Horreur</a></li>
+                            <li><a href="#">Thriller</a></li>
+                            <li><a href="#">Comédie</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="divider"></li>
 
         </ul>
 

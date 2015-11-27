@@ -563,7 +563,7 @@ Torrent1.controller = {
                     }
                 });
             }
-
+            if (listafaire.length > 0)
             $.ajax({
                 url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/recheck/' + Base.model.utilisateur.keyconnexion + ".json",
                 dataType: "json",
@@ -594,7 +594,7 @@ Torrent1.controller = {
                     }
                 });
             }
-
+            if (listafaire.length > 0)
             $.ajax({
                 url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/stop/' + Base.model.utilisateur.keyconnexion + ".json",
                 dataType: "json",
@@ -625,6 +625,7 @@ Torrent1.controller = {
                     }
                 });
             }
+            if (listafaire.length > 0)
             $.ajax({
                 url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/start/' + Base.model.utilisateur.keyconnexion + ".json",
                 dataType: "json",
@@ -655,6 +656,7 @@ Torrent1.controller = {
                     }
                 });
             }
+            if (listafaire.length > 0)
             $.ajax({
                 url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/pause/' + Base.model.utilisateur.keyconnexion + ".json",
                 dataType: "json",
@@ -683,6 +685,7 @@ Torrent1.controller = {
                 });
             }
             Torrent1.model.listTorrent.selectionne = [];
+            if (listafaire.length > 0)
             $.ajax({
                 url: Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/delete/' + Base.model.utilisateur.keyconnexion + ".json",
                 dataType: "json",
@@ -713,6 +716,7 @@ Torrent1.controller = {
                     res += listeo[v][1] + "<br>";
                 });
             }
+            if (listafaire.length > 0)
             Base.view.noty.generateConfirm(res, function () {
                     Torrent1.model.listTorrent.selectionne = [];
                     $.ajax({
@@ -835,6 +839,7 @@ Torrent1.controller = {
         },
         download: function (k) {
             var url = Base.controller.makeUrlBase(Torrent1.model.baseUrl) + 'torrent/download/' + Torrent1.model.listTorrent.selectionne[0] + "/" + Torrent1.model.filesTorrent.original[k][0] + "/" + Base.model.utilisateur.keyconnexion;
+            console.error(url);
             if (Torrent1.model.filesTorrent.original[k][2] == Torrent1.model.filesTorrent.original[k][3]) {
                 $("#getdata").attr("action", url).submit();
             } else {
@@ -910,6 +915,7 @@ Torrent1.controller = {
                 for (var j = 0; j < Torrent1.model.filesTorrent.original.length; j++) {
                     var v = Torrent1.model.filesTorrent.original[j];
                     //Torrent1.model.filesTorrent.liste[Torrent1.model.filesTorrent.liste.length]= v;
+                    console.log(v);
                     var paths = v[1].split("/");
                     var dire = "/";
                     var ancdire = "/";
@@ -1208,7 +1214,7 @@ Torrent1.controller = {
                 movie: {
                     showPanel: function (id, numfile, nom) {
                         Base.view.boxmodal.make("Infos films ", Torrent1.view.addTorrent.files.file.movie.recherche.recherche(nom, id, numfile));
-                        $("#details").height($("#modalc").height() - $("#modaltitre").height() - $("#modalcontenu").height())
+                        $("#details").height($("#modalc").height() - $("#modaltitre").height() - $("#infosfilm").height())
                     },
                     recherche: function () {
                         var recherche = $("#suggestrecherche").val();
@@ -1263,7 +1269,7 @@ Torrent1.controller = {
                 serie: {
                     showPanel: function (id, nom) {
                         Base.view.boxmodal.make("Infos films ", Torrent1.view.addTorrent.files.file.serie.recherche.recherche(nom, id));
-                        $("#details").height($("#modalc").height() - $("#modaltitre").height() - $("#modalcontenu").height())
+                        $("#details").height($("#modalc").height() - $("#modaltitre").height() - $("#infosfilm").height())
                     },
                     recherche: function () {
                         if (Torrent1.model.addTorrent.files.file.rechercheReq != null)
@@ -1279,6 +1285,7 @@ Torrent1.controller = {
                             //contentType: "application/json",
                             success: function (response, textStatus, jqXHR) {
                                 //console.log(response);
+                                console.log(response);
                                 Torrent1.view.addTorrent.files.file.serie.recherche.results( response);
                             },
                             error: function (jqXHR, textStatus, errorThrown) {

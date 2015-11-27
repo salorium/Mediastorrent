@@ -20,6 +20,11 @@ function __autoload($class_name)
 
 }
 
+/**
+ * Todo : Demandé si c'est un serveur principal ou secondaire.
+ * Serveur principal création de la bd
+ * Serveur secondaire pas de création de la bd
+ */
 //Retour visuel
 \config\Conf::$debuglocalfile = false;
 \model\simple\Console::println("Configuration de mediastorrent");

@@ -998,6 +998,7 @@ Torrent1.view = {
                         },
                         allrecherche: function (film) {
                             $("#details").empty();
+                            console.log(film);
                             if (!film.type) {
                                 $("#details").append('<input type="hidden" id="typerecherche" value="local">');
                                 $("#details").append('<input type="hidden" id="detailsposter" value="' + film.imageposter + '">');
