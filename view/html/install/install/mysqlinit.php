@@ -24,7 +24,7 @@ if (!isset($res)) {
                         <small>obligatoire</small>
                     </label></td>
                 <td>
-                    <input name="pass" type="password" required pattern="password"/>
+                    <input name="pass" type="password" required/>
                     <small class="error">Le mot de passe est obligatoire ! (Au moins 8 caractères avec une lettre
                         majuscule, un chiffre / un caractère spécial.)
                     </small>
