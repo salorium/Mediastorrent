@@ -14,6 +14,22 @@ define('DS', DIRECTORY_SEPARATOR);
 define('CORE', ROOT . DS . 'core');
 define('BASE_URL', "http" . (isset($_SERVER["HTTPS"]) ? "s" : "") . "://" . $_SERVER["HTTP_HOST"] . dirname(dirname($_SERVER["SCRIPT_NAME"])) . ($_SERVER["SCRIPT_NAME"] !== "/index.php" ? "/" : ""));
 define('HOST', substr($_SERVER["HTTP_HOST"] . dirname(dirname($_SERVER["SCRIPT_NAME"])) . ($_SERVER["SCRIPT_NAME"] !== "/index.php" ? "/" : ""), 0, -1));
+
+if (!function_exists('apache_request_headers')) {
+    function apache_request_headers()
+    {
+        foreach ($_SERVER as $key => $value) {
+            if (substr($key, 0, 5) == "HTTP_") {
+                $key = str_replace(" ", "-", ucwords(strtolower(str_replace("_", " ", substr($key, 5)))));
+                $out[$key] = $value;
+            } else {
+                $out[$key] = $value;
+            }
+        }
+        return $out;
+    }
+}
+
 function __autoload($class_name)
 {
     $filename = ROOT . DS . str_replace("\\", DS, $class_name) . ".php";

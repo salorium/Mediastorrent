@@ -19,6 +19,11 @@ Base.model = {
         this.id++;
         return this.id;
     },
+    extractUrl: function (href) {
+        var l = document.createElement("a");
+        l.href = href;
+        return l;
+    },
     converter: {
         paramUrl: function (val) {
             return encodeURIComponent(val.replace(/\//gi, "\\"));

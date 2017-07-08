@@ -41,7 +41,7 @@ class Torrentserie extends \core\ModelMysql
         $toserie->clefunique = $clefunique;
         $toserie->fini = 0;
         $toserie->partageamis = $partageamis;
-        $toserie->id = \model\simple\String::random(10);
+        $toserie->id = \model\simple\ChaineCaractere::random(10);
 
         $toserie->insert();
         return $toserie;
@@ -399,7 +399,7 @@ class Torrentserie extends \core\ModelMysql
     {
         do {
             $query = "select * from torrentserie ";
-            $clefunique = \model\simple\String::random(10);
+            $clefunique = \model\simple\ChaineCaractere::random(10);
             $query .= "where clefunique=" . \core\Mysqli::real_escape_string_html($clefunique);
             \core\Mysqli::query($query);
         } while (!is_bool(\core\Mysqli::getObjectAndClose(false, __CLASS__)));

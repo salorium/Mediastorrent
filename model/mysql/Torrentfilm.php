@@ -37,7 +37,7 @@ class Torrentfilm extends \core\ModelMysql
         $tofilm->clefunique = $clefunique;
         $tofilm->fini = 0;
         $tofilm->partageamis = $partageamis;
-        $tofilm->id = \model\simple\String::random(10);
+        $tofilm->id = \model\simple\ChaineCaractere::random(10);
 
         $tofilm->insert();
         return $tofilm;
@@ -309,7 +309,7 @@ class Torrentfilm extends \core\ModelMysql
     {
         do {
             $query = "select * from torrentfilm ";
-            $clefunique = \model\simple\String::random(10);
+            $clefunique = \model\simple\ChaineCaractere::random(10);
             $query .= "where clefunique=" . \core\Mysqli::real_escape_string_html($clefunique);
             \core\Mysqli::query($query);
         } while (!is_bool(\core\Mysqli::getObjectAndClose(false, __CLASS__)));

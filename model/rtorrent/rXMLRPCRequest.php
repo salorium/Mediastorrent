@@ -6,7 +6,7 @@
  * Time: 23:39
  */
 
-namespace model\xmlrpc;
+namespace model\rtorrent;
 
 
 use core\Debug;
@@ -25,15 +25,19 @@ class rXMLRPCRequest extends \core\Model
     public $important = true;
     public $portscgi;
     public $userscgi;
+    public $timeMake = 0;
+    public $timeParse = 0;
+    public $timeRegex = 0;
+    public $timeSend = 0;
     public static $query = null;
     public static $time = 0;
 
     /**
      * @param null $cmds
      */
-    public function __construct($userscgi, $cmds = null)
+    public function __construct($cmds = null)
     {
-        $this->userscgi = $userscgi;
+        $this->userscgi = \config\Conf::$userscgi;
         if ($cmds) {
             if (is_array($cmds))
                 foreach ($cmds as $cmd)
@@ -43,12 +47,12 @@ class rXMLRPCRequest extends \core\Model
         }
     }
 
-    public static function send($data, $user)
+    public function send($data)
     {
         /*if(Variable::$rpc_call)
             toLog($data);*/
         $QueryStartTime = \microtime(true);
-        $scgi_host = "unix:///home/$user/rtorrent/session/rpc.socket";
+        $scgi_host = "unix:///home/" . $this->userscgi . "/rtorrent/session/rpc.socket";
         //$scgi_port = $portscgi;
         $result = false;
         $contentlength = strlen($data);
@@ -73,7 +77,7 @@ class rXMLRPCRequest extends \core\Model
         }
         $QueryEndTime = microtime(true);
         self::$time += ($QueryEndTime - $QueryStartTime) * 1000;
-        self::$query[] = array($d, ($QueryEndTime - $QueryStartTime) * 1000, $result);
+        $this->timeSend = ($QueryEndTime - $QueryStartTime) * 1000;
         /*if(Variable::$rpc_call)
             toLog($result);*/
         return ($result);
@@ -91,6 +95,7 @@ class rXMLRPCRequest extends \core\Model
 
     public function makeCall()
     {
+        $QueryStartTime = \microtime(true);
         $this->fault = false;
         $this->content = "";
         $cnt = count($this->commands);
@@ -114,6 +119,8 @@ class rXMLRPCRequest extends \core\Model
             }
             $this->content .= "</params></methodCall>";
         }
+        $QueryEndTime = microtime(true);
+        $this->timeMake = ($QueryEndTime - $QueryStartTime) * 1000;
         return ($cnt > 0);
     }
 
@@ -128,17 +135,13 @@ class rXMLRPCRequest extends \core\Model
         $this->i8s = array();
         $this->strings = array();
         $this->val = array();
-        Debug::startTimer("makecall");
         if ($this->makeCall()) {
-            Debug::endTimer("makecall");
-            Debug::startTimer("send");
-            $answer = self::send($this->content, $this->userscgi);
-            Debug::endTimer("send");
+            $answer = $this->send($this->content);
 
             if (!empty($answer)) {
                 if ($factory) {
-                    Debug::startTimer("refac");
                     if ($this->parseByTypes) {
+                        $QueryStartTime = \microtime(true);
                         if ((preg_match_all("|<value><string>(.*)</string></value>|Us", $answer, $this->strings) !== false) &&
                             count($this->strings) > 1 &&
                             (preg_match_all("|<value><i.>(.*)</i.></value>|Us", $answer, $this->i8s) !== false) &&
@@ -151,19 +154,19 @@ class rXMLRPCRequest extends \core\Model
                             $this->i8s = $this->i8s[1];
                             $ret = true;
                         }
+                        $QueryEndTime = microtime(true);
+                        $this->timeParse = ($QueryEndTime - $QueryStartTime) * 1000;
                     } else {
-                        Debug::startTimer("refacpreg");
+                        $QueryStartTime = \microtime(true);
                         if ((preg_match_all("/<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>/Us", $answer, $this->val) !== false) &&
                             count($this->val) > 2
                         ) {
-                            Debug::startTimer("refacfor");
                             $this->val = $this->val[2];
-                            Debug::endTimer("refacfor");
                             $ret = true;
                         }
-                        Debug::endTimer("refacpreg");
+                        $QueryEndTime = microtime(true);
+                        $this->timeRegex = ($QueryEndTime - $QueryStartTime) * 1000;
                     }
-                    Debug::endTimer("refac");
                 } else {
                     $ret = true;
                     $this->val = $answer;
@@ -182,8 +185,21 @@ class rXMLRPCRequest extends \core\Model
                 }
 
             }
+            self::$query[] = array(
+                "timeMake" => $this->timeMake,
+                "timeParse" => $this->timeParse,
+                "timeRegex" => $this->timeRegex,
+                "timeSend" => $this->timeSend,
+                "requete" => $this->content,
+                "response" => $answer,
+
+            );
             //trigger_error($answer);
         }
+        $this->timeMake = 0;
+        $this->timeParse = 0;
+        $this->timeSend = 0;
+        $this->timeRegex = 0;
         $this->content = "";
         $this->commands = array();
         return ($ret);
@@ -191,12 +207,8 @@ class rXMLRPCRequest extends \core\Model
 
     public function success($factory = true)
     {
-        Debug::startTimer("sucess");
         $res = ($this->run($factory) && !$this->fault);
-        Debug::endTimer("sucess");
-
         return $res;
-
     }
 
     public function getValueParsed()

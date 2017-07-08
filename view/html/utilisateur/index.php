@@ -71,7 +71,7 @@ if (isset ($erreur)) {
                 <div class="columns">
                     <label>Mot de passe
                         <small>obligatoire</small>
-                        <input name="motdepasse" type="password" required pattern="password"/>
+                        <input name="motdepasse" type="password" required/>
                     </label>
                     <small class="error">Le mot de passe est obligatoire ! (Au moins 8 caractères avec une lettre
                         majuscule, un chiffre / un caractère spécial.)

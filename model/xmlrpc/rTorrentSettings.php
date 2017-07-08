@@ -62,6 +62,7 @@ class rTorrentSettings extends \core\Model
                 $res = Memcached::value("rtorrent" . $user, "rtorrentsetting");
                 if (!$res) {
                     self::$theSettings->obtain();
+
                 } else {
                     self::$theSettings = $res;
                 }
@@ -111,7 +112,7 @@ class rTorrentSettings extends \core\Model
                     new rXMLRPCCommand($this->user, "directory.default"),
                     new rXMLRPCCommand($this->user, "session.path"),
                     new rXMLRPCCommand($this->user, "system.library_version"),
-                    new rXMLRPCCommand($this->user, "network.xmlrpc.size_limit.set", array("", 67108863)),
+                    new rXMLRPCCommand($this->user, "network.xmlrpc.size_limit.set", array("", "10M")),
                     new rXMLRPCCommand($this->user, "session.name"),
                     new rXMLRPCCommand($this->user, "network.port_range"),
                     new rXMLRPCCommand($this->user, "system.pid"),

@@ -23,7 +23,7 @@ class Download extends Model
             $name = pathinfo($file, PATHINFO_FILENAME);
         if (!($fp = fopen(ROOT . DS . "log" . DS . 'download.txt', 'a'))) return;
 
-        fprintf($fp, \config\Conf::$user["user"]->login . " : " . $name . "." . pathinfo($file, PATHINFO_EXTENSION) . "\n");
+        fprintf($fp, date("d/m/Y") . ":" . \config\Conf::$user["user"]->login . " : " . $name . "." . pathinfo($file, PATHINFO_EXTENSION) . "\n");
         fclose($fp);
         $file = str_replace("&amp;", "&", $file);
         if (!file_exists($file)) {

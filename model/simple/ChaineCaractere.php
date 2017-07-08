@@ -9,7 +9,7 @@
 namespace model\simple;
 
 
-class String extends \core\Model
+class ChaineCaractere extends \core\Model
 {
     static function random($car, $espace = false)
     {

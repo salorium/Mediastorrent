@@ -162,6 +162,423 @@ class Torrent extends Controller
         $this->set("res", $ret);
     }
 
+    function listen($keyconnexion = null, $cid = null, $hashtorrentselectionne = "")
+    {
+        Debug::startTimer("l");
+        \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
+        $tor = null;
+        if (!\config\Conf::$user["user"]) throw new \Exception("Non User");
+        $cmds = array(
+            "d.hash=" /*0*/, "d.is_active=" /*1*/, "d.is_open=" /*2*/, "d.is_hash_checking=" /*3*/, "d.hashing=" /*4*/,
+            "d.state=" /*5*/, "d.name=" /*6*/, "d.bytes_done=" /*7*/, "d.size_bytes=" /*8*/,
+//            "d.timestamp.started=" /*9*/,"d.timestamp.finished=" /*10*/,"d.ratio="/*11*/,
+//            'cat="$t.multicall=d.hash=,t.scrape_complete=,cat={#}"' /*12*/,"d.peers_complete=" /*13*/,
+//            'cat="$t.multicall=d.hash=,t.scrape_incomplete=,cat={#}"' /*14*/,"d.peers_accounted=" /*15*/,
+//            "d.up.rate=" /*16*/, "d.down.rate=" /*17*/,"d.down.total=" /*18*/,"d.up.total=" /*19*/
+        );
+        $cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "d.multicall2", array("", "main"));
+        $res = array();
+        foreach ($cmds as $v) {
+            $res[] = \model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$userscgi, $v);
+        }
+        $cmd->addParameters($res);
+        $cnt = count($cmd->params) - 1;
+
+        $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$userscgi);
+        $req2 = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$userscgi);
+
+        $req->addCommand($cmd);
+        $req2->addCommand($cmd);
+        $cmds = array(
+            "throttle.global_up.rate", "throttle.global_up.max_rate", "throttle.global_up.total", "throttle.global_down.rate", "throttle.global_down.max_rate", "throttle.global_down.total"
+        );
+        $req1 = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$userscgi);
+
+        foreach ($cmds as $cmd) {
+            $req2->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, $cmd));
+            $req1->addCommand(new rXMLRPCCommand(\config\Conf::$userscgi, $cmd));
+        }
+
+
+        $cmds = array(
+//            "d.hash" /*0*/, "d.is_active" /*1*/,"d.is_open" /*2*/, "d.is_hash_checking" /*3*/, "d.hashing" /*4*/,
+//            "d.state" /*5*/,"d.name" /*6*/,  "d.bytes_done" /*7*/, "d.size_bytes" /*8*/,
+//            "d.timestamp.started"/*9*/,"d.timestamp.finished"/*10*/,"d.ratio"/*11*/,
+//            't.scrape_incomplete' /*12*/,"d.peers_complete"/*13*/,
+//            'cat="$t.multicall=d.hash=,t.scrape_complete=,cat={#}"' /*12*/,"d.peers_complete=" /*13*/,
+//            "d.peers_accounted"/*15*/,
+//            "d.up.rate"/*16*/, "d.down.rate"/*17*/,"d.down.total"/*18*/,"d.up.total"/*19*/
+        );
+        foreach ($cmds as $cmd) {
+            $req2->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, $cmd, ["", $hashtorrentselectionne]));
+            $req1->addCommand(new rXMLRPCCommand(\config\Conf::$userscgi, $cmd));
+        }
+//        $req1->success(false);
+//        sleep(5);
+////        sleep(5);
+//        $req->success(false);
+//        sleep(5);
+        $req2->success(false);
+        return;
+//
+//        $cmds = array(
+//            "f.path=", "f.completed_chunks=", "f.size_chunks=", "f.size_bytes=", "f.priority=", "f.prioritize_first=", "f.prioritize_last="
+//        );
+//        $cmd1 = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "f.multicall", array($hashtorrentselectionne,""));
+//
+//        foreach ($cmds as $prm) {
+//            $cmd1->addParameter(\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$userscgi, $prm));
+//        }
+//        $req->addCommand($cmd1);
+
+        $t = null;
+        Debug::startTimer("rtorrent");
+        /*$req->success();
+        Debug::endTimer("rtorrent");
+        $this->set(array(
+            //"torrent"=>$req->val,
+            "tt"=> $req->vals
+        ));
+        return true;//*/
+        if ($req->success(false)) {
+            Debug::endTimer("rtorrent");
+            Debug::startTimer("t");
+            $retour = $req->val;
+            for ($i = 0; $i < 4; $i++) {
+                $index = strpos($retour, "\n") + 1;
+                $retour = substr($retour, $index);
+            }
+//            $index = strpos($retour,"array");
+//            $indexfin = strrpos($retour,'array' );
+//
+//            $retour = substr($retour,$index+strlen("array")+1,$indexfin-$index-strlen("array")-3);
+            Debug::endTimer("t");
+            //var_dump(Debug::$timelog["t"]);
+            Debug::startTimer("t");
+            $xml = simplexml_load_string($retour);
+            $allRep = $xml->xpath("/methodResponse/params/param/value/array/data/value");
+            $torrents = $allRep[0]->xpath("array/data/value/array/data/value");
+            $status = array('started' => 1, 'paused' => 2, 'checking' => 4, 'hashing' => 8, 'error' => 16);
+            foreach ($torrents as $torrent) {
+                $infos = $torrent->xpath("array/data/value");
+                $hash = (string)$infos[0]->children();
+                $is_active = (boolean)(int)$infos[1]->children();
+                $is_open = (boolean)(int)$infos[2]->children();
+                $is_hash_checking = (boolean)(int)$infos[3]->children();
+                $is_hashing = (boolean)(int)$infos[4]->children();
+                $state = 0;
+                $is_state = (boolean)(int)$infos[5]->children();
+                if ($is_open) {
+                    $state |= $status["started"];
+                    if ((!$is_state) || (!$is_active))
+                        $state |= $status["paused"];
+                }
+                if ($is_hashing)
+                    $state |= $status["hashing"];
+                if ($is_hash_checking != 0)
+                    $state |= $status["checking"];
+//                if ($msg != "" && $msg != "Tracker: [Tried all trackers.]")
+//                    $state |= $status["error"];
+                $name = (string)$infos[6]->children();
+                $bytesDone = (int)$infos[7]->children();
+                $bytesTotal = (int)$infos[8]->children();
+//                $timeAdd = (int)$infos[9]->children();
+//                $timeSeed = (int)$infos[10]->children();
+//                $ratio = (int)$infos[11]->children();
+//                $seedsTotal = 0;
+//                foreach (explode("#", (string)$infos[12]->children()) as $k => $v) {
+//                    $seedsTotal += $v;
+//                }
+//                $seeds = (int)$infos[13]->children();
+//                $peersTotal = 0;
+//                foreach (explode("#", (string)$infos[14]->children()) as $k => $v) {
+//                    $peersTotal += $v;
+//                }
+//                $peers = (int)$infos[15]->children();
+//                $vitessUpload = (int)$infos[16]->children();
+//                $vitessDownload = (int)$infos[17]->children();
+//                $bytesDownload = (int)$infos[18]->children();
+//                $bytesUpload = (int)$infos[19]->children();
+
+//                var_dump(count($infos));
+//                var_dump($infos[12]->children());
+//                var_dump($infos[16]->children());
+//                echo "===============<br>";
+//                var_dump($hash);
+//                var_dump($state);
+//                var_dump($name);
+            }
+//            var_dump(count($torrents));
+            Debug::endTimer("t");
+//            var_dump(Debug::$timelog["t"]);
+            return;
+            //     die();
+            Debug::startTimer("rtorrentcl");
+            $i = 0;
+            $tmp = array();
+            $status = array('started' => 1, 'paused' => 2, 'checking' => 4, 'hashing' => 8, 'error' => 16);
+            Debug::startTimer("regex");
+            $i = preg_match_all("/<array><data>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<value>(<string>|<i.>)(.*)((\n)?<\/string>|<\/i.>)<\/value>.*<\/data><\/array>/Us", $req->val, $tmp1);
+            Debug::endTimer("regex");
+            Debug::startTimer("an");
+            for ($ii = 0; $ii < $i; $ii++) {
+                $torrent = null;
+                $state = 0;
+                $is_open = $tmp1[2 + 4 * 1][$ii];
+                $is_hash_checking = $tmp1[2 + 4 * 2][$ii];
+                $is_hash_checked = $tmp1[2 + 4 * 3][$ii];
+                $get_state = $tmp1[2 + 4 * 4][$ii];
+                $get_hashing = $tmp1[2 + 4 * 24][$ii];
+                $is_active = $tmp1[2 + 4 * 29][$ii];
+                $msg = $tmp1[2 + 4 * 30][$ii];
+                if ($is_open != 0) {
+                    $state |= $status["started"];
+                    if (($get_state == 0) || ($is_active == 0))
+                        $state |= $status["paused"];
+                }
+                if ($get_hashing != 0)
+                    $state |= $status["hashing"];
+                if ($is_hash_checking != 0)
+                    $state |= $status["checking"];
+                if ($msg != "" && $msg != "Tracker: [Tried all trackers.]")
+                    $state |= $status["error"];
+                $torrent[] = $state; //state 0
+                $torrent[] = $tmp1[2 + 4 * 5][$ii]; //nom 1
+                $torrent[] = intval($tmp1[2 + 4 * 6][$ii]); //taille 2
+                $get_completed_chunks = $tmp1[2 + 4 * 7][$ii];
+                $get_hashed_chunks = $tmp1[2 + 4 * 25][$ii];
+                $get_size_chunks = $tmp1[2 + 4 * 8][$ii];
+                $chunks_processing = ($is_hash_checking == 0) ? $get_completed_chunks : $get_hashed_chunks;
+                $done = floor($chunks_processing / $get_size_chunks * 1000);
+                $torrent[] = $done; // 3
+                $torrent[] = intval($tmp1[2 + 4 * 9][$ii]); //downloaded 4
+                $torrent[] = intval($tmp1[2 + 4 * 10][$ii]); //Uploaded 5
+                $torrent[] = intval($tmp1[2 + 4 * 11][$ii]); //ratio 6
+                $torrent[] = intval($tmp1[2 + 4 * 12][$ii]); //UL 7
+                $torrent[] = intval($tmp1[2 + 4 * 13][$ii]); //DL 8
+                $get_chunk_size = $tmp1[2 + 4 * 14][$ii];
+                $torrent[] = ($tmp1[2 + 4 * 13][$ii] > 0 ? floor(($get_size_chunks - $get_completed_chunks) * $get_chunk_size / $tmp1[2 + 4 * 13][$ii]) : -1); //Eta 9 (Temps restant en seconde)
+                /*$get_peers_not_connected = $tmp1[2+4*17][$ii];
+                $get_peers_connected = $tmp1[2+4*18][$ii];
+                $get_peers_all = $get_peers_not_connected+$get_peers_connected;*/
+                $torrent[] = intval($tmp1[2 + 4 * 16][$ii]); //Peer Actual 10
+                $torrent[] = intval($tmp1[2 + 4 * 19][$ii]); //Seed Actual 11
+                $seeds = 0;
+                foreach (explode("#", $tmp1[2 + 4 * 39][$ii]) as $k => $v) {
+                    $seeds += $v;
+                }
+                $peers = 0;
+                foreach (explode("#", $tmp1[2 + 4 * 40][$ii]) as $k => $v) {
+                    $peers += $v;
+                }
+                $torrent[] = $peers; //Peer total 12
+                $torrent[] = $seeds; //Seed tota 13
+
+
+                $torrent[] = intval($tmp1[2 + 4 * 20][$ii]); //Taille restant 14
+                $torrent[] = intval($tmp1[2 + 4 * 21][$ii]); //Priority 15 (0 ne pas télécharger, 1 basse, 2 moyenne, 3 haute)
+                $torrent[] = intval($tmp1[2 + 4 * 22][$ii]); //State change 16 (dernière date de change d'état)
+                $torrent[] = intval($tmp1[2 + 4 * 23][$ii]); //Skip total Contiens les rejets en mo 17
+                $torrent[] = $tmp1[2 + 4 * 26][$ii]; //Base Path 18
+                $torrent[] = intval($tmp1[2 + 4 * 27][$ii]); //Date create 19
+                $torrent[] = intval($tmp1[2 + 4 * 28][$ii]); //Focus tracker 20
+                /*try {
+                    torrent.comment = this.getValue(values,31);
+                    if(torrent.comment.search("VRS24mrker")==0)
+                        torrent.comment = decodeURIComponent(torrent.comment.substr(10));
+                } catch(e) { torrent.comment = ''; }*/
+                $torrent[] = intval($tmp1[2 + 4 * 32][$ii]); //Torrent free diskspace 21
+                $torrent[] = intval($tmp1[2 + 4 * 33][$ii]); //Torrent is private 22
+                $torrent[] = intval($tmp1[2 + 4 * 34][$ii]); //Torrent is multifile 23
+                $torrent[] = /*preg_replace("#\n#", "", */
+                    intval($tmp1[2 + 4 * 42][$ii]); //Torrent seed time 24
+                $torrent[] = /*preg_replace("#\n#", "", */
+                    intval($tmp1[2 + 4 * 43][$ii]); //Torrent add time 25
+                $torrent[] = $msg; //Message tracker 26
+                $torrent[] = $tmp1[2 + 4 * 0][$ii]; //Hash 27
+                $torrent[] = $tmp1[2 + 4 * 44][$ii]; //Clefunique
+                $torrent[] = $tmp1[2 + 4 * 45][$ii]; //Type medias
+                if ($hashtorrentselectionne == $tmp1[2 + 4 * 0][$ii])
+                    $tor = $torrent;
+                $tmp[$tmp1[2 + 4 * 0][$ii]] = $torrent;
+            }
+            Debug::endTimer("an");
+            $data = $tmp;
+//            if (!is_null($cid)) {
+//                if ($anc = \core\Memcached::value("torrentlist" . \config\Conf::$userscgi, $cid)) {
+//                    foreach ($anc as $k => $v) {
+//                        if (!isset($tmp[$k]))
+//                            $tmp[$k] = false;
+//                        foreach ($v as $kk => $vv) {
+//                            if (isset($tmp[$k][$kk]) && $tmp[$k][$kk] == $vv) {
+//                                unset($tmp[$k][$kk]);
+//                            }
+//                        }
+//                        if (count($tmp[$k]) == 0)
+//                            unset($tmp[$k]);
+//                    }
+//                }
+//            }
+
+            $ncid = \model\simple\ChaineCaractere::random(5);
+            \core\Memcached::del("torrentlist" . \config\Conf::$userscgi, $cid);
+            if (!(\core\Memcached::value("torrentlist" . \config\Conf::$userscgi, $ncid, $data, 60 * 5)))
+                trigger_error("Impossible de mettre des données dans le cache");
+            $t[] = array_slice($tmp, 0, 5);
+            $t[] = $ncid;
+            $path = DS . "home" . DS . \config\Conf::$user["user"]->login . DS . "rtorrent" . DS . "data";
+            $t[] = disk_total_space($path) - disk_free_space($path);
+            $t[] = disk_total_space($path);
+            $t[] = [1, 1, 1, 1, 1, 1];
+
+            $cmds = array(
+                "throttle.global_up.rate", "throttle.global_up.max_rate", "throttle.global_up.total", "throttle.global_down.rate", "throttle.global_down.max_rate", "throttle.global_down.total"
+            );
+//            $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$userscgi);
+//
+//            foreach ($cmds as $cmd)
+//                $req->addCommand(new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, $cmd));
+//            if ($req->success())
+//                $t[] = $req->val;
+            Debug::endTimer("rtorrentcl");
+        }
+        if (is_null($t)) trigger_error("Impossible de se connecter à rtorrent :(");
+        $torrent = null;
+//        if ($hashtorrentselectionne !== "") {
+//            /*
+//             * =================================================
+//             * Détails du torrent hashtorrent
+//             * =================================================
+//             */
+//            $tmp = $tor;
+//            $data = $tmp;
+//            if (!is_null($cid)) {
+//                if ($anc = \core\Memcached::value("detaillist" . \config\Conf::$userscgi, sha1($cid . $hashtorrentselectionne))) {
+//                    foreach ($anc as $k => $v) {
+//                        if (isset($tmp[$k]) && $tmp[$k] == $v) {
+//                            unset($tmp[$k]);
+//                        }
+//                    }
+//                }
+//            }
+//            \core\Memcached::del("detaillist" . \config\Conf::$userscgi, sha1($cid . $hashtorrentselectionne));
+//            if (!(\core\Memcached::value("detaillist" . \config\Conf::$userscgi, sha1($ncid . $hashtorrentselectionne), $data, 60 * 5))) {
+//                trigger_error("Impossible de mettre des données dans le cache");
+//            }
+//            $torrent["detail"] = $tmp;
+//            /*
+//             * =================================================
+//             * Détails du torrent hashtorrent (file liste)
+//             * =================================================
+//             */
+//            $cmds = array(
+//                "f.path=", "f.completed_chunks=", "f.size_chunks=", "f.size_bytes=", "f.priority=", "f.prioritize_first=", "f.prioritize_last="
+//            );
+//            $cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "f.multicall", array($hashtorrentselectionne, ""));
+//
+//            foreach ($cmds as $prm) {
+//                $cmd->addParameter(\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$userscgi, $prm));
+//            }
+//            $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$userscgi, $cmd);
+//            $files = null;
+//            $to = null;
+//            if (!$req->success()) {
+//                trigger_error("Impossible de récupéré la liste des fichiers de " . $hashtorrentselectionne);
+//                $files = $req->val;
+//            } else {
+//                $taille = count($req->val);
+//                $j = 0;
+//                for ($i = 0; $i < $taille; $i += 7) {
+//                    $files[] = array($j, $req->val[$i], $req->val[$i + 1], $req->val[$i + 2], $req->val[$i + 3], $req->val[$i + 4], $req->val[$i + 5], $req->val[$i + 6]);
+//                    $j++;
+//                }
+//                $tmp = $files;
+//                $data = $tmp;
+//                if (!is_null($cid)) {
+//                    if ($anc = \core\Memcached::value("fileslist" . \config\Conf::$userscgi, sha1($cid . $hashtorrentselectionne))) {
+//                        foreach ($anc as $k => $v) {
+//                            if (!isset($tmp[$k]))
+//                                $tmp[$k] = false;
+//                            foreach ($v as $kk => $vv) {
+//                                if (isset($tmp[$k][$kk]) && $tmp[$k][$kk] == $vv) {
+//                                    unset($tmp[$k][$kk]);
+//                                }
+//                            }
+//                            if (count($tmp[$k]) == 0)
+//                                unset($tmp[$k]);
+//                        }
+//                    }
+//                }
+//                \core\Memcached::del("fileslist" . \config\Conf::$userscgi, sha1($cid . $hashtorrentselectionne));
+//                if (!(\core\Memcached::value("fileslist" . \config\Conf::$userscgi, sha1($ncid . $hashtorrentselectionne), $data, 60 * 5)))
+//                    trigger_error("Impossible de mettre des données dans le cache");
+//                $torrent["files"] = $tmp;
+//            }
+//            /*
+//             * =================================================
+//             * Détails du torrent hashtorrent (traker liste)
+//             * =================================================
+//             */
+//            $cmds = array(
+//                "t.url=", "t.type=", "t.is_enabled=", "t.group=", "t.scrape_complete=",
+//                "t.scrape_incomplete=", "t.scrape_downloaded=",
+//                "t.normal_interval=", "t.scrape_time_last="
+//            );
+//            $cmd = new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "t.multicall", array($hashtorrentselectionne, ""));
+//
+//            foreach ($cmds as $prm) {
+//                $cmd->addParameter(\model\xmlrpc\rTorrentSettings::getCmd(\config\Conf::$userscgi, $prm));
+//            }
+//            $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$userscgi, $cmd);
+//            $trackers = null;
+//            if (!$req->success()) {
+//                trigger_error("Impossible de récupéré la liste des trakers de " . $hashtorrentselectionne);
+//                $traker = $req->val;
+//            } else {
+//
+//                $taille = count($req->val);
+//                $j = 0;
+//                for ($i = 0; $i < $taille; $i += 9) {
+//                    $trackers[] = array($j, $req->val[$i], $req->val[$i + 1], $req->val[$i + 2], $req->val[$i + 3], $req->val[$i + 4], $req->val[$i + 5], $req->val[$i + 6], $req->val[$i + 7], $req->val[$i + 8]);
+//                    $j++;
+//                }
+//                /*for ($i = 0; $i < 30; $i++)
+//                    $trackers[] = $trackers[0];
+//                    /*$tmp = $files;
+//                    $data = $tmp;
+//                    if (!is_null($cid)) {
+//                        if ($anc = \core\Memcached::value("fileslist" . \config\Conf::$userscgi, sha1($cid . $hashtorrentselectionne))) {
+//                            foreach ($anc as $k => $v) {
+//                                if (!isset($tmp[$k]))
+//                                    $tmp[$k] = false;
+//                                foreach ($v as $kk => $vv) {
+//                                    if (isset($tmp[$k][$kk]) && $tmp[$k][$kk] == $vv) {
+//                                        unset($tmp[$k][$kk]);
+//                                    }
+//                                }
+//                                if (count($tmp[$k]) == 0)
+//                                    unset($tmp[$k]);
+//                            }
+//                        }
+//                    }
+//
+//                    if (!(\core\Memcached::value("fileslist" . \config\Conf::$userscgi, sha1($ncid . $hashtorrentselectionne), $data, 60 * 5)))
+//                        trigger_error("Impossible de mettre des données dans le cache");
+//                    */
+//                $torrent["trackers"] = $trackers;
+//            }
+//
+//        }
+
+        $this->set(array(
+            "torrent" => $t,
+            "torrentselectionnee" => $torrent,
+            "hashtorrent" => $hashtorrentselectionne,
+            "host" => HOST,
+            //"seedbox" => \model\mysql\Rtorrent::getRtorrentsDeUtilisateur(\config\Conf::$user["user"]->login)
+        ));
+    }
+
     function liste($keyconnexion = null, $cid = null, $hashtorrentselectionne = "")
     {
         \model\simple\Utilisateur::authentificationPourRtorrent($keyconnexion);
@@ -245,11 +662,11 @@ class Torrent extends Controller
                 $torrent[] = intval($tmp1[2 + 4 * 19][$ii]); //Seed Actual 11
                 $seeds = 0;
                 foreach (explode("#", $tmp1[2 + 4 * 39][$ii]) as $k => $v) {
-                    $seeds += $v;
+                    $seeds += (int)$v;
                 }
                 $peers = 0;
                 foreach (explode("#", $tmp1[2 + 4 * 40][$ii]) as $k => $v) {
-                    $peers += $v;
+                    $peers += (int)$v;
                 }
                 $torrent[] = $peers; //Peer total 12
                 $torrent[] = $seeds; //Seed tota 13
@@ -299,7 +716,7 @@ class Torrent extends Controller
                 }
             }
 
-            $ncid = \model\simple\String::random(5);
+            $ncid = \model\simple\ChaineCaractere::random(5);
             \core\Memcached::del("torrentlist" . \config\Conf::$userscgi, $cid);
             if (!(\core\Memcached::value("torrentlist" . \config\Conf::$userscgi, $ncid, $data, 60 * 5)))
                 trigger_error("Impossible de mettre des données dans le cache");
@@ -716,7 +1133,7 @@ class Torrent extends Controller
                     } else {
                         $torrent['erreur'] = 0;
                         $torrent["status"] = \model\xmlrpc\rTorrent::sendTorrent($to, !isset($_REQUEST['autostart']));
-                        $torrent["clefunique"] = \model\simple\String::random(10);
+                        $torrent["clefunique"] = \model\simple\ChaineCaractere::random(10);
                         usleep(40000);
                         $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$userscgi, array(
                             new \model\xmlrpc\rXMLRPCCommand(\config\Conf::$userscgi, "d.set_custom", array($to->hash_info(), "clefunique", $clefunique[$to->hash_info()])),
@@ -945,7 +1362,7 @@ class Torrent extends Controller
                         $torrent['status'] = "Erreur du fichier torrent";
                     } else {
                         $torrent["status"] = \model\xmlrpc\rTorrent::sendTorrent($to, !isset($_REQUEST['autostart']),$_REQUEST['repertoire']);
-                        $torrent["clefunique"] = \model\simple\String::random(10);
+                        $torrent["clefunique"] = \model\simple\ChaineCaractere::random(10);
                         usleep(40000);
                         if ( $torrent['status'][0] === '0'){
                             $req = new \model\xmlrpc\rXMLRPCRequest(\config\Conf::$userscgi, array(

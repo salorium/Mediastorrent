@@ -97,7 +97,7 @@ class Utilisateur extends \core\Model
     static function getRandomMdp()
     {
         do {
-            $mdp = \model\simple\String::random(8);
+            $mdp = \model\simple\ChaineCaractere::random(8);
         } while (preg_match('/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/', $mdp) != 1);
         return $mdp;
     }

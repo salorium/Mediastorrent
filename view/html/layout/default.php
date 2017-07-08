@@ -26,7 +26,7 @@
 </head>
 <body>
 <script src="<?php echo BASE_URL; ?>bower_components/jquery/dist/jquery.min.js"></script>
-<script src="<?php echo BASE_URL; ?>bower_components/foundation/js/foundation.js"></script>
+<script src="<?php echo BASE_URL; ?>bower_components/foundation/js/foundation.min.js"></script>
 
 <?= isset($loadjavascript_for_layout) ? $loadjavascript_for_layout : ""; ?>
 <h1><?php

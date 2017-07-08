@@ -232,12 +232,13 @@ Torrent1.view = {
                 '<path style="fill: ' + state[1].color + ';" d="' + this.getIconDessin(state[1].name) + '"/></svg></td><td>' + (torrent[1] ? torrent[1] : "Test" ) + '</td></tr></table></legend>' +
                 '<table style="width: 100%"><tr><td width="100%"><progress class="' + state[1].colorname + '" id="p" value="' + (torrent[3] ? torrent[3] / 10 : "0" ) + '" max="100"></progress></td><td  width="70px" style="text-align:center;min-width:70px; "><span class="pcr">' + (torrent[3] ? torrent[3] / 10 : "0" ) + '</span>%</td></tr></table>' +
                 '<table class="show-for-medium-up" style="width: 100%">' +
-                //'<tr><td width="80px;" style="vertical-align: bottom;">Ajouté</td><td width="170px">: ' + ((torrent[25] > 3600 * 24 * 365) ? Base.model.converter.date(Base.model.converter.iv(torrent[25])) : "") + '</td><td width="60px;">Seedtime</td><td>: ' + ((torrent[24] > 3600 * 24 * 365) ? Base.model.converter.time(new Date().getTime() / 1000 - (Base.model.converter.iv(torrent[24])), true) : "") + '</td><td align="right">Ratio : ' + torrent[6] / 1000 + '</td></tr>' +
+                // '<tr><td width="80px;" style="vertical-align: bottom;">Ajouté</td><td width="170px">: ' + ((torrent[25] > 3600 * 24 * 365) ? Base.model.converter.date(Base.model.converter.iv(torrent[25])) : "") + '</td><td width="60px;">Seedtime</td><td>: ' + ((torrent[24] > 3600 * 24 * 365) ? Base.model.converter.time(new Date().getTime() / 1000 - (Base.model.converter.iv(torrent[24])), true) : "") + '</td><td align="right">Ratio : ' + torrent[6] / 1000 + '</td></tr>' +
                 '<tr><td style="vertical-align: bottom;">Ajouté</td><td>: ' + ((torrent[25] > 3600 * 24 * 365) ? Base.model.converter.date(Base.model.converter.iv(torrent[25])) : "") + '</td><td>Seedtime</td><td>: ' + ((torrent[24] > 3600 * 24 * 365) ? Base.model.converter.time(new Date().getTime() / 1000 - (Base.model.converter.iv(torrent[24])), true) : "") + '</td><td align="right">Ratio : ' + torrent[6] / 1000 + '</td></tr>' +
                 '<tr><td style="vertical-align: bottom;">Sources</td><td>: ' + (torrent[13] ? torrent[13] : "0" ) + '(' + (torrent[11] ? torrent[11] : "0" ) + ')</td><td>Clients</td><td>: ' + (torrent[12] ? torrent[12] : "0" ) + '(' + (torrent[10] ? torrent[10] : "0" ) + ')</td><td align="right">Upload : ' + (Base.model.converter.speed(torrent[7]) != "" ? Base.model.converter.speed(torrent[7]) : "-") + ' Download : ' + (Base.model.converter.speed(torrent[8]) != "" ? Base.model.converter.speed(torrent[8]) : "-") + '</td></tr>' +
                 '<tr><td style="vertical-align: bottom;">Téléchargé</td><td >: ' + (Base.model.converter.bytes(torrent[4], 2) != "" ? Base.model.converter.bytes(torrent[4], 2) : "-" ) + '/' + (Base.model.converter.bytes(torrent[2], 2) != "" ? Base.model.converter.bytes(torrent[2], 2) : "-" ) + '</td><td>Envoyé</td><td>: ' + (Base.model.converter.bytes(torrent[5], 2) != "" ? Base.model.converter.bytes(torrent[5], 2) : "-" ) + '</td><td align="right">Temps restant : ' + (torrent[9] != -1 ? Base.model.converter.time(torrent[9]) : "∞") + '</td></tr>' +
                 ( Base.model.utilisateur.role == "Sysop" ? '<tr><td style="vertical-align: bottom;">Clef unique</td><td>: ' + torrent[28] + '</td><td>Type</td><td>: ' + torrent[29] + '</td><td align="right"></td></tr>' : '') +
-                '</table></fieldset>';
+                '</table>' +
+                '</fieldset>';
         },
         stats: function (hdduse, hddtotal, statreso) {
             $("#storage").attr({"value": hdduse, "max": hddtotal, "title": Base.model.converter.bytes(hddtotal - hdduse, 2) + " | " + Base.model.converter.bytes(hddtotal, 2)});
@@ -320,6 +321,35 @@ Torrent1.view = {
                         Torrent1.controller.filesTorrent.resetSelectionne();
                         Torrent1.model.filesTorrent.hauteurArbre = list.back;
                         Torrent1.view.filesTorrent.afficheArbre();
+                    });
+                } else {
+                    var $tr = $('<tr style="cursor: pointer;" data-cpt="0"><td><img width="30" src="' + Base.controller.makeUrlBase() + 'images/dossier.svg">.</td><td></td><td></td><td></td><td></td></tr>');
+
+                    $("#torrentdetailsfiles").append(
+                        $tr
+                    );
+                    $tr.mousedown(function (e) {
+                        e.preventDefault();
+                        switch (e.which) {
+                            case 1:
+                                //clique gauche
+
+                                break;
+                            case 3:
+                                //clique droit
+
+                                var button = [];
+
+                                button.push({
+                                    nom: "Liens SCP", dest: function () {
+                                        prompt('SCP', 'scp -r "' + Base.model.utilisateur.login + "@" + Base.model.extractUrl("http://" + Torrent1.model.baseUrl).hostname + ":" + Torrent1.model.detailsTorrent.liste[18] + '" .');
+                                    }
+                                });
+                                Base.model.pannelClicDroit.make(button, e.clientX, e.clientY);
+
+                                break;
+                        }
+
                     });
                 }
                 var cpt = 0;
@@ -447,6 +477,11 @@ Torrent1.view = {
                                         }})
                                     }
                                     button.push({nom: "Priorité", dest: subutton});
+                                    button.push({
+                                        nom: "Liens SCP", dest: function () {
+                                            prompt('SCP', 'scp -r "' + Base.model.utilisateur.login + "@" + Base.model.extractUrl("http://" + Torrent1.model.baseUrl).hostname + ":" + v[7] + '" .');
+                                        }
+                                    });
                                     /*button.push({nom:"Télécharger",dest : function(){Torrent.controller.downloadFileTorrent($(e.currentTarget).attr("data-cpt"));}});
                                      if ( Base.model.path.ext(v[1]) == "avi" || Base.model.path.ext(v[1]) == "mp4" || Base.model.path.ext(v[1]) == "mkv"){
                                      button.push({nom:"Streaming",dest : function(){Torrent.controller.streamingFileTorrent($(e.currentTarget).attr("data-cpt"));}});
@@ -573,6 +608,13 @@ Torrent1.view = {
                                     button.push({nom: "Priorité", dest: subutton});
                                     button.push({nom: "Télécharger", dest: function () {
                                         Torrent1.controller.filesTorrent.download($(e.currentTarget).attr("data-id"));
+                                    }
+                                    });
+                                    button.push({
+                                        nom: "Liens SCP", dest: function () {
+
+
+                                            prompt('SCP', 'scp -r "' + Base.model.utilisateur.login + "@" + Base.model.extractUrl("http://" + Torrent1.model.baseUrl).hostname + ":" + v[6] + '" .');
                                     }});
                                     if (Base.model.path.ext(v[0]) == "avi" || Base.model.path.ext(v[0]) == "mp4" || Base.model.path.ext(v[0]) == "mkv") {
                                         button.push({nom: "Streaming", dest: function () {

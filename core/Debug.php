@@ -19,6 +19,7 @@ class Debug
     static $fatal = null;
     static $that = null;
     static $timelog = null;
+    static $cpt = 0;
     private $loggedVars;
 
     function __construct($dispatcher)
@@ -32,6 +33,10 @@ class Debug
         }
     }
 
+    static function plus()
+    {
+        self::$cpt++;
+    }
     static function startTimer($nom)
     {
         self::$timelog[$nom] = \microtime(true);

@@ -20,19 +20,19 @@
     <tr>
         <td>Memcached</td>
         <td><a <?= (!$memcached ? 'onclick="Install.controller.enableModule(this);"' : '') ?>
-                data-module="memcached"><?= ($memcached ? \model\simple\String::styleSuccess("Ok") : \model\simple\String::styleError("Non ok")); ?></a>
+                data-module="memcached"><?= ($memcached ? \model\simple\ChaineCaractere::styleSuccess("Ok") : \model\simple\ChaineCaractere::styleError("Non ok")); ?></a>
         </td>
     </tr>
     <tr>
         <td>Mysqli</td>
         <td><a <?= (!$mysqli ? 'onclick="Install.controller.enableModule(this);"' : '') ?>
-                data-module="mysqli"><?= ($mysqli ? \model\simple\String::styleSuccess("Ok") : \model\simple\String::styleError("Non ok")); ?></a>
+                data-module="mysqli"><?= ($mysqli ? \model\simple\ChaineCaractere::styleSuccess("Ok") : \model\simple\ChaineCaractere::styleError("Non ok")); ?></a>
         </td>
     </tr>
     <tr>
         <td>Imagick</td>
         <td><a <?= (!$imagick ? 'onclick="Install.controller.enableModule(this);"' : '') ?>
-                data-module="imagick"><?= ($imagick ? \model\simple\String::styleSuccess("Ok") : \model\simple\String::styleError("Non ok")); ?></a>
+                data-module="imagick"><?= ($imagick ? \model\simple\ChaineCaractere::styleSuccess("Ok") : \model\simple\ChaineCaractere::styleError("Non ok")); ?></a>
         </td>
     </tr>
 </table>
@@ -41,7 +41,7 @@
     <tr>
         <td>Ecriture dans le cache</td>
         <td><a <?= (!$ecrituredossiercache ? 'onclick="Install.controller.enableWriteFile(this);"' : '') ?>
-                data-filewrite="cache"><?= ($ecrituredossiercache ? \model\simple\String::styleSuccess("Ok") : \model\simple\String::styleError("Non ok")); ?></a>
+                data-filewrite="cache"><?= ($ecrituredossiercache ? \model\simple\ChaineCaractere::styleSuccess("Ok") : \model\simple\ChaineCaractere::styleError("Non ok")); ?></a>
         </td>
     </tr>
 
@@ -50,27 +50,27 @@
     <table>
         <tr>
             <td>Memcached</td>
-            <td><?= ($memcached ? \model\simple\String::styleSuccess("Ok") : \model\simple\String::styleError("Non ok : pour l'installer veuillez faire : sudo apt-get install php5-memcached")); ?>
+            <td><?= ($memcached ? \model\simple\ChaineCaractere::styleSuccess("Ok") : \model\simple\ChaineCaractere::styleError("Non ok : pour l'installer veuillez faire : sudo apt-get install php5-memcached")); ?>
             </td>
         </tr>
         <tr>
             <td>Mysqli</td>
-            <td><?= ($mysqli ? \model\simple\String::styleSuccess("Ok") : \model\simple\String::styleError("Non ok : pour l'installer veuillez faire : sudo apt-get install php5-mysqlnd")); ?>
+            <td><?= ($mysqli ? \model\simple\ChaineCaractere::styleSuccess("Ok") : \model\simple\ChaineCaractere::styleError("Non ok : pour l'installer veuillez faire : sudo apt-get install php5-mysqlnd")); ?>
             </td>
         </tr>
         <tr>
             <td>Imagick</td>
-            <td><?= ($imagick ? \model\simple\String::styleSuccess("Ok") : \model\simple\String::styleError("Non ok : pour l'installer veuillez faire : sudo apt-get install php5-imagick")); ?>
+            <td><?= ($imagick ? \model\simple\ChaineCaractere::styleSuccess("Ok") : \model\simple\ChaineCaractere::styleError("Non ok : pour l'installer veuillez faire : sudo apt-get install php5-imagick")); ?>
             </td>
         </tr>
         <tr>
             <td>Curl</td>
-            <td><?= ($curl ? \model\simple\String::styleSuccess("Ok") : \model\simple\String::styleError("Non ok : pour l'installer veuillez faire : sudo apt-get install php5-imagick")); ?>
+            <td><?= ($curl ? \model\simple\ChaineCaractere::styleSuccess("Ok") : \model\simple\ChaineCaractere::styleError("Non ok : pour l'installer veuillez faire : sudo apt-get install php5-imagick")); ?>
             </td>
         </tr>
         <tr>
             <td>Json</td>
-            <td><?= ($json ? \model\simple\String::styleSuccess("Ok") : \model\simple\String::styleError("Non ok : pour l'installer veuillez faire : sudo apt-get install php5-imagick")); ?>
+            <td><?= ($json ? \model\simple\ChaineCaractere::styleSuccess("Ok") : \model\simple\ChaineCaractere::styleError("Non ok : pour l'installer veuillez faire : sudo apt-get install php5-imagick")); ?>
             </td>
         </tr>
     </table>
@@ -78,17 +78,17 @@
     <table>
         <tr>
             <td>Ecriture dans le cache</td>
-            <td><?= ($ecrituredossiercache ? \model\simple\String::styleSuccess("Ok") : \model\simple\String::styleError("Non ok : pour rendre l'écriture possible veuillez faire : sudo chmod -R a+w " . ROOT . DS . "cache")); ?>
+            <td><?= ($ecrituredossiercache ? \model\simple\ChaineCaractere::styleSuccess("Ok") : \model\simple\ChaineCaractere::styleError("Non ok : pour rendre l'écriture possible veuillez faire : sudo chmod -R a+w " . ROOT . DS . "cache")); ?>
             </td>
         </tr>
         <tr>
             <td>Ecriture dans le log</td>
-            <td><?= ($ecrituredossierlog ? \model\simple\String::styleSuccess("Ok") : \model\simple\String::styleError("Non ok : pour rendre l'écriture possible veuillez faire : sudo chmod -R a+w " . ROOT . DS . "log")); ?>
+            <td><?= ($ecrituredossierlog ? \model\simple\ChaineCaractere::styleSuccess("Ok") : \model\simple\ChaineCaractere::styleError("Non ok : pour rendre l'écriture possible veuillez faire : sudo chmod -R a+w " . ROOT . DS . "log")); ?>
             </td>
         </tr>
         <tr>
             <td>Ecriture dans le fichier Conf</td>
-            <td><?= ($ecriturefileconfig ? \model\simple\String::styleSuccess("Ok") : \model\simple\String::styleError("Non ok : pour rendre l'écriture possible veuillez faire : sudo chmod -R a+w " . ROOT . DS . "config" . DS . "Conf.php")); ?>
+            <td><?= ($ecriturefileconfig ? \model\simple\ChaineCaractere::styleSuccess("Ok") : \model\simple\ChaineCaractere::styleError("Non ok : pour rendre l'écriture possible veuillez faire : sudo chmod -R a+w " . ROOT . DS . "config" . DS . "Conf.php")); ?>
             </td>
         </tr>
     </table>

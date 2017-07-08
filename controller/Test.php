@@ -15,18 +15,314 @@ use model\mysql\Torrentfilm;
 use model\mysql\Torrents_files;
 use model\mysql\Utilisateur;
 use model\ocelot\Requete;
+use model\rtorrent\rTorrent;
+use model\simple\Allocine;
 use model\simple\Mail;
 use model\simple\Repertoire;
-use model\simple\String;
+use model\simple\ChaineCaractere;
 use model\simple\Torrent;
-use model\xmlrpc\rTorrentSettings;
 
 
 class Test extends Controller
 {
+    function req()
+    {
+        \config\Conf::$userscgi = "salorium";
+        $listeTorrent = rTorrent::listeTorrent();
+        $this->set('liste', $listeTorrent);
+    }
+
+
+    function secureMdp()
+    {
+        $mdp = "bonjour";
+        $secretBDD = "fgjfdsjqdslkjgkfdqlgdfjg";
+        $salt = "fjfjfikdfds";
+        $cryptmdpClient = sha1(sha1($mdp) . sha1($salt));
+
+        $serveurMDP = sha1($cryptmdpClient . sha1($secretBDD));
+
+
+        $ddBaseMDP = sha1(sha1(sha1($mdp) . sha1($salt)) . sha1($secretBDD));
+        var_dump($cryptmdpClient);
+        var_dump($serveurMDP == $ddBaseMDP);
+        var_dump("=====================");
+//        var_dump(getallheaders());
+        $verbeHTTP = $_SERVER['REQUEST_METHOD'];
+        $request = $_SERVER["REQUEST_URI"];
+        $crymdp = $_SERVER["HTTP_REST_PASSWORD"];
+        $signature = $_SERVER["HTTP_REST_SIGNATURE"];
+        $login = $_SERVER["HTTP_REST_USER"];
+        $url = $verbeHTTP . $request . $login;
+        $signature1 = sha1(sha1($url) . $crymdp);
+        var_dump($signature == $signature1);
+
+
+//        $url = ""
+        var_dump("=========================================");
+
+        var_dump($_SERVER);
+        var_dump("=========================================");
+        var_dump($_REQUEST);
+        die();
+    }
+
+    function posta()
+    {
+        $this->set('post', $_REQUEST);
+        $this->set('file', $_FILES);
+    }
+
+    function h5allo()
+    {
+        $o["typesearch"] = "movie";
+        $a = new Allocine("225884", $o);
+        $this->set("r", $a->retourneResMovie());
+    }
+
+    function h5allo1($code)
+    {
+        $o["typesearch"] = "media";
+        $a = new Allocine($code, $o);
+        $this->set("r", $a->getMediaInfo());
+    }
+
+    function dlDossier()
+    {
+        \model\simple\Download::sendFile(WEBROOT . DS . "images" . DS . "favicon.svg", "Mondossier/txt.txt");
+    }
+
+    function host()
+    {
+        $this->set("h", array(substr($_SERVER["HTTP_HOST"] . dirname(dirname($_SERVER["SCRIPT_NAME"])) . ($_SERVER["SCRIPT_NAME"] !== "/index.php" ? "/" : ""), 0, -1)));
+        $this->set("ha", array($_SERVER["HTTP_HOST"] . dirname(dirname($_SERVER["SCRIPT_NAME"])) . ($_SERVER["SCRIPT_NAME"] !== "/index.php" ? "/" : "")));
+    }
+
+    function mediainfo()
+    {
+        $info = new \model\simple\Mediainfo("/home/salorium/Musique/Ahzee Born Again (320)/1.Born Again (Radio Edit).mp3");
+        //var_dump( $info->general);
+        //die();
+        //file_put_contents('test.jpg',base64_decode($info->general["Cover_Data"]));
+        $this->set(array(
+            "image" => base64_decode($info->general["Cover_Data"])
+        ));//*/
+        //var_dump();
+    }
+
+    function sm1()
+    {
+        $rest = \model\simple\Console::executeBrut('tmux new-session -s rt' . uniqid() . ' -n fec -d ffmpeg -i "/home/salorium/rtorrent/data/Da Tweekaz - Wodka [FLAC]/01 - Da Tweekaz - Wodka (Extended Mix).flac" -c:a libmp3lame -b:a 320k -listen 1 -vn -movflags faststart -f mp3 http://localhost:1234');
+        var_dump($rest);
+    }
+
+    function sm2()
+    {
+        $rest = \model\simple\Console::executeBrut('tmux new-session -s rt' . uniqid() . ' -n fec -d ffmpeg -i "/home/salorium/rtorrent/data/VA-DJ_Networx_Vol._63-2CD-FLAC-2015-VOLDiES/101-hardwell_feat._chris_jones-young_again_(extended_mix).flac" -acodec libvorbis -aq 10 -listen 1 -vn -movflags faststart -f ogg http://localhost:1234');
+        var_dump($rest);
+    }
+
+    function sm4()
+    {
+        $rest = \model\simple\Console::executeBrut('tmux new-session -s rt' . uniqid() . ' -n fec -d ffmpeg -i "/home/salorium/rtorrent/data/Kendji Girac - Kendji (2014) FLAC/(01) Color Gitano.flac" -c:a libmp3lame -b:a 320k -listen 1 -vn -movflags faststart -f mp3 http://localhost:1234');
+        var_dump($rest);
+    }
+
+    function musique()
+    {
+        //  $rest = \model\simple\Console::executeBrut('tmux new-session -s rt -n fec -d ffmpeg -i "/home/salorium/rtorrent/data/Da Tweekaz - Wodka [FLAC]/01 - Da Tweekaz - Wodka (Extended Mix).flac" -c:a libmp3lame -b:a 320k -listen 1 -vn -movflags faststart -f mp3 http://localhost:1234');
+        //var_dump($rest);
+    }
+
+    function musique1()
+    {
+//        $rest = \model\simple\Console::executeBrut('tmux new-session -s rt -n fec -d ffmpeg -i "/home/salorium/rtorrent/data/VA-DJ_Networx_Vol._63-2CD-FLAC-2015-VOLDiES/101-hardwell_feat._chris_jones-young_again_(extended_mix).flac" -c:a libmp3lame -b:a 320k -listen 1 -vn -movflags faststart -f mp3 http://localhost:1234');
+        //var_dump($rest);
+    }
+
+    function h($t)
+    {
+        var_dump(strtotime($t));
+    }
+
+    function stat2($what = "up", $step = 1, $start = "-1days", $end = "now")
+    {
+
+        if (strtotime($start) !== false)
+            $start = strtotime($start);
+        if (strtotime($end) !== false)
+            $end = strtotime($end);
+
+        $rrdFile = DS . "home" . DS . "salorium" . DS . "rtorrent" . DS . "stat15";
+        $outputPngFile = ROOT . DS . "cache" . DS . "stat1.png";
+        $rrdFile1 = $rrdFile . "-1.rrd";
+        $rrdFile2 = $rrdFile . "-2.rrd";
+        $graphObj = new \RRDGraph($outputPngFile);
+        $options = array(
+            "--title" => "Rtorrent de salorium",
+            "--font" => "DEFAULT:7:",
+            "--watermark" => date("D j F Y G:i"),
+            "--start" => $start,
+            "--end" => $end,
+            "--base" => 1024,
+            "--width" => "1000",
+            "--height" => "400",
+            "--step" => $step,
+            "--imgformat" => "SVG",
+            //"--end"=>"-10hours",
+            //"--upper-limit"=> "10485790",
+            //"--lower-limit"=> "-10000000",
+            //"--alt-autoscale",
+            //"--alt-y-grid",
+            //"--rigid",
+            //"--y-grid"=>(1024*1024*10).":5",
+            "--vertical-label" => "Octet",
+            "DEF:myspeed=$rrdFile1:bpup:AVERAGE",
+            "DEF:myspeed1=$rrdFile1:bpdown:AVERAGE",
+            "DEF:myspeed2=$rrdFile2:up:AVERAGE",
+            "DEF:myspeed3=$rrdFile2:down:AVERAGE",
+            "DEF:myspeed4=$rrdFile2:up1:LAST",
+            "DEF:myspeed5=$rrdFile2:down1:AVERAGE",
+            //"CDEF:abs=myspeed3,STEPWIDTH,*,PREF,ADDNAN",
+            //"CDEF:ds0modified=TIME",
+            "CDEF:realspeed=myspeed,1,*",
+            "CDEF:realspeed1=myspeed1," . (1) . ",*",
+            "CDEF:realspeed2=myspeed2," . ($step) . ",*",
+            "CDEF:realspeed3=myspeed3," . ($step) . ",*",
+            "HRULE:0#000000"
+
+
+        );
+        switch ($what) {
+            case 'up':
+                $options[] = "AREA:realspeed2#CDFF66:Upload";
+                //if ( $step == 1)
+                $options[] = "LINE1:realspeed#00FF00:Vitesse de upload o/s";
+                $options[] = 'GPRINT:myspeed4:LAST:Total Upload \: %.2lf %s';
+                break;
+            case 'down':
+            default:
+                $options[] = "AREA:realspeed3#66CDFF:Download";
+                //if ( $step == 1)
+                $options[] = "LINE1:realspeed1#0000FF:Vitesse de download o/s";
+                $options[] = 'GPRINT:myspeed5:LAST:Total Download \: %.2lf %s';
+
+                break;
+        }
+        $graphObj->setOptions(
+            $options
+        );
+        $graphObj->save();
+        header("Content-Type: " . mime_content_type($outputPngFile) . ";");
+        header("Content-Length: " . filesize($outputPngFile));
+        //header('Content-Disposition: attachment; filename*=UTF-8\'\'' . rawurlencode((str_replace("&lt;", "<", "dd"))) . '.' . pathinfo($outputPngFile, PATHINFO_EXTENSION));
+        //header('Accept-Ranges: bytes');
+        readfile($outputPngFile);
+
+        exit();
+    }
+
+    function stat1()
+    {
+
+        $rrdFile = DS . "home" . DS . "salorium" . DS . "rtorrent" . DS . "stat9";
+        $outputPngFile = ROOT . DS . "cache" . DS . "stat1.png";
+        $rrdFile1 = $rrdFile . "-1.rrd";
+        $rrdFile2 = $rrdFile . "-2.rrd";
+        $graphObj = new \RRDGraph($outputPngFile);
+        $graphObj->setOptions(
+            array(
+                "--title" => "Rtorrent de salorium",
+                "--font" => "DEFAULT:7:",
+                "--watermark" => date("D j F Y G:i"),
+                "--start" => "-1hours",
+                "--base" => 1024,
+                "--width" => "1000",
+                "--height" => "300",
+                //"--upper-limit"=> "10485790",
+                //"--lower-limit"=> "-10000000",
+                "--vertical-label" => "Vitesse octet/s",
+                "DEF:myspeed=$rrdFile1:bpup:LAST",
+                "DEF:myspeed1=$rrdFile1:bpdown:LAST",
+                "DEF:myspeed2=$rrdFile2:up:LAST",
+                "DEF:myspeed3=$rrdFile2:down:LAST",
+                "CDEF:realspeed=myspeed,1,*",
+                "CDEF:realspeed1=myspeed1,-1,*",
+                "CDEF:realspeed2=myspeed2,1,*",
+                "CDEF:realspeed3=myspeed3,-1,*",
+                "HRULE:0#000000",
+                //"LINE:realspeed1#0000FF:Vitess de download",
+                "AREA:realspeed2#AAFF55:Upload",
+                //  "AREA:realspeed#00FF00BB:Vitesse de upload",
+
+                "LINE:realspeed#00FF00:Vitesse de upload"
+
+                //      "LINE:realspeed3#AA55FF:Download"
+            )
+        );
+        $graphObj->save();
+        header("Content-Type: " . mime_content_type($outputPngFile) . ";");
+        header("Content-Length: " . filesize($outputPngFile));
+        //header('Content-Disposition: attachment; filename*=UTF-8\'\'' . rawurlencode((str_replace("&lt;", "<", "dd"))) . '.' . pathinfo($outputPngFile, PATHINFO_EXTENSION));
+        //header('Accept-Ranges: bytes');
+        readfile($outputPngFile);
+
+        exit();
+    }
+
+    function stat()
+    {
+
+        $rrdFile = DS . "home" . DS . "salorium" . DS . "rtorrent" . DS . "stat9";
+        $outputPngFile = ROOT . DS . "cache" . DS . "stat1.png";
+        $rrdFile1 = $rrdFile . "-1.rrd";
+        $rrdFile2 = $rrdFile . "-2.rrd";
+        $graphObj = new \RRDGraph($outputPngFile);
+        $graphObj->setOptions(
+            array(
+                "--title" => "Rtorrent de salorium",
+                "--font" => "DEFAULT:7:",
+                "--watermark" => date("D j F Y G:i"),
+                "--start" => "-1days",
+                "--base" => 1024,
+                "--width" => "1200",
+                "--height" => "300",
+                "--step" => 60 * 60,
+                //"--upper-limit"=> "10485790",
+                //"--lower-limit"=> "-10000000",
+                "--vertical-label" => "Vitesse octet/s",
+                "DEF:myspeed=$rrdFile1:bpup:AVERAGE",
+                "DEF:myspeed1=$rrdFile1:bpdown:AVERAGE",
+                //   "DEF:myspeed2=$rrdFile2:up:LAST",
+                "DEF:myspeed3=$rrdFile2:down:LAST",
+                "CDEF:realspeed=myspeed,1,*",
+                "CDEF:realspeed1=myspeed1,-1,*",
+                //    "CDEF:realspeed2=myspeed2,60,*",
+                "CDEF:realspeed3=myspeed3,-60,*",
+                "HRULE:0#000000",
+                "AREA:realspeed#00FF00",
+                "AREA:realspeed1#0000FF",
+                "LINE:realspeed#00FF00:Vitesse de upload",
+                "LINE:realspeed1#0000FF:Vitess de download",
+                //      "LINE:realspeed2#AAFF55:Upload",
+                //      "LINE:realspeed3#AA55FF:Download"
+            )
+        );
+        $graphObj->save();
+        header("Content-Type: " . mime_content_type($outputPngFile) . ";");
+        header("Content-Length: " . filesize($outputPngFile));
+        //header('Content-Disposition: attachment; filename*=UTF-8\'\'' . rawurlencode((str_replace("&lt;", "<", "dd"))) . '.' . pathinfo($outputPngFile, PATHINFO_EXTENSION));
+        //header('Accept-Ranges: bytes');
+        readfile($outputPngFile);
+
+        exit();
+    }
     function f()
     {
-        $this->set("res", true);
+        $k = "debug";
+        //var_dump(\config\Conf::"$k");
+
+        $this->set("res", \model\simple\MakerConf::maker());
     }
     function tconf()
     {
@@ -176,8 +472,8 @@ foreach ($steamid as $k=>$v){
         \core\Mysqli::$default = "gazelle";
         \config\Conf::$torrentpass = $user;
         if (is_null($user)) {
-            $user = String::random(5);
-            $pass = String::random(32);
+            $user = ChaineCaractere::random(5);
+            $pass = ChaineCaractere::random(32);
             \config\Conf::$torrentpass = $pass;
             Requete::addUser($user, $pass, "1");
         }
@@ -726,8 +1022,8 @@ foreach ($steamid as $k=>$v){
     function genereCache()
     {
         for ($i = 0; $i < 100; $i++) {
-            $login = \model\simple\String::random(5);
-            \core\Memcached::value($login, "user", \model\simple\String::random(105, true), 60 * 60);
+            $login = \model\simple\ChaineCaractere::random(5);
+            \core\Memcached::value($login, "user", \model\simple\ChaineCaractere::random(105, true), 60 * 60);
         }
 
     }

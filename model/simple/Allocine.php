@@ -19,6 +19,8 @@ class Allocine extends Model
     private $baseurl = "http://api.allocine.fr/rest/v3";
     private $partenaire_key = "100043982026";
     private $secret_key = "29d185d98c984a359e6e6f26a0474269";
+    private $typesearch;
+    public $maxPage = 1;
 
     public function getRandomUserAgent()
     {
@@ -26,8 +28,7 @@ class Allocine extends Model
         return "Dalvik/1.7.0 (Linux; U; Android $v; SGH-T989 Build/IML74KK)";
     }
 
-    private $typesearch;
-    public $maxPage = 1;
+
 
     function __construct($q, $o = null)
     {
@@ -311,7 +312,7 @@ class Allocine extends Model
                 if (count($series->results) > 0) {
                     foreach ($series->results as $vvv) {
                         //var_dump(stripos($vvv->original_title, $v->originalTitle));
-                        if (stripos(String::remplaceAccent($vvv->original_name), String::remplaceAccent($v->originalTitle)) === 0) {
+                        if (stripos(ChaineCaractere::remplaceAccent($vvv->original_name), ChaineCaractere::remplaceAccent($v->originalTitle)) === 0) {
                             $tmp1 = $tmdb->getSerieImage($vvv->id);
                             foreach ($tmp1->backdrops as $k => $vv) {
                                 //var_dump($vv);
@@ -492,7 +493,7 @@ class Allocine extends Model
                 if (count($films->results) > 0) {
                     foreach ($films->results as $vvv) {
                         //var_dump(stripos($vvv->original_title, $v->originalTitle));
-                        if (stripos(String::remplaceAccent($vvv->original_title), String::remplaceAccent($v->originalTitle)) === 0) {
+                        if (stripos(ChaineCaractere::remplaceAccent($vvv->original_title), ChaineCaractere::remplaceAccent($v->originalTitle)) === 0) {
                             $tmp1 = $tmdb->getMovieImage($vvv->id);
                             foreach ($tmp1->backdrops as $k => $vv) {
                             //var_dump($vv);
@@ -646,7 +647,7 @@ class Allocine extends Model
                 if (count($films->results) > 0) {
                     foreach ($films->results as $vvv) {
                         //var_dump(stripos($vvv->original_title, $v->originalTitle));
-                        if (stripos(String::remplaceAccent($vvv->original_title), String::remplaceAccent($v->originalTitle)) === 0) {
+                        if (stripos(ChaineCaractere::remplaceAccent($vvv->original_title), ChaineCaractere::remplaceAccent($v->originalTitle)) === 0) {
                             $tmp1 = $tmdb->getMovieImage($vvv->id);
                             foreach ($tmp1->posters as $k => $vv) {
                                 $height = $vv->height;
@@ -736,7 +737,7 @@ class Allocine extends Model
                 if (count($films->results) > 0) {
                     foreach ($films->results as $vvv) {
                         //var_dump(stripos($vvv->original_title, $v->originalTitle));
-                        if (stripos(String::remplaceAccent($vvv->original_title), String::remplaceAccent($v->originalTitle)) === 0) {
+                        if (stripos(ChaineCaractere::remplaceAccent($vvv->original_title), ChaineCaractere::remplaceAccent($v->originalTitle)) === 0) {
                             $tmp1 = $tmdb->getMovieImage($vvv->id);
                             foreach ($tmp1->backdrops as $k => $vv) {
                                 //var_dump($vv);

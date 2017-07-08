@@ -28,7 +28,7 @@
 <!--
 <script src="<?php echo BASE_URL; ?>bower_components/foundation/js/foundation/foundation.js"></script>
 <script src="<?php echo BASE_URL; ?>bower_components/foundation/js/foundation/foundation.topbar.js"></script>-->
-<script src="<?php echo BASE_URL; ?>bower_components/foundation/js/foundation.js"></script>
+<script src="<?php echo BASE_URL; ?>bower_components/foundation/js/foundation.min.js"></script>
 <script type="text/javascript" src="<?php echo BASE_URL; ?>javascripts/noty/packaged/jquery.noty.packaged.js"></script>
 <!--<script src="<?php echo BASE_URL; ?>javascripts/mediastorrent/jquery.mousewheel.js"></script>
 --><?= isset($loadjavascript_for_layout) ? $loadjavascript_for_layout : ""; ?>

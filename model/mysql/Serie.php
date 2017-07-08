@@ -89,7 +89,7 @@ class Serie extends \core\ModelMysql
             $serie->anneeprod = $anneeprod;
             $serie->realisateurs = $realisateurs;
             do {
-                $serie->id = \model\simple\String::random(10);
+                $serie->id = \model\simple\ChaineCaractere::random(10);
             } while (!$serie->insert());
             return $serie;
         }

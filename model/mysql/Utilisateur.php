@@ -90,7 +90,7 @@ class Utilisateur extends \core\ModelMysql
         if ($u) {
             $u->options = json_decode($u->options);
             do {
-                $u->keyconnexion = \model\simple\String::random(40);
+                $u->keyconnexion = \model\simple\ChaineCaractere::random(40);
             } while (!$u->update());
             return $u;
         }

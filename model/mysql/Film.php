@@ -89,7 +89,7 @@ class Film extends \core\ModelMysql
             $film->anneeprod = $anneeprod;
             $film->realisateurs = $realisateurs;
             do {
-                $film->id = \model\simple\String::random(10);
+                $film->id = \model\simple\ChaineCaractere::random(10);
             } while (!$film->insert());
             return $film;
         }

@@ -165,10 +165,12 @@ class Controller
         if (\config\Conf::$debug) {
 
 
-            $this->vars["debuggermysql"] = \core\Mysqli::$query;
+//            $this->vars["debuggermysql"] = \core\Mysqli::$query;
             $this->vars["debuggerxmlrpc"] = array(\model\xmlrpc\rXMLRPCRequest::$time, \model\xmlrpc\rXMLRPCRequest::$query);
-            $this->vars["debuggermemcache"] = \core\Memcached::$request;
-            //$this->vars["debuggerlogtime"] = \core\Debug::$timelog;
+            //  $this->vars["debuggerxmlrpc1"] = array(\model\rtorrent\rXMLRPCRequest::$time, \model\rtorrent\rXMLRPCRequest::$query);
+//            $this->vars["debuggermemcache"] = \core\Memcached::$request;
+            $this->vars["debuggerlogtime"] = \core\Debug::$timelog;
+            $this->vars["cpt"] = Debug::$cpt;
         //$this->vars["scgi"] = \config\Conf::$portscgi;
         }
         $this->vars["perf"] = $this->debug->get_perf();
