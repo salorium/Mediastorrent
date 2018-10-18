@@ -55,7 +55,11 @@ class Mysqli
             return "NULL";
         if ($str === "")
             return "NULL";
-        return "'" . self::$dblink->real_escape_string(str_replace("<", "&lt;", $str)) . "'";
+        return "'" .
+            self::$dblink->real_escape_string(
+
+                \str_replace("<", "&lt;", $str)
+            ) . "'";
     }
 
     public static function real_escape_json($str)

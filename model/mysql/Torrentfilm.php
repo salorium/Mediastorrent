@@ -16,6 +16,7 @@ class Torrentfilm extends \core\ModelMysql
     public $numfile;
     public $complementfichier;
     public $idfilm;
+    public $titre;
     public $login;
     public $nomrtorrent;
     public $hashtorrent;
@@ -203,7 +204,7 @@ class Torrentfilm extends \core\ModelMysql
 
     static function getTorrentFilmParIdFilm($id)
     {
-        $query = "select tf.id as id,r.hostname as hostname,tf.mediainfo as mediainfo, tf.qualite as qualite, tf.complementfichier as complementfichier, tf.fini as fini, tf.login = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login) . " as proprietaire, tf.partageamis as partageamis ";
+        $query = "select tf.id as id,r.hostname as hostname,tf.mediainfo as mediainfo, tf.qualite as qualite, tf.complementfichier as complementfichier, tf.fini as fini, tf.login = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login) . " as proprietaire, tf.partageamis as partageamis, f.titre as titre ";
         $query .= "from torrentfilm tf,film f,rtorrent r,rtorrents rs ";
         $query .= "where( tf.idfilm = f.id ";
         $query .= "and r.nom = tf.nomrtorrent ";
@@ -224,7 +225,7 @@ class Torrentfilm extends \core\ModelMysql
         $query .= " and tf.login in (select login from amis a1 where a1.demandeur = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login) . " and a1.ok = true union select demandeur from amis a2 where a2.login = " . \core\Mysqli::real_escape_string_html(\config\Conf::$user["user"]->login) . " and a2.ok = true)";
         $query .= ") order by qualite DESC";
         \core\Mysqli::query($query);
-        return \core\Mysqli::getObjectAndClose(true);
+        return \core\Mysqli::getObjectAndClose(true,__CLASS__);
     }
 
     static function getTorrentFilmParId($id)
@@ -376,4 +377,38 @@ class Torrentfilm extends \core\ModelMysql
         return $res;
 
     }
+
+    public function getFilename(){
+        $mediainfo = json_decode($this->mediainfo, true);
+        $compfile = "[";
+        $compfile .= (strlen($this->complementfichier) > 0 ? $this->complementfichier . "." : "");
+        switch ($mediainfo["typequalite"]) {
+            case "SD":
+                $compfile .= $mediainfo["codec"];
+                break;
+            case "HD":
+                $compfile .= $mediainfo["qualite"] . "." . $mediainfo["codec"];
+                break;
+        }
+        $audios = array();
+        foreach ($mediainfo["audios"] as $v) {
+            $res = "";
+            if ($v["type"] !== "MP3") {
+                $res .= $v["type"] . " " . $v["cannal"];
+                if (isset($v["lang"]))
+                    $res .= " " . $v["lang"];
+
+            }
+            $audios[] = $res;
+        }
+
+        if (count($audios) > 1) {
+            $au = implode(".", $audios);
+            $compfile .= "." . $au . "]";
+        } else {
+            $compfile .= "." . $audios[0] . "]";
+        }
+        return [$mediainfo["filename"],$this->titre . " " . $compfile];
+    }
+
 } 

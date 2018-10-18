@@ -30,7 +30,7 @@ if (!function_exists('apache_request_headers')) {
     }
 }
 
-function __autoload($class_name)
+spl_autoload_register (function ($class_name)
 {
     $filename = ROOT . DS . str_replace("\\", DS, $class_name) . ".php";
     if (file_exists($filename)) {
@@ -41,7 +41,7 @@ function __autoload($class_name)
         $Dispa->error($class_name . " n'existe pas !");
     }
 
-}
+});
 
 /*
 

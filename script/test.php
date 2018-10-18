@@ -8,7 +8,8 @@
 define('WEBROOT', __DIR__);
 define('ROOT', dirname(WEBROOT));
 define('DS', DIRECTORY_SEPARATOR);
-spl_autoload_register (function ($class_name)
+
+function __autoload($class_name)
 {
     $filename = ROOT . DS . str_replace("\\", DS, $class_name) . ".php";
     if (file_exists($filename)) {
@@ -17,7 +18,7 @@ spl_autoload_register (function ($class_name)
 
     }
 
-});
+}
 
 $userscgi = $argv[1];
 $hash = $argv[2];
@@ -41,7 +42,7 @@ if (file_exists($filetorrent)) {
         if (isset($info['files'])) {
             foreach ($info['files'] as $key => $file) {
                 $file = $base_path . DS . implode('/', $file['path']);
-                \model\simple\Console::println($file. '=> Num '.$numfile. "h ".$hash." clef [".$clefunique."]");
+                \model\simple\Console::println($file);
                 switch ($typemedias) {
                     case "film":
                         $torrentf = \model\mysql\Torrentfilm::rechercheParNumFileHashClefunique($numfile, $hash, $clefunique);

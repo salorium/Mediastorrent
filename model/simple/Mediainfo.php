@@ -21,7 +21,7 @@ class Mediainfo extends \core\Model
 
     function __construct($file)
     {
-        exec('mediainfo -f --Output=XML --BOM "' . $file . '"', $output, $error);
+        exec('mediainfo -f --Output=OLDXML --BOM "' . $file . '"', $output, $error);
         if ($error) {
             \model\simple\Console::println("Impossible de charger le mediainfos");
             throw new \Exception("Impossible de charger le mediainfos");

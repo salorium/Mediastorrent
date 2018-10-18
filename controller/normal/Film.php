@@ -215,6 +215,8 @@ class Film extends Controller
         $a = \model\mysql\Torrentfilm::getTorrentFilmParIdFilm($id);
         $tmp = array();
         foreach ($a as $v) {
+            $tmp1 = $v->getFilename();
+            $v->filename = $tmp1[1].".".pathinfo($tmp1[0],PATHINFO_EXTENSION);
             $v->mediainfo = json_decode($v->mediainfo);
             $tmp[] = $v;
         }

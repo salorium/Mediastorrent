@@ -84,36 +84,8 @@ class Film extends \core\Controller
                 }
             */
 
-                $mediainfo = json_decode($torrentf->mediainfo, true);
-                $compfile = "[";
-                $compfile .= (strlen($torrentf->complementfichier) > 0 ? $torrentf->complementfichier . "." : "");
-                switch ($mediainfo["typequalite"]) {
-                    case "SD":
-                        $compfile .= $mediainfo["codec"];
-                        break;
-                    case "HD":
-                        $compfile .= $mediainfo["qualite"] . "." . $mediainfo["codec"];
-                        break;
-                }
-                $audios = array();
-                foreach ($mediainfo["audios"] as $v) {
-                    $res = "";
-                    if ($v["type"] !== "MP3") {
-                        $res .= $v["type"] . " " . $v["cannal"];
-                        if (isset($v["lang"]))
-                            $res .= " " . $v["lang"];
-
-                    }
-                    $audios[] = $res;
-                }
-
-                if (count($audios) > 1) {
-                    $au = implode(".", $audios);
-                    $compfile .= "." . $au . "]";
-                } else {
-                    $compfile .= "." . $audios[0] . "]";
-                }
-            $tmp = \model\simple\Download::sendFile($mediainfo["filename"], $torrentf->titre . " " . $compfile);
+            $fileInfos = $torrentf->getFilename();
+            $tmp = \model\simple\Download::sendFile($fileInfos[0], $fileInfos[1]);
             //}
 
         } else {
